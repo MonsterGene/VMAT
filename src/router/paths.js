@@ -1,5 +1,4 @@
-export default [
-
+const paths = [
   {
     path: '*',
     meta: {
@@ -595,3 +594,17 @@ export default [
     )
   },
 ];
+
+paths.push(
+  {
+    path: '/components/demopage',
+    meta: { breadcrumb: true },
+    name: 'components/demopage',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/DemoPage.vue`
+    )
+  });
+
+export default paths;

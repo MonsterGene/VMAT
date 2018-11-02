@@ -1,4 +1,13 @@
 const Menu =  [
+  {
+    title: 'demo',
+    icon: 'widgets',
+    items: [
+      { name: 'demopage', title: 'Demo Page', component: 'components/demopage' },
+      { name: 'item2', title: 'item2' },
+      { name: 'item3', title: 'item3' }
+    ]
+  },
   { header: 'Apps' },
   {
     title: 'Dashboard',
