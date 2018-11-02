@@ -14,6 +14,7 @@
                   <v-text-field append-icon="person" name="login" label="Please Input Username" type="text" v-model="model.username"></v-text-field>
                   <v-text-field append-icon="lock" name="password" label="Please Input Password" id="password" type="password" v-model="model.password"></v-text-field>
                 </v-form>
+                {{ error }}
               </v-card-text>
               <v-card-actions>
                 <!-- <v-btn icon>
@@ -38,23 +39,37 @@
 </template>
 
 <script>
+import { getLogin } from '../api/user';
+
 export default {
   data: () => ({
     loadingLogin: false,
     loadingRegister: false,
+    error: '',
     model: {
-      username: 'genius',
-      password: 'genius'
+      username: '',
+      password: ''
     }
   }),
 
   methods: {
     login () {
       this.loadingLogin = true;
-      setTimeout(() => {
-        this.$router.push('/dashboard');
-      }, 1000);
+
+      getLogin(this.model.username, this.model.password)
+        .then(response => {
+          console.log(response.data);
+          setTimeout(() => {
+            this.$router.push('/dashboard');
+          }, 2000);
+        })
+        .catch(e => {
+          // console.log(e);
+          this.error = 'Username or Password is incorrect';
+          this.loadingLogin = false;
+        });
     },
+
     register () {
       this.loadingRegister = true;
       setTimeout(() => {
