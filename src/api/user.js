@@ -428,8 +428,28 @@ const getUser = (limit) => {
   return (limit) ? Items.slice(0, limit) : Items;
 };
 
+import axios from 'axios';
+
+const getLogin = (username, password) => {
+  return axios.post('http://10.132.45.236/get-gac-authentication/', { username: username, password: password });
+};
+
+const getRegister = (username, password, given_name, last_name, desk_phone_number, email, manager) => {
+  return axios.post('http://10.132.45.236/register-gac-account/', {
+    username: username, 
+    password: password,
+    given_name: given_name,
+    last_name: last_name,
+    desk_phone_number: desk_phone_number,
+    email: email,
+    manager: manager
+  });
+};
+
 export {
   Items,
   getUser,
-  getUserById
+  getUserById,
+  getLogin,
+  getRegister
 };
