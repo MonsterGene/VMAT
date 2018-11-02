@@ -65,7 +65,7 @@ export default {
           jobTitle: 'Web Developer',
           name: 'Michael Wang',
           avatar: {
-            src: 'https://randomuser.me/api/portraits/men/1.jpg',
+            src: '../../static/people/man/1.jpg',
             size: '36'
           },  
         },
@@ -75,7 +75,7 @@ export default {
           color: 'pink',
           dark: true,
           avatar: {
-            src: 'https://randomuser.me/api/portraits/women/1.jpg',
+            src: '../../static/people/woman/1.jpg',
             size: '36'
           },  
         },  
@@ -85,7 +85,7 @@ export default {
           color: 'teal',
           dark: true,
           avatar: {
-            src: 'https://randomuser.me/api/portraits/men/10.jpg',
+            src: '../../static/people/man/10.jpg',
             size: '36'
           },  
         },
@@ -95,7 +95,7 @@ export default {
           dark: true,
           cardBgImage: '/static/bg/15.jpg',
           avatar: {
-            src: 'https://randomuser.me/api/portraits/men/5.jpg',
+            src: '../../static/people/man/5.jpg',
             size: '36'
           },  
         },        

@@ -1,22 +1,23 @@
 <template>
   <div id="appRoot">
+    <!--  -->
     <template v-if="!$route.meta.public">
       <!-- 整个APP界面 -->
       <v-app id="inspire" class="app">
-        <!-- 侧边抽屉 -->
+        <!-- 左边抽屉 -->
         <app-drawer class="app--drawer"></app-drawer>
         <!-- 顶部工具条 -->
         <app-toolbar class="app--toolbar"></app-toolbar>
         <!-- 页面主视图 -->
         <v-content>
-          <!-- Page Header -->
+          <!-- 主视图头部 Page Header -->
           <page-header v-if="$route.meta.breadcrumb"></page-header>
           <div class="page-wrapper">
             <router-view></router-view>
           </div>   
-           <!-- App Footer -->
+           <!-- 主视图底部 App Footer -->
           <v-footer height="auto" class="white pa-3 app--footer">
-            <span class="caption">isocked.com Design &copy; {{ new Date().getFullYear() }}</span>
+            <span class="caption">FCT Team &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> Make With Love </span> <v-icon color="pink" small>favorite</v-icon>
           </v-footer>

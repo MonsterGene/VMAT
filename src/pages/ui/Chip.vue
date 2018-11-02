@@ -82,7 +82,7 @@
                     <div class="text-xs-center">
                       <v-chip close>
                         <v-avatar>
-                          <img src="https://randomuser.me/api/portraits/men/35.jpg" alt="trevor">
+                          <img src="static/people/man/35.jpg" alt="trevor">
                         </v-avatar>
                         Trevor Hansen
                       </v-chip>

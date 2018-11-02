@@ -90,7 +90,7 @@ const Items =  [
     'jobTitle': 'Project Manager',
     'username': 'Hortense99',
     'phone': '712.916.2569 x0663',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/moscoz/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '9046 Allen Ferry',
       'suite': 'Suite 429',
@@ -111,7 +111,7 @@ const Items =  [
     'email': 'Pat_Zulauf81.Bartell86@gmail.com',
     'username': 'Pat_Zulauf81',
     'phone': '(058) 200-7342',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/rehatkathuria/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '62268 Favian Coves',
       'suite': 'Suite 993',
@@ -132,7 +132,7 @@ const Items =  [
     'email': 'Solon.Bauch4_Rath@hotmail.com',
     'username': 'Solon.Bauch4',
     'phone': '789-914-4904 x173',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/spacewood_/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '8153 Favian Walk',
       'suite': 'Apt. 495',
@@ -153,7 +153,7 @@ const Items =  [
     'email': 'Calista_Mertz1757@hotmail.com',
     'username': 'Calista_Mertz17',
     'phone': '961-703-4134',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/moscoz/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '886 Wendy Circles',
       'suite': 'Apt. 933',
@@ -174,7 +174,7 @@ const Items =  [
     'email': 'Jackeline.Abshire_Dach@yahoo.com',
     'username': 'Jackeline.Abshire',
     'phone': '(326) 903-5706 x6854',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/larrybolt/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '416 Cathy Spur',
       'suite': 'Apt. 431',
@@ -195,7 +195,7 @@ const Items =  [
     'email': 'Jamey_Grant_Cruickshank73@gmail.com',
     'username': 'Jamey_Grant',
     'phone': '545-939-2404 x32373',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/mikebeecham/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '38372 Mante Glen',
       'suite': 'Suite 090',
@@ -216,7 +216,7 @@ const Items =  [
     'jobTitle': 'Web Developer',
     'username': 'Barton85',
     'phone': '(979) 560-8322 x174',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/a_harris88/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '185 Florine Spurs',
       'suite': 'Suite 178',
@@ -237,7 +237,7 @@ const Items =  [
     'email': 'Gloria78.Nicolas83@hotmail.com',
     'username': 'Gloria78',
     'phone': '188.890.3246',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/nehfy/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '643 Arch Mews',
       'suite': 'Apt. 171',
@@ -258,7 +258,7 @@ const Items =  [
     'email': 'Olin.Robel49.Schowalter24@yahoo.com',
     'username': 'Olin.Robel49',
     'phone': '1-982-234-7756',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/jcubic/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '0813 Mayer Greens',
       'suite': 'Apt. 551',
@@ -279,7 +279,7 @@ const Items =  [
     'email': 'Rollin43_Fay@yahoo.com',
     'username': 'Rollin43',
     'phone': '477-651-5715 x502',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/horaciobella/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '5704 Spinka Causeway',
       'suite': 'Suite 388',
@@ -300,7 +300,7 @@ const Items =  [
     'username': 'Murl_Abshire41',
     'jobTitle': 'Web Developer',
     'phone': '107-733-1219 x0615',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/stayuber/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '4880 Tanner Circles',
       'suite': 'Apt. 994',
@@ -321,7 +321,7 @@ const Items =  [
     'email': 'Breanna.Bartoletti21@hotmail.com',
     'username': 'Breanna.Bartoletti',
     'phone': '645.045.0876 x35882',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/flexrs/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '431 Grimes Common',
       'suite': 'Apt. 530',
@@ -342,7 +342,7 @@ const Items =  [
     'username': 'Maya55',
     'jobTitle': 'Web Developer',
     'phone': '199.260.3770 x2815',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/nvkznemo/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '58581 Guillermo Springs',
       'suite': 'Suite 574',
@@ -363,7 +363,7 @@ const Items =  [
     'email': 'Santiago41_Crooks15@yahoo.com',
     'username': 'Santiago41',
     'phone': '1-489-921-2159 x8655',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/ernestsemerda/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '7868 Windler Dam',
       'suite': 'Suite 876',
@@ -383,7 +383,7 @@ const Items =  [
     'email': 'Leonardo10.Macejkovic@yahoo.com',
     'username': 'Leonardo10',
     'phone': '445-761-1519',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/adobi/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '146 Lemke Mountains',
       'suite': 'Apt. 407',
@@ -404,7 +404,7 @@ const Items =  [
     'email': 'Lora_Kessler586@hotmail.com',
     'username': 'Lora_Kessler5',
     'phone': '315-215-2852 x69280',
-    'avatar': 'https://s3.amazonaws.com/uifaces/faces/twitter/antongenkin/128.jpg',
+    'avatar': 'static/128.jpg',
     'address': {
       'street': '4018 Willms Turnpike',
       'suite': 'Suite 573',

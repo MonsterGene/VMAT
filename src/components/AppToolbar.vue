@@ -16,11 +16,8 @@
         class="hidden-sm-and-down"
         >
       </v-text-field>
-      <v-spacer></v-spacer>
-      <v-btn href="mailto:wangqiangshen@gmail.com">
-        Hire Me
-      </v-btn>      
-      <v-btn icon href="https://github.com/tookit/vue-material-admin">
+      <v-spacer></v-spacer>     
+      <v-btn icon href="http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB">
         <v-icon>fa fa-github</v-icon>
       </v-btn>
       <v-btn icon @click="handleFullScreen()">
