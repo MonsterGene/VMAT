@@ -12,7 +12,7 @@
     <v-toolbar color="primary darken-1" dark>
       <img v-bind:src="computeLogo" height="36" alt="Vue Material Admin Template">
       <v-toolbar-title class="ml-0 pl-3">
-        <span class="hidden-sm-and-down">Project Center</span>
+        <span class="hidden-sm-and-down">Genius Solution</span>
       </v-toolbar-title>        
     </v-toolbar>
     <!-- 菜单栏 -->

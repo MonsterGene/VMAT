@@ -17,7 +17,7 @@
         >
       </v-text-field>
       <v-spacer></v-spacer>     
-      <v-btn icon href="http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB">
+      <v-btn icon href="http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB" target="_blank">
         <v-icon>fa fa-github</v-icon>
       </v-btn>
       <v-btn icon @click="handleFullScreen()">
@@ -32,6 +32,7 @@
         </v-btn>
         <notification-list></notification-list>
       </v-menu>
+
       <v-menu offset-y origin="center center" :nudge-bottom="10" transition="scale-transition">
         <v-btn icon large flat slot="activator">
           <v-avatar size="30px">
@@ -49,6 +50,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
+      
   </v-toolbar>
 </template>
 <script>
