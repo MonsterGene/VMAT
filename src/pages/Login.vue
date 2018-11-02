@@ -25,9 +25,9 @@
                 <v-btn icon>
                   <v-icon color="light-blue">fa fa-twitter fa-lg</v-icon>
                 </v-btn> -->
-                <v-btn block color="warn" @click="register" :loading="loading">Register</v-btn>
+                <v-btn block color="warn" @click="register" :loading="loadingRegister">Register</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
+                <v-btn block color="primary" @click="login" :loading="loadingLogin">Login</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -40,7 +40,8 @@
 <script>
 export default {
   data: () => ({
-    loading: false,
+    loadingLogin: false,
+    loadingRegister: false,
     model: {
       username: 'genius',
       password: 'genius'
@@ -49,13 +50,13 @@ export default {
 
   methods: {
     login () {
-      this.loading = true;
+      this.loadingLogin = true;
       setTimeout(() => {
         this.$router.push('/dashboard');
       }, 1000);
     },
     register () {
-      this.loading = true;
+      this.loadingRegister = true;
       setTimeout(() => {
         this.$router.push('/dashboard');
       }, 1000);
