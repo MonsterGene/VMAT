@@ -61,7 +61,7 @@ const paths = [
     meta: { },
     name: 'Root',
     redirect: {
-      name: 'Dashboard'
+      name: 'Login'
     }
   },
   {

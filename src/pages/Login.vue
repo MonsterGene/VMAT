@@ -7,16 +7,16 @@
             <v-card class="elevation-1 pa-3">
               <v-card-text>
                 <div class="layout column align-center">
-                  <img src="/static/m.png" alt="Vue Material Admin" width="120" height="120">
-                  <h1 class="flex my-4 primary--text">Material Admin Template</h1>
+                  <img src="/static/logo.png" alt="Vue Material Admin" width="120" height="120">
+                  <h1 class="flex my-4 primary--text">Genius Solution Center</h1>
                 </div>                
                 <v-form>
-                  <v-text-field append-icon="person" name="login" label="Login" type="text" v-model="model.username"></v-text-field>
-                  <v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
+                  <v-text-field append-icon="person" name="login" label="Please Input Username" type="text" v-model="model.username"></v-text-field>
+                  <v-text-field append-icon="lock" name="password" label="Please Input Password" id="password" type="password" v-model="model.password"></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
-                <v-btn icon>
+                <!-- <v-btn icon>
                   <v-icon color="blue">fa fa-facebook-square fa-lg</v-icon>
                 </v-btn>
                 <v-btn icon>
@@ -24,7 +24,8 @@
                 </v-btn>
                 <v-btn icon>
                   <v-icon color="light-blue">fa fa-twitter fa-lg</v-icon>
-                </v-btn>
+                </v-btn> -->
+                <v-btn block color="warn" @click="register" :loading="loading">Register</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
               </v-card-actions>
@@ -41,8 +42,8 @@ export default {
   data: () => ({
     loading: false,
     model: {
-      username: 'admin@isockde.com',
-      password: 'password'
+      username: 'genius',
+      password: 'genius'
     }
   }),
 
@@ -52,7 +53,14 @@ export default {
       setTimeout(() => {
         this.$router.push('/dashboard');
       }, 1000);
+    },
+    register () {
+      this.loading = true;
+      setTimeout(() => {
+        this.$router.push('/dashboard');
+      }, 1000);
     }
+
   }
 
 };
