@@ -45,6 +45,9 @@ Vuetify is Awesome.
 # install dependencies
 npm install
 
+### npm install chromedriver issue
+use 'npm install chromedriver --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver'
+
 # serve with hot reload at localhost:8080
 npm run dev
 
@@ -86,6 +89,3 @@ If you find this project useful, you can buy author a glass of juice :tropical_d
 ## License
 
 [MIT](https://github.com/tookit/vue-material-admin/blob/master/LICENSE)
-
-## npm install chromedriver issue
-use 'npm install chromedriver --chromedriver_cdnurl=http://cdn.npm.taobao.org/dist/chromedriver'
