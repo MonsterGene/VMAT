@@ -1,13 +1,4 @@
-const Menu =  [
-  {
-    title: 'demo',
-    icon: 'widgets',
-    items: [
-      { name: 'demopage', title: 'Demo Page', component: 'components/demopage' },
-      { name: 'item2', title: 'item2' },
-      { name: 'item3', title: 'item3' }
-    ]
-  },
+const menu = [
   { header: 'Apps' },
   {
     title: 'Dashboard',
@@ -133,15 +124,5 @@ const Menu =  [
     ]
   },
 ];
-// reorder menu
-Menu.forEach((item) => {
-  if (item.items) {
-    item.items.sort((x, y) => {
-      let textA = x.title.toUpperCase();
-      let textB = y.title.toUpperCase();
-      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    });
-  }
-});
 
-export default Menu;
+export default menu;
