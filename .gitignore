@@ -9,7 +9,6 @@ yarn-error.log*
 selenium-debug.log
 node_modules
 release
-dist
 
 # Editor directories and files
 .idea
