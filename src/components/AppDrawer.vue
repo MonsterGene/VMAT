@@ -74,7 +74,7 @@
   </v-navigation-drawer>
 </template>
 <script>
-import menu from '@/api/menu';
+import menu from '@/api/menus/menu';
 import VuePerfectScrollbar from 'vue-perfect-scrollbar';
 export default {
   name: 'app-drawer',
