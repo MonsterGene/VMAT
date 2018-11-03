@@ -40,10 +40,10 @@ const demo_locationData = [
     name: 'Other'
   }
 ];
-const locationDataApiUrl = null;
-const locationData = () => {
-  if (locationDataApiUrl) {
-    return axios.get(locationDataApiUrl);
+
+const locationData = (param1) => {
+  if (false) {
+    return axios.get('http://10.1.1.1/get-test-data/?param=' + param1);
   } else {
     return { data: demo_locationData };
   }

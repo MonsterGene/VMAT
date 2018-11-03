@@ -1,4 +1,4 @@
-import * as Chart from './chart';
+import Chart from './chart';
 
 export default {
   getMonthVisit: Chart.monthVisitData,
