@@ -40,16 +40,16 @@ const demo_locationData = [
     name: 'Other'
   }
 ];
-
+const apiEnable = false;
 const locationData = (param1) => {
-  if (false) {
+  if (apiEnable) {
     return axios.get('http://10.1.1.1/get-test-data/?param=' + param1);
   } else {
     return { data: demo_locationData };
   }
 };
 
-export {
+export default {
   monthVisitData,
   locationData
 };
