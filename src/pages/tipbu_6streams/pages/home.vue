@@ -307,7 +307,7 @@ export default {
   },
   data () {
     return {
-      equipment_list: ['equip 1', 'equip 2', 'equip 3', 'equip 4', 'equip 5', 'equip 6','equip 7'],
+      equipment_list: ['equip 1', 'equip 2', 'equip 3', 'equip 4', 'equip 5', 'equip 6', 'equip 7'],
       selectedTab: 'tab-1',
       option: null,
       dataset: {
