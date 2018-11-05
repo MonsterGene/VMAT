@@ -1,30 +1,126 @@
 <template>
-  <div id="pageHome">
+  <div id="social">
     <v-container grid-list-xl fluid>
-      <v-layout row wrap> 
-        <!-- mini statistic  end -->   
+      <!-- complex chart -->
+      <v-layout row wrap>  
         <v-flex lg12 sm12 xs12>
-          <v-widget title="Site Traffic" content-bg="white">
+          <v-widget title="稼动率与产能分析" content-bg="white">
             <v-btn icon slot="widget-header-action">
               <v-icon class="text--secondary">refresh</v-icon>
             </v-btn>
             <div slot="widget-content">
                 <e-chart 
                 :path-option="[
-                  ['dataset.source', siteTrafficData],
-                  ['color', [color.lightBlue.base, color.green.lighten1]],
+                  ['dataset.source', dataset.chart_data1],
+                  ['color', [color.amber.base, color.indigo.base, color.teal.base]],
                   ['legend.show', true],
+                  ['legend.selected', {'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false}],
+                  ['toolbox.show', true],
                   ['xAxis.axisLabel.show', true],
                   ['yAxis.axisLabel.show', true],
                   ['grid.left', '2%'],
                   ['grid.bottom', '5%'],
                   ['grid.right', '3%'],
-                  ['series[0].type', 'bar'],
-                  ['series[0].areaStyle', {}],
+
+                  ['series[0].type', 'line'],
+                  ['series[0].label.show', true],
                   ['series[0].smooth', true],
+                  
+                  ['series[1].type', 'line'],
+                  ['series[1].label.show', true],
                   ['series[1].smooth', true],
+
+                  ['series[2].type', 'line'],
+                  ['series[2].label.show', true],
+                  ['series[2].smooth', true],
+
+                  ['series[3].smooth', true],
+                  ['series[3].type', 'bar'],
+                  ['series[3].label.show', true],
+                  ['series[3].label.position', 'top'],
+
+                  ['series[4].smooth', true],
+                  ['series[4].type', 'bar'],
+                  ['series[4].label.show', true],
+                  ['series[4].label.position', 'top'],
+
+                  ['series[5].smooth', true],
+                  ['series[5].type', 'bar'],
+                  ['series[5].label.show', true],
+                  ['series[5].label.position', 'top'],
+                ]"
+                height="400px"
+                width="100%"
+                >
+                </e-chart>     
+            </div>
+          </v-widget>  
+        </v-flex>
+
+        <v-flex lg12 sm12 xs12>
+          <v-widget title="運行時間(By Day)" content-bg="white">
+            <v-btn icon slot="widget-header-action">
+              <v-icon class="text--secondary">refresh</v-icon>
+            </v-btn>
+            <div slot="widget-content">
+                <e-chart 
+                :path-option="[
+                  ['dataset.source', dataset.chart_data2],
+                  ['color', [color.amber.base, color.indigo.base, color.teal.base]],
+                  ['legend.show', true],
+                  ['legend.selected', {'Bar 1': false, 'Bar 2': false, 'Bar 3': false, 'Bar 4': false}],
+                  ['toolbox.show', true],
+                  ['xAxis.axisLabel.show', true],
+                  ['yAxis.axisLabel.show', true],
+                  ['grid.left', '2%'],
+                  ['grid.bottom', '5%'],
+                  ['grid.right', '3%'],
+
+                  ['series[0].type', 'bar'],
+                  ['series[0].label.show', true],
+                  ['series[0].smooth', true],
+                  ['series[3].label.position', 'top'],
+                  
                   ['series[1].type', 'bar'],
-                  ['series[1].areaStyle', {}],
+                  ['series[1].label.show', true],
+                  ['series[1].smooth', true],
+                  ['series[3].label.position', 'top'],
+
+                  ['series[2].type', 'bar'],
+                  ['series[2].label.show', true],
+                  ['series[2].smooth', true],
+                  ['series[3].label.position', 'top'],
+
+                  ['series[3].smooth', true],
+                  ['series[3].type', 'bar'],
+                  ['series[3].label.show', true],
+                  ['series[3].label.position', 'top'],
+
+                  ['series[4].smooth', true],
+                  ['series[4].type', 'bar'],
+                  ['series[4].label.show', true],
+                  ['series[4].label.position', 'top'],
+
+                  ['series[5].smooth', true],
+                  ['series[5].type', 'bar'],
+                  ['series[5].label.show', true],
+                  ['series[5].label.position', 'top'],
+              
+                  ['series[6].smooth', true],
+                  ['series[6].type', 'bar'],
+                  ['series[6].label.show', true],
+                  ['series[6].label.position', 'top'],
+              
+                  ['series[7].smooth', true],
+                  ['series[7].type', 'bar'],
+                  ['series[7].label.show', true],
+                  ['series[7].label.position', 'top'],
+              
+                  ['series[8].smooth', true],
+                  ['series[8].type', 'bar'],
+                  ['series[8].label.show', true],
+                  ['series[8].label.position', 'top'],
+              
                 ]"
                 height="400px"
                 width="100%"
@@ -33,244 +129,205 @@
             </div>
           </v-widget>  
         </v-flex>
-        <v-flex lg4 sm12 xs12>
-          <v-widget title="Top Location" content-bg="white">
-            <div slot="widget-content">
-                <e-chart 
-                :path-option="[
-                  ['dataset.source', locationData],
-                  ['legend.bottom', '0'],
-                  ['color', [color.lightBlue.base, color.indigo.base, color.pink.base, color.green.base, color.cyan.base, color.teal.base]],
-                  ['xAxis.show', false],
-                  ['yAxis.show', false],
-                  ['series[0].type', 'pie'],
-                  ['series[0].avoidLabelOverlap', true],         
-                  ['series[0].radius', ['50%', '70%']],                      
-                ]"
-                height="400px"
-                width="100%"
-                >
-                </e-chart>     
-            </div>
-          </v-widget>  
-        </v-flex>
-        <v-flex lg4 sm12 xs12>
-          <v-widget title="Top Location" content-bg="white">
-            <div slot="widget-content">
-                <e-chart 
-                :path-option="[
-                  ['dataset.source', locationData],
-                  ['legend.bottom', '0'],
-                  ['color', [color.lightBlue.base, color.indigo.base, color.pink.base, color.green.base, color.cyan.base, color.teal.base]],
-                  ['xAxis.show', false],
-                  ['yAxis.show', false],
-                  ['series[0].type', 'pie'],
-                  ['series[0].avoidLabelOverlap', true],         
-                  ['series[0].radius', ['50%', '70%']],                      
-                ]"
-                height="400px"
-                width="100%"
-                >
-                </e-chart>     
-            </div>
-          </v-widget>  
-        </v-flex>
-        <v-flex lg4 sm12 xs12>
-          <v-widget title="Top Location" content-bg="white">
-            <div slot="widget-content">
-                <e-chart 
-                :path-option="[
-                  ['dataset.source', locationData],
-                  ['legend.bottom', '0'],
-                  ['color', [color.lightBlue.base, color.indigo.base, color.pink.base, color.green.base, color.cyan.base, color.teal.base]],
-                  ['xAxis.show', false],
-                  ['yAxis.show', false],
-                  ['series[0].type', 'pie'],
-                  ['series[0].avoidLabelOverlap', true],         
-                  ['series[0].radius', ['50%', '70%']],                      
-                ]"
-                height="400px"
-                width="100%"
-                >
-                </e-chart>     
-            </div>
-          </v-widget>  
-        </v-flex>
-        <!-- social/weather card start -->     
+
         <v-flex lg12 sm12 xs12>
-          <box-chart
-            card-color=""
-            title="Trending"
-            sub-title="10%"
-            icon="trending_up"
-            :data="siteTrafficData"
-            :chart-color="[color.indigo.lighten1]"
-            type="line"
-          >
-          </box-chart>
-          <box-chart class="mt-4"
-            card-color=""
-            title="Page views"
-            sub-title="10%"
-            icon="trending_up"
-            :data="siteTrafficData"
-            :chart-color="[color.pink.darken1, 'rgba(255,255,255,0.3)']"
-            gradient
-            type="area"
-          >
-          </box-chart>          
+          <v-widget title="異常分佈(By Day)" content-bg="white">
+            <v-btn icon slot="widget-header-action">
+              <v-icon class="text--secondary">refresh</v-icon>
+            </v-btn>
+            <div slot="widget-content">
+                <e-chart 
+                :path-option="[
+                  ['dataset.source', dataset.chart_data1],
+                  ['color', [color.amber.base, color.indigo.base, color.teal.base]],
+                  ['legend.show', true],
+                  ['legend.selected', {'Line 1': false, 'Line 2': false}],
+                  ['toolbox.show', true],
+                  ['xAxis.axisLabel.show', true],
+                  ['yAxis.axisLabel.show', true],
+                  ['grid.left', '2%'],
+                  ['grid.bottom', '5%'],
+                  ['grid.right', '3%'],
+
+                  ['series[0].type', 'line'],
+                  ['series[0].label.show', true],
+                  ['series[0].smooth', true],
+                  
+                  ['series[1].type', 'line'],
+                  ['series[1].label.show', true],
+                  ['series[1].smooth', true],
+
+                  ['series[2].type', 'line'],
+                  ['series[2].label.show', true],
+                  ['series[2].smooth', true],
+
+                ]"
+                height="400px"
+                width="100%"
+                >
+                </e-chart>     
+            </div>
+          </v-widget>  
         </v-flex>
+
+        <v-flex lg6 sm12 xs12>
+          <v-widget title="机故异常(By Hour)(2018/07/01)">
+            <div slot="widget-content">
+              <e-chart 
+                :path-option="[
+                  ['dataset.source', dataset.chart_data1],
+                  ['color', [color.amber.base, color.indigo.base, color.teal.base]],
+                  ['legend.show', true],
+                  ['legend.selected', {'Line 1': false, 'Line 2': false}],
+                  ['toolbox.show', true],
+                  ['xAxis.axisLabel.show', true],
+                  ['yAxis.axisLabel.show', true],
+                  ['grid.left', '2%'],
+                  ['grid.bottom', '5%'],
+                  ['grid.right', '3%'],
+
+                  ['series[0].type', 'line'],
+                  ['series[0].label.show', true],
+                  ['series[0].smooth', true],
+                  
+                  ['series[1].type', 'line'],
+                  ['series[1].label.show', true],
+                  ['series[1].smooth', true],
+
+                  ['series[2].type', 'line'],
+                  ['series[2].label.show', true],
+                  ['series[2].smooth', true],
+
+                ]"
+                height="400px"
+                width="100%"
+                >
+              </e-chart>   
+            </div>
+          </v-widget>            
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
+          <v-widget title="机台产出(By Hour)(2018/07/01)">
+            <div slot="widget-content">
+              <e-chart 
+                :path-option="[
+                  ['dataset.source', dataset.chart_data1],
+                  ['color', [color.indigo.base, color.teal.base]],
+                  ['legend.show', true],
+                  ['legend.selected', {}],
+                  ['toolbox.show', true],
+                  ['xAxis.axisLabel.show', true],
+                  ['yAxis.axisLabel.show', true],
+                  ['grid.left', '2%'],
+                  ['grid.bottom', '5%'],
+                  ['grid.right', '3%'],
+
+                  ['series[0].type', 'bar'],
+                  ['series[0].label.show', true],
+                  ['series[0].smooth', true],
+                
+                ]"
+                height="400px"
+                width="100%"
+                >
+              </e-chart>              
+            </div>
+          </v-widget>             
+        </v-flex>
+
         <v-flex lg12 sm12 xs12>
-          <plain-table-order></plain-table-order>
-        </v-flex>               
+          <v-widget title="机故类型分布(2018-11-05)" content-bg="white">
+            <v-btn icon slot="widget-header-action">
+              <v-icon class="text--secondary">refresh</v-icon>
+            </v-btn>
+            <div slot="widget-content">
+                <e-chart 
+                :path-option="[
+                  ['dataset.source', dataset.chart_data1],
+                  ['color', [color.indigo.base, color.teal.base]],
+                  ['legend.show', true],
+                  ['legend.selected', {}],
+                  ['toolbox.show', true],
+                  ['xAxis.axisLabel.show', true],
+                  ['yAxis.axisLabel.show', true],
+                  ['grid.left', '2%'],
+                  ['grid.bottom', '5%'],
+                  ['grid.right', '3%'],
+
+                  ['series[0].type', 'line'],
+                  ['series[0].label.show', true],
+                  ['series[0].smooth', true],
+                  
+                  ['series[1].type', 'bar'],
+                  ['series[1].label.show', true],
+                  ['series[1].smooth', true],
+                ]"
+                height="400px"
+                width="100%"
+                >
+                </e-chart>     
+            </div>
+          </v-widget>  
+        </v-flex>
+
+      </v-layout>
+
+      <v-layout row wrap>
+        <v-flex v-for="(item, index) in equipment_list" :key="index" lg1 sm2>
+          <v-card color="purple" dark>
+            <v-card-title class="pb-0">
+              <h4>{{ item }}</h4>
+            </v-card-title>
+            <v-card-text>
+              U: 20pcs/h 
+              E: 85%
+            </v-card-text>
+            <v-card-actions>
+              <v-btn flat small>Link</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-flex>
       </v-layout>
     </v-container>
   </div>
 </template>
 
 <script>
-import API from '@/pages/tipbu_6streams/api/chart';
+import { data1, data2 } from '../api/chart';
 import EChart from '@/components/chart/echart';
-import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
-import PostListCard from '@/components/widgets/card/PostListCard';
-import ProfileCard from '@/components/widgets/card/ProfileCard';
-import PostSingleCard from '@/components/widgets/card/PostSingleCard';
-import WeatherCard from '@/components/widgets/card/WeatherCard';
-import PlainTable from '@/components/widgets/list/PlainTable';
-import PlainTableOrder from '@/components/widgets/list/PlainTableOrder';
-import VWidget from '@/components/VWidget';
+import {
+  campaignData,
+} from '@/api/chart';
 import Material from 'vuetify/es5/util/colors';
-import VCircle from '@/components/circle/VCircle';
-import BoxChart from '@/components/widgets/chart/BoxChart';
-import ChatWindow from '@/components/chat/ChatWindow';
-import CircleStatistic from '@/components/widgets/statistic/CircleStatistic';
-import LinearStatistic from '@/components/widgets/statistic/LinearStatistic';
+import VWidget from '@/components/VWidget';
 export default {
   components: {
-    VWidget,
-    MiniStatistic,
-    ChatWindow,
-    VCircle,
-    WeatherCard,
-    PostSingleCard,
-    PostListCard,
-    ProfileCard,
     EChart,
-    BoxChart,
-    CircleStatistic,
-    LinearStatistic,
-    PlainTable,
-    PlainTableOrder    
+    VWidget
   },
-  data: () => ({
-    color: Material,
-    selectedTab: 'tab-1',
-    linearTrending: [
-      {
-        subheading: 'Sales',
-        headline: '2,55',
-        caption: 'increase',
-        percent: 15,
-        icon: {
-          label: 'trending_up',
-          color: 'success'
-        },
-        linear: {
-          value: 15,
-          color: 'success'
-        }
+  data () {
+    return {
+      equipment_list: ['equip 1', 'equip 2', 'equip 3', 'equip 4', 'equip 5', 'equip 6','equip 7'],
+      selectedTab: 'tab-1',
+      option: null,
+      dataset: {
+        campaign: campaignData,
+        chart_data1: data1,
+        chart_data2: data2,
       },
-      {
-        subheading: 'Revenue',
-        headline: '6,553',
-        caption: 'increase',
-        percent: 10,
-        icon: {
-          label: 'trending_down',
-          color: 'error'
-        },
-        linear: {
-          value: 15,
-          color: 'error'
-        }
-      },
-      {
-        subheading: 'Orders',
-        headline: '5,00',
-        caption: 'increase',
-        percent: 50,
-        icon: {
-          label: 'arrow_upward',
-          color: 'info'
-        },
-        linear: {
-          value: 50,
-          color: 'info'
-        }
-      }
-    ],    
-    trending: [
-      {
-        subheading: 'Email',
-        headline: '15+',
-        caption: 'email opens',
-        percent: 15,
-        icon: {
-          label: 'email',
-          color: 'info'
-        },
-        linear: {
-          value: 15,
-          color: 'info'
-        }
-      },        
-      {
-        subheading: 'Tasks',
-        headline: '90%',
-        caption: 'tasks completed.',
-        percent: 90,
-        icon: {
-          label: 'list',
-          color: 'primary'
-        },
-        linear: {
-          value: 90,
-          color: 'success'
-        }
-      },        
-      {
-        subheading: 'Issues',
-        headline: '100%',
-        caption: 'issues fixed.',
-        percent: 100,
-        icon: {
-          label: 'bug_report',
-          color: 'primary'
-        },
-        linear: {
-          value: 100,
-          color: 'error'
-        }
-      },        
-    ]    
-  }),
-  computed: {
-    activity () {
-      // return getActivity();
-      return [];
-    },
-    posts () {
-      // return API.getPost(3);
-      return [];
-    },
-    siteTrafficData () {
-      // return API.getMonthVisit;
-      return [];
-    },
-    locationData () {
-      return API.locationData;
+      color: Material,
+      
+    };
+  },
+  created () {
+    // console.log(this.$refs.chart);
+    return false;
+  },  
+  methods: {
+    handleTabChange (val, e) {
+      // make sure the chart resized while parent from hidden to show
+      window.dispatchEvent(new Event('resize'));
     }
   },
-
 };
 </script>
