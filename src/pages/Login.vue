@@ -26,7 +26,7 @@
                 <v-btn icon>
                   <v-icon color="light-blue">fa fa-twitter fa-lg</v-icon>
                 </v-btn> -->
-                <v-btn block color="warn" @click="register" :loading="loadingRegister">Register</v-btn>
+                <v-btn block color="warn" @click="register" :loading="loadingRegister">Skip Login</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn block color="primary" @click="login" :loading="loadingLogin">Login</v-btn>
               </v-card-actions>
@@ -60,7 +60,7 @@ export default {
         .then(response => {
           console.log(response.data);
           setTimeout(() => {
-            this.$router.push('/dashboard');
+            this.$router.push('/tipbu-6streams');
           }, 2000);
         })
         .catch(e => {
@@ -73,7 +73,7 @@ export default {
     register () {
       this.loadingRegister = true;
       setTimeout(() => {
-        this.$router.push('/dashboard');
+        this.$router.push('/tipbu-6streams');
       }, 1000);
     }
 
