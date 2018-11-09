@@ -59,6 +59,14 @@ const dailyData2 = date.map(d => {
   };
 });
 
+const dailyCishuShijian = date.map(d => {
+  return {
+    'date': d,
+    '次数': Math.floor(Math.random() * 1000),
+    '时间': Math.floor(Math.random() * 100)
+  };
+});
+
 const cishuByStation = Array(8).fill(0).map((v, index) => {
   return {
     'station': 'Station ' + index,
@@ -90,6 +98,7 @@ export default {
   data2,
   dailyData1,
   dailyData2,
+  dailyCishuShijian,
   cishuByStation,
   shijianByStation
 };

@@ -1,12 +1,22 @@
 const tipbu_6streams_path = [
   {
-    path: '/tipbu-6streams/line-details',
-    meta: { breadcrumb: true },
-    name: 'tipbu-6streams',
+    path: '/tipbu-6streams/line-details/:lineName',
+    meta: { breadcrumb: false },
+    name: 'tipbu-6streams/line-details',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/tipbu_6streams/pages/home.vue`
+      `@/pages/tipbu_6streams/pages/lineDetails.vue`
+    )
+  },
+  {
+    path: '/tipbu-6streams/station-details/:stationName',
+    meta: { breadcrumb: false },
+    name: 'tipbu-6streams/station-details',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/tipbu_6streams/pages/stationDetails.vue`
     )
   },
   {
