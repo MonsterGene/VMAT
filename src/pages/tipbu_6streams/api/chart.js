@@ -47,15 +47,26 @@ const dailyData1 = date.map(d => {
 const dailyData2 = date.map(d => {
   return {
     'month': d,
-    'Bar 1': Math.floor(Math.random() * 1000) + 100,
-    'Bar 2': Math.floor(Math.random() * 1000) + 450,
-    'Bar 3': Math.floor(Math.random() * 1000) + 200,
-    'Bar 4': Math.floor(Math.random() * 1000) + 220,
-    'Bar 5': Math.floor(Math.random() * 1000) + 620,
-    'Bar 6': Math.floor(Math.random() * 1000) + 120,
-    'Bar 7': Math.floor(Math.random() * 1000) + 120,
-    'Bar 8': Math.floor(Math.random() * 1000) + 120,
-    'Bar 9': Math.floor(Math.random() * 1000) + 120,
+    'Run 1': Math.floor(Math.random() * 1000) + 100,
+    'Standy 1': Math.floor(Math.random() * 1000) + 450,
+    'Error 1': Math.floor(Math.random() * 1000) + 200,
+    'Unready 1': Math.floor(Math.random() * 1000) + 220,
+    'Run 2': Math.floor(Math.random() * 1000) + 620,
+    'Standy 2': Math.floor(Math.random() * 1000) + 120,
+    'Error 2': Math.floor(Math.random() * 1000) + 120,
+    'Unready 2': Math.floor(Math.random() * 1000) + 120,
+    'Run 3': Math.floor(Math.random() * 1000) + 620,
+    'Standy 3': Math.floor(Math.random() * 1000) + 120,
+    'Error 3': Math.floor(Math.random() * 1000) + 120,
+    'Unready 3': Math.floor(Math.random() * 1000) + 120,
+  };
+});
+
+const dailyCishuShijian = date.map(d => {
+  return {
+    'date': d,
+    '次数': Math.floor(Math.random() * 1000),
+    '时间': Math.floor(Math.random() * 100)
   };
 });
 
@@ -84,12 +95,56 @@ shijianByStation.reduce((acc, cur) => {
   cur['累计时间(%)'] = ((acc + cur['时间']) / shijianTotal) * 100;
   return acc + cur['时间'];
 }, 0);
-console.log(shijianByStation);
+const shijianByType = Array(8).fill(0).map((val, index) => {
+  return {
+    type: 'Error' + index,
+    '时间(min)': Math.floor(Math.random() * 1000) + 12
+  };
+});
+const shijianByDay = Array(7).fill(0).map((val, index) => {
+  return {
+    date: moment().subtract(7 - index, 'days').format('MM-DD'),
+    '时间(min)': Math.floor(Math.random() * 1000) + 12
+  };
+});
+const shijianByHour = Array(24).fill(0).map((val, index) => {
+  return {
+    hour: moment().subtract(24 - index, 'hours').format('HH:mm'),
+    '时间(min)': Math.floor(Math.random() * 1000) + 12
+  };
+});
+
+const cishuByType = Array(8).fill(0).map((val, index) => {
+  return {
+    type: 'Error' + index,
+    '次数': Math.floor(Math.random() * 1000) + 12
+  };
+});
+const cishuByDay = Array(7).fill(0).map((val, index) => {
+  return {
+    date: moment().subtract(7 - index, 'days').format('MM-DD'),
+    '次数': Math.floor(Math.random() * 1000) + 12
+  };
+});
+const cishuByHour = Array(24).fill(0).map((val, index) => {
+  return {
+    hour: moment().subtract(24 - index, 'hours').format('HH:mm'),
+    '次数': Math.floor(Math.random() * 1000) + 12
+  };
+});
+
 export default {
   data1,
   data2,
   dailyData1,
   dailyData2,
+  dailyCishuShijian,
   cishuByStation,
-  shijianByStation
+  cishuByType,
+  cishuByDay,
+  cishuByHour,
+  shijianByStation,
+  shijianByType,
+  shijianByDay,
+  shijianByHour
 };

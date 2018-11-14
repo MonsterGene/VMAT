@@ -191,10 +191,17 @@ export default {
         setTimeout(_ => {
           this.chartInstance.resize();
         }, this.widthChangeDelay);
-      });      
+      });
     },
-
-
+    update () {
+      // set 
+      if (this.pathOption) {
+        this.pathOption.forEach((p) => {
+          _object.set(this.$data._defaultOption, p[0], p[1]);
+        });
+      }
+      this.chartInstance.setOption(_object.merge(this.option, this.$data._defaultOption));
+    },
     resize () {
       this.chartInstance.resize();
     },
@@ -208,6 +215,7 @@ export default {
   },
 
   beforeDestroy () {
+    console.log('Echart destory!');
     this.clean();
   }
 };

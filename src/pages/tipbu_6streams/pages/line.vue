@@ -1,6 +1,20 @@
 <template>
 <v-container grid-list-xl fluid>
   <v-layout row wrap>
+    <v-flex lg1 sm2>
+      <v-card color="green" dark>
+        <v-card-title class="pb-0">
+          <h4>A01</h4>
+        </v-card-title>
+        <v-card-text>
+          目标：2000
+          达成：90%
+        </v-card-text>
+        <v-card-actions>
+          <v-btn flat small to="/tipbu-6streams/line-details/A01">Link</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-flex>
     <v-flex v-for="(item, index) in equipment_list" :key="index" lg1 sm2>
       <v-card color="purple" dark>
         <v-card-title class="pb-0">
@@ -11,7 +25,7 @@
           E: 85%
         </v-card-text>
         <v-card-actions>
-          <v-btn flat small to="/tipbu-6streams/line-details">Link</v-btn>
+          <v-btn flat small to="/tipbu-6streams/station-details/equip1">Link</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
