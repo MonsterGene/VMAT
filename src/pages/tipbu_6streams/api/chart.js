@@ -47,15 +47,18 @@ const dailyData1 = date.map(d => {
 const dailyData2 = date.map(d => {
   return {
     'month': d,
-    'Bar 1': Math.floor(Math.random() * 1000) + 100,
-    'Bar 2': Math.floor(Math.random() * 1000) + 450,
-    'Bar 3': Math.floor(Math.random() * 1000) + 200,
-    'Bar 4': Math.floor(Math.random() * 1000) + 220,
-    'Bar 5': Math.floor(Math.random() * 1000) + 620,
-    'Bar 6': Math.floor(Math.random() * 1000) + 120,
-    'Bar 7': Math.floor(Math.random() * 1000) + 120,
-    'Bar 8': Math.floor(Math.random() * 1000) + 120,
-    'Bar 9': Math.floor(Math.random() * 1000) + 120,
+    'Run 1': Math.floor(Math.random() * 1000) + 100,
+    'Standy 1': Math.floor(Math.random() * 1000) + 450,
+    'Error 1': Math.floor(Math.random() * 1000) + 200,
+    'Unready 1': Math.floor(Math.random() * 1000) + 220,
+    'Run 2': Math.floor(Math.random() * 1000) + 620,
+    'Standy 2': Math.floor(Math.random() * 1000) + 120,
+    'Error 2': Math.floor(Math.random() * 1000) + 120,
+    'Unready 2': Math.floor(Math.random() * 1000) + 120,
+    'Run 3': Math.floor(Math.random() * 1000) + 620,
+    'Standy 3': Math.floor(Math.random() * 1000) + 120,
+    'Error 3': Math.floor(Math.random() * 1000) + 120,
+    'Unready 3': Math.floor(Math.random() * 1000) + 120,
   };
 });
 

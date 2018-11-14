@@ -1,8 +1,8 @@
 <template>
 <v-widget :title="title" content-bg="white">
-  <v-btn icon slot="widget-header-action">
-    <v-icon class="text--secondary">refresh</v-icon>
-  </v-btn>
+  <template slot="widget-header-action">
+    <slot name="widget-header-action"></slot>
+  </template>
   <div slot="widget-content">
       <e-chart
       ref="chart"
