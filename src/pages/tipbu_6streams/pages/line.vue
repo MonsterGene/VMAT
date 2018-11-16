@@ -29,7 +29,8 @@
       class="station-card"
       v-for="(item, index) in equipment_list"
       :key="item"
-      style="position:relative;margin-top:50px"
+      style="position:relative;margin-top:50px;cursor: pointer;"
+      @click="$router.push({path: '/tipbu-6streams/station-details/'+item})"
     >
       <div style="position:absolute;top:-50px;">
         <h5>{{ item }}<div style="width:15px;height:15px;background:#4caf50;display:inline-block"></div></h5>
