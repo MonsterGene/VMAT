@@ -1,11 +1,11 @@
 <template>
 <v-container grid-list-xl fluid>
   <!-- complex chart -->
-  <v-layout row wrap>  
+  <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
       <output-analysis
         ref="chanchuDacheng"
-        :title="'产出与达成率分析（'+ $route.params.lineName +'）'"
+        :title="'产出与达成率分析（整线 - '+ $route.params.lineName +' - 每日趋势）'"
         :path-option="chanchu_dacheng_byday"
       >
         <div slot="widget-header-action" style="width:120px">
@@ -20,7 +20,7 @@
     <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="dachengByHour.model" expand>
         <v-expansion-panel-content>
-          <div slot="header">产出与达成率分析（{{ dachengByHour.date }}）</div>
+          <div slot="header">产出与达成率分析（整线单天【{{ dachengByHour.date }}】 小时趋势）</div>
           <e-chart 
             ref="dachengExp"
             :path-option="dachengByHour.chartOption"
@@ -35,14 +35,14 @@
     <v-flex lg12 sm12 xs12>
       <output-analysis
         ref="chanchuJiadong"
-        :title="'产出与稼动率分析（'+ $route.params.lineName +'）'"
+        :title="'产出与稼动率分析（整线 - '+ $route.params.lineName +' - 每日趋势）'"
         :path-option="chanchu_jiadong_byday"
       ></output-analysis> 
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="jiadongByHour.model" expand>
         <v-expansion-panel-content>
-          <div slot="header">稼动率与产出分析（{{ jiadongByHour.date }}）</div>
+          <div slot="header">稼动率与产出分析（整线单天【{{ jiadongByHour.date }}】 小时趋势）</div>
           <e-chart
             ref="jiadongExp"
             :path-option="jiadongByHour.chartOption"
@@ -57,7 +57,7 @@
     <v-flex lg6 sm12 xs12>
       <error-analysis
         ref="cishu"
-        :title="'异常次数分析('+ $route.params.lineName +')'" 
+        :title="'工站异常次数分析('+ $route.params.lineName +')'" 
         :path-option="yichangcishu_line"
       >
         <div slot="widget-header-action" style="width:380px;display:flex;height:48px">
@@ -108,7 +108,7 @@
     <v-flex lg6 sm12 xs12>
       <error-analysis
         ref="shijian"
-        :title="'异常时间分析('+ $route.params.lineName +')'" 
+        :title="'工站异常时间分析('+ $route.params.lineName +')'" 
         :path-option="yichangshijian_line"
       >
         <div slot="widget-header-action" style="width:380px;display:flex;height:48px">
@@ -194,10 +194,10 @@ export default {
         model: [false],
         date: moment().format('MM-DD'),
         chartOption: [
-          ['dataset.source', API.dailyData1],
+          ['dataset.source', API.hoursData],
           ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
           ['legend.show', true],
-          ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
           ['toolbox.show', true],
           ['xAxis.axisLabel.show', true],
           ['yAxis.axisLabel.show', true],
@@ -237,7 +237,7 @@ export default {
         ['dataset.source', API.dailyData1],
         ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
         ['legend.show', true],
-        ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
         ['yAxis.axisLabel.show', true],
@@ -276,10 +276,10 @@ export default {
         model: [false],
         date: moment().format('MM-DD'),
         chartOption: [
-          ['dataset.source', API.dailyData1],
+          ['dataset.source', API.hoursData],
           ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
           ['legend.show', true],
-          ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
           ['toolbox.show', true],
           ['xAxis.axisLabel.show', true],
           ['yAxis.axisLabel.show', true],
@@ -319,7 +319,7 @@ export default {
         ['dataset.source', API.dailyData1],
         ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
         ['legend.show', true],
-        ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
         ['yAxis.axisLabel.show', true],

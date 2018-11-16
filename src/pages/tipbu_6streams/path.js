@@ -1,5 +1,25 @@
 const tipbu_6streams_path = [
   {
+    path: '/tipbu-6streams',
+    meta: { breadcrumb: true },
+    name: 'tipbu-6streams',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/tipbu_6streams/pages/layout.vue`
+    )
+  },
+  {
+    path: '/tipbu-6streams/line',
+    meta: { breadcrumb: true },
+    name: 'tipbu-6streams/line',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/tipbu_6streams/pages/line.vue`
+    )
+  },
+  {
     path: '/tipbu-6streams/line-details/:lineName',
     meta: { breadcrumb: false },
     name: 'tipbu-6streams/line-details',
@@ -17,16 +37,6 @@ const tipbu_6streams_path = [
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
       `@/pages/tipbu_6streams/pages/stationDetails.vue`
-    )
-  },
-  {
-    path: '/tipbu-6streams',
-    meta: { breadcrumb: true },
-    name: 'tipbu-6streams',
-    component: () => import(
-      /* webpackChunkName: "routes" */
-      /* webpackMode: "lazy-once" */
-      `@/pages/tipbu_6streams/pages/line.vue`
     )
   },
 ];

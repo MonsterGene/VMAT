@@ -4,14 +4,14 @@
     <v-flex lg12 sm12 xs12>
       <output-analysis
         ref="chanchuJiadong"
-        :title="'产出与稼动率分析（'+ $route.params.stationName +'）'"
+        :title="'产出与稼动率分析（单站 - '+ $route.params.stationName +' - 每日趋势）'"
         :path-option="chanchu_jiadong_byday"
       ></output-analysis> 
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="jiadongByHour.model" expand>
         <v-expansion-panel-content>
-          <div slot="header">稼动率与产出分析（{{ jiadongByHour.date }}）</div>
+          <div slot="header">稼动率与产出分析（单站单天【{{ jiadongByHour.date }}】小时趋势）</div>
           <e-chart
             ref="jiadongExp"
             :path-option="jiadongByHour.chartOption"
@@ -374,10 +374,10 @@ export default {
         model: [false],
         date: moment().format('MM-DD'),
         chartOption: [
-          ['dataset.source', API.dailyData1],
+          ['dataset.source', API.hoursData],
           ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
           ['legend.show', true],
-          ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
           ['toolbox.show', true],
           ['xAxis.axisLabel.show', true],
           ['yAxis.axisLabel.show', true],
@@ -417,7 +417,7 @@ export default {
         ['dataset.source', API.dailyData1],
         ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
         ['legend.show', true],
-        ['legend.selected', { 'Line 1': false, 'Line 2': false, 'Bar 1': false, 'Bar 2': false }],
+        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
         ['yAxis.axisLabel.show', true],
@@ -464,11 +464,11 @@ export default {
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
 
-        ['series[0].type', 'bar'],
+        ['series[0].type', 'line'],
         ['series[0].label.show', true],
         ['series[0].smooth', true],
         
-        ['series[1].type', 'line'],
+        ['series[1].type', 'bar'],
         ['series[1].label.show', true],
         ['series[1].smooth', false],
         ['series[1].label.show', true],
@@ -556,7 +556,7 @@ export default {
             ['grid.bottom', '5%'],
             ['grid.right', '3%'],
 
-            ['series[0].type', 'line'],
+            ['series[0].type', 'bar'],
             ['series[0].label.show', true],
             ['series[0].smooth', true],
           ]
@@ -576,7 +576,7 @@ export default {
             ['grid.bottom', '5%'],
             ['grid.right', '3%'],
 
-            ['series[0].type', 'line'],
+            ['series[0].type', 'bar'],
             ['series[0].label.show', true],
             ['series[0].smooth', true],
           ]
@@ -596,7 +596,7 @@ export default {
             ['grid.bottom', '5%'],
             ['grid.right', '3%'],
 
-            ['series[0].type', 'line'],
+            ['series[0].type', 'bar'],
             ['series[0].label.show', true],
             ['series[0].smooth', true],
           ]
@@ -639,6 +639,10 @@ export default {
             this.yichangCishu.byDay.show = true;
             this.yichangCishu.byHour.show = false;
             this.yichangCishu.byDay.type = evt.name;
+
+            this.yichangShijian.byDay.show = true;
+            this.yichangShijian.byHour.show = false;
+            this.yichangShijian.byDay.type = evt.name;
           });
         });
       }
@@ -649,6 +653,9 @@ export default {
           this.$refs.cishuByDay.chartInstance.on('click', evt => {
             this.yichangCishu.byHour.show = true;
             this.yichangCishu.byHour.date = evt.name;
+
+            this.yichangShijian.byHour.show = true;
+            this.yichangShijian.byHour.date = evt.name;
           });
         });
       }
@@ -660,6 +667,10 @@ export default {
             this.yichangShijian.byDay.show = true;
             this.yichangShijian.byHour.show = false;
             this.yichangShijian.byDay.type = evt.name;
+
+            this.yichangCishu.byDay.show = true;
+            this.yichangCishu.byHour.show = false;
+            this.yichangCishu.byDay.type = evt.name;
           });
         });
       }
@@ -670,6 +681,9 @@ export default {
           this.$refs.shijianByDay.chartInstance.on('click', evt => {
             this.yichangShijian.byHour.show = true;
             this.yichangShijian.byHour.date = evt.name;
+
+            this.yichangCishu.byHour.show = true;
+            this.yichangCishu.byHour.date = evt.name;
           });
         });
       }
@@ -705,29 +719,29 @@ export default {
       }
     },
     littleShow (a, b) {
-      if (a === 1) {
-        Object.keys(this.yichangShijian).forEach(v => {
-          this.yichangShijian[v].show = false;
-        });
-        Object.keys(this.yichangCishu).forEach((v, i) => {
-          if (i + 1 <= b) {
-            this.yichangCishu[v].show = true;
-          } else {
-            this.yichangCishu[v].show = false;
-          }
-        });
-      } else {
-        Object.keys(this.yichangCishu).forEach(v => {
+      // if (a === 1) {
+      // Object.keys(this.yichangShijian).forEach(v => {
+      //   this.yichangShijian[v].show = false;
+      // });
+      Object.keys(this.yichangCishu).forEach((v, i) => {
+        if (i + 1 <= b) {
+          this.yichangCishu[v].show = true;
+        } else {
           this.yichangCishu[v].show = false;
-        });
-        Object.keys(this.yichangShijian).forEach((v, i) => {
-          if (i + 1 <= b) {
-            this.yichangShijian[v].show = true;
-          } else {
-            this.yichangShijian[v].show = false;
-          }
-        });
-      }
+        }
+      });
+      // } else {
+      // Object.keys(this.yichangCishu).forEach(v => {
+      //   this.yichangCishu[v].show = false;
+      // });
+      Object.keys(this.yichangShijian).forEach((v, i) => {
+        if (i + 1 <= b) {
+          this.yichangShijian[v].show = true;
+        } else {
+          this.yichangShijian[v].show = false;
+        }
+      });
+      // }
     }
   }
 };
