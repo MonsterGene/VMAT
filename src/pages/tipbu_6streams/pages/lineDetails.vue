@@ -1,7 +1,7 @@
 <template>
 <v-container grid-list-xl fluid>
   <!-- complex chart -->
-  <v-layout row wrap>  
+  <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
       <output-analysis
         ref="chanchuDacheng"
