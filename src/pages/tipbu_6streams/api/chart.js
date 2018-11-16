@@ -1,46 +1,16 @@
 import moment from 'moment';
 
-const shortMonth = [
-  'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-];
-const data1 = shortMonth.map(m => {
-  return {
-    'month': m,
-    'Line 1': Math.floor(Math.random() * 1000) + 100,
-    'Line 2': Math.floor(Math.random() * 1000) + 450,
-    'Line 3': Math.floor(Math.random() * 1000) + 200,
-    'Bar 1': Math.floor(Math.random() * 1000) + 220,
-    'Bar 2': Math.floor(Math.random() * 1000) + 620,
-    'Bar 3': Math.floor(Math.random() * 1000) + 120,
-  };
-});
-
-const data2 = shortMonth.map(m => {
-  return {
-    'month': m,
-    'Bar 1': Math.floor(Math.random() * 1000) + 100,
-    'Bar 2': Math.floor(Math.random() * 1000) + 450,
-    'Bar 3': Math.floor(Math.random() * 1000) + 200,
-    'Bar 4': Math.floor(Math.random() * 1000) + 220,
-    'Bar 5': Math.floor(Math.random() * 1000) + 620,
-    'Bar 6': Math.floor(Math.random() * 1000) + 120,
-    'Bar 7': Math.floor(Math.random() * 1000) + 120,
-    'Bar 8': Math.floor(Math.random() * 1000) + 120,
-    'Bar 9': Math.floor(Math.random() * 1000) + 120,
-  };
-});
-
 const date = new Array(30).fill(0).map((el, index) => moment().subtract(30 - index, 'days').format('MM-DD'));
 
 const dailyData1 = date.map(d => {
   return {
     'month': d,
-    'Line 1': Math.floor(Math.random() * 1000) + 100,
-    'Line 2': Math.floor(Math.random() * 1000) + 450,
-    'Line 3': Math.floor(Math.random() * 1000) + 200,
-    'Bar 1': Math.floor(Math.random() * 1000) + 220,
-    'Bar 2': Math.floor(Math.random() * 1000) + 620,
-    'Bar 3': Math.floor(Math.random() * 1000) + 120,
+    'Rate 1': Math.floor(Math.random() * 1000) + 100,
+    'Rate 2': Math.floor(Math.random() * 1000) + 450,
+    'Rate 3': Math.floor(Math.random() * 1000) + 200,
+    'Num 1': Math.floor(Math.random() * 1000) + 220,
+    'Num 2': Math.floor(Math.random() * 1000) + 620,
+    'Num 3': Math.floor(Math.random() * 1000) + 120,
   };
 });
 
@@ -62,6 +32,22 @@ const dailyData2 = date.map(d => {
   };
 });
 
+const hoursData = new Array(24).fill(
+  moment().hours() < 8 ?
+    moment().subtract(1, 'days').format('YYYY-MM-DD 08:00:00') :
+    moment().format('YYYY-MM-DD 08:00:00')
+).map((val, index) => {
+  return {
+    hours: moment(val).add(index, 'hours').format('HH:mm'),
+    'Rate 1': Math.floor(Math.random() * 1000) + 100,
+    'Rate 2': Math.floor(Math.random() * 1000) + 450,
+    'Rate 3': Math.floor(Math.random() * 1000) + 200,
+    'Num 1': Math.floor(Math.random() * 1000) + 220,
+    'Num 2': Math.floor(Math.random() * 1000) + 620,
+    'Num 3': Math.floor(Math.random() * 1000) + 120,
+  };
+});
+
 const dailyCishuShijian = date.map(d => {
   return {
     'date': d,
@@ -76,7 +62,7 @@ const cishuByStation = Array(8).fill(0).map((v, index) => {
     '次数': Math.floor(Math.random() * 1000),
     '累计次数(%)': 0
   };
-});
+}).sort((a, b) => b.次数 - a.次数);
 const cishuTotal = cishuByStation.reduce((acc, cur) => acc + cur['次数'], 0);
 cishuByStation.reduce((acc, cur) => {
   cur['累计次数(%)'] = ((acc + cur['次数']) / cishuTotal) * 100;
@@ -89,7 +75,7 @@ const shijianByStation = Array(8).fill(0).map((v, index) => {
     '时间': Math.floor(Math.random() * 1000 + 10),
     '累计时间(%)': 0
   };
-});
+}).sort((a, b) => b.时间 - a.时间);
 const shijianTotal = shijianByStation.reduce((acc, cur) => acc + cur['时间'], 0);
 shijianByStation.reduce((acc, cur) => {
   cur['累计时间(%)'] = ((acc + cur['时间']) / shijianTotal) * 100;
@@ -134,10 +120,9 @@ const cishuByHour = Array(24).fill(0).map((val, index) => {
 });
 
 export default {
-  data1,
-  data2,
   dailyData1,
   dailyData2,
+  hoursData,
   dailyCishuShijian,
   cishuByStation,
   cishuByType,
