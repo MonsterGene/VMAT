@@ -1,6 +1,6 @@
 const tipbu_6streams_menu = [
   {
-    title: 'TIPBU 6 Streams',
+    title: 'NPBG-龙华-MFG3',
     icon: 'view_compact',
     name: 'tipbu-6streams',
   },
