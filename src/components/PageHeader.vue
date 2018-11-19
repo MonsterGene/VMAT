@@ -3,7 +3,7 @@
     <div class="page-header-left">
       <h3 class="pr-3">{{title}}</h3>
     </div>
-    <v-breadcrumbs divider="-">
+    <v-breadcrumbs divider="-" :dark="$vuetify.dark">
       <v-breadcrumbs-item>
       <v-icon larg>home</v-icon>
       </v-breadcrumbs-item>
