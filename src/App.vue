@@ -12,11 +12,11 @@
         <v-content>
           <!-- 主视图头部 Page Header -->
           <page-header v-if="$route.meta.breadcrumb"></page-header>
-          <div class="page-wrapper">
+          <div :class="[$route.meta.breadcrumb ? 'page-wrapper' : 'page-wrapper-nopageheader', $vuetify.theme.primaryName, 'lighten-2']">
             <router-view></router-view>
           </div>   
            <!-- 主视图底部 App Footer -->
-          <v-footer height="auto" class="white pa-3 app--footer">
+          <v-footer height="auto" class="pa-3 app--footer" :color="$vuetify.dark ? 'grey' : 'white'">
             <span class="caption">FCT Team &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> Genius Solution Center </span> <v-icon color="pink" small>favorite</v-icon>
@@ -115,5 +115,7 @@ export default {
   border-radius:0  
 .page-wrapper
   min-height:calc(100vh - 64px - 50px - 81px );  
+.page-wrapper-nopageheader
+  min-height:calc(100vh - 64px - 50px );  
 
 </style>
