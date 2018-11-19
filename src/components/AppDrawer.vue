@@ -6,6 +6,7 @@
     :dark="$vuetify.dark"
     app
     v-model="drawer"
+    :stateless="true"
     width="260"
     >
     <!-- 顶部logo title -->
@@ -89,7 +90,7 @@ export default {
   },
   data: () => ({
     mini: false,
-    drawer: true,
+    drawer: false,
     menus: menu,
     scrollSettings: {
       maxScrollbarLength: 160

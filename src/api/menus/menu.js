@@ -4,9 +4,8 @@ import tipbu_6streams_menu from '../../pages/tipbu_6streams/menu';
 const Menu = [];
 
 Menu.push(...tipbu_6streams_menu);
-Menu.push(...project);
-Menu.push(...example);
-console.log(Menu);
+// Menu.push(...project);
+// Menu.push(...example);
 
 // reorder menu
 Menu.forEach((item) => {

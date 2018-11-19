@@ -11,7 +11,7 @@ const tipbu_6streams_path = [
   },
   {
     path: '/tipbu-6streams/line',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'tipbu-6streams/line',
     component: () => import(
       /* webpackChunkName: "routes" */
