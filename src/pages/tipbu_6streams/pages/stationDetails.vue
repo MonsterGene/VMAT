@@ -2,14 +2,26 @@
 <v-container grid-list-xl fluid>
   <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
-      <output-analysis
+      <v-expansion-panel v-model="chanchu_jiadong_byday.model" expand :dark="$vuetify.dark">
+        <v-expansion-panel-content>
+          <div slot="header">产出与稼动率分析（单站 - {{ $route.params.stationName }} - 每日趋势）</div>
+          <e-chart
+            ref="chanchuJiadong"
+            :path-option="chanchu_jiadong_byday.chartOption"
+            height="400px"
+            width="100%"
+            >
+            </e-chart>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <!-- <output-analysis
         ref="chanchuJiadong"
         :title="'产出与稼动率分析（单站 - '+ $route.params.stationName +' - 每日趋势）'"
         :path-option="chanchu_jiadong_byday"
-      ></output-analysis> 
+      ></output-analysis>  -->
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="jiadongByHour.model" expand>
+      <v-expansion-panel v-model="jiadongByHour.model" expand :dark="$vuetify.dark">
         <v-expansion-panel-content>
           <div slot="header">稼动率与产出分析（单站单天【{{ jiadongByHour.date }}】小时趋势）</div>
           <e-chart
@@ -24,7 +36,7 @@
     </v-flex>
 
     <v-flex lg12 sm12 xs12>
-      <v-widget :title="'運行時間('+ $route.params.stationName +')'" content-bg="white">
+      <v-widget :title="'運行時間('+ $route.params.stationName +')'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
@@ -130,7 +142,7 @@
     <v-flex lg6 sm12 xs12>
       <v-layout v-if="yichangCishu.byType.show" row>
         <v-flex xs12>
-          <v-widget :title="'机故类型次数分析（'+ yichangCishu.byType.date +'）'">
+          <v-widget :title="'机故类型次数分析（'+ yichangCishu.byType.date +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-header-action" style="width:260px;display:flex;">
               <v-menu
                 :close-on-content-click="false"
@@ -181,7 +193,7 @@
       </v-layout>
       <v-layout v-if="yichangCishu.byDay.show" row>
         <v-flex xs12>
-          <v-widget :title="'机故次数走势（'+ yichangCishu.byDay.type +'）'">
+          <v-widget :title="'机故次数走势（'+ yichangCishu.byDay.type +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-content">
               <e-chart
                 ref="cishuByDay"
@@ -190,7 +202,7 @@
                 width="100%"
                 >
               </e-chart>
-              <v-toolbar flat color="white">
+              <v-toolbar flat :color="$vuetify.dark ? 'grey' : 'white'">
                 <v-toolbar-title>异常处理方法：</v-toolbar-title>
               </v-toolbar>
               <v-data-table
@@ -218,7 +230,7 @@
       </v-layout>
       <v-layout v-if="yichangCishu.byHour.show" row>
         <v-flex xs12>
-          <v-widget :title="'机故次数走势（'+ yichangCishu.byHour.date +' '+ yichangShijian.byDay.type +'）'">
+          <v-widget :title="'机故次数走势（'+ yichangCishu.byHour.date +' '+ yichangShijian.byDay.type +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-content">
               <e-chart 
                 :path-option="yichangCishu.byHour.chartOption"
@@ -235,7 +247,7 @@
     <v-flex lg6 sm12 xs12>
       <v-layout row v-if="yichangShijian.byType.show">
         <v-flex xs12>
-          <v-widget :title="'异常类型分析（'+ yichangShijian.byType.date +'）'">
+          <v-widget :title="'异常类型分析（'+ yichangShijian.byType.date +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-header-action" style="width:260px;display:flex;">
               <v-menu
                 :close-on-content-click="false"
@@ -286,7 +298,7 @@
       </v-layout>
       <v-layout row v-if="yichangShijian.byDay.show">
         <v-flex xs12>
-          <v-widget :title="'机故时间走势（'+ yichangShijian.byDay.type +'）'">
+          <v-widget :title="'机故时间走势（'+ yichangShijian.byDay.type +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-content">
               <e-chart 
                 ref="shijianByDay"
@@ -295,7 +307,7 @@
                 width="100%"
                 >
               </e-chart>
-              <v-toolbar flat color="white">
+              <v-toolbar flat :color="$vuetify.dark ? 'grey' : 'white'">
                 <v-toolbar-title>异常处理方法：</v-toolbar-title>
               </v-toolbar>
               <v-data-table
@@ -323,7 +335,7 @@
       </v-layout>
       <v-layout row v-if="yichangShijian.byHour.show">
         <v-flex xs12>
-          <v-widget :title="'机故时间走势('+ yichangShijian.byHour.date +' '+ yichangShijian.byDay.type +')'">
+          <v-widget :title="'机故时间走势('+ yichangShijian.byHour.date +' '+ yichangShijian.byDay.type +')'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
             <div slot="widget-content">
               <e-chart
                 ref="shijianByHour"
@@ -413,45 +425,48 @@ export default {
           ['series[5].label.position', 'top'],
         ]
       },
-      chanchu_jiadong_byday: [
-        ['dataset.source', API.dailyData1],
-        ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-        ['legend.show', true],
-        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-        ['toolbox.show', true],
-        ['xAxis.axisLabel.show', true],
-        ['yAxis.axisLabel.show', true],
-        ['grid.left', '2%'],
-        ['grid.bottom', '5%'],
-        ['grid.right', '3%'],
+      chanchu_jiadong_byday: {
+        model: [false],
+        chartOption: [
+          ['dataset.source', API.dailyData1],
+          ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
+          ['legend.show', true],
+          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
 
-        ['series[0].type', 'line'],
-        ['series[0].label.show', true],
-        ['series[0].smooth', true],
-        
-        ['series[1].type', 'line'],
-        ['series[1].label.show', true],
-        ['series[1].smooth', true],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', true],
+          
+          ['series[1].type', 'line'],
+          ['series[1].label.show', true],
+          ['series[1].smooth', true],
 
-        ['series[2].type', 'line'],
-        ['series[2].label.show', true],
-        ['series[2].smooth', true],
+          ['series[2].type', 'line'],
+          ['series[2].label.show', true],
+          ['series[2].smooth', true],
 
-        ['series[3].smooth', true],
-        ['series[3].type', 'bar'],
-        ['series[3].label.show', true],
-        ['series[3].label.position', 'top'],
+          ['series[3].smooth', true],
+          ['series[3].type', 'bar'],
+          ['series[3].label.show', true],
+          ['series[3].label.position', 'top'],
 
-        ['series[4].smooth', true],
-        ['series[4].type', 'bar'],
-        ['series[4].label.show', true],
-        ['series[4].label.position', 'top'],
+          ['series[4].smooth', true],
+          ['series[4].type', 'bar'],
+          ['series[4].label.show', true],
+          ['series[4].label.position', 'top'],
 
-        ['series[5].smooth', true],
-        ['series[5].type', 'bar'],
-        ['series[5].label.show', true],
-        ['series[5].label.position', 'top'],
-      ],
+          ['series[5].smooth', true],
+          ['series[5].type', 'bar'],
+          ['series[5].label.show', true],
+          ['series[5].label.position', 'top'],
+        ]
+      },
       yichang_cishu_shijian_byday: [
         ['dataset.source', API.dailyCishuShijian],
         ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
@@ -628,6 +643,9 @@ export default {
     };
   },
   watch: {
+    'chanchu_jiadong_byday.model.0': function (n, o) {
+      this.chartResize('chanchuJiadong', n);
+    },
     'jiadongByHour.model.0': function (n, o) {
       this.chartResize('jiadongExp', n);
     },
