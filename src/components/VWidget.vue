@@ -1,6 +1,6 @@
 <template>
   <div id="v-widget">
-    <v-card>
+    <v-card :dark="$vuetify.dark">
       <v-toolbar color="transparent" flat dense card v-if="enableHeader">
         <v-toolbar-title><h4>{{title}}</h4></v-toolbar-title>
         <v-spacer></v-spacer>
