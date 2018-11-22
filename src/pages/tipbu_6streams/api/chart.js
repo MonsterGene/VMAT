@@ -128,10 +128,9 @@ const stateLegends = [
 ];
 
 const stationImgConf = {};
-stationImgConf.default = require('../static/pic/station.png');
 stationImgConf['入前盖'] = stationImgConf['锁螺丝'] = require('../static/pic/station_001.png');
 stationImgConf['入导航键'] = require('../static/pic/station_002.png');
-stationImgConf['入支架'] = stationImgConf['装LCD屏'] = stationImgConf['锁面板'] = require('../static/pic/station_003.png');
+stationImgConf.default = stationImgConf['入支架'] = stationImgConf['装LCD屏'] = stationImgConf['锁面板'] = require('../static/pic/station_003.png');
 stationImgConf['装灯罩'] = require('../static/pic/station_004.png');
 
 const stationList = ['入前盖', '取保护板', '装LCD屏', '锁LCD', '入导航键', '锁主板 1', '锁主板 2', '锁主板 3', '装灯罩', '贴Label', '锁后盖', '锁面板'].map(name => {

@@ -9,7 +9,7 @@
     <div :class="['state-ide', leg.color]"></div>
     {{ leg.state }}
   </div>
-  <v-layout row wrap style="margin:0;">
+  <v-layout v-for="line in lineList" :key="line" class="line-container" row wrap>
     <v-card
       class="line-card"
       color="green"
@@ -17,7 +17,7 @@
       href="#/tipbu-6streams/line-details/A01"
     >
       <v-card-title class="pb-0">
-        <h4>A01</h4>
+        <h4>{{ line }}</h4>
       </v-card-title>
       <v-card-text>
         <p>目标产出：2000台</p>
@@ -41,7 +41,7 @@
             <img :src="item.img" alt="加载中...">
           </div>
           <div class="bottom">
-            <p style="margin:0">产出： {{ item.output }}台</p>
+            <h5>产出： {{ item.output }}台</h5>
           </div>
         </div>
       </v-hover>
@@ -57,6 +57,7 @@ export default {
   data () {
     return {
       legends: API.stateLegends,
+      lineList: ['A01', 'A02', 'A03'],
       stationList: API.stationList
     };
   }
@@ -76,36 +77,52 @@ export default {
   margin-left 5px
   display:inline-block
 
-.station-container
-  flex:1;
-  
-  .station-card
-    cursor: pointer;
-    float:left
-    height 100%
-    .top
-      height 20px
-    .img
-      flex 1
-      height calc(100% - 40px)
+.line-container
+  margin-bottom:5px!important;
+  display flex
+  .line-card
+    border 3px solid #76FF03!important //green lighten-2
+    border-radius 5px
+    margin-right 15px
+  .line-card:before
+    content ''
+    display inline-block
+    height calc(50% - 80px)
+  .station-container
+    flex:1;
+    position relative
+    &:hover
+      background #0000000f
+      transition 800ms ease all
+    &:before,&:after
+      content ''
+      height 2px
+      width 0
+      position absolute
+      background #1AAB8A
+      transition: 600ms ease all;
+    &:after
+      bottom 0
+      left 0
+    &:hover:before,&:hover:after
+      width 100%
+      transition:800ms ease all;
+    .station-card
+      cursor: pointer;
+      float:left
       display flex
-      align-items flex-end
-      
-    .bottom
-      height 20px
-.line-card
-  border 3px solid #76FF03!important //green lighten-2
-  margin-right 5px
-  
-.line-card:before
-  content:'';
-  display:inline-block;
-  vertical-align:middle;
-  height:15%
-  
-@media screen and (max-width 1350px) {
-  .line-card:before{
-    height:30%
-  }
-}
+      flex-direction: column;
+      text-align center
+      .top
+        height 20px
+      .img
+        flex 1
+        height calc(100% - 40px)
+        display flex
+        align-items flex-end
+        img 
+          margin 0 auto
+      .bottom
+        height 20px
+
 </style>

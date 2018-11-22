@@ -41,7 +41,7 @@
               </v-btn>
             </v-btn-toggle>   
           </div>
-        </div>        
+        </div>
       </v-flex>
     </v-layout>
   </v-container>
@@ -53,7 +53,7 @@ import colors from 'vuetify/es5/util/colors';
 export default {
   data () {
     return {
-      themeColor: 'indigo',
+      themeColor: 'blue',
       sideBarOption: 'light',
       colors: colors
     };
