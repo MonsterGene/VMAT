@@ -12,11 +12,13 @@
 
 每条线分线头和机台名
 
-信息获取：
-状态图例：
+### 信息获取：
+#### 状态图例：
+
 path： /station/state
+
 返回数据：
-```
+```javascript
 {
   success: Boolean,
   message: String,
@@ -29,10 +31,11 @@ path： /station/state
   ]
 }
 ```
-线体数据：
+#### 线体数据：
 path: /line/info
+
 返回数据：
-```
+```javascript
 {
   success: Boolean,
   message: String,
