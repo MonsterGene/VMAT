@@ -16,6 +16,7 @@
 状态图例：
 path： /station/state
 返回数据：
+```
 {
   success: Boolean,
   message: String,
@@ -27,5 +28,25 @@ path： /station/state
     { state: '关机', stateCode: '', color: 'black' }
   ]
 }
+```
+线体数据：
+path: /line/info
+返回数据：
+```
+{
+  success: Boolean,
+  message: String,
+  data: [
+    {
+      name: String,     //工站名称
+      state: String,    //状态名称
+      output: Int,      //工站产出
+      totalTarget: Int, //整线目标
+      achievingRate: Float(2) //整线达成率
+    },
+    ...
+  ]
+}
+```
 
 
