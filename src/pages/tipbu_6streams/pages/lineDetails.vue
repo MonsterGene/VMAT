@@ -18,7 +18,7 @@
       </output-analysis>
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="dachengByHour.model" expand dark>
+      <v-expansion-panel v-model="dachengByHour.model" expand>
         <v-expansion-panel-content>
           <div slot="header">产出与达成率分析（整线单天【{{ dachengByHour.date }}】 小时趋势）</div>
           <e-chart 
@@ -40,7 +40,7 @@
       ></output-analysis> 
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="jiadongByHour.model" expand dark>
+      <v-expansion-panel v-model="jiadongByHour.model" expand>
         <v-expansion-panel-content>
           <div slot="header">稼动率与产出分析（整线单天【{{ jiadongByHour.date }}】 小时趋势）</div>
           <e-chart

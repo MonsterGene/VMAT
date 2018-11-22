@@ -20,26 +20,28 @@
         <h4>A01</h4>
       </v-card-title>
       <v-card-text>
-        <p>目标：2000</p>
-        <p>达成：90%</p>
+        <p>目标产出：2000台</p>
+        <p>达成率：90%</p>
       </v-card-text>
     </v-card>
-    <div style="flex:1;">
+    <div class="station-container">
       <v-hover
-        v-for="(item, index) in equipment_list"
-        :key="item"
+        v-for="(item, index) in stationList"
+        :key="item.name"
       >
         <div
           slot-scope="{ hover }"
-          :class="['station-card', {'elevation-10': hover}, 'grey', 'lighten-3']"
-          @click="$router.push({path: '/tipbu-6streams/station-details/'+item})"
+          :class="['station-card', {'elevation-10': hover}]"
+          @click="$router.push({path: '/tipbu-6streams/station-details/'+item.name})"
         >
           <div class="top">
-            <h5>{{ item }}<div :class="['state-ide', 'green']"></div></h5>
+            <h5>{{ item.name }}<div :class="['state-ide', legends.filter(v => v.state === item.state)[0].color]"></div></h5>
           </div>
-          <img src="../static/pic/station.png" alt="加载中...">
+          <div class="img">
+            <img :src="item.img" alt="加载中...">
+          </div>
           <div class="bottom">
-            <p style="margin:0">产出： 1500</p>
+            <p style="margin:0">产出： {{ item.output }}台</p>
           </div>
         </div>
       </v-hover>
@@ -49,17 +51,13 @@
 </template>
 
 <script>
+import API from '../api/chart.js';
+
 export default {
   data () {
     return {
-      legends: [
-        { state: '正常', color: 'green' },
-        { state: '待机', color: 'orange' },
-        { state: '异常', color: 'red' },
-        { state: '断网', color: 'grey' },
-        { state: '关机', color: 'black' }
-      ],
-      equipment_list: ['入前盖', '取保护板', '装LCD', '锁LCD', '装导航键', '锁主板 1', '锁主板 2', '锁主板 3', '装灯罩', '贴Label', '锁后盖', '锁面板']
+      legends: API.stateLegends,
+      stationList: API.stationList
     };
   }
 };
@@ -78,22 +76,23 @@ export default {
   margin-left 5px
   display:inline-block
 
-.station-card
-  width 90px
-  height 185px
-  position:relative;
-  padding-top:25px;
-  padding-bottom:25px;
-  cursor: pointer;
-  float:left
-  // background-image url('../static/pic/station.png')
-  .top
-    position:absolute;
-    top:0px;
-  .bottom
-    position:absolute;
-    bottom:0px;
-
+.station-container
+  flex:1;
+  
+  .station-card
+    cursor: pointer;
+    float:left
+    height 100%
+    .top
+      height 20px
+    .img
+      flex 1
+      height calc(100% - 40px)
+      display flex
+      align-items flex-end
+      
+    .bottom
+      height 20px
 .line-card
   border 3px solid #76FF03!important //green lighten-2
   margin-right 5px
