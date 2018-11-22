@@ -1,4 +1,4 @@
-const tipbu_6streams_menu = [
+const menu_6streams_tipbu = [
   {
     title: 'NPBG-龙华-MFG3',
     icon: 'view_compact',
@@ -6,7 +6,7 @@ const tipbu_6streams_menu = [
   },
 ];
 
-export default tipbu_6streams_menu;
+export default menu_6streams_tipbu;
 
 
 // in api/menu.js, you just need to add below twe lines
