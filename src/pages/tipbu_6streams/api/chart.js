@@ -119,6 +119,24 @@ const cishuByHour = Array(24).fill(0).map((val, index) => {
   };
 });
 
+const stateLegends = [
+  { state: '正常', stateCode: '', color: 'green' },
+  { state: '待机', stateCode: '', color: 'orange' },
+  { state: '异常', stateCode: '', color: 'red' },
+  { state: '断网', stateCode: '', color: 'grey' },
+  { state: '关机', stateCode: '', color: 'black' }
+];
+
+const stationImgConf = {};
+stationImgConf['入前盖'] = stationImgConf['锁螺丝'] = require('../static/pic/station_001.png');
+stationImgConf['入导航键'] = require('../static/pic/station_002.png');
+stationImgConf.default = stationImgConf['入支架'] = stationImgConf['装LCD屏'] = stationImgConf['锁面板'] = require('../static/pic/station_003.png');
+stationImgConf['装灯罩'] = require('../static/pic/station_004.png');
+
+const stationList = ['入前盖', '取保护板', '装LCD屏', '锁LCD', '入导航键', '锁主板 1', '锁主板 2', '锁主板 3', '装灯罩', '贴Label', '锁后盖', '锁面板'].map(name => {
+  return { name: name, img: stationImgConf[name] || stationImgConf.default, state: stateLegends[Math.floor(Math.random() * 100) % 4].state, output: Math.floor(Math.random() * 1000) + 12 };
+});
+
 export default {
   dailyData1,
   dailyData2,
@@ -131,5 +149,7 @@ export default {
   shijianByStation,
   shijianByType,
   shijianByDay,
-  shijianByHour
+  shijianByHour,
+  stateLegends,
+  stationList
 };
