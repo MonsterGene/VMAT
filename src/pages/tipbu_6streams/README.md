@@ -23,29 +23,42 @@ path： /station/state
   success: Boolean,
   message: String,
   data: [
-    { state: '正常', stateCode: '', color: 'green' },
-    { state: '待机', stateCode: '', color: 'orange' },
-    { state: '异常', stateCode: '', color: 'red' },
-    { state: '断网', stateCode: '', color: 'grey' },
-    { state: '关机', stateCode: '', color: 'black' }
+    {
+      state: '正常',     // 状态显示文字
+      stateCode: '',     // 状态代码
+      stateDetails: '',  // 状态描述（预留）
+      color: 'green'     // 状态指示颜色
+    },
+    { state: '待机', stateCode: '', stateDetails: '', color: 'orange' },
+    { state: '异常', stateCode: '', stateDetails: '', color: 'red' },
+    { state: '断网', stateCode: '', stateDetails: '', color: 'grey' },
+    { state: '关机', stateCode: '', stateDetails: '', color: 'black' }
   ]
 }
 ```
 #### 线体数据：
-path: /line/info
+路径: /lines/info
+
+参数：area //预留参数，用于以后区分需要显示哪几条线的数据
 
 返回数据：
 ```javascript
 {
   success: Boolean,
   message: String,
-  data: [
+  data: [ //按顺序列出该区域所有的线体
     {
-      name: String,     //工站名称
-      state: String,    //状态名称
-      output: Int,      //工站产出
+      id: Int,          //线体ID
+      name: String,     //线体名称
       totalTarget: Int, //整线目标
-      achievingRate: Float(2) //整线达成率
+      stations: [ //按顺序列出该线所有工站
+        {
+          id: Int,            //工站ID
+          name: String,       //工站的名称
+          stateCode: String,  //工站状态码
+          output: Int         //工站产出
+        }
+      ]
     },
     ...
   ]
