@@ -5,7 +5,7 @@
       Theme Settings
     </v-toolbar-title>
   </v-toolbar>
-  <v-container>
+  <v-container :dark="$vuetify.dark">
     <v-layout column>
       <v-flex>
         <v-subheader class="px-1 my-2">
