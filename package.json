@@ -5,7 +5,7 @@
   "author": "Micahel Wang <wangqiangshen@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "cross-env HOST=0.0.0.0 webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
@@ -48,6 +48,7 @@
     "chalk": "^2.4.1",
     "chromedriver": "^2.43.1",
     "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.2.0",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",

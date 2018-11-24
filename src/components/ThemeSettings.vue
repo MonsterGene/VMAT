@@ -1,11 +1,11 @@
 <template>
 <div id="themeSetting">
-  <v-toolbar color="blue" dark>
+  <v-toolbar :color="themeColor" dark>
     <v-toolbar-title>
       Theme Settings
     </v-toolbar-title>
   </v-toolbar>
-  <v-container>
+  <v-container :dark="$vuetify.dark">
     <v-layout column>
       <v-flex>
         <v-subheader class="px-1 my-2">
@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       themeColor: 'blue',
-      sideBarOption: 'light',
+      sideBarOption: 'dark',
       colors: colors
     };
   },

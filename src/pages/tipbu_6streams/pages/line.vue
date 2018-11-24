@@ -5,10 +5,13 @@
       <img src="../static/pic/line.png" alt="加载中...">
     </v-flex>
   </v-layout> -->
-  <div class="legend" v-for="leg in legends" :key="leg.state">
-    <div :class="['state-ide', leg.color]"></div>
-    {{ leg.state }}
+  <div class="legend-container">
+    <div class="legend" v-for="leg in legends" :key="leg.state">
+      <div :class="['state-ide', leg.color]"></div>
+      {{ leg.state }}
+    </div>
   </div>
+  
   <v-layout v-for="line in lineList" :key="line" class="line-container" row wrap>
     <v-card
       class="line-card"
@@ -77,8 +80,14 @@ export default {
   margin-left 5px
   display:inline-block
 
+.legend-container
+  width 1570px
+  margin 0 auto
 .line-container
-  margin-bottom:5px!important;
+  margin-bottom:10px!important;
+  margin-left auto!important
+  margin-right auto!important
+  width 1570px
   display flex
   .line-card
     border 3px solid #76FF03!important //green lighten-2

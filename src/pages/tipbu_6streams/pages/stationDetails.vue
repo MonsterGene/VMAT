@@ -712,7 +712,7 @@ export default {
     this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
       this.jiadongByHour.model = [true];
       this.jiadongByHour.date = evt.name;
-      API.dailyData1.reverse();
+      API.hoursData.reverse();
       this.$refs.jiadongExp.update();
     });
 
