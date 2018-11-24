@@ -437,7 +437,7 @@ export default {
       console.log(this.$refs.chanchuDacheng.chartInstance);
       this.dachengByHour.model = [true];
       this.dachengByHour.date = evt.name;
-      API.dailyData1.reverse();
+      API.hoursData.reverse();
       console.log(this.dachengByHour.model);
       this.$refs.dachengExp.update();
     });
@@ -446,7 +446,7 @@ export default {
     this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
       this.jiadongByHour.model = [true];
       this.jiadongByHour.date = evt.name;
-      API.dailyData1.reverse();
+      API.hoursData.reverse();
       this.$refs.jiadongExp.update();
     });
 
