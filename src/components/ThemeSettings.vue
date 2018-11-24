@@ -1,6 +1,6 @@
 <template>
 <div id="themeSetting">
-  <v-toolbar color="blue" dark>
+  <v-toolbar :color="themeColor" dark>
     <v-toolbar-title>
       Theme Settings
     </v-toolbar-title>
@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       themeColor: 'blue',
-      sideBarOption: 'light',
+      sideBarOption: 'dark',
       colors: colors
     };
   },
