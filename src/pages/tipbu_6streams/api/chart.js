@@ -4,7 +4,7 @@ const date = new Array(30).fill(0).map((el, index) => moment().subtract(30 - ind
 
 const dailyData1 = date.map(d => {
   return {
-    'month': d,
+    'date': d,
     'Rate 1': Math.floor(Math.random() * 1000) + 100,
     'Rate 2': Math.floor(Math.random() * 1000) + 450,
     'Rate 3': Math.floor(Math.random() * 1000) + 200,
@@ -16,7 +16,7 @@ const dailyData1 = date.map(d => {
 
 const dailyData2 = date.map(d => {
   return {
-    'month': d,
+    'date': d,
     'Run 1': Math.floor(Math.random() * 1000) + 100,
     'Standy 1': Math.floor(Math.random() * 1000) + 450,
     'Error 1': Math.floor(Math.random() * 1000) + 200,
@@ -128,12 +128,25 @@ const stateLegends = [
 ];
 
 const stationImgConf = {};
-stationImgConf['入前盖'] = stationImgConf['锁螺丝'] = require('../static/pic/station_001.png');
-stationImgConf['入导航键'] = require('../static/pic/station_002.png');
-stationImgConf.default = stationImgConf['入支架'] = stationImgConf['装LCD屏'] = stationImgConf['锁面板'] = require('../static/pic/station_003.png');
-stationImgConf['装灯罩'] = require('../static/pic/station_004.png');
+stationImgConf['入前盖'] = 
+stationImgConf['锁螺丝'] = require('../static/pic/station_001.png');
+stationImgConf['装导航键'] = require('../static/pic/station_002.png');
+stationImgConf.default = 
+stationImgConf['入支架'] = 
+stationImgConf['装LCD'] = 
+stationImgConf['锁面板'] = require('../static/pic/station_003.png');
+stationImgConf['装灯罩&小卡'] = require('../static/pic/station_004.png');
 
-const stationList = ['入前盖', '取保护板', '装LCD屏', '锁LCD', '入导航键', '锁主板 1', '锁主板 2', '锁主板 3', '装灯罩', '贴Label', '锁后盖', '锁面板'].map(name => {
+const stationList = [
+  '前盖入料机',
+  '入前盖',
+  '取保护板',
+  '装LCD',
+  '锁LCD螺丝', '锁主板螺丝1', '锁主板螺丝2', '锁主板螺丝3', '锁后盖螺丝', '锁面板螺丝',
+  '装导航键',
+  '装灯罩&小卡',
+  '贴Label'
+].map(name => {
   return { name: name, img: stationImgConf[name] || stationImgConf.default, state: stateLegends[Math.floor(Math.random() * 100) % 4].state, output: Math.floor(Math.random() * 1000) + 12 };
 });
 
@@ -151,5 +164,6 @@ export default {
   shijianByDay,
   shijianByHour,
   stateLegends,
+  stationImgConf,
   stationList
 };

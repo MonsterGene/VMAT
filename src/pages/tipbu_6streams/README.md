@@ -15,7 +15,7 @@
 ### 信息获取：
 #### 状态图例：
 
-path： /station/state
+path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 
 返回数据：
 ```javascript
@@ -37,7 +37,7 @@ path： /station/state
 }
 ```
 #### 线体数据：
-路径: /lines/info
+路径: http://10.167.192.146/SixStream/api/LineConfig/GetLineData
 
 参数：area //预留参数，用于以后区分需要显示哪几条线的数据
 
@@ -51,6 +51,7 @@ path： /station/state
       id: Int,          //线体ID
       name: String,     //线体名称
       totalTarget: Int, //整线目标
+      achievingRate: Number(.2) // 达成率，前端计算
       stations: [ //按顺序列出该线所有工站
         {
           id: Int,            //工站ID

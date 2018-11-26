@@ -110,12 +110,37 @@ export default {
 
 <style lang="stylus" scoped>
 .setting-fab 
-  top:50%!important; 
-  right:0;
-  border-radius:0  
+  top 50%!important
+  right 0
+  border-radius 0
 .page-wrapper
-  min-height:calc(100vh - 64px - 50px - 81px );  
+  min-height:calc(100vh - 64px - 50px - 81px )
 .page-wrapper-nopageheader
-  min-height:calc(100vh - 64px - 50px );  
+  min-height:calc(100vh - 64px - 50px )
+</style>
+<style>
+/*滚动条*/
+/* Let's get this party started */
+::-webkit-scrollbar {
+  width: 9px;
+  height:9px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(187,187,187,0.8); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(187,187,187,0.1); 
+}
 </style>
