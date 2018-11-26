@@ -163,6 +163,7 @@
 <script>
 import moment from 'moment';
 import API from '../api/chart';
+
 import EChart from '@/components/chart/echart';
 import {
   campaignData,

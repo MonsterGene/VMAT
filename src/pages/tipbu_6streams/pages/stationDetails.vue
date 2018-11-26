@@ -14,11 +14,6 @@
             </e-chart>
         </v-expansion-panel-content>
       </v-expansion-panel>
-      <!-- <output-analysis
-        ref="chanchuJiadong"
-        :title="'产出与稼动率分析（单站 - '+ $route.params.stationName +' - 每日趋势）'"
-        :path-option="chanchu_jiadong_byday"
-      ></output-analysis>  -->
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="jiadongByHour.model" expand :dark="$vuetify.dark">
@@ -387,7 +382,7 @@ export default {
         date: moment().format('MM-DD'),
         chartOption: [
           ['dataset.source', API.hoursData],
-          ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
+          ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
           ['legend.show', true],
           ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
           ['toolbox.show', true],
@@ -429,7 +424,7 @@ export default {
         model: [false],
         chartOption: [
           ['dataset.source', API.dailyData1],
-          ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
+          ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
           ['legend.show', true],
           ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
           ['toolbox.show', true],
@@ -469,7 +464,7 @@ export default {
       },
       yichang_cishu_shijian_byday: [
         ['dataset.source', API.dailyCishuShijian],
-        ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
+        ['color', [Material.red.base, Material.orange.base, Material.red.base]],
         ['legend.show', true],
         ['legend.selected', {}],
         ['toolbox.show', true],

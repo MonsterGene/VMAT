@@ -54,7 +54,7 @@ export default {
   data () {
     return {
       themeColor: 'blue',
-      sideBarOption: 'dark',
+      sideBarOption: 'light',
       colors: colors
     };
   },
@@ -157,10 +157,12 @@ export default {
       handler (val) {
         this.$vuetify.dark = (val === 'dark');
       },
-      immediate: true      
+      immediate: true
     }
   },  
-
+  mounted () {
+    this.sideBarOption = 'dark';
+  }
 };
 </script>
 <style lang="stylus" scoped>
