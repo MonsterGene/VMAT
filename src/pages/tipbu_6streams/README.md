@@ -69,7 +69,7 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 ### 产出与稼动率每天趋势
 
 返回数据：
-```JavaScript
+```javascript
 {
   success: Boolean,
   message: String,
@@ -84,7 +84,7 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 ### 产出与稼动率每小时趋势
 
 返回数据：
-```JavaScript
+```javascript
 {
   success: Boolean,
   message: String,
