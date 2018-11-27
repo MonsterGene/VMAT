@@ -6,7 +6,26 @@
       {{ leg.state }}
     </div>
   </div>
-  
+  <v-dialog
+    v-model="loadingDialog"
+    hide-overlay
+    persistent
+    width="300"
+  >
+    <v-card
+      color="primary"
+      dark
+    >
+      <v-card-text>
+        数据加载中，请稍后...
+        <v-progress-linear
+          indeterminate
+          color="white"
+          class="mb-0"
+        ></v-progress-linear>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
   <v-layout v-for="line in linesData" :key="line.id" class="line-container" row wrap>
     <v-card
       class="line-card"
@@ -54,6 +73,7 @@ const API = { demoApi, lineApi };
 export default {
   data () {
     return {
+      loadingDialog: true,
       legends: [],
       stationImg: demoApi.stationImgConf,
       linesData: []
@@ -96,6 +116,7 @@ export default {
           };
         });
       }
+      this.loadingDialog = false;
     });
   }
 };

@@ -37,8 +37,13 @@
             ref="yunxingshijian"
             :path-option="[
               ['dataset.source', dataset.dailyData2],
-              ['color', [color.green.base, color.orange.base, color.red.base, color.blue.base]],
+              ['color', ['#374A47', '#4d7cae', '#ca211d', '#6a99cb']],
               ['legend.show', true],
+              ['legend.selected', {
+                'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
+                'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
+                'Run 3': false, 'Standy 3': false, 'Error 3': false, 'Unready 3': false
+              }],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
               ['yAxis.axisLabel.show', true],
@@ -384,7 +389,7 @@ export default {
           ['dataset.source', API.hoursData],
           ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
           ['legend.show', true],
-          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
           ['toolbox.show', true],
           ['xAxis.axisLabel.show', true],
           ['yAxis.axisLabel.show', true],
@@ -394,30 +399,39 @@ export default {
 
           ['series[0].type', 'line'],
           ['series[0].label.show', true],
+          ['series[0].label.textBorderWidth', 3],
+          ['series[0].label.textShadowColor', 'rgba(0,0,0,120)'],
+          ['series[0].label.textShadowBlur', 5],
           ['series[0].smooth', true],
+          ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
           
           ['series[1].type', 'line'],
           ['series[1].label.show', true],
           ['series[1].smooth', true],
+          ['series[1].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[2].type', 'line'],
           ['series[2].label.show', true],
           ['series[2].smooth', true],
+          ['series[2].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[3].smooth', true],
           ['series[3].type', 'bar'],
           ['series[3].label.show', true],
           ['series[3].label.position', 'top'],
+          ['series[3].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[4].smooth', true],
           ['series[4].type', 'bar'],
           ['series[4].label.show', true],
           ['series[4].label.position', 'top'],
+          ['series[4].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[5].smooth', true],
           ['series[5].type', 'bar'],
           ['series[5].label.show', true],
           ['series[5].label.position', 'top'],
+          ['series[5].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
         ]
       },
       chanchu_jiadong_byday: {
@@ -437,29 +451,35 @@ export default {
           ['series[0].type', 'line'],
           ['series[0].label.show', true],
           ['series[0].smooth', true],
+          ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
           
           ['series[1].type', 'line'],
           ['series[1].label.show', true],
           ['series[1].smooth', true],
+          ['series[1].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[2].type', 'line'],
           ['series[2].label.show', true],
           ['series[2].smooth', true],
+          ['series[2].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[3].smooth', true],
           ['series[3].type', 'bar'],
           ['series[3].label.show', true],
           ['series[3].label.position', 'top'],
+          ['series[3].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[4].smooth', true],
           ['series[4].type', 'bar'],
           ['series[4].label.show', true],
           ['series[4].label.position', 'top'],
+          ['series[4].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
 
           ['series[5].smooth', true],
           ['series[5].type', 'bar'],
           ['series[5].label.show', true],
           ['series[5].label.position', 'top'],
+          ['series[5].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
         ]
       },
       yichang_cishu_shijian_byday: [
@@ -477,6 +497,7 @@ export default {
         ['series[0].type', 'line'],
         ['series[0].label.show', true],
         ['series[0].smooth', true],
+        ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
         
         ['series[1].type', 'bar'],
         ['series[1].label.show', true],
