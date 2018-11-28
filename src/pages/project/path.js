@@ -6,7 +6,7 @@ const router = [
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `./pages/project.vue`
+      `./pages/template.vue`
     )
   }
 ];
