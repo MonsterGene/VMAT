@@ -67,21 +67,44 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 ```
 
 ### 产出与稼动率每天趋势
+路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByDay
+路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByDay
+
+参数：
+star_date  // 查询起始日期
+end_date   // 查询截止日期
+line_id    // 线ID
+area_id    // 工站ID
 
 返回数据：
 ```javascript
 {
   success: Boolean,
   message: String,
-  data: {
+  data: [
+    {date:}
+  ]
     date: Array, // X轴信息
     'Output LineName': Array,//后面都是一样的
-    'utilizationRate lineName LineName': Array,//后面都是一样的
+  }
+}
+{
+  success: Boolean,
+  message: String,
+  data: {
+    date: Array, // X轴信息
+    'UtilizationRate LineName': Array,//后面都是一样的
   }
 }
 ```
 
 ### 产出与稼动率每小时趋势
+路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByHour
+路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByHour
+参数： 
+date
+line_id
+area_id
 
 返回数据：
 ```javascript
@@ -91,7 +114,33 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
   data: {
     hour: Array, // X轴信息
     'Output LineName': Array,//后面都是一样的
-    'utilizationRate lineName LineName': Array,//后面都是一样的
+  }
+}
+{
+  success: Boolean,
+  message: String,
+  data: {
+    hour: Array, // X轴信息
+    'UtilizationRate  LineName': Array,//后面都是一样的
+  }
+}
+```
+
+### 异常次数事件
+提交数据：
+startDate   // 开始日期
+endDate     // 结束日期
+stationId   // 工站ID
+
+返回数据：
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    date: Array,         // X轴信息
+    'Frequency': Array,  // 异常次数
+    'Time': Array,       // 异常时间
   }
 }
 ```
