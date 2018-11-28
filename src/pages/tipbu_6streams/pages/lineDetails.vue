@@ -18,8 +18,8 @@
       </output-analysis>
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="dachengByHour.model" expand>
-        <v-expansion-panel-content>
+      <v-expansion-panel v-model="dachengByHour.model" expand :dark="$vuetify.dark">
+        <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
           <div slot="header">产出与达成率分析（整线单天【{{ dachengByHour.date }}】 小时趋势）</div>
           <e-chart 
             ref="dachengExp"
@@ -40,8 +40,8 @@
       ></output-analysis> 
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="jiadongByHour.model" expand>
-        <v-expansion-panel-content>
+      <v-expansion-panel v-model="jiadongByHour.model" expand :dark="$vuetify.dark">
+        <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
           <div slot="header">稼动率与产出分析（整线单天【{{ jiadongByHour.date }}】 小时趋势）</div>
           <e-chart
             ref="jiadongExp"

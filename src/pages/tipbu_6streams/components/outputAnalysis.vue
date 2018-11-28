@@ -1,5 +1,5 @@
 <template>
-<v-widget :title="title" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+<v-widget :title="title" content-bg="blue darken-3">
   <template slot="widget-header-action">
     <slot name="widget-header-action"></slot>
   </template>

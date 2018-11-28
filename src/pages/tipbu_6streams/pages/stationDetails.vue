@@ -6,9 +6,18 @@
         :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
         :line-id="$route.query.l"
         :station-id="$route.query.s"
+        @click="utilOutputByDayClick"
       ></utilization-rate-and-output-by-day>
     </v-flex>
     <v-flex lg12 sm12 xs12>
+      <utilization-rate-and-output-by-hour
+        :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
+        :date="utilOutputByHour.date"
+        :line-id="utilOutputByHour.lineId"
+        :station-id="utilOutputByHour.stationId"
+      ></utilization-rate-and-output-by-hour>
+    </v-flex>
+    <!-- <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="chanchu_jiadong_byday.model" expand :dark="$vuetify.dark">
         <v-expansion-panel-content>
           <div slot="header">产出与稼动率分析（单站 - {{ $route.params.stationName }} - 每日趋势）</div>
@@ -35,10 +44,10 @@
             </e-chart>
         </v-expansion-panel-content>
       </v-expansion-panel>
-    </v-flex>
+    </v-flex> -->
 
     <v-flex lg12 sm12 xs12>
-      <v-widget :title="'運行時間('+ $route.params.stationName +')'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+      <v-widget :title="'運行時間('+ $route.params.stationName +')'" content-bg="blue darken-3">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
@@ -369,6 +378,7 @@ import ErrorAnalysis from '../components/errorAnalysis.vue';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
+import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
 
 export default {
   components: {
@@ -376,11 +386,17 @@ export default {
     ErrorAnalysis,
     EChart,
     VWidget,
-    UtilizationRateAndOutputByDay
+    UtilizationRateAndOutputByDay,
+    UtilizationRateAndOutputByHour
   },
   data () {
     console.log(API.dailyCishuShijian);
     return {
+      utilOutputByHour: {
+        date: moment().format('YYYY-MM-DD'),
+        lineId: this.$route.query.l,
+        stationId: this.$route.query.s
+      },
       dataset: {
         ...API
       },
@@ -733,7 +749,7 @@ export default {
     }
   },
   mounted () {
-    // 产出稼动率点击
+    // 产出稼动率by day点击
     this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
       this.jiadongByHour.model = [true];
       this.jiadongByHour.date = evt.name;
@@ -754,6 +770,9 @@ export default {
     });
   },
   methods: {
+    utilOutputByDayClick (evt) {
+      this.utilOutputByHour.date = evt.date;
+    },
     chartResize (name, n) {
       if (n) {
         setTimeout(() => {

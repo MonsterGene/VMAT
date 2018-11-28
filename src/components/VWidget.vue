@@ -1,7 +1,7 @@
 <template>
   <div id="v-widget">
     <v-card :dark="$vuetify.dark">
-      <v-toolbar color="transparent" flat dense card v-if="enableHeader">
+      <v-toolbar :color="contentBg" flat dense card v-if="enableHeader">
         <v-toolbar-title><h4>{{title}}</h4></v-toolbar-title>
         <v-spacer></v-spacer>
         <slot name="widget-header-action"></slot>
