@@ -61,23 +61,16 @@ export default {
         ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.show', true],
         ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-        ['yAxis', Array(2).fill({
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, .54)'
-            }
-          },
-          axisTick: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, .54)'
-            }
-          },
-          axisLabel: {
-            show: true,
-            color: 'rgba(255, 255, 255, .54)'
-          }
-        })],
+        ...(Array(2).fill(0).map((v, i) => {
+          return [
+            ['yAxis[' + i + '].axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+            ['yAxis[' + i + '].axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+            ['yAxis[' + i + '].axisLabel.color', 'rgba(255, 255, 255, .54)'],
+            ['yAxis[' + i + '].axisLabel.show', true]
+          ];
+        }).reduce((acc, cur) => {
+          return acc.concat(cur);
+        }, [])),
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
