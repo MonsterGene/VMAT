@@ -30,14 +30,14 @@
     <v-card
       class="line-card"
       dark hover
-      :href="'#/tipbu-6streams/line-details/' + line.name"
+      :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id"
     >
       <v-card-title class="pb-0">
-        <h4>{{ line.name }}</h4>
+        <h4 style="margin: 0 auto">{{ line.name }}</h4>
       </v-card-title>
       <v-card-text>
-        <p>目标产出：{{ line.totalTarget }}台</p>
-        <p>达成率：{{ line.achievingRate }}</p>
+        <h5>目标产出：{{ line.totalTarget }}台</h5>
+        <h5>达成率：{{ line.achievingRate }}</h5>
       </v-card-text>
     </v-card>
     <div class="station-container">
@@ -48,7 +48,7 @@
         <div
           slot-scope="{ hover }"
           :class="['station-card', {'elevation-10': hover}]"
-          @click="$router.push({path: '/tipbu-6streams/station-details/'+station.name})"
+          @click="$router.push({path: '/tipbu-6streams/station-details/'+station.name, query: {l: line.id, s: station.id}})"
         >
           <div class="top">
             <h5>{{ station.name }}<div :class="['state-ide', legends.filter(v => v.stateCode === station.stateCode)[0].color]"></div></h5>
@@ -142,7 +142,7 @@ export default {
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1670px
+  width 1690px
   background #00000030
   display flex
   position relative
@@ -167,12 +167,15 @@ export default {
     background #42424242
     border-radius 5px
     margin-right 15px
+    text-align center
   .line-card:before
     content ''
     display inline-block
     height calc(50% - 80px)
   .station-container
     flex:1;
+    padding 5px
+    color #fff
     .station-card
       cursor: pointer;
       float:left

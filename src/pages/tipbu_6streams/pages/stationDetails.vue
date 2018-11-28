@@ -4,8 +4,8 @@
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-day
         :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
-        :line-id="1"
-        :station-id="1"
+        :line-id="$route.query.l"
+        :station-id="$route.query.s"
       ></utilization-rate-and-output-by-day>
     </v-flex>
     <v-flex lg12 sm12 xs12>
@@ -44,7 +44,7 @@
             ref="yunxingshijian"
             :path-option="[
               ['dataset.source', dataset.dailyData2],
-              ['color', ['#374A47', '#4d7cae', '#ca211d', '#6a99cb']],
+              ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
               ['legend.show', true],
               ['legend.selected', {
                 'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
