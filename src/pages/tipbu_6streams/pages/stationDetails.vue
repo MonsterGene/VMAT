@@ -2,6 +2,13 @@
 <v-container grid-list-xl fluid>
   <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
+      <utilization-rate-and-output-by-day
+        :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
+        :line-id="1"
+        :station-id="1"
+      ></utilization-rate-and-output-by-day>
+    </v-flex>
+    <v-flex lg12 sm12 xs12>
       <v-expansion-panel v-model="chanchu_jiadong_byday.model" expand :dark="$vuetify.dark">
         <v-expansion-panel-content>
           <div slot="header">产出与稼动率分析（单站 - {{ $route.params.stationName }} - 每日趋势）</div>
@@ -361,13 +368,15 @@ import OutputAnalysis from '../components/outputAnalysis.vue';
 import ErrorAnalysis from '../components/errorAnalysis.vue';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
+import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
 
 export default {
   components: {
     OutputAnalysis,
     ErrorAnalysis,
     EChart,
-    VWidget
+    VWidget,
+    UtilizationRateAndOutputByDay
   },
   data () {
     console.log(API.dailyCishuShijian);
