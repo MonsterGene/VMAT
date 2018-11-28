@@ -126,12 +126,16 @@ area_id
 }
 ```
 
-### 异常次数事件
+### 异常次数时间
 提交数据：
 startDate   // 开始日期
+
 endDate     // 结束日期
+
 stationId   // 工站ID
+
 lineId      // 线ID
+
 
 返回数据：
 ```javascript
