@@ -1,6 +1,7 @@
-import Chart from './chart';
+import demoApi from './demoApi';
+import pageApi from './pageApi';
 
-export default {
-  getMonthVisit: Chart.monthVisitData,
-  getLocation: Chart.locationData
+export {
+  demoApi,
+  pageApi
 };

@@ -1,6 +1,6 @@
 <template>
 <v-expansion-panel v-model="expansionModel" :dark="$vuetify.dark" expand>
-  <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-4' : 'lighten-4']">
+  <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
     <div slot="header"><h4>{{ headerText }}</h4></div>
     <e-chart
       ref="chartDOM"
@@ -56,9 +56,28 @@ export default {
         ['dataset.source', this.chartData],
         ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
         ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.show', true],
-        ['yAxis', Array(2).fill({ axisLabel: { show: true }})],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+
+        ['yAxis', Array(2).fill({
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)'
+            }
+          },
+          axisTick: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          }
+        })],
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
@@ -76,12 +95,6 @@ export default {
       ];
     }
   },
-  watch: {
-    chartOption () {
-      this.$refs.chartDOM.update();
-      this.$refs.chartDOM.update();
-    }
-  },
   mounted () {
     this.getChartData();
   },
@@ -95,8 +108,8 @@ export default {
       const request1 = stationApi.getStationOutput.byDay({
         start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'),
         end_date: moment().format('YYYY-MM-DD'),
-        line_id: 1,
-        area_id: 1
+        line_id: this.lineId,
+        area_id: this.stationId
       });
       const request2 = null;
 
@@ -106,11 +119,13 @@ export default {
           const resdata = res1.data;
           if (resdata.success) {
             const data = resdata.data;
+            data.date = data.date.map(v => {
+              return v.substring(v.indexOf('-') + 1);
+            });
             this.chartData = data;
-            setTimeout(() => {
+            this.$nextTick(() => {
               this.$refs.chartDOM.update();
-            }, 3000);
-
+            });
           } else {
             console.log('加载产出数据出错！');
           }
