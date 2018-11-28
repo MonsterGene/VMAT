@@ -24,7 +24,7 @@ export default {
   components: {
     EChart
   },
-  props: ['headerText', 'stationId', 'lineId'],
+  props: ['headerText', 'date', 'stationId', 'lineId'],
   data () {
     return {
       refreshInterval: 5000,
@@ -44,7 +44,7 @@ export default {
           }
         }
       },
-      chartData: { date: [] }
+      chartData: { hour: [] }
     };
   },
   computed: {
@@ -107,16 +107,6 @@ export default {
   },
   mounted () {
     this.getChartData();
-    this.$refs.chartDOM.chartInstance.on('click', function (evt) {
-      console.log(arguments);
-      this.$emit('chart-click', {
-        date: evt.data[0],
-        value: evt.data[1],
-        seriesName: evt.seriesName,
-        seriesType: evt.seriesType,
-        dataIndex: evt.dataIndex
-      });
-    });
   },
   beforeDestroy () {
     if (this.intervalId) {
@@ -125,12 +115,13 @@ export default {
   },
   methods: {
     getChartData () {
-      const request1 = stationApi.getStationOutput.byDay({
-        start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'),
-        end_date: moment().format('YYYY-MM-DD'),
+      // 请求产出数据
+      const request1 = stationApi.getStationOutput.byHour({
+        date: moment(this.date).format('YYYY-MM-DD'),
         line_id: this.lineId,
         area_id: this.stationId
       });
+      // 请求稼动率数据
       const request2 = null;
 
       axios.all([request1])
@@ -139,9 +130,6 @@ export default {
           const resdata = res1.data;
           if (resdata.success) {
             const data = resdata.data;
-            // data.date = data.date.map(v => {
-            //   return v.substring(v.indexOf('-') + 1);
-            // });
             this.chartData = data;
             this.$nextTick(() => {
               this.$refs.chartDOM.update();
