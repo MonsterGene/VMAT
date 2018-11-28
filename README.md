@@ -69,6 +69,9 @@ npm test
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+### Project
+[三处六流组装线项目](http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB/tree/master/src/pages/tipbu_6streams)
+
 ### Reference
 
 * [Vuetifyjs](https://vuetifyjs.com/)

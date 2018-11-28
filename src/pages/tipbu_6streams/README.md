@@ -67,8 +67,8 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 ```
 
 ### 产出与稼动率每天趋势
-路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByDay
-路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByDay
+产出路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByDay
+稼动率路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByDay
 
 参数：
 star_date  // 查询起始日期
@@ -78,6 +78,7 @@ area_id    // 工站ID
 
 返回数据：
 ```javascript
+// 产出数据格式
 {
   success: Boolean,
   message: String,
@@ -88,6 +89,7 @@ area_id    // 工站ID
     'Output LineName': Array,//后面都是一样的
   }
 }
+// 稼动率数据格式
 {
   success: Boolean,
   message: String,
@@ -99,8 +101,8 @@ area_id    // 工站ID
 ```
 
 ### 产出与稼动率每小时趋势
-路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByHour
-路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByHour
+产出路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByHour 
+稼动率路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByHour
 参数： 
 date
 line_id
@@ -108,6 +110,7 @@ area_id
 
 返回数据：
 ```javascript
+// 产出数据格式
 {
   success: Boolean,
   message: String,
@@ -116,6 +119,7 @@ area_id
     'Output LineName': Array,//后面都是一样的
   }
 }
+// 稼动率数据格式
 {
   success: Boolean,
   message: String,
