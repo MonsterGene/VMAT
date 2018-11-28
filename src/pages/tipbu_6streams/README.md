@@ -131,6 +131,7 @@ area_id
 startDate   // 开始日期
 endDate     // 结束日期
 stationId   // 工站ID
+lineId      // 线ID
 
 返回数据：
 ```javascript
@@ -139,8 +140,8 @@ stationId   // 工站ID
   message: String,
   data: {
     date: Array,         // X轴信息
-    'Frequency': Array,  // 异常次数
-    'Time': Array,       // 异常时间
+    'Frequency LineName': Array,  // 异常次数
+    'Time LineName': Array,       // 异常时间
   }
 }
 ```
