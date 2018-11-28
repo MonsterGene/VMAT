@@ -60,9 +60,16 @@
                 'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
                 'Run 3': false, 'Standy 3': false, 'Error 3': false, 'Unready 3': false
               }],
+              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
               ['yAxis.axisLabel.show', true],
+              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+
               ['grid.left', '2%'],
               ['grid.bottom', '5%'],
               ['grid.right', '3%'],
@@ -514,7 +521,35 @@ export default {
         ['legend.selected', {}],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
-        ['yAxis', Array(2).fill({ axisLabel: { show: true }})],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(2).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
