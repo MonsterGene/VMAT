@@ -53,7 +53,7 @@ import colors from 'vuetify/es5/util/colors';
 export default {
   data () {
     return {
-      themeColor: 'blue',
+      themeColor: 'orange',
       sideBarOption: 'light',
       colors: colors
     };

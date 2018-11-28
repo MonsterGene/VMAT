@@ -1,7 +1,7 @@
 <template>
-<v-expansion-panel v-model="expansionModel" color="primary" expand>
-  <v-expansion-panel-content>
-    <div slot="header">{{ headerText }}</div>
+<v-expansion-panel v-model="expansionModel" :dark="$vuetify.dark" expand>
+  <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-4' : 'lighten-4']">
+    <div slot="header"><h4>{{ headerText }}</h4></div>
     <e-chart
       ref="chartDOM"
       :path-option="chartOption"
