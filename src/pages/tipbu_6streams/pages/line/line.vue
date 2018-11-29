@@ -67,13 +67,15 @@
 </template>
 
 <script>
-import { demoApi, lineApi } from '../api/index.js';
+import { demoApi, lineApi } from '../../api/index.js';
 const API = { demoApi, lineApi };
 
 export default {
   data () {
     return {
       loadingDialog: true,
+      timeoutId: null,
+      refresh: 500,
       legends: [],
       stationImg: demoApi.stationImgConf,
       linesData: []
@@ -93,32 +95,47 @@ export default {
     });
 
     // fetch lineData data
-    API.lineApi.getLinesData().then(res => {
-      const data = res.data;
-      console.log(data);
-      if (data.success) {
-        this.linesData = data.data.map(line => {
-          line.achievingRate = (line.stations[line.stations.length - 1].output / line.totalTarget).toFixed(2) + '%';
-          line.stations.map(station => {
-            station.img = this.stationImg[station.name] || this.stationImg.default;
-            return station;
+    this.getLinesData();
+    
+  },
+  beforeDestroy () {
+    if (this.timeoutId) {
+      clearTimeout(this.timeoutId);
+    }
+  },
+  methods: {
+    getLinesData () {
+      // fetch lineData data
+      API.lineApi.getLinesData().then(res => {
+        const data = res.data;
+        console.log(data);
+        if (data.success) {
+          this.linesData = data.data.map(line => {
+            line.achievingRate = (line.stations[line.stations.length - 1].output / line.totalTarget).toFixed(2) + '%';
+            line.stations.map(station => {
+              station.img = this.stationImg[station.name] || this.stationImg.default;
+              return station;
+            });
+            return line;
           });
-          return line;
-        });
-      } else {
-        console.log(data.message);
-        this.linesData = ['A01', 'A02', 'A03'].map(val => {
-          return {
-            id: 0,
-            name: val,
-            totalTarget: 2000,
-            stations: API.demoApi.stationList
-          };
-        });
-      }
-      this.loadingDialog = false;
-    });
-  }
+        } else {
+          console.log(data.message);
+          this.linesData = ['A01', 'A02', 'A03'].map(val => {
+            return {
+              id: 0,
+              name: val,
+              totalTarget: 2000,
+              stations: API.demoApi.stationList
+            };
+          });
+        }
+        this.loadingDialog = false;
+        this.timeoutId = setTimeout(() => {
+          this.getLinesData();
+        }, this.refresh);
+      });
+    }
+  },
 };
 </script>
 
@@ -136,13 +153,13 @@ export default {
   display:inline-block
 
 .legend-container
-  width 1570px
+  width 1700px
   margin 0 auto
 .line-container
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1690px
+  width 1700px
   background #00000030
   display flex
   position relative

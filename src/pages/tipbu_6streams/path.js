@@ -16,7 +16,7 @@ const tipbu_6streams_path = [
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/tipbu_6streams/pages/line.vue`
+      `@/pages/tipbu_6streams/pages/line`
     )
   },
   {

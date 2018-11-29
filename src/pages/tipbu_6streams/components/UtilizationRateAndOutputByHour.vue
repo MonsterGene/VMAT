@@ -105,13 +105,13 @@ export default {
       ];
     }
   },
+  watch: {
+    date () {
+      this.getChartData();
+    }
+  },
   mounted () {
     this.getChartData();
-  },
-  beforeDestroy () {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
   },
   methods: {
     getChartData () {
