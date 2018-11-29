@@ -8,14 +8,14 @@ Menu.push(...tipbu_6streams_menu);
 // Menu.push(...example);
 
 // reorder menu
-Menu.forEach((item) => {
-  if (item.items) {
-    item.items.sort((x, y) => {
-      let textA = x.title.toUpperCase();
-      let textB = y.title.toUpperCase();
-      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-    });
-  }
-});
+// Menu.forEach((item) => {
+//   if (item.items) {
+//     item.items.sort((x, y) => {
+//       let textA = x.title.toUpperCase();
+//       let textB = y.title.toUpperCase();
+//       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+//     });
+//   }
+// });
 
 export default Menu;
