@@ -17,37 +17,9 @@
         :station-id="utilOutputByHour.stationId"
       ></utilization-rate-and-output-by-hour>
     </v-flex>
-    <!-- <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="chanchu_jiadong_byday.model" expand :dark="$vuetify.dark">
-        <v-expansion-panel-content>
-          <div slot="header">产出与稼动率分析（单站 - {{ $route.params.stationName }} - 每日趋势）</div>
-          <e-chart
-            ref="chanchuJiadong"
-            :path-option="chanchu_jiadong_byday.chartOption"
-            height="400px"
-            width="100%"
-            >
-            </e-chart>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-flex>
-    <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="jiadongByHour.model" expand :dark="$vuetify.dark">
-        <v-expansion-panel-content>
-          <div slot="header">稼动率与产出分析（单站单天【{{ jiadongByHour.date }}】小时趋势）</div>
-          <e-chart
-            ref="jiadongExp"
-            :path-option="jiadongByHour.chartOption"
-            height="400px"
-            width="100%"
-            >
-            </e-chart>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
-    </v-flex> -->
 
     <v-flex lg12 sm12 xs12>
-      <v-widget :title="'運行時間('+ $route.params.stationName +')'" content-bg="blue darken-3">
+      <v-widget :title="'運行時間('+ $route.params.stationName +')'" content-bg="#282a30">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
@@ -165,7 +137,7 @@
     <v-flex lg6 sm12 xs12>
       <v-layout v-if="yichangCishu.byType.show" row>
         <v-flex xs12>
-          <v-widget :title="'机故类型次数分析（'+ yichangCishu.byType.date +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+          <v-widget :title="'机故类型次数分析（'+ yichangCishu.byType.date +'）'" content-bg="#282a30">
             <div slot="widget-header-action" style="width:260px;display:flex;">
               <v-menu
                 :close-on-content-click="false"
@@ -516,7 +488,7 @@ export default {
       },
       yichang_cishu_shijian_byday: [
         ['dataset.source', API.dailyCishuShijian],
-        ['color', [Material.red.base, Material.orange.base, Material.red.base]],
+        ['color', ['#73fb79', '#bfbfbf']],
         ['legend.show', true],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['legend.selected', {}],
@@ -558,12 +530,11 @@ export default {
         ['series[0].type', 'line'],
         ['series[0].label.show', true],
         ['series[0].smooth', true],
-        ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
+        // ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
         
         ['series[1].type', 'bar'],
-        ['series[1].label.show', true],
+        ['series[1].label.show', false],
         ['series[1].smooth', false],
-        ['series[1].label.show', true],
         ['series[1].yAxisIndex', 1]
 
       ],

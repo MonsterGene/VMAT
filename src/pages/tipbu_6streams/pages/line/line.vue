@@ -2,7 +2,7 @@
 <v-container grid-list-xl fluid>
   <div class="legend-container">
     <div class="legend" v-for="leg in legends" :key="leg.state">
-      <div :class="['state-ide', leg.color]"></div>
+      <div :class="['state-ide', leg.color==='black'? 'grey' : leg.color]"></div>
       {{ leg.state }}
     </div>
   </div>
@@ -13,7 +13,7 @@
     width="300"
   >
     <v-card
-      color="primary"
+      color="#ffffff0f"
       dark
     >
       <v-card-text>
@@ -51,7 +51,15 @@
           @click="$router.push({path: '/tipbu-6streams/station-details/'+station.name, query: {l: line.id, s: station.id}})"
         >
           <div class="top">
-            <h5>{{ station.name }}<div :class="['state-ide', legends.filter(v => v.stateCode === station.stateCode)[0].color]"></div></h5>
+            <h5>
+              {{ station.name }}
+              <div
+                :class="[
+                  'state-ide',
+                  legends.filter(v => v.stateCode === station.stateCode)[0].color==='black' ? 'grey' : legends.filter(v => v.stateCode === station.stateCode)[0].color
+                ]">
+              </div>
+            </h5>
           </div>
           <div class="img">
             <img :src="station.img" alt="加载中...">
@@ -131,6 +139,7 @@ export default {
         }
         this.loadingDialog = false;
         this.timeoutId = setTimeout(() => {
+          console.log(this);
           this.getLinesData();
         }, this.refresh);
       });
@@ -153,18 +162,19 @@ export default {
   display:inline-block
 
 .legend-container
-  width 1700px
+  width 1750px
   margin 0 auto
+  color #fff
 .line-container
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1700px
+  width 1750px
   background #00000030
   display flex
   position relative
   &:hover
-    background #0000000f
+    background #282a30
     transition 800ms ease all
   &:before,&:after
     content ''

@@ -3,17 +3,17 @@
     id="appDrawer"
     :mini-variant.sync="mini"
     fixed
-    :dark="$vuetify.dark"
     app
     v-model="drawer"
     :stateless="true"
     width="260"
+    style="background: #30333b"
     >
     <!-- 顶部logo title -->
-    <v-toolbar color="primary darken-1" dark>
+    <v-toolbar color="#24262c">
       <img v-bind:src="computeLogo" height="36" alt="Vue Material Admin Template">
       <v-toolbar-title class="ml-0 pl-3">
-        <span class="hidden-sm-and-down">Genius Solution</span>
+        <span class="hidden-sm-and-down" style="color: #fff">Genius Solution</span>
       </v-toolbar-title>        
     </v-toolbar>
     <!-- 菜单栏 -->

@@ -1,6 +1,6 @@
 <template>
   <v-toolbar
-    color="primary"
+    color="#24262c"
     fixed
     dark
     app

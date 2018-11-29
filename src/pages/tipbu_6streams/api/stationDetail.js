@@ -32,7 +32,16 @@ const getUtilizationRate = {
   }
 };
 
+/** 
+ * 异常次数&时间
+ * params: {startDate: Date, endDate: Date, areaid: Int, lineid: Int}
+ */
+const getErrorFrequencyAndTime = (params) => {
+  return axios.post('/GetAlertMessage/GetAlertByDay', params).catch(catchMethod);
+};
+
 export default {
   getStationOutput,
-  getUtilizationRate
+  getUtilizationRate,
+  getErrorFrequencyAndTime
 };

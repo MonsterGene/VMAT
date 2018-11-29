@@ -1,5 +1,5 @@
 <template>
-<v-widget :title="title" content-bg="blue darken-3">
+<v-widget :title="title" content-bg="#282a30">
   <template slot="widget-header-action">
     <slot name="widget-header-action"></slot>
   </template>
