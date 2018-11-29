@@ -6,7 +6,7 @@
         :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
         :line-id="$route.query.l"
         :station-id="$route.query.s"
-        @click="utilOutputByDayClick"
+        @chart-click="utilOutputByDayClick"
       ></utilization-rate-and-output-by-day>
     </v-flex>
     <v-flex lg12 sm12 xs12>
@@ -518,6 +518,7 @@ export default {
         ['dataset.source', API.dailyCishuShijian],
         ['color', [Material.red.base, Material.orange.base, Material.red.base]],
         ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['legend.selected', {}],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],

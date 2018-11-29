@@ -107,8 +107,7 @@ export default {
   },
   mounted () {
     this.getChartData();
-    this.$refs.chartDOM.chartInstance.on('click', function (evt) {
-      console.log(arguments);
+    this.$refs.chartDOM.chartInstance.on('click', evt => {
       this.$emit('chart-click', {
         date: evt.data[0],
         value: evt.data[1],
