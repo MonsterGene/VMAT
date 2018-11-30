@@ -1,6 +1,6 @@
 <template>
 <v-expansion-panel v-model="expansionModel" :dark="$vuetify.dark" expand>
-  <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
+  <v-expansion-panel-content style="background: #282a30">
     <div slot="header"><h4>{{ headerText }}</h4></div>
     <e-chart
       ref="chartDOM"
@@ -29,7 +29,7 @@ export default {
     return {
       refreshInterval: 5000,
       intervalId: null,
-      expansionModel: [true],
+      expansionModel: [false],
       seriesConf: {
         smooth: true,
         label: {
@@ -54,7 +54,7 @@ export default {
 
       return [
         ['dataset.source', this.chartData],
-        ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
+        ['color', ['#fff2cc', '#afabab', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
         ['legend.show', true],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
@@ -103,6 +103,15 @@ export default {
           return defSeries;
         })]
       ];
+    }
+  },
+  watch: {
+    'expansionModel.0': function (n) {
+      if (n) {
+        this.$nextTick(() => {
+          this.$refs.chartDOM.chartInstance.resize();
+        });
+      }
     }
   },
   mounted () {

@@ -9,14 +9,14 @@
         <!-- 顶部工具条 -->
         <app-toolbar class="app--toolbar"></app-toolbar>
         <!-- 页面主视图 -->
-        <v-content>
+        <v-content style="background: black">
           <!-- 主视图头部 Page Header -->
           <page-header v-if="$route.meta.breadcrumb"></page-header>
-          <div :class="['page-wrapper', !$route.meta.breadcrumb && 'page-wrapper-nopageheader', $vuetify.theme.primaryName, 'lighten-2']">
+          <div :class="['page-wrapper', !$route.meta.breadcrumb && 'page-wrapper-nopageheader']">
             <router-view></router-view>
           </div>   
            <!-- 主视图底部 App Footer -->
-          <v-footer height="auto" :class="['pa-3', 'app--footer', $vuetify.theme.primaryName, 'lighten-1']" >
+          <v-footer height="auto" :class="['pa-3', 'app--footer']" color="black" style="color:#fff" >
             <span class="caption">FCT Team &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> Genius Solution Center </span> <v-icon color="pink" small>favorite</v-icon>
@@ -25,7 +25,7 @@
         <!-- 回到顶部按钮 -->
         <app-fab></app-fab>
         <!-- 主题设置 -->
-        <v-btn small fab dark falt fixed top="top" right="right" class="setting-fab" :color="$vuetify.theme.primaryName" @click="openThemeSettings">
+        <v-btn small fab dark falt fixed top="top" right="right" class="setting-fab" color="#30333b" @click="openThemeSettings">
           <v-icon>settings</v-icon>
         </v-btn>
         <v-navigation-drawer
@@ -128,7 +128,8 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+  -webkit-box-shadow: inset 0 0 6px rgb(0, 0, 0); 
+  background: rgb(0,0,0);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
@@ -137,8 +138,8 @@ export default {
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: rgba(187,187,187,0.8); 
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1); 
+  background: rgba(255, 255, 255, 0.2); 
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(187,187,187,0.1); 
