@@ -130,7 +130,7 @@ area_id
 }
 ```
 
-### 异常次数时间
+### 异常次数/时间
 提交数据：
 startDate   // 开始日期
 
@@ -153,5 +153,165 @@ lineId      // 线ID
   }
 }
 ```
+
+### 异常次数按类型降序
+说明： 查询该工站所有异常，按异常类型统计次数降序排序，返回结果
+参数： 
+startDate   // 查询开始日期 
+endDate     // 查询结束日期 
+lineId      // 线ID 
+stationId   // 工站ID 
+
+返回数据：
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: [
+    { type: String, frequency: Int },
+    ...//降序
+  ]
+}
+```
+
+### 异常时间按类型降序
+说明： 查询该工站所有异常时间，按异常类型统计异常时间，降序排序，返回结果
+参数： 
+startDate   // 查询开始日期
+endDate     // 查询结束日期
+lineId      // 线ID
+stationId   // 工站ID
+
+返回数据： 
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: [
+    {type: String, time: Int}, // 时间单位为秒
+    ... // 降序
+  ]
+}
+```
+
+### 异常类型次数每天趋势
+说明： 按天统计该类型异常次数，返回数据
+参数： 
+startDate     // 查询开始时间
+endDate       // 查询结束时间
+errorType     // 查询异常类型
+lineId        // 线ID
+stationId     // 工站ID
+
+返回数据：
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    date: Array(Date String),
+    frequency: Array(Int)
+  }
+}
+```
+
+### 异常类型次数单天每小时趋势
+说明： 按天统计该类型异常次数，返回数据
+参数： 
+date     // 查询日期
+errorType     // 查询异常类型
+lineId        // 线ID
+stationId     // 工站ID
+
+返回数据：
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    hour: Array(Date String),
+    frequency: Array(Int)
+  }
+}
+```
+
+### 异常类型时间每天趋势
+说明： 按天统计该类型异常时间，返回趋势数据
+参数： 
+startDate   // 查询开始日期
+endDate     // 查询结束日期
+errorType   // 查询的异常类型
+lineId      // 线ID
+stationId   // 工站ID
+
+返回数据： 
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    date: Array(Date String),
+    time: Array(Int)
+  }
+}
+```
+
+### 异常类型时间单天每小时趋势
+说明： 按天统计该类型异常时间，返回趋势数据
+参数： 
+date        // 查询日期
+errorType   // 查询的异常类型
+lineId      // 线ID
+stationId   // 工站ID
+
+返回数据： 
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    hour: Array(Datetime String),
+    time: Array(Int)
+  }
+}
+```
+
+### 异常类型的处理方法
+说明： 返回该异常的处理方法
+参数： 
+errorType  // 异常类型
+
+返回数据：
+```javascript
+{
+  success: Boolean,
+  message: String,
+  data: {
+    code: String,       // 异常代码
+    info: String,       // 异常描述
+    rootCourse: String, // 异常原因
+    action: String      // 处理动作
+  }
+}
+```
+
+### 异常类型处理方法编辑
+说明： 修改异常的处理方法
+参数： 
+errorType   // 异常类型，用于后台的查询条件
+info        // 修改后的异常描述
+rootCourse  // 修改后的异常原因
+action      // 修改后的处理动作
+
+返回数据： 
+```javascript
+{
+  success: Boolean,
+  message: String
+}
+```
+
+
+
 
 
