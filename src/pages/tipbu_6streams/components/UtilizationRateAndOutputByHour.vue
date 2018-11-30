@@ -29,7 +29,7 @@ export default {
     return {
       refreshInterval: 5000,
       intervalId: null,
-      expansionModel: [true],
+      expansionModel: [false],
       seriesConf: {
         smooth: true,
         label: {
@@ -108,6 +108,13 @@ export default {
   watch: {
     date () {
       this.getChartData();
+    },
+    'expansionModel.0': function (n) {
+      if (n) {
+        this.$nextTick(() => {
+          this.$refs.chartDOM.chartInstance.resize();
+        });
+      }
     }
   },
   mounted () {

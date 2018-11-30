@@ -127,11 +127,14 @@
       </v-widget>  
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <output-analysis
+      <error-frequency-and-time-by-day
         ref="yichangCishuShijian"
         :title="'异常次数/时间分析（'+ $route.params.stationName +'）'"
-        :path-option="yichang_cishu_shijian_byday"
-      ></output-analysis> 
+        :start-date="errorFreqAndTimeByDay.startDate"
+        :end-date="errorFreqAndTimeByDay.endDate"
+        :line-id="errorFreqAndTimeByDay.lineId"
+        :station-id="errorFreqAndTimeByDay.stationId"
+      ></error-frequency-and-time-by-day>
     </v-flex>
 
     <v-flex lg6 sm12 xs12>
@@ -358,6 +361,7 @@ import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
 import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
+import ErrorFrequencyAndTimeByDay from '../components/ErrorFrequencyAndTimeByDay.vue';
 
 export default {
   components: {
@@ -366,13 +370,20 @@ export default {
     EChart,
     VWidget,
     UtilizationRateAndOutputByDay,
-    UtilizationRateAndOutputByHour
+    UtilizationRateAndOutputByHour,
+    ErrorFrequencyAndTimeByDay
   },
   data () {
     console.log(API.dailyCishuShijian);
     return {
       utilOutputByHour: {
         date: moment().format('YYYY-MM-DD'),
+        lineId: this.$route.query.l,
+        stationId: this.$route.query.s
+      },
+      errorFreqAndTimeByDay: {
+        startDate: moment().subtract('months', 1).format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD'),
         lineId: this.$route.query.l,
         stationId: this.$route.query.s
       },
@@ -756,25 +767,25 @@ export default {
     }
   },
   mounted () {
-    // 产出稼动率by day点击
-    this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
-      this.jiadongByHour.model = [true];
-      this.jiadongByHour.date = evt.name;
-      API.hoursData.reverse();
-      this.$refs.jiadongExp.update();
-    });
+    // // 产出稼动率by day点击
+    // this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
+    //   this.jiadongByHour.model = [true];
+    //   this.jiadongByHour.date = evt.name;
+    //   API.hoursData.reverse();
+    //   this.$refs.jiadongExp.update();
+    // });
 
-    // 异常次数或时间分析图点击
-    this.$refs.yichangCishuShijian.chartInstance.on('click', evt => {
-      console.log(evt);// evt.name evt.seriesName
-      if (evt.seriesName === '次数') {
-        this.littleShow(1, 1);
-        this.yichangCishu.byType.date = evt.name;
-      } else {
-        this.littleShow(2, 1);
-        this.yichangShijian.byType.date = evt.name;
-      }
-    });
+    // // 异常次数或时间分析图点击
+    // this.$refs.yichangCishuShijian.chartInstance.on('click', evt => {
+    //   console.log(evt);// evt.name evt.seriesName
+    //   if (evt.seriesName === '次数') {
+    //     this.littleShow(1, 1);
+    //     this.yichangCishu.byType.date = evt.name;
+    //   } else {
+    //     this.littleShow(2, 1);
+    //     this.yichangShijian.byType.date = evt.name;
+    //   }
+    // });
   },
   methods: {
     utilOutputByDayClick (evt) {
