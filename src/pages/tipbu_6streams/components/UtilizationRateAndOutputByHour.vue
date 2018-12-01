@@ -107,6 +107,9 @@ export default {
   },
   watch: {
     date () {
+      if (!this.expansionModel[0]) {
+        this.expansionModel = [true];
+      }
       this.getChartData();
     },
     'expansionModel.0': function (n) {

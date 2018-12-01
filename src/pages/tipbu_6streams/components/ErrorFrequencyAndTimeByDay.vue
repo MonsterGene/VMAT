@@ -80,6 +80,8 @@ export default {
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
+        ['grid.tooltip.trigger', 'axis'],
+        ['grid.tooltip.axisPointer.type', 'shadow'],
 
         ['series[0].type', 'line'],
         ['series[0].label.show', true],
@@ -95,6 +97,15 @@ export default {
   },
   mounted () {
     this.getChartData();
+    this.$refs.chartDOM.chartInstance.on('click', evt => {
+      this.$emit('chart-click', {
+        date: evt.data[0],
+        value: evt.data[1],
+        seriesName: evt.seriesName,
+        seriesType: evt.seriesType,
+        dataIndex: evt.dataIndex
+      });
+    });
   },
   methods: {
     getChartData () {

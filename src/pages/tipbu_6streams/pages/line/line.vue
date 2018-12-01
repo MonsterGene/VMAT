@@ -1,5 +1,12 @@
 <template>
 <v-container grid-list-xl fluid>
+  <v-alert
+    v-model="alertOpts.model"
+    :type="alertOpts.type"
+    transition="scale-transition"
+  >
+    {{ alertOpts.text }}
+  </v-alert>
   <div class="legend-container">
     <div class="legend" v-for="leg in legends" :key="leg.state">
       <div :class="['state-ide', leg.color==='black'? 'grey' : leg.color]"></div>
@@ -7,7 +14,7 @@
     </div>
   </div>
   <v-dialog
-    v-model="loadingDialog"
+    v-model="lineInfo.loadingDialog"
     hide-overlay
     persistent
     width="300"
@@ -81,12 +88,22 @@ const API = { demoApi, lineApi };
 export default {
   data () {
     return {
-      loadingDialog: true,
-      timeoutId: null,
-      refresh: 500,
+      lineInfo: {
+        loadingDialog: true,
+        timeoutId: null,
+        refresh: 5000,
+        lastReq: Date.now(),
+        
+      },
       legends: [],
       stationImg: demoApi.stationImgConf,
-      linesData: []
+      linesData: [],
+      alertOpts: {
+        model: false,
+        type: 'error',
+        text: '提示信息。'
+      },
+      destroyed: false
     };
   },
   mounted () {
@@ -98,7 +115,7 @@ export default {
         this.legends = data.data;
       } else {
         console.log(data.message);
-        this.legends = API.demoApi.stateLegends;
+        this.legends = [];
       }
     });
 
@@ -107,13 +124,15 @@ export default {
     
   },
   beforeDestroy () {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
+    this.destroyed = true;
+    if (this.lineInfo.timeoutId) {
+      clearTimeout(this.lineInfo.timeoutId);
     }
   },
   methods: {
     getLinesData () {
       // fetch lineData data
+      this.lineInfo.lastReq = Date.now();
       API.lineApi.getLinesData().then(res => {
         const data = res.data;
         console.log(data);
@@ -128,20 +147,24 @@ export default {
           });
         } else {
           console.log(data.message);
-          this.linesData = ['A01', 'A02', 'A03'].map(val => {
-            return {
-              id: 0,
-              name: val,
-              totalTarget: 2000,
-              stations: API.demoApi.stationList
-            };
-          });
+          this.alertOpts.text = '获取生产数据失败！';
+          this.alertOpts.model = true;
+          setTimeout(() => {
+            this.alertOpts.model = false;
+          }, 3000);
         }
-        this.loadingDialog = false;
-        this.timeoutId = setTimeout(() => {
+        this.lineInfo.loadingDialog = false;
+        if (!this.destroyed) {
           console.log(this);
-          this.getLinesData();
-        }, this.refresh);
+          if (Date.now() - this.lineInfo.lastReq > this.lineInfo.refresh) {
+            this.getLinesData();
+          } else {
+            this.lineInfo.timeoutId = setTimeout(() => {
+              this.getLinesData();
+            }, this.lineInfo.refresh - (Date.now() - this.lineInfo.lastReq));
+          }
+        }
+        
       });
     }
   },
