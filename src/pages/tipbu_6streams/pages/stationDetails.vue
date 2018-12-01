@@ -134,6 +134,7 @@
         :end-date="errorFreqAndTimeByDay.endDate"
         :line-id="errorFreqAndTimeByDay.lineId"
         :station-id="errorFreqAndTimeByDay.stationId"
+        @chart-click="errorFreqAndTimeByDayClick"
       ></error-frequency-and-time-by-day>
     </v-flex>
 
@@ -551,7 +552,7 @@ export default {
       ],
       yichangCishu: {
         byType: {
-          show: false,
+          show: true,
           date: moment().format('MM-DD'),
           chartOption: [
             ['dataset.source', API.cishuByType],
@@ -572,7 +573,7 @@ export default {
           ]
         },
         byDay: {
-          show: false,
+          show: true,
           type: '异常类型',
           chartOption: [
             ['dataset.source', API.cishuByDay],
@@ -593,7 +594,7 @@ export default {
           ]
         },
         byHour: {
-          show: false,
+          show: true,
           date: moment().format('MM-DD'),
           chartOption: [
             ['dataset.source', API.cishuByHour],
@@ -616,7 +617,7 @@ export default {
       },
       yichangShijian: {
         byType: {
-          show: false,
+          show: true,
           date: moment().format('MM-DD'),
           chartOption: [
             ['dataset.source', API.shijianByType],
@@ -636,7 +637,7 @@ export default {
           ]
         },
         byDay: {
-          show: false,
+          show: true,
           type: '异常类型',
           chartOption: [
             ['dataset.source', API.shijianByDay],
@@ -656,7 +657,7 @@ export default {
           ]
         },
         byHour: {
-          show: false,
+          show: true,
           date: moment().format('MM-DD'),
           chartOption: [
             ['dataset.source', API.shijianByHour],
@@ -702,12 +703,6 @@ export default {
     };
   },
   watch: {
-    'chanchu_jiadong_byday.model.0': function (n, o) {
-      this.chartResize('chanchuJiadong', n);
-    },
-    'jiadongByHour.model.0': function (n, o) {
-      this.chartResize('jiadongExp', n);
-    },
     'yichangCishu.byType.show': function (n, o) {
       if (n) {
         console.log(API.cishuByHour);
@@ -791,12 +786,8 @@ export default {
     utilOutputByDayClick (evt) {
       this.utilOutputByHour.date = evt.date;
     },
-    chartResize (name, n) {
-      if (n) {
-        setTimeout(() => {
-          this.$refs[name].resize();
-        }, 300);
-      }
+    errorFreqAndTimeByDayClick (evt) {
+      console.log(evt);
     },
     littleShow (a, b) {
       // if (a === 1) {
