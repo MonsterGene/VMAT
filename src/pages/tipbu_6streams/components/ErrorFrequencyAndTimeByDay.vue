@@ -28,7 +28,7 @@ export default {
   props: ['title', 'startDate', 'endDate', 'lineId', 'stationId'],
   data () {
     return {
-      chartData: null
+      chartData: { date: [] }
     };
   },
   computed: {
