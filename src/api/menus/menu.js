@@ -1,9 +1,11 @@
 import example from './example';
 import project from '../../pages/project/menu';
 import tipbu_6streams_menu from '../../pages/tipbu_6streams/menu';
+import vision from '../../pages/vision/menu';
 const Menu = [];
 
 Menu.push(...tipbu_6streams_menu);
+Menu.push(...vision);
 // Menu.push(...project);
 // Menu.push(...example);
 
