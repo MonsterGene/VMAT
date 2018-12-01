@@ -14,7 +14,7 @@
     </div>
   </div>
   <v-dialog
-    v-model="loadingDialog"
+    v-model="lineInfo.loadingDialog"
     hide-overlay
     persistent
     width="300"
@@ -88,9 +88,13 @@ const API = { demoApi, lineApi };
 export default {
   data () {
     return {
-      loadingDialog: true,
-      timeoutId: null,
-      refresh: 500,
+      lineInfo: {
+        loadingDialog: true,
+        timeoutId: null,
+        refresh: 5000,
+        lastReq: Date.now(),
+        
+      },
       legends: [],
       stationImg: demoApi.stationImgConf,
       linesData: [],
@@ -98,7 +102,8 @@ export default {
         model: false,
         type: 'error',
         text: '提示信息。'
-      }
+      },
+      destroyed: false
     };
   },
   mounted () {
@@ -119,13 +124,15 @@ export default {
     
   },
   beforeDestroy () {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
+    this.destroyed = true;
+    if (this.lineInfo.timeoutId) {
+      clearTimeout(this.lineInfo.timeoutId);
     }
   },
   methods: {
     getLinesData () {
       // fetch lineData data
+      this.lineInfo.lastReq = Date.now();
       API.lineApi.getLinesData().then(res => {
         const data = res.data;
         console.log(data);
@@ -146,12 +153,16 @@ export default {
             this.alertOpts.model = false;
           }, 3000);
         }
-        this.loadingDialog = false;
-        if (this) {
-          this.timeoutId = setTimeout(() => {
-            console.log(this);
+        this.lineInfo.loadingDialog = false;
+        if (!this.destroyed) {
+          console.log(this);
+          if (Date.now() - this.lineInfo.lastReq > this.lineInfo.refresh) {
             this.getLinesData();
-          }, this.refresh);
+          } else {
+            this.lineInfo.timeoutId = setTimeout(() => {
+              this.getLinesData();
+            }, this.lineInfo.refresh - (Date.now() - this.lineInfo.lastReq));
+          }
         }
         
       });
