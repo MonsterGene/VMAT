@@ -1,5 +1,12 @@
 <template>
 <v-container grid-list-xl fluid>
+  <v-alert
+    v-model="alertOpts.model"
+    :type="alertOpts.type"
+    transition="scale-transition"
+  >
+    {{ alertOpts.text }}
+  </v-alert>
   <div class="legend-container">
     <div class="legend" v-for="leg in legends" :key="leg.state">
       <div :class="['state-ide', leg.color==='black'? 'grey' : leg.color]"></div>
@@ -86,7 +93,12 @@ export default {
       refresh: 500,
       legends: [],
       stationImg: demoApi.stationImgConf,
-      linesData: []
+      linesData: [],
+      alertOpts: {
+        model: false,
+        type: 'error',
+        text: '提示信息。'
+      }
     };
   },
   mounted () {
@@ -98,7 +110,7 @@ export default {
         this.legends = data.data;
       } else {
         console.log(data.message);
-        this.legends = API.demoApi.stateLegends;
+        this.legends = [];
       }
     });
 
@@ -128,20 +140,20 @@ export default {
           });
         } else {
           console.log(data.message);
-          this.linesData = ['A01', 'A02', 'A03'].map(val => {
-            return {
-              id: 0,
-              name: val,
-              totalTarget: 2000,
-              stations: API.demoApi.stationList
-            };
-          });
+          this.alertOpts.text = '获取生产数据失败！';
+          this.alertOpts.model = true;
+          setTimeout(() => {
+            this.alertOpts.model = false;
+          }, 3000);
         }
         this.loadingDialog = false;
-        this.timeoutId = setTimeout(() => {
-          console.log(this);
-          this.getLinesData();
-        }, this.refresh);
+        if (this) {
+          this.timeoutId = setTimeout(() => {
+            console.log(this);
+            this.getLinesData();
+          }, this.refresh);
+        }
+        
       });
     }
   },
