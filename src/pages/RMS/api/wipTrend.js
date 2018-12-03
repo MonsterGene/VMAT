@@ -1,7 +1,6 @@
 import { axios, catchMethod } from './config';
-
 const getBu = () => {
-  return axios.post('/overview/').catch(catchMethod);
+  return axios.get('/overview/').catch(catchMethod);
 };
 
 // const getLinesData = () => {

@@ -161,7 +161,7 @@ export default {
     }
   },  
   mounted () {
-    this.sideBarOption = 'dark';
+    // this.sideBarOption = 'dark';
   }
 };
 </script>
