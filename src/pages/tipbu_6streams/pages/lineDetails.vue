@@ -3,55 +3,39 @@
   <!-- complex chart -->
   <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
-      <output-analysis
-        ref="chanchuDacheng"
-        :title="'产出与达成率分析（整线 - '+ $route.params.lineName +' - 每日趋势）'"
-        :path-option="chanchu_dacheng_byday"
-      >
-        <div slot="widget-header-action" style="width:120px;height:48px">
-          <v-select
-            :items="['机种1','机种2','机种3','机种4','机种5']"
-            label="机种选择"
-            solo
-          ></v-select>
-        </div>
-      </output-analysis>
+      <utilization-rate-and-output-by-day
+        :header-text="'产出与达成率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
+        :line-id="$route.query.l"
+        :station-id="13"
+        :open="true"
+        @chart-click="yieldOutputByDayClick"
+      ></utilization-rate-and-output-by-day>
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="dachengByHour.model" expand :dark="$vuetify.dark">
-        <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
-          <div slot="header">产出与达成率分析（整线单天【{{ dachengByHour.date }}】 小时趋势）</div>
-          <e-chart 
-            ref="dachengExp"
-            :path-option="dachengByHour.chartOption"
-            height="400px"
-            width="100%"
-            >
-            </e-chart>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+      <utilization-rate-and-output-by-hour
+        :header-text="'产出与达成率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ yieldOutputByHour.date +'）'"
+        :date="yieldOutputByHour.date"
+        :line-id="yieldOutputByHour.lineId"
+        :station-id="13"
+      ></utilization-rate-and-output-by-hour>
     </v-flex>
 
     <v-flex lg12 sm12 xs12>
-      <output-analysis
-        ref="chanchuJiadong"
-        :title="'产出与稼动率分析（整线 - '+ $route.params.lineName +' - 每日趋势）'"
-        :path-option="chanchu_jiadong_byday"
-      ></output-analysis> 
+      <utilization-rate-and-output-by-day
+        :header-text="'产出与稼动率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
+        :line-id="$route.query.l"
+        :station-id="13"
+        :open="true"
+        @chart-click="utilOutputByDayClick"
+      ></utilization-rate-and-output-by-day>
     </v-flex>
     <v-flex lg12 sm12 xs12>
-      <v-expansion-panel v-model="jiadongByHour.model" expand :dark="$vuetify.dark">
-        <v-expansion-panel-content :class="[$vuetify.theme.primaryName, $vuetify.dark ? 'darken-3' : 'lighten-4']">
-          <div slot="header">稼动率与产出分析（整线单天【{{ jiadongByHour.date }}】 小时趋势）</div>
-          <e-chart
-            ref="jiadongExp"
-            :path-option="jiadongByHour.chartOption"
-            height="400px"
-            width="100%"
-            >
-            </e-chart>
-        </v-expansion-panel-content>
-      </v-expansion-panel>
+      <utilization-rate-and-output-by-hour
+        :header-text="'产出与稼动率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
+        :date="utilOutputByHour.date"
+        :line-id="utilOutputByHour.lineId"
+        :station-id="13"
+      ></utilization-rate-and-output-by-hour>
     </v-flex>
 
     <v-flex lg6 sm12 xs12>
@@ -173,17 +157,28 @@ import _object from 'lodash/object';
 import VWidget from '@/components/VWidget';
 import OutputAnalysis from '../components/outputAnalysis.vue';
 import ErrorAnalysis from '../components/errorAnalysis.vue';
+import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
+import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
 
 export default {
   components: {
     EChart,
     VWidget,
     OutputAnalysis,
-    ErrorAnalysis
+    ErrorAnalysis,
+    UtilizationRateAndOutputByDay,
+    UtilizationRateAndOutputByHour
   },
   data () {
     return {
-      moment,
+      yieldOutputByHour: {
+        date: moment().format('YYYY-MM-DD'),
+        lineId: this.$route.query.l
+      },
+      utilOutputByHour: {
+        date: moment().format('YYYY-MM-DD'),
+        lineId: this.$route.query.l
+      },
       selectedTab: 'tab-1',
       option: null,
       dataset: {
@@ -191,178 +186,43 @@ export default {
         ...API
       },
       color: Material,
-      dachengByHour: {
-        model: [false],
-        date: moment().format('MM-DD'),
-        chartOption: [
-          ['dataset.source', API.hoursData],
-          ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-          ['legend.show', true],
-          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-          ['toolbox.show', true],
-          ['xAxis.axisLabel.show', true],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '2%'],
-          ['grid.bottom', '5%'],
-          ['grid.right', '3%'],
-
-          ['series[0].type', 'line'],
-          ['series[0].label.show', true],
-          ['series[0].smooth', true],
-          
-          ['series[1].type', 'line'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true],
-
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],
-
-          ['series[3].smooth', true],
-          ['series[3].type', 'bar'],
-          ['series[3].label.show', true],
-          ['series[3].label.position', 'top'],
-
-          ['series[4].smooth', true],
-          ['series[4].type', 'bar'],
-          ['series[4].label.show', true],
-          ['series[4].label.position', 'top'],
-
-          ['series[5].smooth', true],
-          ['series[5].type', 'bar'],
-          ['series[5].label.show', true],
-          ['series[5].label.position', 'top'],
-        ]
-      },
-      chanchu_dacheng_byday: [
-        ['dataset.source', API.dailyData1],
-        ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-        ['legend.show', true],
-        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-        ['toolbox.show', true],
-        ['xAxis.axisLabel.show', true],
-        ['yAxis.axisLabel.show', true],
-        ['grid.left', '2%'],
-        ['grid.bottom', '5%'],
-        ['grid.right', '3%'],
-
-        ['series[0].type', 'line'],
-        ['series[0].label.show', true],
-        ['series[0].smooth', true],
-        
-        ['series[1].type', 'line'],
-        ['series[1].label.show', true],
-        ['series[1].smooth', true],
-
-        ['series[2].type', 'line'],
-        ['series[2].label.show', true],
-        ['series[2].smooth', true],
-
-        ['series[3].smooth', true],
-        ['series[3].type', 'bar'],
-        ['series[3].label.show', true],
-        ['series[3].label.position', 'top'],
-
-        ['series[4].smooth', true],
-        ['series[4].type', 'bar'],
-        ['series[4].label.show', true],
-        ['series[4].label.position', 'top'],
-
-        ['series[5].smooth', true],
-        ['series[5].type', 'bar'],
-        ['series[5].label.show', true],
-        ['series[5].label.position', 'top'],
-      ],
-      jiadongByHour: {
-        model: [false],
-        date: moment().format('MM-DD'),
-        chartOption: [
-          ['dataset.source', API.hoursData],
-          ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-          ['legend.show', true],
-          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-          ['toolbox.show', true],
-          ['xAxis.axisLabel.show', true],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '2%'],
-          ['grid.bottom', '5%'],
-          ['grid.right', '3%'],
-
-          ['series[0].type', 'line'],
-          ['series[0].label.show', true],
-          ['series[0].smooth', true],
-          
-          ['series[1].type', 'line'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true],
-
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],
-
-          ['series[3].smooth', true],
-          ['series[3].type', 'bar'],
-          ['series[3].label.show', true],
-          ['series[3].label.position', 'top'],
-
-          ['series[4].smooth', true],
-          ['series[4].type', 'bar'],
-          ['series[4].label.show', true],
-          ['series[4].label.position', 'top'],
-
-          ['series[5].smooth', true],
-          ['series[5].type', 'bar'],
-          ['series[5].label.show', true],
-          ['series[5].label.position', 'top'],
-        ]
-      },
-      chanchu_jiadong_byday: [
-        ['dataset.source', API.dailyData1],
-        ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-        ['legend.show', true],
-        ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-        ['toolbox.show', true],
-        ['xAxis.axisLabel.show', true],
-        ['yAxis.axisLabel.show', true],
-        ['grid.left', '2%'],
-        ['grid.bottom', '5%'],
-        ['grid.right', '3%'],
-
-        ['series[0].type', 'line'],
-        ['series[0].label.show', true],
-        ['series[0].smooth', true],
-        
-        ['series[1].type', 'line'],
-        ['series[1].label.show', true],
-        ['series[1].smooth', true],
-
-        ['series[2].type', 'line'],
-        ['series[2].label.show', true],
-        ['series[2].smooth', true],
-
-        ['series[3].smooth', true],
-        ['series[3].type', 'bar'],
-        ['series[3].label.show', true],
-        ['series[3].label.position', 'top'],
-
-        ['series[4].smooth', true],
-        ['series[4].type', 'bar'],
-        ['series[4].label.show', true],
-        ['series[4].label.position', 'top'],
-
-        ['series[5].smooth', true],
-        ['series[5].type', 'bar'],
-        ['series[5].label.show', true],
-        ['series[5].label.position', 'top'],
-      ],
       yichangcishu_line: [
         ['dataset.source', API.cishuByStation],
-        ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
+        ['color', ['#bfbfbf', '#73fb79']],
         ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['legend.selected', {}],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
-        ['yAxis', Array(2).fill({ axisLabel: { show: true }})],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(2).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
@@ -381,12 +241,41 @@ export default {
       ],
       yichangshijian_line: [
         ['dataset.source', API.shijianByStation],
-        ['color', [Material.indigo.base, Material.teal.base]],
+        ['color', ['#bfbfbf', '#73fb79']],
         ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['legend.selected', {}],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
-        ['yAxis', Array(2).fill({ axisLabel: { show: true }})],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(2).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
@@ -433,28 +322,28 @@ export default {
   },
   mounted () {
     // 产出达成分析图点击
-    this.$refs.chanchuDacheng.chartInstance.on('click', evt => {
-      console.log(evt);
-      console.log(this.$refs.chanchuDacheng.chartInstance);
-      this.dachengByHour.model = [true];
-      this.dachengByHour.date = evt.name;
-      API.hoursData.reverse();
-      console.log(this.dachengByHour.model);
-      this.$refs.dachengExp.update();
-    });
+    // this.$refs.chanchuDacheng.chartInstance.on('click', evt => {
+    //   console.log(evt);
+    //   console.log(this.$refs.chanchuDacheng.chartInstance);
+    //   this.dachengByHour.model = [true];
+    //   this.dachengByHour.date = evt.name;
+    //   API.hoursData.reverse();
+    //   console.log(this.dachengByHour.model);
+    //   this.$refs.dachengExp.update();
+    // });
 
     // 产出稼动分析图点击
-    this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
-      this.jiadongByHour.model = [true];
-      this.jiadongByHour.date = evt.name;
-      API.hoursData.reverse();
-      this.$refs.jiadongExp.update();
-    });
+    // this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
+    //   this.jiadongByHour.model = [true];
+    //   this.jiadongByHour.date = evt.name;
+    //   API.hoursData.reverse();
+    //   this.$refs.jiadongExp.update();
+    // });
 
     // 次数、时间分析图点击
     this.$refs.cishu.chartInstance.on('click', evt => {
       console.log(evt);
-      this.$router.push({ path: '/tipbu-6streams/station-details/' + evt.name });
+      this.$router.push({ path: '/tipbu-6streams/station-details/' + evt.name + '?l=' + this.$route.query.l });
     });
     this.$refs.shijian.chartInstance.on('click', evt => {
       console.log(evt);
@@ -462,6 +351,14 @@ export default {
     });
   },
   methods: {
+    yieldOutputByDayClick (evt) {
+      console.log(evt);
+      this.yieldOutputByHour.date = evt.date;
+    },
+    utilOutputByDayClick (evt) {
+      console.log(evt);
+      this.utilOutputByHour.date = evt.date;
+    },
     chartResize (name, n) {
       if (n) {
         setTimeout(() => {
