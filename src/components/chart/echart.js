@@ -192,6 +192,9 @@ export default {
           this.chartInstance.resize();
         }, this.widthChangeDelay);
       });
+      this.chartInstance.on('click', evt => {
+        this.$emit('chart-click', evt);
+      });
     },
     update () {
       // set 
