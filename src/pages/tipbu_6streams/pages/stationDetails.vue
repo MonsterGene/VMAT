@@ -35,12 +35,12 @@
               ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
+              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisLabel.show', true],
               ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
 
               ['grid.left', '2%'],
               ['grid.bottom', '5%'],
@@ -138,17 +138,20 @@
       ></error-frequency-and-time-by-day>
     </v-flex>
 
-    <!-- <error-frequency
+    <error-frequency
       :show-level="subError.showLevel"
       :date="subError.date"
       :line-id="subError.lineId"
-      :station
+      :station-id="subError.stationId"
+      @chart-click="subErrorClick"
     ></error-frequency>
     <error-time
       :show-level="subError.showLevel"
       :date="subError.date"
       :line-id="subError.lineId"
-    ></error-time> -->
+      :station-id="subError.stationId"
+      @chart-click="subErrorClick"
+    ></error-time>
     
   </v-layout>
 </v-container>
@@ -182,443 +185,47 @@ export default {
   },
   data () {
     console.log(API.dailyCishuShijian);
+    const lineId = this.$route.query.l;
+    const stationId = this.$route.query.s;
     return {
       utilOutputByHour: {
         date: moment().format('YYYY-MM-DD'),
-        lineId: this.$route.query.l,
-        stationId: this.$route.query.s
+        lineId,
+        stationId
       },
       errorFreqAndTimeByDay: {
         startDate: moment().subtract('months', 1).format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD'),
-        lineId: this.$route.query.l,
-        stationId: this.$route.query.s
+        lineId,
+        stationId
+      },
+      subError: {
+        showLevel: 0,
+        date: moment().format('YYYY-MM-DD'),
+        lineId,
+        stationId 
       },
       dataset: {
         ...API
       },
       color: Material,
-      datePicker: [
-        { menu: false, date: moment().format('YYYY-MM-DD') },
-        { menu: false, date: moment().format('YYYY-MM-DD') },
-        { menu: false, date: moment().format('YYYY-MM-DD') },
-        { menu: false, date: moment().format('YYYY-MM-DD') }
-      ],
-      jiadongByHour: {
-        model: [false],
-        date: moment().format('MM-DD'),
-        chartOption: [
-          ['dataset.source', API.hoursData],
-          ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
-          ['legend.show', true],
-          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-          ['toolbox.show', true],
-          ['xAxis.axisLabel.show', true],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '2%'],
-          ['grid.bottom', '5%'],
-          ['grid.right', '3%'],
 
-          ['series[0].type', 'line'],
-          ['series[0].label.show', true],
-          ['series[0].label.textBorderWidth', 3],
-          ['series[0].label.textShadowColor', 'rgba(0,0,0,120)'],
-          ['series[0].label.textShadowBlur', 5],
-          ['series[0].smooth', true],
-          ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-          
-          ['series[1].type', 'line'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true],
-          ['series[1].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],
-          ['series[2].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[3].smooth', true],
-          ['series[3].type', 'bar'],
-          ['series[3].label.show', true],
-          ['series[3].label.position', 'top'],
-          ['series[3].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[4].smooth', true],
-          ['series[4].type', 'bar'],
-          ['series[4].label.show', true],
-          ['series[4].label.position', 'top'],
-          ['series[4].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[5].smooth', true],
-          ['series[5].type', 'bar'],
-          ['series[5].label.show', true],
-          ['series[5].label.position', 'top'],
-          ['series[5].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-        ]
-      },
-      chanchu_jiadong_byday: {
-        model: [false],
-        chartOption: [
-          ['dataset.source', API.dailyData1],
-          ['color', [Material.amber.base, Material.blue.base, Material.teal.base]],
-          ['legend.show', true],
-          ['legend.selected', { 'Rate 1': false, 'Rate 2': false, 'Num 1': false, 'Num 2': false }],
-          ['toolbox.show', true],
-          ['xAxis.axisLabel.show', true],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '2%'],
-          ['grid.bottom', '5%'],
-          ['grid.right', '3%'],
-
-          ['series[0].type', 'line'],
-          ['series[0].label.show', true],
-          ['series[0].smooth', true],
-          ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-          
-          ['series[1].type', 'line'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true],
-          ['series[1].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],
-          ['series[2].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[3].smooth', true],
-          ['series[3].type', 'bar'],
-          ['series[3].label.show', true],
-          ['series[3].label.position', 'top'],
-          ['series[3].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[4].smooth', true],
-          ['series[4].type', 'bar'],
-          ['series[4].label.show', true],
-          ['series[4].label.position', 'top'],
-          ['series[4].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-
-          ['series[5].smooth', true],
-          ['series[5].type', 'bar'],
-          ['series[5].label.show', true],
-          ['series[5].label.position', 'top'],
-          ['series[5].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-        ]
-      },
-      yichang_cishu_shijian_byday: [
-        ['dataset.source', API.dailyCishuShijian],
-        ['color', ['#73fb79', '#bfbfbf']],
-        ['legend.show', true],
-        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-        ['legend.selected', {}],
-        ['toolbox.show', true],
-        ['xAxis.axisLabel.show', true],
-        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
-        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-        ['yAxis', Array(2).fill({
-          show: true,
-          type: 'value',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
-            }
-          },
-          axisTick: {
-            show: true,
-            lineStyle: {
-              show: true,
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
-            }
-          },
-          axisLabel: {
-            show: true,
-            color: 'rgba(255, 255, 255, .54)'
-          },
-          splitLine: {
-            lineStyle: {
-              type: 'dashed'
-            }
-          }
-        })],
-        ['grid.left', '2%'],
-        ['grid.bottom', '5%'],
-        ['grid.right', '3%'],
-
-        ['series[0].type', 'line'],
-        ['series[0].label.show', true],
-        ['series[0].smooth', true],
-        // ['series[0].lineStyle.normal', { width: 3, shadowColor: 'rgba(255,255,255,10)', shadowBlur: 5, shadowOffsetY: 0 }],
-        
-        ['series[1].type', 'bar'],
-        ['series[1].label.show', false],
-        ['series[1].smooth', false],
-        ['series[1].yAxisIndex', 1]
-
-      ],
-      yichangCishu: {
-        byType: {
-          show: true,
-          date: moment().format('MM-DD'),
-          chartOption: [
-            ['dataset.source', API.cishuByType],
-            ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'line'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-            
-          ]
-        },
-        byDay: {
-          show: true,
-          type: '异常类型',
-          chartOption: [
-            ['dataset.source', API.cishuByDay],
-            ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'line'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-            
-          ]
-        },
-        byHour: {
-          show: true,
-          date: moment().format('MM-DD'),
-          chartOption: [
-            ['dataset.source', API.cishuByHour],
-            ['color', [Material.amber.base, Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'line'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-            
-          ]
-        }
-      },
-      yichangShijian: {
-        byType: {
-          show: true,
-          date: moment().format('MM-DD'),
-          chartOption: [
-            ['dataset.source', API.shijianByType],
-            ['color', [Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'bar'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-          ]
-        },
-        byDay: {
-          show: true,
-          type: '异常类型',
-          chartOption: [
-            ['dataset.source', API.shijianByDay],
-            ['color', [Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'bar'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-          ]
-        },
-        byHour: {
-          show: true,
-          date: moment().format('MM-DD'),
-          chartOption: [
-            ['dataset.source', API.shijianByHour],
-            ['color', [Material.indigo.base, Material.teal.base]],
-            ['legend.show', true],
-            ['legend.selected', {}],
-            ['toolbox.show', true],
-            ['xAxis.axisLabel.show', true],
-            ['yAxis', Array(1).fill({ axisLabel: { show: true }})],
-            ['grid.left', '2%'],
-            ['grid.bottom', '5%'],
-            ['grid.right', '3%'],
-
-            ['series[0].type', 'bar'],
-            ['series[0].label.show', true],
-            ['series[0].smooth', true],
-          ]
-        }
-      },
-      table: {
-        headers: [
-          { text: 'Work date', value: 'date' },
-          { text: 'Machine name', value: 'machineName' },
-          { text: 'Error code', value: 'errorCode' },
-          { text: 'Error info', value: 'errorInfo' },
-          { text: 'Error rootc', value: 'errorRoot' },
-          { text: 'Error action', value: 'errorAction' },
-          { text: 'Count', value: 'count' },
-          { text: 'Action' }
-        ],
-        desserts: [
-          {
-            date: moment().format('YYYY-MM-DD'),
-            machineName: 'test machine',
-            errorCode: 'M10',
-            errorInfo: '',
-            errorRoot: '',
-            errorAction: '',
-            acount: ''
-          }
-        ]
-      }
     };
   },
-  watch: {
-    'yichangCishu.byType.show': function (n, o) {
-      if (n) {
-        console.log(API.cishuByHour);
-        this.$nextTick(() => {
-          this.$refs.cishuByType.chartInstance.on('click', evt => {
-            this.yichangCishu.byDay.show = true;
-            this.yichangCishu.byHour.show = false;
-            this.yichangCishu.byDay.type = evt.name;
-
-            this.yichangShijian.byDay.show = true;
-            this.yichangShijian.byHour.show = false;
-            this.yichangShijian.byDay.type = evt.name;
-          });
-        });
-      }
-    },
-    'yichangCishu.byDay.show': function (n, o) {
-      if (n) {
-        this.$nextTick(() => {
-          this.$refs.cishuByDay.chartInstance.on('click', evt => {
-            this.yichangCishu.byHour.show = true;
-            this.yichangCishu.byHour.date = evt.name;
-
-            this.yichangShijian.byHour.show = true;
-            this.yichangShijian.byHour.date = evt.name;
-          });
-        });
-      }
-    },
-    'yichangShijian.byType.show': function (n, o) {
-      if (n) {
-        this.$nextTick(() => {
-          this.$refs.shijianByType.chartInstance.on('click', evt => {
-            this.yichangShijian.byDay.show = true;
-            this.yichangShijian.byHour.show = false;
-            this.yichangShijian.byDay.type = evt.name;
-
-            this.yichangCishu.byDay.show = true;
-            this.yichangCishu.byHour.show = false;
-            this.yichangCishu.byDay.type = evt.name;
-          });
-        });
-      }
-    },
-    'yichangShijian.byDay.show': function (n, o) {
-      if (n) {
-        this.$nextTick(() => {
-          this.$refs.shijianByDay.chartInstance.on('click', evt => {
-            this.yichangShijian.byHour.show = true;
-            this.yichangShijian.byHour.date = evt.name;
-
-            this.yichangCishu.byHour.show = true;
-            this.yichangCishu.byHour.date = evt.name;
-          });
-        });
-      }
-    }
-  },
-  mounted () {
-    // // 产出稼动率by day点击
-    // this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
-    //   this.jiadongByHour.model = [true];
-    //   this.jiadongByHour.date = evt.name;
-    //   API.hoursData.reverse();
-    //   this.$refs.jiadongExp.update();
-    // });
-
-    // // 异常次数或时间分析图点击
-    // this.$refs.yichangCishuShijian.chartInstance.on('click', evt => {
-    //   console.log(evt);// evt.name evt.seriesName
-    //   if (evt.seriesName === '次数') {
-    //     this.littleShow(1, 1);
-    //     this.yichangCishu.byType.date = evt.name;
-    //   } else {
-    //     this.littleShow(2, 1);
-    //     this.yichangShijian.byType.date = evt.name;
-    //   }
-    // });
-  },
+  // mounted () {},
   methods: {
     utilOutputByDayClick (evt) {
       this.utilOutputByHour.date = evt.date;
     },
     errorFreqAndTimeByDayClick (evt) {
       console.log(evt);
+      this.subError.date = evt.date;
+      this.subError.showLevel = 1;
     },
-    littleShow (a, b) {
-      // if (a === 1) {
-      // Object.keys(this.yichangShijian).forEach(v => {
-      //   this.yichangShijian[v].show = false;
-      // });
-      Object.keys(this.yichangCishu).forEach((v, i) => {
-        if (i + 1 <= b) {
-          this.yichangCishu[v].show = true;
-        } else {
-          this.yichangCishu[v].show = false;
-        }
-      });
-      // } else {
-      // Object.keys(this.yichangCishu).forEach(v => {
-      //   this.yichangCishu[v].show = false;
-      // });
-      Object.keys(this.yichangShijian).forEach((v, i) => {
-        if (i + 1 <= b) {
-          this.yichangShijian[v].show = true;
-        } else {
-          this.yichangShijian[v].show = false;
-        }
-      });
-      // }
+    subErrorClick (evt, level) {
+      console.log(evt, level);
+      this.subError.showLevel = ++level;
+      console.log(this.subError.showLevel);
     }
   }
 };
