@@ -24,12 +24,12 @@ export default {
   components: {
     EChart
   },
-  props: ['headerText', 'stationId', 'lineId'],
+  props: ['headerText', 'stationId', 'lineId', 'open'],
   data () {
     return {
       refreshInterval: 5000,
       intervalId: null,
-      expansionModel: [false],
+      expansionModel: [typeof this.open === 'undefined' ? false : this.open],
       seriesConf: {
         smooth: true,
         label: {

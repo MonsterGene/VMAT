@@ -58,8 +58,8 @@ export default {
         ['legend.show', true],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
-        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.show', true],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
         ['yAxis', Array(2).fill({
           show: true,
