@@ -1,12 +1,12 @@
 <template>
-<v-flex lg6 sm12 xs12>
-  <v-layout row v-if="yichangShijian.byType.show">
+<v-flex lg6 sm12 xs12 v-if="showLevel">
+  <v-layout row v-if="showLevel>=1">
     <v-flex xs12>
-      <v-widget :title="'异常类型分析（'+ yichangShijian.byType.date +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+      <v-widget :title="'异常类型分析'" content-bg="#282a30">
         <div slot="widget-header-action" style="width:260px;display:flex;">
           <v-menu
             :close-on-content-click="false"
-            v-model="datePicker[2].menu"
+            v-model="timeByType.startDate.menu"
             :nudge-right="40"
             lazy
             transition="scale-transition"
@@ -15,15 +15,15 @@
           >
             <v-text-field
               slot="activator"
-              v-model="datePicker[2].date"
+              v-model="timeByType.startDate.date"
               prepend-icon="event"
               readonly
             ></v-text-field>
-            <v-date-picker v-model="datePicker[2].date" @input="datePicker[2].menu = false"></v-date-picker>
+            <v-date-picker v-model="timeByType.startDate.date" @input="timeByType.startDate.menu = false"></v-date-picker>
           </v-menu>
           <v-menu
             :close-on-content-click="false"
-            v-model="datePicker[3].menu"
+            v-model="timeByType.endDate.menu"
             :nudge-right="40"
             lazy
             transition="scale-transition"
@@ -32,17 +32,17 @@
           >
             <v-text-field
               slot="activator"
-              v-model="datePicker[3].date"
+              v-model="timeByType.endDate.date"
               prepend-icon="event"
               readonly
             ></v-text-field>
-            <v-date-picker v-model="datePicker[3].date" @input="datePicker[3].menu = false"></v-date-picker>
+            <v-date-picker v-model="timeByType.endDate.date" @input="timeByType.endDate.menu = false"></v-date-picker>
           </v-menu>
         </div>
         <div slot="widget-content">
           <e-chart
-            ref="shijianByType"
-            :path-option="yichangShijian.byType.chartOption"
+            :path-option="timeByTypeChartOption"
+            @chart-click="$emit('chart-click', $event, 1)"
             height="400px"
             width="100%"
             >
@@ -51,50 +51,28 @@
       </v-widget>
     </v-flex>
   </v-layout>
-  <v-layout row v-if="yichangShijian.byDay.show">
+  <v-layout row v-if="showLevel>=2">
     <v-flex xs12>
-      <v-widget :title="'机故时间走势（'+ yichangShijian.byDay.type +'）'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+      <v-widget :title="'机故时间走势（'+ timeByDay.type +'）'" content-bg="#282a30">
         <div slot="widget-content">
           <e-chart 
-            ref="shijianByDay"
-            :path-option="yichangShijian.byDay.chartOption"
+            :path-option="timeByDayChartOption"
+            @chart-click="$emit('chart-click', $event, 2)"
             height="400px"
             width="100%"
             >
           </e-chart>
-          <v-toolbar flat :color="$vuetify.dark ? 'grey' : 'white'">
-            <v-toolbar-title>异常处理方法：</v-toolbar-title>
-          </v-toolbar>
-          <v-data-table
-            :headers="table.headers"
-            :items="table.desserts"
-            :hide-actions="true"
-            class="elevation-1"
-          >
-            <template slot="items" slot-scope="props">
-              <td class="text-xs-right">{{ props.item.date }}</td>
-              <td class="text-xs-right">{{ props.item.machineName }}</td>
-              <td class="text-xs-right">{{ props.item.errorCode }}</td>
-              <td class="text-xs-right">{{ props.item.errorInfo }}</td>
-              <td class="text-xs-right">{{ props.item.errorRoot }}</td>
-              <td class="text-xs-right">{{ props.item.errorAction }}</td>
-              <td class="text-xs-right">{{ props.item.count }}</td>
-              <td class="text-xs-right">
-                <v-btn color="success">修改</v-btn>
-              </td>
-            </template>
-          </v-data-table>
         </div>
       </v-widget>
     </v-flex>
   </v-layout>
-  <v-layout row v-if="yichangShijian.byHour.show">
+  <v-layout row v-if="showLevel>=3">
     <v-flex xs12>
-      <v-widget :title="'机故时间走势('+ yichangShijian.byHour.date +' '+ yichangShijian.byDay.type +')'" :content-bg="$vuetify.dark ? 'grey' : 'white'">
+      <v-widget :title="'机故时间走势('+ timeByHour.date +' '+ timeByHour.type +')'" content-bg="#282a30">
         <div slot="widget-content">
           <e-chart
-            ref="shijianByHour"
-            :path-option="yichangShijian.byHour.chartOption"
+            :path-option="timeByHourChartOption"
+            @chart-click="$emit('chart-click', $event, 3)"
             height="400px"
             width="100%"
             >
@@ -107,10 +85,202 @@
 </template>
 
 <script>
+import moment from 'moment';
+import EChart from '@/components/chart/echart';
+import VWidget from '@/components/VWidget';
+
 export default {
+  components: {
+    EChart, VWidget
+  },
+  props: ['showLevel', 'date', 'lineId', 'stationId'],
   data () {
     return {
+      timeByType: {
+        startDate: { menu: false, date: this.date },
+        endDate: { menu: false, date: this.date },
+        chartData: { type: [] }
+      },
+      timeByDay: {
+        type: null,
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().subtract('weeks', 1).format('YYYY-MM-DD'),
+        chartData: { date: [] }
+      },
+      timeByHour: {
+        date: null,
+        type: null,
+        chartData: { hour: [] }
+      }
     };
+  },
+  computed: {
+    timeByTypeChartOption () {
+      return [
+        ['dataset.source', this.timeByType.chartData],
+        ['color', ['#bfbfbf']],
+        ['legend.show', true],
+        // ['legend.selected', {}],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['toolbox.show', true],
+        ['xAxis.axisLabel.show', true],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(1).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
+        ['grid.left', '2%'],
+        ['grid.bottom', '5%'],
+        ['grid.right', '3%'],
+
+        ['series[0].type', 'bar'],
+        ['series[0].label.show', true],
+        ['series[0].smooth', true],
+      ];
+    },
+    timeByDayChartOption () {
+      return [
+        ['dataset.source', this.timeByDay.chartData],
+        ['color', ['#bfbfbf']],
+        ['legend.show', true],
+        // ['legend.selected', {}],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['toolbox.show', true],
+        ['xAxis.axisLabel.show', true],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', {
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        }],
+        ['grid.left', '2%'],
+        ['grid.bottom', '5%'],
+        ['grid.right', '3%'],
+
+        ['series[0].type', 'bar'],
+        ['series[0].label.show', true],
+        ['series[0].smooth', true],
+      ];
+    },
+    timeByHourChartOption () {
+      return [
+        ['dataset.source', this.timeByHour.chartData],
+        ['color', ['#bfbfbf']],
+        ['legend.show', true],
+        // ['legend.selected', {}],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['toolbox.show', true],
+        ['xAxis.axisLabel.show', true],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', {
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        }],
+        ['grid.left', '2%'],
+        ['grid.bottom', '5%'],
+        ['grid.right', '3%'],
+        
+
+        ['series[0].type', 'bar'],
+        ['series[0].label.show', true],
+        ['series[0].smooth', true],
+      ];
+    }
+  },
+  watch: {
+    date (n, o) {
+      this.timeByType.startDate.date = n;
+      this.timeByType.endDate.date = n;
+    },
+    showLevel (n, o) {
+      if (n === 1) {
+        this.timeByType.chartData = {
+          type: ['Error 1', 'Error 2', 'Error 3', 'Error 4'],
+          frequency: [2, 4, 7, 3]
+        };
+      } else if (n === 2) {
+        this.timeByDay.chartData = {
+          date: ['12-01', '12-02', '12-03', '12-04'],
+          frequency: [2, 4, 7, 3]
+        };
+      } else if (n === 3) {
+        this.timeByHour.chartData = {
+          hour: ['08:00', '09:00', '10:00', '11:00'],
+          frequency: [2, 4, 7, 3]
+        };
+      }
+    }
   }
 };
 </script>
