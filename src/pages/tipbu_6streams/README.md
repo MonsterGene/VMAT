@@ -72,9 +72,13 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 
 参数：
 star_date  // 查询起始日期
+
 end_date   // 查询截止日期
+
 line_id    // 线ID
+
 area_id    // 工站ID
+
 
 返回数据：
 ```javascript
@@ -102,10 +106,12 @@ area_id    // 工站ID
 
 ### 产出与稼动率每小时趋势
 产出路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByHour 
+
 稼动率路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByHour
-参数： 
-date
-line_id
+
+参数：  
+date  
+line_id  
 area_id
 
 返回数据：
@@ -155,11 +161,11 @@ lineId      // 线ID
 ```
 
 ### 异常次数按类型降序
-说明： 查询该工站所有异常，按异常类型统计次数降序排序，返回结果
-参数： 
-startDate   // 查询开始日期 
-endDate     // 查询结束日期 
-lineId      // 线ID 
+说明： 查询该工站所有异常，按异常类型统计次数降序排序，返回结果  
+参数：   
+startDate   // 查询开始日期  
+endDate     // 查询结束日期  
+lineId      // 线ID  
 stationId   // 工站ID 
 
 返回数据：
@@ -175,11 +181,11 @@ stationId   // 工站ID
 ```
 
 ### 异常时间按类型降序
-说明： 查询该工站所有异常时间，按异常类型统计异常时间，降序排序，返回结果
-参数： 
-startDate   // 查询开始日期
-endDate     // 查询结束日期
-lineId      // 线ID
+说明： 查询该工站所有异常时间，按异常类型统计异常时间，降序排序，返回结果  
+参数：  
+startDate   // 查询开始日期  
+endDate     // 查询结束日期  
+lineId      // 线ID  
 stationId   // 工站ID
 
 返回数据： 
@@ -195,12 +201,12 @@ stationId   // 工站ID
 ```
 
 ### 异常类型次数每天趋势
-说明： 按天统计该类型异常次数，返回数据
-参数： 
-startDate     // 查询开始时间
-endDate       // 查询结束时间
-errorType     // 查询异常类型
-lineId        // 线ID
+说明： 按天统计该类型异常次数，返回数据  
+参数：  
+startDate     // 查询开始时间  
+endDate       // 查询结束时间  
+errorType     // 查询异常类型  
+lineId        // 线ID  
 stationId     // 工站ID
 
 返回数据：
@@ -216,12 +222,12 @@ stationId     // 工站ID
 ```
 
 ### 异常类型次数单天每小时趋势
-说明： 按天统计该类型异常次数，返回数据
-参数： 
-date     // 查询日期
-errorType     // 查询异常类型
-lineId        // 线ID
-stationId     // 工站ID
+说明： 按天统计该类型异常次数，返回数据  
+参数：  
+date     // 查询日期  
+errorType     // 查询异常类型  
+lineId        // 线ID  
+stationId     // 工站ID  
 
 返回数据：
 ```javascript
@@ -236,12 +242,12 @@ stationId     // 工站ID
 ```
 
 ### 异常类型时间每天趋势
-说明： 按天统计该类型异常时间，返回趋势数据
-参数： 
-startDate   // 查询开始日期
-endDate     // 查询结束日期
-errorType   // 查询的异常类型
-lineId      // 线ID
+说明： 按天统计该类型异常时间，返回趋势数据  
+参数：  
+startDate   // 查询开始日期  
+endDate     // 查询结束日期  
+errorType   // 查询的异常类型  
+lineId      // 线ID  
 stationId   // 工站ID
 
 返回数据： 
@@ -257,11 +263,11 @@ stationId   // 工站ID
 ```
 
 ### 异常类型时间单天每小时趋势
-说明： 按天统计该类型异常时间，返回趋势数据
-参数： 
-date        // 查询日期
-errorType   // 查询的异常类型
-lineId      // 线ID
+说明： 按天统计该类型异常时间，返回趋势数据  
+参数：  
+date        // 查询日期  
+errorType   // 查询的异常类型  
+lineId      // 线ID  
 stationId   // 工站ID
 
 返回数据： 
@@ -277,8 +283,8 @@ stationId   // 工站ID
 ```
 
 ### 异常类型的处理方法
-说明： 返回该异常的处理方法
-参数： 
+说明： 返回该异常的处理方法  
+参数：  
 errorType  // 异常类型
 
 返回数据：
@@ -296,11 +302,11 @@ errorType  // 异常类型
 ```
 
 ### 异常类型处理方法编辑
-说明： 修改异常的处理方法
-参数： 
-errorType   // 异常类型，用于后台的查询条件
-info        // 修改后的异常描述
-rootCourse  // 修改后的异常原因
+说明： 修改异常的处理方法  
+参数：  
+errorType   // 异常类型，用于后台的查询条件  
+info        // 修改后的异常描述  
+rootCourse  // 修改后的异常原因  
 action      // 修改后的处理动作
 
 返回数据： 
