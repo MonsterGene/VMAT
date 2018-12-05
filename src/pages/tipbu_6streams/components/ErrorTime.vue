@@ -41,6 +41,7 @@
         </div>
         <div slot="widget-content">
           <e-chart
+            ref="timeByTypeChart"
             :path-option="timeByTypeChartOption"
             @chart-click="$emit('chart-click', $event, 1)"
             height="400px"
@@ -56,6 +57,7 @@
       <v-widget :title="'机故时间走势（'+ timeByDay.type +'）'" content-bg="#282a30">
         <div slot="widget-content">
           <e-chart 
+            ref="timeByDayChart"
             :path-option="timeByDayChartOption"
             @chart-click="$emit('chart-click', $event, 2)"
             height="400px"
@@ -71,6 +73,7 @@
       <v-widget :title="'机故时间走势('+ timeByHour.date +' '+ timeByHour.type +')'" content-bg="#282a30">
         <div slot="widget-content">
           <e-chart
+            ref="timeByHourChart"
             :path-option="timeByHourChartOption"
             @chart-click="$emit('chart-click', $event, 3)"
             height="400px"
@@ -269,18 +272,36 @@ export default {
           type: ['Error 1', 'Error 2', 'Error 3', 'Error 4'],
           frequency: [2, 4, 7, 3]
         };
+        this.$nextTick(() => {
+          this.$refs.timeByTypeChart.update();
+        });
       } else if (n === 2) {
         this.timeByDay.chartData = {
           date: ['12-01', '12-02', '12-03', '12-04'],
           frequency: [2, 4, 7, 3]
         };
+        this.$nextTick(() => {
+          this.$refs.timeByDayChart.update();
+        });
       } else if (n === 3) {
         this.timeByHour.chartData = {
           hour: ['08:00', '09:00', '10:00', '11:00'],
           frequency: [2, 4, 7, 3]
         };
+        this.$nextTick(() => {
+          this.$refs.timeByHourChart.update();
+        });
       }
     }
+  },
+  mounted () {
+    this.timeByType.chartData = {
+      type: ['Error 1', 'Error 2', 'Error 3', 'Error 4'],
+      frequency: [2, 4, 7, 3]
+    };
+    this.$nextTick(() => {
+      this.$refs.timeByTypeChart.update();
+    });
   }
 };
 </script>

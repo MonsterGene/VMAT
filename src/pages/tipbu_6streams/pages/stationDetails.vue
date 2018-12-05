@@ -139,6 +139,7 @@
     </v-flex>
 
     <error-frequency
+      v-if="subError.showLevel"
       :show-level="subError.showLevel"
       :date="subError.date"
       :line-id="subError.lineId"
@@ -146,6 +147,7 @@
       @chart-click="subErrorClick"
     ></error-frequency>
     <error-time
+      v-if="subError.showLevel"
       :show-level="subError.showLevel"
       :date="subError.date"
       :line-id="subError.lineId"
