@@ -91,6 +91,7 @@
 import moment from 'moment';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
+import { stationApi } from '../api';
 
 export default {
   components: {
@@ -270,7 +271,7 @@ export default {
       if (n === 1) {
         this.timeByType.chartData = {
           type: ['Error 1', 'Error 2', 'Error 3', 'Error 4'],
-          frequency: [2, 4, 7, 3]
+          time: [2, 4, 7, 3]
         };
         this.$nextTick(() => {
           this.$refs.timeByTypeChart.update();
@@ -278,7 +279,7 @@ export default {
       } else if (n === 2) {
         this.timeByDay.chartData = {
           date: ['12-01', '12-02', '12-03', '12-04'],
-          frequency: [2, 4, 7, 3]
+          time: [2, 4, 7, 3]
         };
         this.$nextTick(() => {
           this.$refs.timeByDayChart.update();
@@ -286,7 +287,7 @@ export default {
       } else if (n === 3) {
         this.timeByHour.chartData = {
           hour: ['08:00', '09:00', '10:00', '11:00'],
-          frequency: [2, 4, 7, 3]
+          time: [2, 4, 7, 3]
         };
         this.$nextTick(() => {
           this.$refs.timeByHourChart.update();
@@ -295,13 +296,24 @@ export default {
     }
   },
   mounted () {
-    this.timeByType.chartData = {
-      type: ['Error 1', 'Error 2', 'Error 3', 'Error 4'],
-      frequency: [2, 4, 7, 3]
-    };
-    this.$nextTick(() => {
-      this.$refs.timeByTypeChart.update();
-    });
+    this.getTimeByType();
+  },
+  methods: {
+    getTimeByType () {
+      stationApi.getErrorTime.byType({ startDate: this.date, endDate: this.date, lineID: 1, areaID: 1 }).then(res => {
+        console.log(res.data);
+        const data = res.data;
+        if (data.success) {
+          this.$set(this.timeByType, 'chartData', data.data);
+          this.$nextTick(() => {
+            this.$refs.timeByTypeChart.update();
+          });
+          console.log(this.timeByType.chartData);
+        } else {
+          console.log('获取异常类型次数失败！');
+        }
+      });
+    }
   }
 };
 </script>

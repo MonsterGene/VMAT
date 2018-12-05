@@ -50,9 +50,20 @@ const getErrorFrequency = {
   }
 };
 
+/**
+ * 异常类型时间
+ * params: {startDate: Date, endDate: Date, lineID: Int, areaID: Int}
+ */
+const getErrorTime = {
+  byType: params => {
+    return axios.post('/GetAlertMessage/GetErrorTypeDate', params).catch(catchMethod);
+  }
+};
+
 export default {
   getStationOutput,
   getUtilizationRate,
   getErrorFrequencyAndTime,
-  getErrorFrequency
+  getErrorFrequency,
+  getErrorTime
 };
