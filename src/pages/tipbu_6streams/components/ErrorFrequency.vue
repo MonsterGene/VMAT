@@ -113,6 +113,7 @@
 import moment from 'moment';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
+import { stationApi } from '../api';
 
 export default {
   components: {
@@ -330,6 +331,26 @@ export default {
           frequency: [2, 4, 7, 3]
         };
       }
+    }
+  },
+  mounted () {
+    this.getFrequencyByType();
+  },
+  methods: {
+    getFrequencyByType () {
+      stationApi.getErrorFrequency.byType({ startDate: this.date, endDate: this.date, lineID: 1, areaID: 1 }).then(res => {
+        console.log(res.data);
+        const data = res.data;
+        if (data.success) {
+          this.$set(this.frequencyByType, 'chartData', data.data);
+          this.$nextTick(() => {
+            this.$refs.frequencyByType.update();
+          });
+          console.log(this.frequencyByType.chartData);
+        } else {
+          console.log('获取异常类型次数失败！');
+        }
+      });
     }
   }
 };
