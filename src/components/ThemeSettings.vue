@@ -50,7 +50,10 @@
 
 <script>
 import colors from 'vuetify/es5/util/colors';
+import { globalMixin } from '../util/mixins/globalMixins.js';
+
 export default {
+  mixins: [globalMixin],
   data () {
     return {
       themeColor: 'blue',
@@ -62,6 +65,19 @@ export default {
     themeColorOptions () {
       return [
         {
+          key: 'jean-black',
+          value: {
+            isDark: true,
+            darkSettable: false,
+            sideNav: '#24262c',
+            mainNav: '#24262c',
+            sideManu: '#30333B',
+            layout: '#000000',
+            header: '#282A30',
+            content: '#282A30'
+          }
+        },
+        {
           key: 'blue',
           value: {
             sideNav: 'blue',
@@ -69,14 +85,6 @@ export default {
             sideManu: 'white'
           }
         },
-        // {
-        //   key: 'lightBlue',
-        //   value: {
-        //     sideNav: 'blue',
-        //     mainNav: 'white',
-        //     sideManu: 'blue lighten-1'
-        //   }
-        // },
         {
           key: 'teal',
           value: {
@@ -149,7 +157,7 @@ export default {
       handler (val) {
         this.$set(this.$vuetify.theme, 'primaryName', val);
         this.$vuetify.theme.primary = this.colors[val].base;
-        
+        this.theme = this.themeColorOptions.filter(v => v.key === val)[0].value;
       },
       immediate: true
     },
@@ -159,9 +167,6 @@ export default {
       },
       immediate: true
     }
-  },  
-  mounted () {
-    this.sideBarOption = 'dark';
   }
 };
 </script>
