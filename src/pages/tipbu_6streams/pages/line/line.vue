@@ -138,7 +138,7 @@ export default {
         console.log(data);
         if (data.success) {
           this.linesData = data.data.map(line => {
-            line.achievingRate = (line.stations[line.stations.length - 1].output / line.totalTarget).toFixed(2) + '%';
+            line.achievingRate = (line.stations[line.stations.length - 1].output * 100 / line.totalTarget).toFixed(2) + '%';
             line.stations.map(station => {
               station.img = this.stationImg[station.name] || this.stationImg.default;
               return station;
