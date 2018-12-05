@@ -1,7 +1,12 @@
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export const globalMixin = {
   computed: {
     ...mapGetters(['theme'])
+  },
+  methods: {
+    ...mapActions([
+      'setTheme'
+    ])
   }
 };

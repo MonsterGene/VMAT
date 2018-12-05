@@ -15,20 +15,20 @@
           <v-layout wrap>
             <label class="color-option--label flex xs6 pa-1" v-for="(option,index) in themeColorOptions" :key="index">
               <input type="radio" name="color" v-bind:value="option.key" v-model="themeColor">
-              <span class="color-option--item bg">
+              <span class="color-option--item bg" :style="{background: option.value.layout}">
                 <span class="overlay">
                   <span class="material-icons">check</span>
                 </span>
-                <span class="color-option--item--header sideNav" :class="option.value.sideNav"></span>
-                <span class="color-option--item--header mainNav" :class="option.value.mainNav"></span>
-                <span class="sideMenu" :class="option.value.sideManu"></span>
+                <span class="color-option--item--header sideNav" :style="{background: option.value.sideNav}"></span>
+                <span class="color-option--item--header mainNav" :style="{background: option.value.mainNav}"></span>
+                <span class="sideMenu" :style="{background: option.value.sideManu}"></span>
               </span>
             </label>
           </v-layout>
         </div>
         <div class="theme-options">
           <v-subheader class="px-1 my-2">
-            Sidebar Option
+            Lighten Option
           </v-subheader>
           <v-divider></v-divider>
           <div class="my-3">
@@ -80,73 +80,73 @@ export default {
         {
           key: 'blue',
           value: {
-            sideNav: 'blue',
-            mainNav: 'blue',
-            sideManu: 'white'
+            sideNav: '#2196F3',
+            mainNav: '#2196F3',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'teal',
           value: {
-            sideNav: 'teal',
-            mainNav: 'teal',
-            sideManu: 'white'
+            sideNav: '#009688',
+            mainNav: '#009688',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'red',
           value: {
-            sideNav: 'red',
-            mainNav: 'red',
-            sideManu: 'white'
+            sideNav: '#F44336',
+            mainNav: '#F44336',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'orange',
           value: {
-            sideNav: 'orange',
-            mainNav: 'orange',
-            sideManu: 'white'
+            sideNav: '#FF9800',
+            mainNav: '#FF9800',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'purple',
           value: {
-            sideNav: 'purple',
-            mainNav: 'purple',
-            sideManu: 'white'
+            sideNav: '#9C27B0',
+            mainNav: '#9C27B0',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'indigo',
           value: {
-            sideNav: 'indigo',
-            mainNav: 'indigo',
-            sideManu: 'white'
+            sideNav: '#3F51B5',
+            mainNav: '#3F51B5',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'cyan',
           value: {
-            sideNav: 'cyan',
-            mainNav: 'cyan',
-            sideManu: 'white'
+            sideNav: '#00BCD4',
+            mainNav: '#00BCD4',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'pink',
           value: {
-            sideNav: 'pink',
-            mainNav: 'pink',
-            sideManu: 'white'
+            sideNav: '#E91E63',
+            mainNav: '#E91E63',
+            sideManu: '#FFFFFF'
           }
         },
         {
           key: 'green',
           value: {
-            sideNav: 'green',
-            mainNav: 'green',
-            sideManu: 'white'
+            sideNav: '#4CAF50',
+            mainNav: '#4CAF50',
+            sideManu: '#FFFFFF'
           }
         }
       ];
@@ -156,8 +156,8 @@ export default {
     themeColor: {
       handler (val) {
         this.$set(this.$vuetify.theme, 'primaryName', val);
-        this.$vuetify.theme.primary = this.colors[val].base;
-        this.theme = this.themeColorOptions.filter(v => v.key === val)[0].value;
+        this.$vuetify.theme.primary = this.colors[val] && this.colors[val].base || val;
+        this.setTheme(this.themeColorOptions.filter(v => v.key === val)[0].value);
       },
       immediate: true
     },
