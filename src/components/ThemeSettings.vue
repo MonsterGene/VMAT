@@ -32,11 +32,11 @@
           </v-subheader>
           <v-divider></v-divider>
           <div class="my-3">
-            <v-btn-toggle v-model="sideBarOption">
-              <v-btn flat value="dark">
+            <v-btn-toggle v-model="darkTheme">
+              <v-btn flat :disabled="!theme.darkSettable" :value="true">
                 Dark
               </v-btn>
-              <v-btn flat value="light">
+              <v-btn flat :disabled="!theme.darkSettable" :value="false">
                 Light
               </v-btn>
             </v-btn-toggle>   
@@ -57,7 +57,7 @@ export default {
   data () {
     return {
       themeColor: 'blue',
-      sideBarOption: 'light',
+      darkTheme: false,
       colors: colors
     };
   },
@@ -69,6 +69,7 @@ export default {
           value: {
             isDark: true,
             darkSettable: false,
+            primary: '#24262c',
             sideNav: '#24262c',
             mainNav: '#24262c',
             sideManu: '#30333B',
@@ -80,6 +81,9 @@ export default {
         {
           key: 'blue',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#2196F3',
             sideNav: '#2196F3',
             mainNav: '#2196F3',
             sideManu: '#FFFFFF'
@@ -88,6 +92,9 @@ export default {
         {
           key: 'teal',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#009688',
             sideNav: '#009688',
             mainNav: '#009688',
             sideManu: '#FFFFFF'
@@ -96,6 +103,9 @@ export default {
         {
           key: 'red',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#F44336',
             sideNav: '#F44336',
             mainNav: '#F44336',
             sideManu: '#FFFFFF'
@@ -104,6 +114,9 @@ export default {
         {
           key: 'orange',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#FF9800',
             sideNav: '#FF9800',
             mainNav: '#FF9800',
             sideManu: '#FFFFFF'
@@ -112,6 +125,9 @@ export default {
         {
           key: 'purple',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#9C27B0',
             sideNav: '#9C27B0',
             mainNav: '#9C27B0',
             sideManu: '#FFFFFF'
@@ -120,6 +136,9 @@ export default {
         {
           key: 'indigo',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#3F51B5',
             sideNav: '#3F51B5',
             mainNav: '#3F51B5',
             sideManu: '#FFFFFF'
@@ -128,6 +147,9 @@ export default {
         {
           key: 'cyan',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#00BCD4',
             sideNav: '#00BCD4',
             mainNav: '#00BCD4',
             sideManu: '#FFFFFF'
@@ -136,6 +158,9 @@ export default {
         {
           key: 'pink',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#E91E63',
             sideNav: '#E91E63',
             mainNav: '#E91E63',
             sideManu: '#FFFFFF'
@@ -144,6 +169,9 @@ export default {
         {
           key: 'green',
           value: {
+            isDark: false,
+            darkSettable: false,
+            primary: '#4CAF50',
             sideNav: '#4CAF50',
             mainNav: '#4CAF50',
             sideManu: '#FFFFFF'
@@ -155,15 +183,18 @@ export default {
   watch: {
     themeColor: {
       handler (val) {
-        this.$set(this.$vuetify.theme, 'primaryName', val);
-        this.$vuetify.theme.primary = this.colors[val] && this.colors[val].base || val;
+        const theme = this.themeColorOptions.filter(v => v.key === val)[0].value;
+        theme.name = val;
+        this.$vuetify.theme = theme;
+        this.$vuetify.dark = theme.isDark;
+        this.darkTheme = theme.isDark;
         this.setTheme(this.themeColorOptions.filter(v => v.key === val)[0].value);
       },
       immediate: true
     },
-    sideBarOption: {
+    darkTheme: {
       handler (val) {
-        this.$vuetify.dark = (val === 'dark');
+        this.$vuetify.dark = val;
       },
       immediate: true
     }
