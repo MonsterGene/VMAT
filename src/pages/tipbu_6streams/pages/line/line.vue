@@ -204,7 +204,7 @@ export default {
     height 2px
     width 0
     position absolute
-    background #1AAB8A
+    background #BDBDBD
     transition: 600ms ease all;
   &:after
     bottom 0
