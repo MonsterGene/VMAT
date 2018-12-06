@@ -9,6 +9,7 @@ import './theme/default.styl';
 import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import Truncate from 'lodash.truncate';
+import store from './store';
 Vue.config.productionTip = false;
 // Helpers
 // Global filters
@@ -42,6 +43,7 @@ Vue.use(Vuetify, {
 window.vm = new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 });

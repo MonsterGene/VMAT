@@ -1,6 +1,6 @@
 <template>
 <div id="themeSetting">
-  <v-toolbar :color="themeColor" dark>
+  <v-toolbar :color="$vuetify.theme.primary" dark>
     <v-toolbar-title>
       Theme Settings
     </v-toolbar-title>
@@ -15,28 +15,28 @@
           <v-layout wrap>
             <label class="color-option--label flex xs6 pa-1" v-for="(option,index) in themeColorOptions" :key="index">
               <input type="radio" name="color" v-bind:value="option.key" v-model="themeColor">
-              <span class="color-option--item bg">
+              <span class="color-option--item bg" :style="{background: option.value.layout}">
                 <span class="overlay">
                   <span class="material-icons">check</span>
                 </span>
-                <span class="color-option--item--header sideNav" :class="option.value.sideNav"></span>
-                <span class="color-option--item--header mainNav" :class="option.value.mainNav"></span>
-                <span class="sideMenu" :class="option.value.sideManu"></span>
+                <span class="color-option--item--header sideNav" :style="{background: option.value.sideNav}"></span>
+                <span class="color-option--item--header mainNav" :style="{background: option.value.mainNav}"></span>
+                <span class="sideMenu" :style="{background: option.value.sideManu}"></span>
               </span>
             </label>
           </v-layout>
         </div>
         <div class="theme-options">
           <v-subheader class="px-1 my-2">
-            Sidebar Option
+            Lighten Option
           </v-subheader>
           <v-divider></v-divider>
           <div class="my-3">
-            <v-btn-toggle v-model="sideBarOption">
-              <v-btn flat value="dark">
+            <v-btn-toggle v-model="darkTheme">
+              <v-btn flat :disabled="!theme.darkSettable" :value="true">
                 Dark
               </v-btn>
-              <v-btn flat value="light">
+              <v-btn flat :disabled="!theme.darkSettable" :value="false">
                 Light
               </v-btn>
             </v-btn-toggle>   
@@ -50,118 +50,38 @@
 
 <script>
 import colors from 'vuetify/es5/util/colors';
+import themeList from '../api/themeOptions';
+import { globalMixin } from '../util/mixins/globalMixins';
+
 export default {
+  mixins: [globalMixin],
   data () {
     return {
       themeColor: 'blue',
-      sideBarOption: 'light',
-      colors: colors
+      darkTheme: false,
+      colors: colors,
+      themeColorOptions: themeList
     };
   },
-  computed: {
-    themeColorOptions () {
-      return [
-        {
-          key: 'blue',
-          value: {
-            sideNav: 'blue',
-            mainNav: 'blue',
-            sideManu: 'white'
-          }
-        },
-        // {
-        //   key: 'lightBlue',
-        //   value: {
-        //     sideNav: 'blue',
-        //     mainNav: 'white',
-        //     sideManu: 'blue lighten-1'
-        //   }
-        // },
-        {
-          key: 'teal',
-          value: {
-            sideNav: 'teal',
-            mainNav: 'teal',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'red',
-          value: {
-            sideNav: 'red',
-            mainNav: 'red',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'orange',
-          value: {
-            sideNav: 'orange',
-            mainNav: 'orange',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'purple',
-          value: {
-            sideNav: 'purple',
-            mainNav: 'purple',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'indigo',
-          value: {
-            sideNav: 'indigo',
-            mainNav: 'indigo',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'cyan',
-          value: {
-            sideNav: 'cyan',
-            mainNav: 'cyan',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'pink',
-          value: {
-            sideNav: 'pink',
-            mainNav: 'pink',
-            sideManu: 'white'
-          }
-        },
-        {
-          key: 'green',
-          value: {
-            sideNav: 'green',
-            mainNav: 'green',
-            sideManu: 'white'
-          }
-        }
-      ];
-    }
-  },  
+  // computed: {},
   watch: {
     themeColor: {
       handler (val) {
-        this.$set(this.$vuetify.theme, 'primaryName', val);
-        this.$vuetify.theme.primary = this.colors[val].base;
-        
+        const theme = this.themeColorOptions.filter(v => v.key === val)[0].value;
+        theme.name = val;
+        this.$vuetify.theme = theme;
+        this.$vuetify.dark = theme.isDark;
+        this.darkTheme = theme.isDark;
+        this.setTheme(this.themeColorOptions.filter(v => v.key === val)[0].value);
       },
       immediate: true
     },
-    sideBarOption: {
+    darkTheme: {
       handler (val) {
-        this.$vuetify.dark = (val === 'dark');
+        this.$vuetify.dark = val;
       },
       immediate: true
     }
-  },  
-  mounted () {
-    this.sideBarOption = 'dark';
   }
 };
 </script>

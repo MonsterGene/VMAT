@@ -3,20 +3,20 @@
     <!--  -->
     <template v-if="!$route.meta.public">
       <!-- 整个APP界面 -->
-      <v-app id="inspire" class="app">
+      <v-app id="inspire" class="app" :style="{background: $vuetify.theme.layout}">
         <!-- 左边抽屉 -->
         <app-drawer class="app--drawer"></app-drawer>
         <!-- 顶部工具条 -->
         <app-toolbar class="app--toolbar"></app-toolbar>
         <!-- 页面主视图 -->
-        <v-content style="background: black">
+        <v-content>
           <!-- 主视图头部 Page Header -->
           <page-header v-if="$route.meta.breadcrumb"></page-header>
           <div :class="['page-wrapper', !$route.meta.breadcrumb && 'page-wrapper-nopageheader']">
             <router-view></router-view>
           </div>   
            <!-- 主视图底部 App Footer -->
-          <v-footer height="auto" :class="['pa-3', 'app--footer']" color="black" style="color:#fff" >
+          <v-footer height="auto" :class="['pa-3', 'app--footer']" :dark="$vuetify.theme.isDark" :color="$vuetify.theme.layout">
             <span class="caption">FCT Team &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> Genius Solution Center </span> <v-icon color="pink" small>favorite</v-icon>
@@ -25,7 +25,7 @@
         <!-- 回到顶部按钮 -->
         <app-fab></app-fab>
         <!-- 主题设置 -->
-        <v-btn small fab dark falt fixed top="top" right="right" class="setting-fab" color="#30333b" @click="openThemeSettings">
+        <v-btn small fab dark falt fixed top="top" right="right" class="setting-fab" :color="$vuetify.theme.primary" @click="openThemeSettings">
           <v-icon>settings</v-icon>
         </v-btn>
         <v-navigation-drawer
@@ -128,8 +128,8 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgb(0, 0, 0); 
-  background: rgb(0,0,0);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.13); 
+  background: rgba(0, 0, 0, 0.13);
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
