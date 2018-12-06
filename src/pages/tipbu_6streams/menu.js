@@ -2,8 +2,7 @@ const menu_6streams_tipbu = [
   {
     title: 'NPBG-龙华-MFG3',
     icon: 'view_compact',
-    href: 'http://www.baidu.com',
-    target: '_blank'
+    name: 'tipbu-6streams'
   },
 ];
 
