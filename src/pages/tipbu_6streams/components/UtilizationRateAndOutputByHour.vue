@@ -1,6 +1,6 @@
 <template>
 <v-expansion-panel v-model="expansionModel" :dark="$vuetify.dark" expand>
-  <v-expansion-panel-content style="background: #282a30">
+  <v-expansion-panel-content :style="{background: $vuetify.theme.primary}">
     <div slot="header"><h4>{{ headerText }}</h4></div>
     <e-chart
       ref="chartDOM"

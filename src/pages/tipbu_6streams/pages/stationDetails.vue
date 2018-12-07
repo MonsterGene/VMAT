@@ -19,7 +19,7 @@
     </v-flex>
 
     <v-flex lg12 sm12 xs12>
-      <v-widget :title="'運行時間('+ $route.params.stationName +')'" content-bg="#282a30">
+      <v-widget :title="'運行時間('+ $route.params.stationName +')'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"

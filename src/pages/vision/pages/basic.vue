@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex sm12>
-      <v-widget title="Basic Test Data Search ">
+      <v-widget title="Basic Test Data Search " :content-bg="$vuetify.theme.app">
         <div slot="widget-content">
           <v-flex>
             <v-alert

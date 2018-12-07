@@ -1,13 +1,14 @@
 <template>
-  <v-widget :title="title">
+  <v-widget :title="title" content-bg="primary">
     <div slot="widget-content">
       <v-layout row wrap>   
         <v-flex xl12>
           <v-card>
-            <v-toolbar card color="white">
+            <v-toolbar card color="primary lighten-2">
               <v-text-field
               flat
               solo
+              :dark="$vuetify.dark"
               prepend-icon="search"
               placeholder="Filtering"
               v-model="search"

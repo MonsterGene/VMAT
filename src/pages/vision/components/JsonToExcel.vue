@@ -1,6 +1,6 @@
 <template>
   <div class="">
-    <v-btn flat color="indigo" @click="onExport">
+    <v-btn flat color="indigo lighten-2" @click="onExport">
       <v-icon>flight_takeoff</v-icon> Export to Excel
     </v-btn>
 </div>

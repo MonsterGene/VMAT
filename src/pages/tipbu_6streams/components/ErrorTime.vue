@@ -2,7 +2,7 @@
 <v-flex lg6 sm12 xs12 v-if="showLevel">
   <v-layout row v-if="showLevel>=1">
     <v-flex xs12>
-      <v-widget :title="'异常类型分析'" content-bg="#282a30">
+      <v-widget :title="'异常类型分析'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-header-action" style="width:260px;display:flex;">
           <v-menu
             :close-on-content-click="false"
@@ -54,7 +54,7 @@
   </v-layout>
   <v-layout row v-if="showLevel>=2">
     <v-flex xs12>
-      <v-widget :title="'机故时间走势（'+ timeByDay.type +'）'" content-bg="#282a30">
+      <v-widget :title="'机故时间走势（'+ timeByDay.type +'）'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-content">
           <e-chart 
             ref="timeByDayChart"
@@ -70,7 +70,7 @@
   </v-layout>
   <v-layout row v-if="showLevel>=3">
     <v-flex xs12>
-      <v-widget :title="'机故时间走势('+ timeByHour.date +' '+ timeByHour.type +')'" content-bg="#282a30">
+      <v-widget :title="'机故时间走势('+ timeByHour.date +' '+ timeByHour.type +')'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-content">
           <e-chart
             ref="timeByHourChart"

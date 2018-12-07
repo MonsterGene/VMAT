@@ -2,7 +2,7 @@
 <v-flex lg6 sm12 xs12 v-if="showLevel">
   <v-layout row v-if="showLevel>=1">
     <v-flex xs12>
-      <v-widget :title="'机故类型次数分析'" content-bg="#282a30">
+      <v-widget :title="'机故类型次数分析'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-header-action" style="width:260px;display:flex;">
           <v-menu
             :close-on-content-click="false"
@@ -54,7 +54,7 @@
   </v-layout>
   <v-layout row v-if="showLevel>=2">
     <v-flex xs12>
-      <v-widget :title="'机故次数走势（'+ frequencyByDay.type +'）'" content-bg="#282a30">
+      <v-widget :title="'机故次数走势（'+ frequencyByDay.type +'）'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-content">
           <e-chart
             ref="frequencyByDay"
@@ -92,7 +92,7 @@
   </v-layout>
   <v-layout row v-if="showLevel>=3">
     <v-flex xs12>
-      <v-widget :title="'机故次数走势（'+ frequencyByHour.date +' '+ frequencyByHour.type +'）'" content-bg="#282a30">
+      <v-widget :title="'机故次数走势（'+ frequencyByHour.date +' '+ frequencyByHour.type +'）'" :content-bg="$vuetify.theme.primary">
         <div slot="widget-content">
           <e-chart
             ref="frequencyByHour"
