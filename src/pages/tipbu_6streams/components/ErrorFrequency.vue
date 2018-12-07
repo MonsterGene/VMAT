@@ -313,6 +313,7 @@ export default {
     date (n, o) {
       this.frequencyByType.startDate.date = n;
       this.frequencyByType.endDate.date = n;
+      this.getFrequencyByType();
     },
     showLevel (n, o) {
       if (n === 1) {
