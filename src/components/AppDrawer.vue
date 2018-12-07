@@ -57,7 +57,7 @@
             <v-subheader v-else-if="item.header" :key="i">{{ item.header }}</v-subheader>
             <v-divider v-else-if="item.divider" :key="i"></v-divider>
             <!--top-level link-->
-            <v-list-tile v-else :to="!item.href ? { name: item.name } : null" :href="item.href" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="item.name">
+            <v-list-tile v-else :to="!item.href ? { name: item.name, path: item.path } : null" :href="item.href" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="item.name">
               <v-list-tile-action v-if="item.icon">
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-tile-action>
@@ -125,12 +125,13 @@ export default {
       if (subItem.href) return;
       if (subItem.component) {
         return {
-          path: subItem.component,
+          name: subItem.component
         };
       }
-      const result = { path: `${item.group}/${(subItem.name)}` };
-      console.log(result);
-      return result;
+      if (subItem.path) {
+        return { path: item.group + '/' + subItem.path };
+      }
+      return { name: `${item.group}/${(subItem.name)}` };
     },
   }
 };

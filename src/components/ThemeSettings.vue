@@ -75,6 +75,7 @@ export default {
   },
   watch: {
     'theme.name' (val) {
+      console.log('theme.name changed!');
       this.themeColor = val;
     },
     themeColor: {

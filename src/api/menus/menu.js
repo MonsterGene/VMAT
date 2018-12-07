@@ -1,4 +1,4 @@
-import example from './example';
+// import example from './example';
 // import project from '../../pages/project/menu';
 import tipbu_6streams_menu from '../../pages/tipbu_6streams/menu';
 import vision from '../../pages/vision/menu';

@@ -123,6 +123,21 @@ const menu = [
       { name: '500', title: '500', component: 'ServerError' },
     ]
   },
+  {
+    title: 'Tree',
+    group: 'tree',
+    icon: 'list',
+    items: [
+      { name: 'leave 1', title: 'Leave 1' },
+      {
+        title: 'Tree 1',
+        items: true,
+        children: [
+          { name: 'leave 2', title: 'Leave 2' }
+        ]
+      }
+    ]
+  }
 ];
 
 export default menu;
