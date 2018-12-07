@@ -1,19 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import tipbu6Streams from './modules';
-import tipbu6StreamsGetters from './getters';
-import tipbu6StreamsActions from './actions';
+import theme from './modules';
+import themeGetters from './getters';
+import themeActions from './actions';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
-    tipbu6Streams
+    global: theme
   },
   getters: {
-    ...tipbu6StreamsGetters
+    ...themeGetters
   },
   actions: {
-    ...tipbu6StreamsActions
+    ...themeActions
   }
 });

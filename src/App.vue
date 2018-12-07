@@ -3,7 +3,7 @@
     <!--  -->
     <template v-if="!$route.meta.public">
       <!-- 整个APP界面 -->
-      <v-app id="inspire" class="app" :style="{background: $vuetify.theme.layout}">
+      <v-app id="inspire" class="app">
         <!-- 左边抽屉 -->
         <app-drawer class="app--drawer"></app-drawer>
         <!-- 顶部工具条 -->

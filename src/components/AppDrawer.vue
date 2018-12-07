@@ -4,7 +4,7 @@
     :mini-variant.sync="mini"
     fixed
     app
-    :dark="theme.isDark"
+    :dark="$vuetify.dark"
     v-model="drawer"
     :stateless="true"
     width="260"
@@ -15,11 +15,11 @@
       <img v-bind:src="computeLogo" height="36" alt="Vue Material Admin Template">
       <v-toolbar-title class="ml-0 pl-3">
         <span class="hidden-sm-and-down" style="color: #fff">Genius Solution</span>
-      </v-toolbar-title>        
+      </v-toolbar-title>
     </v-toolbar>
     <!-- 菜单栏 -->
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
-      <v-list dense expand>
+      <v-list dense expand :dark="$vuetify.dark">
         <template v-for="(item, i) in menus">
             <!--group with subitems-->
             <v-list-group v-if="item.items" :key="item.name" :group="item.group" :prepend-icon="item.icon" no-action="no-action">
@@ -57,7 +57,7 @@
             <v-subheader v-else-if="item.header" :key="i">{{ item.header }}</v-subheader>
             <v-divider v-else-if="item.divider" :key="i"></v-divider>
             <!--top-level link-->
-            <v-list-tile v-else :to="!item.href ? { name: item.name } : null" :href="item.href" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="item.name">
+            <v-list-tile v-else :to="!item.href ? { name: item.name, path: item.path } : null" :href="item.href" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="item.name">
               <v-list-tile-action v-if="item.icon">
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-tile-action>
@@ -121,11 +121,15 @@ export default {
 
   methods: {
     genChildTarget (item, subItem) {
+      console.log(item, subItem);
       if (subItem.href) return;
       if (subItem.component) {
         return {
-          name: subItem.component,
+          name: subItem.component
         };
+      }
+      if (subItem.path) {
+        return { path: item.group + '/' + subItem.path };
       }
       return { name: `${item.group}/${(subItem.name)}` };
     },

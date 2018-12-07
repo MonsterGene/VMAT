@@ -1,115 +1,115 @@
 const themeList = [
   {
-    key: 'jean-black',
-    value: {
-      isDark: true,
-      darkSettable: false,
+    name: 'jean-black',
+    isDark: true,
+    darkSettable: false,
+    colors: {
       primary: '#24262c',
       sideNav: '#24262c',
       mainNav: '#24262c',
       sideMenu: '#30333B',
-      layout: '#000000',
+      app: '#000000',
       header: '#282A30',
       content: '#282A30'
     }
   },
   {
-    key: 'blue',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'blue',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#2196F3',
       sideNav: '#2196F3',
       mainNav: '#2196F3',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'teal',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'teal',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#009688',
       sideNav: '#009688',
       mainNav: '#009688',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'red',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'red',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#F44336',
       sideNav: '#F44336',
       mainNav: '#F44336',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'orange',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'orange',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#FF9800',
       sideNav: '#FF9800',
       mainNav: '#FF9800',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'purple',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'purple',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#9C27B0',
       sideNav: '#9C27B0',
       mainNav: '#9C27B0',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'indigo',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'indigo',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#3F51B5',
       sideNav: '#3F51B5',
       mainNav: '#3F51B5',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'cyan',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'cyan',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#00BCD4',
       sideNav: '#00BCD4',
       mainNav: '#00BCD4',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'pink',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'pink',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#E91E63',
       sideNav: '#E91E63',
       mainNav: '#E91E63',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   },
   {
-    key: 'green',
-    value: {
-      isDark: false,
-      darkSettable: false,
+    name: 'green',
+    isDark: false,
+    darkSettable: false,
+    colors: {
       primary: '#4CAF50',
       sideNav: '#4CAF50',
       mainNav: '#4CAF50',
-      sideManu: '#FFFFFF'
+      sideMenu: '#FFFFFF'
     }
   }
 ];

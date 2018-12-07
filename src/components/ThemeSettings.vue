@@ -13,15 +13,15 @@
         </v-subheader>
         <div class="color-option">
           <v-layout wrap>
-            <label class="color-option--label flex xs6 pa-1" v-for="(option,index) in themeColorOptions" :key="index">
-              <input type="radio" name="color" v-bind:value="option.key" v-model="themeColor">
-              <span class="color-option--item bg" :style="{background: option.value.layout}">
+            <label class="color-option--label flex xs6 pa-1" v-for="(option,index) in themeColorOptions" :key="option.name">
+              <input type="radio" name="color" v-bind:value="option.name" v-model="themeColor">
+              <span class="color-option--item bg" :style="{background: option.colors.app+'!important'}">
                 <span class="overlay">
                   <span class="material-icons">check</span>
                 </span>
-                <span class="color-option--item--header sideNav" :style="{background: option.value.sideNav}"></span>
-                <span class="color-option--item--header mainNav" :style="{background: option.value.mainNav}"></span>
-                <span class="sideMenu" :style="{background: option.value.sideManu}"></span>
+                <span class="color-option--item--header sideNav" :style="{background: option.colors.sideNav+'!important'}"></span>
+                <span class="color-option--item--header mainNav" :style="{background: option.colors.mainNav+'!important'}"></span>
+                <span class="sideMenu" :style="{background: option.colors.sideMenu+'!important'}"></span>
               </span>
             </label>
           </v-layout>
@@ -33,10 +33,10 @@
           <v-divider></v-divider>
           <div class="my-3">
             <v-btn-toggle v-model="darkTheme">
-              <v-btn flat :disabled="!theme.darkSettable" :value="true">
+              <v-btn flat :value="true"><!-- :disabled="!theme.darkSettable" -->
                 Dark
               </v-btn>
-              <v-btn flat :disabled="!theme.darkSettable" :value="false">
+              <v-btn flat :value="false">
                 Light
               </v-btn>
             </v-btn-toggle>   
@@ -57,28 +57,42 @@ export default {
   mixins: [globalMixin],
   data () {
     return {
-      themeColor: 'blue',
+      themeColor: 'jean-black',
       darkTheme: false,
       colors: colors,
-      themeColorOptions: themeList
+      themeColorOptions: themeList,
     };
   },
-  // computed: {},
+  computed: {
+    defaultTheme () {
+      return {
+        error: '#FF5252',
+        info: '#2196F3',
+        success: '#4CAF50',
+        warning: '#FFC107'
+      };
+    }
+  },
   watch: {
+    'theme.name' (val) {
+      console.log('theme.name changed!');
+      this.themeColor = val;
+    },
     themeColor: {
       handler (val) {
-        const theme = this.themeColorOptions.filter(v => v.key === val)[0].value;
-        theme.name = val;
-        this.$vuetify.theme = theme;
-        this.$vuetify.dark = theme.isDark;
+        const theme = this.themeColorOptions.filter(v => v.name === val)[0];
+        this.$vuetify.theme = Object.assign(JSON.parse(JSON.stringify(this.defaultTheme)), theme.colors);
         this.darkTheme = theme.isDark;
-        this.setTheme(this.themeColorOptions.filter(v => v.key === val)[0].value);
+        this.setTheme(theme);
+        console.log(this.$vuetify.dark);
       },
       immediate: true
     },
     darkTheme: {
       handler (val) {
-        this.$vuetify.dark = val;
+        this.$nextTick(() => {
+          this.$vuetify.dark = val;
+        });
       },
       immediate: true
     }

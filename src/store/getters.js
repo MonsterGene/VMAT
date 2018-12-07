@@ -1,5 +1,5 @@
-const tipbu6Streams = {
-  theme: state => state.tipbu6Streams.theme
+const getters = {
+  theme: state => state.global.theme
 };
 
-export default tipbu6Streams;
+export default getters;

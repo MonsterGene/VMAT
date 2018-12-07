@@ -2,8 +2,8 @@ const menu_6streams_tipbu = [
   {
     title: 'NPBG-龙华-MFG3',
     icon: 'view_compact',
-    name: 'tipbu-6streams'
-  },
+    path: '/tipbu-6streams'
+  }
 ];
 
 export default menu_6streams_tipbu;

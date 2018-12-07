@@ -10,7 +10,7 @@
               solo
               prepend-icon="search"
               placeholder="Filtering"
-              v-model="search"
+              v-model="searchFilter"
               hide-details
               class="hidden-sm-and-down"
               ></v-text-field>             
@@ -19,7 +19,7 @@
             <v-card-text class="pa-0">
               <v-data-table
                 :headers="testData.headers"
-                :search="search"
+                :search="searchFilter"
                 :items="testDataContent"
                 :rows-per-page-items="[10,25,50,{text:'All','value':-1}]"
                 class="elevation-1"
@@ -161,6 +161,9 @@ export default {
   computed: {
     testDataContent () {
       return this.testDataSource || [];
+    },
+    searchFilter () {
+      return this.search;
     }
   },
   watch: {
