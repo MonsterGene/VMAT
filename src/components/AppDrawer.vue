@@ -4,7 +4,7 @@
     :mini-variant.sync="mini"
     fixed
     app
-    :dark="theme.isDark"
+    :dark="$vuetify.dark"
     v-model="drawer"
     :stateless="true"
     width="260"
@@ -15,11 +15,11 @@
       <img v-bind:src="computeLogo" height="36" alt="Vue Material Admin Template">
       <v-toolbar-title class="ml-0 pl-3">
         <span class="hidden-sm-and-down" style="color: #fff">Genius Solution</span>
-      </v-toolbar-title>        
+      </v-toolbar-title>
     </v-toolbar>
     <!-- 菜单栏 -->
     <vue-perfect-scrollbar class="drawer-menu--scroll" :settings="scrollSettings">
-      <v-list dense expand>
+      <v-list dense expand :dark="$vuetify.dark">
         <template v-for="(item, i) in menus">
             <!--group with subitems-->
             <v-list-group v-if="item.items" :key="item.name" :group="item.group" :prepend-icon="item.icon" no-action="no-action">
