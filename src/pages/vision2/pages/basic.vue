@@ -1,7 +1,7 @@
 <template>
   <v-layout row wrap>
     <v-flex sm12>
-      <v-widget title="Basic Test Data Search ">
+      <v-widget title="Basic Test Data Search " :content-bg="$vuetify.theme.app">
         <div slot="widget-content">
           <v-flex>
             <v-alert
@@ -20,13 +20,13 @@
                   label="Serial Number"
                   value=""
                   v-model="model.sernum"
-                  color="primary"
+                  color="success"
                   class="input-group--focused"
                 ></v-text-field>
               </v-flex>
               <v-flex xl4>
                 <v-btn large
-                  color="primary"
+                  color="success"
                   :loading="loading"
                   @click.native="loading = true"
                   @click="getTestData"

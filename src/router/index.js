@@ -20,6 +20,11 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   // ...
   NProgress.done();
+  console.log(to);
+  if (to.matched[0].meta && to.matched[0].meta.theme) {
+    console.log('this page require theme ' + to.matched[0].meta.theme);
+  }
+  console.log(this);
 });
 
 export default router;

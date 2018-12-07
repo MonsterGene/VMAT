@@ -1,76 +1,88 @@
-const vision_router = [
+const genius_router = [
   {
-    path: '/vision/basic',
+    path: '/genius/login',
     meta: {
       breadcrumb: false,
     },
-    name: 'basic',
+    name: 'genius/login',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/basic.vue`
+      `@/pages/genius/pages/login.vue`
     )
   },
   {
-    path: '/vision/advanced',
+    path: '/genius/manage',
     meta: {
       breadcrumb: false,
     },
-    name: 'advanced',
+    name: 'genius/manage',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/advanced.vue`
+      `@/pages/genius/pages/manage.vue`
     )
   },
   {
-    path: '/fortinet/basic',
+    path: '/genius/machine',
     meta: {
       breadcrumb: false,
     },
-    name: 'fortinet/basic',
+    name: 'genius/machine',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/basic.vue`
+      `@/pages/genius/pages/machine.vue`
     )
   },
   {
-    path: '/fortinet/advanced',
+    path: '/genius/logs/:connection',
     meta: {
       breadcrumb: false,
     },
-    name: 'fortinet/advanced',
+    name: 'genius/logs',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/advanced.vue`
+      `@/pages/genius/pages/logs.vue`
     )
   },
   {
-    path: '/onlyoffice',
+    path: '/genius',
     meta: {
       breadcrumb: false,
     },
-    name: 'onlyoffice',
+    name: 'genius',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/only-office.vue`
+      `@/pages/genius/pages/station.vue`
     )
   },
   {
-    path: '/gitlab',
+    path: '/genius/:container',
     meta: {
       breadcrumb: false,
     },
-    name: 'gitlab',
+    name: 'genius/station',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/git-lab.vue`
+      `@/pages/genius/pages/container.vue`
+    )
+  },
+  {
+    path: '/genius/:container/:connection',
+    meta: {
+      breadcrumb: false,
+    },
+    name: 'genius/container',
+    component: () => import(
+      /* webpackChunkName: "routes" */
+      /* webpackMode: "lazy-once" */
+      `@/pages/genius/pages/connection.vue`
     )
   },
 ];
 
-export default vision_router;
+export default genius_router;

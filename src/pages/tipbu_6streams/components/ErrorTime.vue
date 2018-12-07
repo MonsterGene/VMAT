@@ -301,14 +301,13 @@ export default {
   methods: {
     getTimeByType () {
       stationApi.getErrorTime.byType({ startDate: this.date, endDate: this.date, lineID: 1, areaID: 1 }).then(res => {
-        console.log(res.data);
+        // console.log(res.data);
         const data = res.data;
         if (data.success) {
           this.$set(this.timeByType, 'chartData', data.data);
           this.$nextTick(() => {
             this.$refs.timeByTypeChart.update();
           });
-          console.log(this.timeByType.chartData);
         } else {
           console.log('获取异常类型次数失败！');
         }

@@ -74,6 +74,9 @@ export default {
     }
   },
   watch: {
+    'theme.name' (val) {
+      this.themeColor = val;
+    },
     themeColor: {
       handler (val) {
         const theme = this.themeColorOptions.filter(v => v.name === val)[0];

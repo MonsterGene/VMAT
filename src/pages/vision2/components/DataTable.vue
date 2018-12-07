@@ -1,16 +1,17 @@
 <template>
-  <v-widget :title="title">
+  <v-widget :title="title" content-bg="primary">
     <div slot="widget-content">
       <v-layout row wrap>   
         <v-flex xl12>
           <v-card>
-            <v-toolbar card color="white">
+            <v-toolbar card color="primary lighten-2">
               <v-text-field
               flat
               solo
+              :dark="$vuetify.dark"
               prepend-icon="search"
               placeholder="Filtering"
-              v-model="searchFilter"
+              v-model="search"
               hide-details
               class="hidden-sm-and-down"
               ></v-text-field>             
@@ -19,7 +20,7 @@
             <v-card-text class="pa-0">
               <v-data-table
                 :headers="testData.headers"
-                :search="searchFilter"
+                :search="search"
                 :items="testDataContent"
                 :rows-per-page-items="[10,25,50,{text:'All','value':-1}]"
                 class="elevation-1"
@@ -161,9 +162,6 @@ export default {
   computed: {
     testDataContent () {
       return this.testDataSource || [];
-    },
-    searchFilter () {
-      return this.search;
     }
   },
   watch: {

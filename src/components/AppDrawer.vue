@@ -121,13 +121,16 @@ export default {
 
   methods: {
     genChildTarget (item, subItem) {
+      console.log(item, subItem);
       if (subItem.href) return;
       if (subItem.component) {
         return {
-          name: subItem.component,
+          path: subItem.component,
         };
       }
-      return { name: `${item.group}/${(subItem.name)}` };
+      const result = { path: `${item.group}/${(subItem.name)}` };
+      console.log(result);
+      return result;
     },
   }
 };

@@ -4,7 +4,7 @@ const vision_router = [
     meta: {
       breadcrumb: false,
     },
-    name: 'basic',
+    name: 'vision/basic',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
@@ -16,7 +16,7 @@ const vision_router = [
     meta: {
       breadcrumb: false,
     },
-    name: 'advanced',
+    name: 'vision/advanced',
     component: () => import(
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
@@ -45,30 +45,6 @@ const vision_router = [
       /* webpackChunkName: "routes" */
       /* webpackMode: "lazy-once" */
       `@/pages/vision/pages/advanced.vue`
-    )
-  },
-  {
-    path: '/onlyoffice',
-    meta: {
-      breadcrumb: false,
-    },
-    name: 'onlyoffice',
-    component: () => import(
-      /* webpackChunkName: "routes" */
-      /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/only-office.vue`
-    )
-  },
-  {
-    path: '/gitlab',
-    meta: {
-      breadcrumb: false,
-    },
-    name: 'gitlab',
-    component: () => import(
-      /* webpackChunkName: "routes" */
-      /* webpackMode: "lazy-once" */
-      `@/pages/vision/pages/git-lab.vue`
     )
   },
 ];

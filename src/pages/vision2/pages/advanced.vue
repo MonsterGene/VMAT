@@ -135,7 +135,7 @@
                       </v-flex>
                       <v-flex xl4>
                         <v-btn large
-                          color="primary"
+                          color="success"
                           :loading="loading"
                           @click.native="loading = true; dialog = true"
                           @click="getYieldThroughput"
@@ -181,7 +181,7 @@
     
     <v-container grid-list-xl fluid>
       <v-layout row wrap>
-        <v-flex lg4 md4 sm12 xs12>
+        <v-flex lg4 sm12>
           <v-card>
             <v-card-text>
               <div class="layout row ma-0 align-center justify-space-between">
@@ -190,27 +190,15 @@
                   <span class="grey--text">{{ first_mini_title }}</span>
                 </div>
                 <div class="details">
-                  <v-layout row>
-                  <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('First Fail')">
-                      <v-icon>trending_down</v-icon>
-                    </v-btn>
-                    <span>Fail Data Table</span>
-                  </v-tooltip>
-                  <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('First Pass')">
-                      <v-icon>trending_up</v-icon>
-                    </v-btn>
-                    <span>Pass Data Table</span>
-                  </v-tooltip>
-                  </v-layout>
+                  <v-btn flat icon color="indigo" @click="updateAllFailTable('First Fail')">
+                    <v-icon>details</v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card-text>
           </v-card> 
         </v-flex>
-        <!-- mini panel -->
-        <v-flex lg4 md4 sm12 xs12>
+        <v-flex lg4 sm12>
           <v-card>
             <v-card-text>
               <div class="layout row ma-0 align-center justify-space-between">
@@ -219,26 +207,15 @@
                   <span class="grey--text">{{ test_mini_title }}</span>
                 </div>
                 <div class="details">
-                  <v-layout row>
-                  <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('Test Fail')">
-                      <v-icon>trending_down</v-icon>
-                    </v-btn>
-                    <span>Fail Data Table</span>
-                  </v-tooltip>
-                  <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('Test Pass')">
-                      <v-icon>trending_up</v-icon>
-                    </v-btn>
-                    <span>Pass Data Table</span>
-                  </v-tooltip>
-                  </v-layout>
+                  <v-btn flat icon color="indigo" @click="updateAllFailTable('Test Fail')">
+                    <v-icon>details</v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card-text>
           </v-card> 
         </v-flex>
-        <v-flex lg4 md4 sm12 xs12>
+        <v-flex lg4 sm12>
           <v-card>
             <v-card-text>
               <div class="layout row ma-0 align-center justify-space-between">
@@ -247,96 +224,58 @@
                   <span class="grey--text">{{ board_mini_title }}</span>
                 </div>
                 <div class="details">
-                  <v-layout row>
-                  <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('Board Fail')">
-                      <v-icon>trending_down</v-icon>
-                    </v-btn>
-                    <span>Fail Data Table</span>
-                  </v-tooltip>
-                  <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('Board Pass')">
-                      <v-icon>trending_up</v-icon>
-                    </v-btn>
-                    <span>Pass Data Table</span>
-                  </v-tooltip>
-                  </v-layout>
+                  <v-btn flat icon color="indigo" @click="updateAllFailTable('Board Fail')">
+                    <v-icon>details</v-icon>
+                  </v-btn>
                 </div>
               </div>
             </v-card-text>
           </v-card> 
         </v-flex>
 
-        <v-expansion-panel
-          v-model="panel"
-          expand
-        >
-        <v-expansion-panel-content readonly>
-          <div slot="header">First Yield/Throughput/Fail Data Panel</div>
-          <v-divider></v-divider>
-          <!-- first data -->
-          <v-layout row wrap>
-          <v-flex lg6 md6 sm12 xs12>
-            <yield-chart title="First Yield/Throughput" :chart-data="firstList" ref="firstYieldChart">
-            </yield-chart>
-          </v-flex>
-          <v-flex lg6 md6 sm12 xs12>
-              <fail-pie-chart 
-                :title="first_fail_title"
-                name="First Fail" 
-                :chart-data="first_fail_list" 
-                @needFreshData="failPieChartFresh('First Fail')"
-                ref="firstFailChart"
-              >
-              </fail-pie-chart>
-          </v-flex>
-          </v-layout>
-        </v-expansion-panel-content>
-        <v-expansion-panel-content>
-          <div slot="header">Test Yield/Throughput/Fail Data Panel</div>
-          <v-divider></v-divider>
-          <!-- test data -->
-          <v-layout row>
-          <v-flex lg6 md6 sm12 xs12>
-            <yield-chart title="Test Yield/Throughput" :chart-data="testList" ref="testYieldChart">
-            </yield-chart>          
-          </v-flex>
-          <v-flex lg6 md6 sm12 xs12>
-              <fail-pie-chart 
-                :title="test_fail_title" 
-                name="Test Fail" 
-                :chart-data="test_fail_list" 
-                @needFreshData="failPieChartFresh('Test Fail')"
-                ref="testFailChart"
-              >
-              </fail-pie-chart>           
-          </v-flex>
-          </v-layout>
-        </v-expansion-panel-content>
-        <v-expansion-panel-content>
-          <div slot="header">Board Yield/Throughput/Fail Data Panel</div>
-          <v-divider></v-divider>
-          <!-- board data -->
-          <v-layout row>
-          <v-flex lg6 md6 sm12 xs12>
-            <yield-chart title="Board Yield/Throughput" :chart-data="boardList" ref="boardYieldChart">
-            </yield-chart>             
-          </v-flex>
-          <v-flex lg6 md6 sm12 xs12>
+        <v-flex lg6 sm12 xs12>
+          <yield-chart title="First Yield/Throughput" :chart-data="firstList" ref="firstYieldChart">
+          </yield-chart>
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
             <fail-pie-chart 
-              :title="board_fail_title" 
-              name="Board Fail" 
-              :chart-data="board_fail_list" 
-              @needFreshData="failPieChartFresh('Board Fail')"
-              ref="boardFailChart"
+              :title="first_fail_title"
+              name="First Fail" 
+              :chart-data="first_fail_list" 
+              @needFreshData="failPieChartFresh('First Fail')"
+              ref="firstFailChart"
             >
-            </fail-pie-chart>             
-          </v-flex>
-          </v-layout>
-        </v-expansion-panel-content>
-        </v-expansion-panel>
-
-        <v-flex lg12 sm12 xs12 id="test-data-table">
+            </fail-pie-chart>
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
+          <yield-chart title="Test Yield/Throughput" :chart-data="testList" ref="testYieldChart">
+          </yield-chart>          
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
+            <fail-pie-chart 
+              :title="test_fail_title" 
+              name="Test Fail" 
+              :chart-data="test_fail_list" 
+              @needFreshData="failPieChartFresh('Test Fail')"
+              ref="testFailChart"
+            >
+            </fail-pie-chart>           
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
+          <yield-chart title="Board Yield/Throughput" :chart-data="boardList" ref="boardYieldChart">
+          </yield-chart>             
+        </v-flex>
+        <v-flex lg6 sm12 xs12>
+          <fail-pie-chart 
+            :title="board_fail_title" 
+            name="Board Fail" 
+            :chart-data="board_fail_list" 
+            @needFreshData="failPieChartFresh('Board Fail')"
+            ref="boardFailChart"
+          >
+          </fail-pie-chart>             
+        </v-flex>
+        <v-flex lg12 sm12 xs12>
           <data-table
             :search="dataSearch"
             :title="dataTableTitle"
@@ -523,16 +462,11 @@ export default {
       first_fail_all_dataSource: [],
       test_fail_all_dataSource: [],
       board_fail_all_dataSource: [],
-      first_pass_all_dataSource: [],
-      test_pass_all_dataSource: [],
-      board_pass_all_dataSource: [],
       //
       dataSource: [],
       all_dataSource: [],
       dataSearch: '',
       color: Material,
-      // for expansion panel
-      panel: [true, true, true],
       
     };
   },
@@ -549,13 +483,7 @@ export default {
     if (params.endDate) { this.endDate = params.endDate }
   },  
   mounted () {
-    if (this.machine || this.uuttype || this.area || this.sernum) {
-      this.loading = true;
-      this.dialog = true;
-      setTimeout(() => {  // set time out to make sure all charts are inited.
-        this.getYieldThroughput();
-      }, 3000);
-    }
+    this.getYieldThroughput();
 
     this.$refs.firstYieldChart.chartInstance.on('click', evt => {
       const name = evt.name;
@@ -699,9 +627,6 @@ export default {
       this.first_fail_all_dataSource = [];
       this.test_fail_all_dataSource = [];
       this.board_fail_all_dataSource = [];
-      this.first_pass_all_dataSource = [];
-      this.test_pass_all_dataSource = [];
-      this.board_pass_all_dataSource = [];
       //
       getAdvanced(params)
         .then(response => {
@@ -717,7 +642,7 @@ export default {
             // it is summary mini chart.
             this.first_mini_title = this.summary['first_yield'] + '% (fail: ' + this.summary['first_fail_qty'] + '/pass: ' + this.summary['first_pass_qty'] + '/total: ' + this.summary['first_total_qty'] + ')';
             this.test_mini_title = this.summary['test_yield'] + '% (fail: ' + this.summary['test_fail_qty'] + '/pass: ' + this.summary['test_pass_qty'] + '/total: ' + this.summary['test_total_qty'] + ')';
-            this.board_mini_title = this.summary['board_yield'] + '% (fail: ' + this.summary['board_fail_qty'] + '/pass: ' + this.summary['board_pass_qty'] + '/total: ' + this.summary['board_total_qty'] + ')';
+            this.board_mini_title = this.summary['board_yield'] + '% (fail: ' + this.summary['board_fail_qty'] + '/pasS: ' + this.summary['board_pass_qty'] + '/total: ' + this.summary['board_total_qty'] + ')';
             // show the bar&line chart of yield/throughput
             this.firstList = response.data['first_list'];
             this.testList = response.data['test_list'];
@@ -730,22 +655,14 @@ export default {
             this.first_fail_all_dataSource = response.data['first_fail_all_unit'];
             this.test_fail_all_dataSource = response.data['test_fail_all_unit'];
             this.board_fail_all_dataSource = response.data['board_fail_all_unit'];
-            // it is all pass data, will show it data-table if user click summary mini chart.
-            this.first_pass_all_dataSource = response.data['first_pass_all_unit'];
-            this.test_pass_all_dataSource = response.data['test_pass_all_unit'];
-            this.board_pass_all_dataSource = response.data['board_pass_all_unit'];
             //
             this.alert_color = 'success';
             this.alert_message = response.data['cost_time'];
           }
           this.model.result = '';
           this.model.mode = '';
-          
-          setTimeout(() => {  // set time out to make sure all charts are inited.
-            this.panel = [true, false, false];
-            this.loading = false;  // for search button
-            this.dialog = false;  // for loading window
-          }, 1000);
+          this.loading = false;  // for search button
+          this.dialog = false;  // for loading window
         })
         .catch(e => {
           console.log(e);
@@ -827,7 +744,6 @@ export default {
       }
     },
     updateAllFailTable (name) {
-      this.dataSearch = '';
       if (name === 'First Fail') {
         this.dataTableTitle = 'First Yield - All Fail Raw Data';
         this.dataSource = this.first_fail_all_dataSource;
@@ -840,22 +756,7 @@ export default {
         this.dataTableTitle = 'Board Yield - All Fail Raw Data';
         this.dataSource = this.board_fail_all_dataSource;
       }
-    },
-    updateAllPassTable (name) {
-      this.dataSearch = '';
-      if (name === 'First Pass') {
-        this.dataTableTitle = 'First Yield - All Pass Raw Data';
-        this.dataSource = this.first_pass_all_dataSource;
-      }
-      if (name === 'Test Pass') {
-        this.dataTableTitle = 'Test Yield - All Pass Raw Data';
-        this.dataSource = this.test_pass_all_dataSource;
-      }
-      if (name === 'Board Pass') {
-        this.dataTableTitle = 'Board Yield - All Pass Raw Data';
-        this.dataSource = this.board_pass_all_dataSource;
-      }
-    },
+    }
   },
 
 };

@@ -1,5 +1,5 @@
 <template>
-  <v-widget :title="title">
+  <v-widget :title="title" :dark="$vuetify.dark">
     <div slot="widget-content">
       <v-layout row wrap>   
         <v-flex xl12>

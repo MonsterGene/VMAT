@@ -2,24 +2,16 @@ const vision_menu = [
   {
     title: 'Vision',
     icon: 'filter_vintage',
+    group: '/vision3',
     items: [
-      { title: 'Basic', component: '/vision/basic' },
-      { title: 'Advanced', component: '/vision/advanced' },
+      { name: 'basic', title: 'Basic' },
+      { name: 'advanced', title: 'Advanced' },
     ]
   },
-  // {
-  //   title: 'Vision',
-  //   icon: 'filter_vintage',
-  //   group: '/vision',
-  //   items: [
-  //     { title: 'Basic', name: 'basic' },
-  //     { title: 'Advanced', name: 'advanced' },
-  //   ]
-  // },
   {
     title: 'Fortinet',
     icon: 'filter_vintage',
-    group: '/fortinet',
+    group: '/fortinet3',
     items: [
       { name: 'basic', title: 'Basic' },
       { name: 'advanced', title: 'Advanced' },
