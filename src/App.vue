@@ -16,7 +16,7 @@
             <router-view></router-view>
           </div>   
            <!-- 主视图底部 App Footer -->
-          <v-footer height="auto" :class="['pa-3', 'app--footer']" :dark="$vuetify.theme.isDark" :color="$vuetify.theme.layout">
+          <v-footer height="auto" :class="['pa-3', 'app--footer']" :dark="$vuetify.dark" :color="$vuetify.theme.app">
             <span class="caption">FCT Team &copy; {{ new Date().getFullYear() }}</span>
             <v-spacer></v-spacer>
             <span class="caption mr-1"> Genius Solution Center </span> <v-icon color="pink" small>favorite</v-icon>

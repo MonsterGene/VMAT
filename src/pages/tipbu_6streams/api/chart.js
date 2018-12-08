@@ -136,6 +136,7 @@ stationImgConf['入支架'] =
 stationImgConf['装LCD'] = 
 stationImgConf['锁面板'] = require('../static/pic/station_003.png');
 stationImgConf['装灯罩&小卡'] = require('../static/pic/station_004.png');
+stationImgConf.stationConnection = require('../static/pic/station_connection.png');
 
 const stationList = [
   '前盖入料机',
