@@ -8,12 +8,7 @@
     <div class="top">
       <h5>
         {{ station.name }}
-        <div
-          :class="[
-            'state-ide',
-            getStateColor
-          ]">
-        </div>
+        <state-ide :color="getStateColor"></state-ide>
       </h5>
     </div>
     <div class="img">
@@ -27,7 +22,10 @@
 </template>
 
 <script>
+import stateIde from './state-ide.vue';
+
 export default {
+  components: { stateIde },
   props: ['station', 'lineId', 'legends'],
   data () {
     return {
