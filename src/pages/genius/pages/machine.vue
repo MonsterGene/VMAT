@@ -66,7 +66,7 @@ export default {
         },
         {
           hostname: 'localhost',
-          ipAddress: '192.168.78.145',
+          ipAddress: '192.168.75.128',
           details: 'It is Develop Genius Server'
         },
       ]
