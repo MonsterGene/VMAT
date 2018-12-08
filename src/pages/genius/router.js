@@ -3,7 +3,7 @@ const genius_router = [
     path: '/genius/login',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/login',
     component: () => import(
@@ -16,7 +16,7 @@ const genius_router = [
     path: '/genius/manage',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/manage',
     component: () => import(
@@ -29,7 +29,7 @@ const genius_router = [
     path: '/genius/machine',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/machine',
     component: () => import(
@@ -42,7 +42,7 @@ const genius_router = [
     path: '/genius/logs/:connection',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/logs',
     component: () => import(
@@ -55,7 +55,7 @@ const genius_router = [
     path: '/genius',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius',
     component: () => import(
@@ -68,7 +68,7 @@ const genius_router = [
     path: '/genius/:container',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/station',
     component: () => import(
@@ -81,7 +81,7 @@ const genius_router = [
     path: '/genius/:container/:connection',
     meta: {
       breadcrumb: false,
-      theme: 'blue'
+      theme: 'purple'
     },
     name: 'genius/container',
     component: () => import(

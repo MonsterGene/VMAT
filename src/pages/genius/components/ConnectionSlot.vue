@@ -49,7 +49,7 @@
       <v-btn
         style="padding: 1; min-width: 0;"
         color="error" 
-        :href="'#/genius/logs/' + connection_name" 
+        :href="machine? '#/genius/logs/' + connection_name + '/?machine=' + machine: '#/genius/logs/' + connection_name" 
         target="_blank"
         v-if="controller !== 'STEP' && controller !== 'INFO'"
       >LOG</v-btn>
@@ -96,12 +96,8 @@ export default {
         { title: 'Test Step 6', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
         { title: 'Test Step 7', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
         { title: 'Test Step 8', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { title: 'Test Step 9', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { title: 'Test Step 10', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { title: 'Test Step 11', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { title: 'Test Step 12', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
-        { title: 'Test Step 13', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
       ],
+      machine: '',
     };
   },
   computed: {
@@ -149,6 +145,8 @@ export default {
         this.testLogFalg = true;
       }, 700);
     }
+    const params = this.$route.query;
+    this.machine = params.machine;
   },
   methods: {
     openCommandPromp () {
