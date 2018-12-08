@@ -3,7 +3,7 @@ const vision_router = [
     path: '/vision',
     component: () => import('./Vision.vue'),
     meta: {
-      theme: 'blue',
+      theme: 'indigo',
     },
     children: [
       {
@@ -34,7 +34,7 @@ const vision_router = [
     path: '/fortinet',
     component: () => import('./Vision.vue'),
     meta: {
-      theme: 'blue'
+      theme: 'indigo'
     },
     children: [
       {
