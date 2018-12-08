@@ -80,9 +80,9 @@ export default {
           this.login_error = 'Incorrect Username or Password...';
           this.model.password = '';
           this.loading = false;
-          this.$cookies.set('username', 'admin', '1h');
-          this.$cookies.set('role', 'engineer', '1h');
-          this.$router.push('/genius/machine');
+          // this.$cookies.set('username', 'admin', '1h');
+          // this.$cookies.set('role', 'engineer', '1h');
+          // this.$router.push('/genius/machine');
           // this.$router.push('/register');
         });
     },
