@@ -121,7 +121,6 @@ export default {
 
   methods: {
     genChildTarget (item, subItem) {
-      console.log(item, subItem);
       if (subItem.href) return;
       if (subItem.component) {
         return {

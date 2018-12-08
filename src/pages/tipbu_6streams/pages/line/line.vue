@@ -1,5 +1,5 @@
 <template>
-<v-container grid-list-xl fluid style="overflow: auto">
+<v-container grid-list-xl fluid>
   <v-alert
     v-model="alertOpts.model"
     :type="alertOpts.type"
@@ -9,7 +9,7 @@
   </v-alert>
   <div class="legend-container">
     <div class="legend" v-for="leg in legends" :key="leg.state">
-      <div :class="['state-ide', leg.color==='black'? 'grey' : leg.color]"></div>
+      <state-ide :color="leg.color"></state-ide>
       {{ leg.state }}
     </div>
   </div>
@@ -74,10 +74,11 @@
 import { demoApi, lineApi } from '../../api/index.js';
 import station from './station.vue';
 import stationConnection from './stationConnection.vue';
+import stateIde from './state-ide.vue';
 const API = { demoApi, lineApi };
 
 export default {
-  components: { station, stationConnection },
+  components: { station, stationConnection, stateIde },
   data () {
     return {
       lineInfo: {
@@ -170,14 +171,6 @@ export default {
   padding 10px
   display inline-block
 
-.state-ide
-  width:16px;
-  height:16px;
-  vertical-align middle
-  border-radius 8px
-  margin-left 5px
-  display:inline-block
-
 .legend-container
   width 1750px
   margin 0 auto
@@ -186,7 +179,7 @@ export default {
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1880px
+  width 1890px
   background #00000030
   display flex
   position relative
