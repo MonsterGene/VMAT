@@ -84,7 +84,6 @@ export default {
         this.$vuetify.theme = Object.assign(JSON.parse(JSON.stringify(this.defaultTheme)), theme.colors);
         this.darkTheme = theme.isDark;
         this.setTheme(theme);
-        console.log(this.$vuetify.dark);
       },
       immediate: true
     },
