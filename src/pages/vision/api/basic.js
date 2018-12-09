@@ -4,7 +4,7 @@ function getBasic (sernum) {
   const currentUrl = window.location.hash;
   const hostname = window.location.hostname;
   if (hostname.includes('localhost')) {
-    return axios.post('http://localhost:8000/get-record-by-sernum/', { 'sernum': sernum, 'database': '192.168.78.145' });  // laptop VM
+    return axios.post('http://localhost:8000/get-record-by-sernum/', { 'sernum': sernum, 'database': '192.168.75.128' });  // laptop VM
   }
   if (currentUrl.includes('fortinet')) {
     console.log('it is Fortinet');

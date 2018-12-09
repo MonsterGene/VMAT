@@ -14,12 +14,11 @@
                   <v-text-field append-icon="person" name="login" label="Username" type="text" v-model="model.username"></v-text-field>
                   <v-text-field append-icon="lock" name="password" label="Password" id="password" type="password" v-model="model.password"></v-text-field>
                 </v-form>
-                <p>{{ login_error }}</p>
               </v-card-text>
               <v-card-actions>
-                <!-- <v-btn block color="" @click="register">New Account</v-btn> -->
-                <!-- <v-btn block color="" @click="forget">Forget ?</v-btn> -->
-                <!-- <v-spacer></v-spacer> -->
+                <v-btn block color="" @click="register">New Account</v-btn>
+                <v-btn block color="" @click="forget">Forget ?</v-btn>
+                <v-spacer></v-spacer>
                 <v-btn block color="primary" @click="login" :loading="loading">Login</v-btn>
               </v-card-actions>
             </v-card>
@@ -31,61 +30,46 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueCookies from 'vue-cookies';
-import { getLogin } from '../api/login';
-
-Vue.use(VueCookies);
-
+import { getLogin } from '../api/gac';
 export default {
   data: () => ({
     loading: false,
     model: {
       username: '',
       password: ''
-    }, 
-    login_error: '',
+    }
   }),
 
-  mounted () {
-    this.$cookies.remove('username');
-    this.$cookies.remove('role');
-  },
   methods: {
     login () {
       this.loading = true;
 
       getLogin(this.model.username, this.model.password)
         .then(response => {
-          // console.log(response.data);
-
-          if (!response.data.status) {
-            this.login_error = response.data.msg;
-            this.model.password = '';
-            this.loading = false;
-            return false;
-          }
-          const display_name = response.data.user;
-          const role = response.data.role;
-
-          this.$cookies.set('username', display_name, '1d');
-          this.$cookies.set('role', role, '1d');
+          console.log(response.data);
+          
           setTimeout(() => {
-            this.loading = false;
-            this.$router.push('/genius/machine');
+            this.$router.push('/dashboard');
           }, 2000);
         })
         .catch(e => {
           // console.log(e);
-          this.login_error = 'Incorrect Username or Password...';
-          this.model.password = '';
-          this.loading = false;
-          this.$cookies.set('username', 'robinwu', '1h');
-          this.$cookies.set('role', 'engineer', '1h');
-          this.$router.push('/genius/machine');
-          // this.$router.push('/register');
+          this.error = 'Username or Password is incorrect';
+          this.loadingLogin = false;
+          this.$router.push('/register');
         });
     },
+
+    register () {
+      setTimeout(() => {
+        this.$router.push('/register');
+      }, 1000);
+    },
+    forget () {
+      setTimeout(() => {
+        this.$router.push('/forget-password');
+      }, 1000);
+    }
   }
 
 };
