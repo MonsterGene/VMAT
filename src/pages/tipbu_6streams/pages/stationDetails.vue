@@ -137,25 +137,31 @@
         @chart-click="errorFreqAndTimeByDayClick"
       ></error-frequency-and-time-by-day>
     </v-flex>
-
-    <error-frequency
-      v-if="subError.showLevel"
-      :show-level="subError.showLevel"
-      :date="subError.date"
-      :line-id="subError.lineId"
-      :station-id="subError.stationId"
-      @chart-click="subErrorClick"
-    ></error-frequency>
-    <error-time
-      v-if="subError.showLevel"
-      :show-level="subError.showLevel"
-      :date="subError.date"
-      :line-id="subError.lineId"
-      :station-id="subError.stationId"
-      @chart-click="subErrorClick"
-    ></error-time>
-    
   </v-layout>
+  <sub-freq-time-by-type
+    v-if="subError.showLevel"
+    :date="subError.date"
+    :line-id="subError.lineId"
+    :station-id="subError.stationId"
+  ></sub-freq-time-by-type>
+  <error-frequency
+    v-if="false"
+    :show-level="subError.showLevel"
+    :date="subError.date"
+    :line-id="subError.lineId"
+    :station-id="subError.stationId"
+    @chart-click="subErrorClick"
+  ></error-frequency>
+  <error-time
+    v-if="false"
+    :show-level="subError.showLevel"
+    :date="subError.date"
+    :line-id="subError.lineId"
+    :station-id="subError.stationId"
+    @chart-click="subErrorClick"
+  ></error-time>
+    
+  
 </v-container>
 </template>
 
@@ -172,6 +178,7 @@ import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutp
 import ErrorFrequencyAndTimeByDay from '../components/ErrorFrequencyAndTimeByDay.vue';
 import ErrorFrequency from '../components/ErrorFrequency.vue';
 import ErrorTime from '../components/ErrorTime.vue';
+import subFreqTimeByType from '../components/SubFreqAndTimeByType.vue';
 
 export default {
   components: {
@@ -183,7 +190,8 @@ export default {
     UtilizationRateAndOutputByHour,
     ErrorFrequencyAndTimeByDay,
     ErrorFrequency,
-    ErrorTime
+    ErrorTime,
+    subFreqTimeByType
   },
   data () {
     console.log(API.dailyCishuShijian);

@@ -9,7 +9,7 @@
   </v-alert>
   <div class="legend-container">
     <div class="legend" v-for="leg in legends" :key="leg.state">
-      <div :class="['state-ide', leg.color==='black'? 'grey' : leg.color]"></div>
+      <state-ide :color="leg.color"></state-ide>
       {{ leg.state }}
     </div>
   </div>
@@ -48,34 +48,23 @@
       </v-card-text>
     </v-card>
     <div class="station-container">
-      <v-hover
+      <template
         v-for="(station) in line.stations"
-        :key="station.id"
+        
       >
-        <div
-          slot-scope="{ hover }"
-          :class="['station-card', {'elevation-10': hover}]"
-          @click="$router.push({path: '/tipbu-6streams/station-details/'+station.name, query: {l: line.id, s: station.id}})"
-        >
-          <div class="top">
-            <h5>
-              {{ station.name }}
-              <div
-                :class="[
-                  'state-ide',
-                  legends.filter(v => v.stateCode === station.stateCode)[0].color==='black' ? 'grey' : legends.filter(v => v.stateCode === station.stateCode)[0].color
-                ]">
-              </div>
-            </h5>
-          </div>
-          <div class="img">
-            <img :src="station.img" alt="加载中...">
-          </div>
-          <div class="bottom">
-            <h5>产出： {{ station.output }}台</h5>
-          </div>
-        </div>
-      </v-hover>
+        <station-connection
+          v-if="station==='conn'"
+          :key="station.id"
+          :img-src="stationImg.stationConnection"
+        ></station-connection>
+        <station
+          v-else
+          :key="station.id"
+          :station="station"
+          :line-id="line.id"
+          :legends="legends"
+        ></station>
+      </template>
     </div>
   </v-layout>
 </v-container>
@@ -83,9 +72,13 @@
 
 <script>
 import { demoApi, lineApi } from '../../api/index.js';
+import station from './station.vue';
+import stationConnection from './stationConnection.vue';
+import stateIde from './state-ide.vue';
 const API = { demoApi, lineApi };
 
 export default {
+  components: { station, stationConnection, stateIde },
   data () {
     return {
       lineInfo: {
@@ -143,6 +136,8 @@ export default {
               station.img = this.stationImg[station.name] || this.stationImg.default;
               return station;
             });
+            line.stations.splice(5, 0, 'conn');
+            line.stations.splice(10, 0, 'conn');
             return line;
           });
         } else {
@@ -176,14 +171,6 @@ export default {
   padding 10px
   display inline-block
 
-.state-ide
-  width:16px;
-  height:16px;
-  vertical-align middle
-  border-radius 8px
-  margin-left 5px
-  display:inline-block
-
 .legend-container
   width 1750px
   margin 0 auto
@@ -192,28 +179,29 @@ export default {
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1750px
+  width 1890px
   background #00000030
   display flex
   position relative
+  border #282a30 2px solid
   &:hover
     background #282a30
     transition 800ms ease all
-  &:before,&:after
-    content ''
-    height 2px
-    width 0
-    position absolute
-    background #BDBDBD
-    transition: 600ms ease all;
-  &:after
-    bottom 0
-    left 0
-  &:hover:before,&:hover:after
-    width 100%
-    transition:800ms ease all;
+  // &:before,&:after
+  //   content ''
+  //   height 2px
+  //   width 0
+  //   position absolute
+  //   background #BDBDBD
+  //   transition: 600ms ease all;
+  // &:after
+  //   bottom 0
+  //   left 0
+  // &:hover:before,&:hover:after
+  //   width 100%
+  //   transition:800ms ease all;
   .line-card
-    border 3px solid #76FF0333!important //green lighten-2
+    // border 3px solid #76FF0333!important //green lighten-2
     background #42424242
     border-radius 5px
     margin-right 15px
@@ -226,22 +214,4 @@ export default {
     flex:1;
     padding 5px
     color #fff
-    .station-card
-      cursor: pointer;
-      float:left
-      display flex
-      flex-direction: column;
-      text-align center
-      .top
-        height 20px
-      .img
-        flex 1
-        height calc(100% - 40px)
-        display flex
-        align-items flex-end
-        img 
-          margin 0 auto
-      .bottom
-        height 20px
-
 </style>
