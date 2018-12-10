@@ -151,6 +151,7 @@
 
 <script>
 import Vue from 'vue';
+import VueCookies from 'vue-cookies';
 import VueNativeSock from 'vue-native-websocket';
 import ToolBar from '../components/ToolBar';
 import NotifyMarquee from '../components/NotifyMarquee';
@@ -173,6 +174,7 @@ const mutations = {
   SOCKET_RECONNECT,
   SOCKET_RECONNECT_ERROR
 };
+Vue.use(VueCookies);
 
 import { getIpAddress } from '../api/basic';
 import { getGeniusVersion } from '../api/getGeniusVersion';
@@ -205,6 +207,7 @@ export default {
   },
   data () {
     return {
+      username: '',
       openScreenStyle: false,
       openChangeMode: false,
       machine: '',
@@ -230,6 +233,7 @@ export default {
     };
   },
   mounted () {
+    this.username = this.$cookies.get('username');
     const hostname = getIpAddress();
     const params = this.$route.query;
     this.machine = params.machine;
@@ -272,7 +276,7 @@ export default {
         { 
           'action': 'notification',
           'notification': this.notification,
-          'user': 'genius'  // TODO, need use logined username.
+          'user': this.username
         }
       );
       setTimeout(() => {
@@ -318,32 +322,32 @@ export default {
       let obj = {};
       if (action === 'Start Engine') {
         console.log(action);
-        obj = { 'action': 'start_engine', 'user': 'genius' };
+        obj = { 'action': 'start_engine', 'user': this.username };
       }
       if (action === 'Stop Engine') {
         console.log(action);
-        obj = { 'action': 'stop_engine', 'user': 'genius' };
+        obj = { 'action': 'stop_engine', 'user': this.username };
       }
       if (action.includes('Upgrade Engine')) {
         const version = action.split('-')[1];
         console.log(version);
-        obj = { 'action': 'upgrade_engine', 'version': version, 'user': 'genius' };
+        obj = { 'action': 'upgrade_engine', 'version': version, 'user': this.username };
       }
       if (action === 'Update DEBUG') {
         console.log(action);
-        obj = { 'action': 'update_te', 'user': 'genius' };
+        obj = { 'action': 'update_te', 'user': this.username };
       }
       if (action === 'Update PROD') {
         console.log(action);
-        obj = { 'action': 'update_prod', 'user': 'genius' };
+        obj = { 'action': 'update_prod', 'user': this.username };
       }
       if (action === 'Lock Container') {
         console.log(action + this.selectContainer);
-        obj = { 'action': 'lock', 'container': this.selectContainer, 'user': 'genius' };
+        obj = { 'action': 'lock', 'container': this.selectContainer, 'user': this.username };
       }
       if (action === 'Unlock Container') {
         console.log(action + this.selectContainer);
-        obj = { 'action': 'unlock', 'container': this.selectContainer, 'user': 'genius' };
+        obj = { 'action': 'unlock', 'container': this.selectContainer, 'user': this.username };
       }
       this.$socket.sendObj(obj);
       this.selectContainer = '';
