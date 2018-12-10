@@ -40,7 +40,7 @@
         <e-chart
           ref="frequencyChart"
           :path-option="frequencyChartOption"
-          @chart-click="$emit('chart-click', $event, 1)"
+          @chart-click="$emit('chart-click', $event)"
           height="400px"
           width="100%"
           >
@@ -88,7 +88,7 @@
           <e-chart
             ref="timeChart"
             :path-option="timeChartOption"
-            @chart-click="$emit('chart-click', $event, 1)"
+            @chart-click="$emit('chart-click', $event)"
             height="400px"
             width="100%"
             >
@@ -124,6 +124,7 @@ export default {
         ['dataset.source', this.frequencyChartData],
         ['color', ['#73fb79']],
         ['yAxis', yAxisConf],
+        ['series[0].type', 'line'],
         ...commChartOpt
       ];
     },
@@ -132,6 +133,7 @@ export default {
         ['dataset.source', this.timeChartData],
         ['color', ['#bfbfbf']],
         ['yAxis', yAxisConf],
+        ['series[0].type', 'bar'],
         ...commChartOpt
       ];
     },

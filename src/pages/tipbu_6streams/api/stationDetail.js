@@ -47,6 +47,12 @@ const getErrorFrequencyAndTime = (params) => {
 const getErrorFrequency = {
   byType: params => {
     return axios.post('/GetAlertMessage/GetErrorTypeCount', params).catch(catchMethod);
+  },
+  byDay: params => {
+    return axios.post('/GetAlertMessage/GetAlertDayDataByType', params).catch(catchMethod);
+  },
+  byHour: params => {
+    return axios.post('/GetAlertMessage/GetAlertHourDataByType', params).catch(catchMethod);    
   }
 };
 

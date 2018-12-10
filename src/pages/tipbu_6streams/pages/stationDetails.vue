@@ -138,29 +138,31 @@
       ></error-frequency-and-time-by-day>
     </v-flex>
   </v-layout>
+
   <sub-freq-time-by-type
     v-if="subError.showLevel"
     :date="subError.date"
     :line-id="subError.lineId"
     :station-id="subError.stationId"
+    @chart-click="subErrorByDayType = $event.name;subError.showLevel = 2"
   ></sub-freq-time-by-type>
-  <error-frequency
-    v-if="false"
-    :show-level="subError.showLevel"
-    :date="subError.date"
+  <sub-freq-time-by-day
+    v-if="subError.showLevel >= 2"
+    :type="subErrorByDayType"
     :line-id="subError.lineId"
     :station-id="subError.stationId"
-    @chart-click="subErrorClick"
-  ></error-frequency>
-  <error-time
-    v-if="false"
-    :show-level="subError.showLevel"
-    :date="subError.date"
+    @chart-click="subErrorByHourDate = $event.name;subError.showLevel = 3"
+  ></sub-freq-time-by-day>
+  <v-flex xs12 v-if="subError.showLevel >= 2">
+    <error-solution></error-solution>
+  </v-flex>
+  <sub-freq-time-by-hour
+    v-if="subError.showLevel >= 3"
+    :date="subErrorByHourDate"
+    :type="subErrorByDayType"
     :line-id="subError.lineId"
     :station-id="subError.stationId"
-    @chart-click="subErrorClick"
-  ></error-time>
-    
+  ></sub-freq-time-by-hour>
   
 </v-container>
 </template>
@@ -176,9 +178,10 @@ import VWidget from '@/components/VWidget';
 import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
 import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
 import ErrorFrequencyAndTimeByDay from '../components/ErrorFrequencyAndTimeByDay.vue';
-import ErrorFrequency from '../components/ErrorFrequency.vue';
-import ErrorTime from '../components/ErrorTime.vue';
 import subFreqTimeByType from '../components/SubFreqAndTimeByType.vue';
+import SubFreqTimeByDay from '../components/SubFreqAndTimeByDay.vue';
+import ErrorSolution from '../components/ErrorSolution.vue';
+import SubFreqTimeByHour from '../components/SubFreqAndTimeByHour.vue';
 
 export default {
   components: {
@@ -189,9 +192,10 @@ export default {
     UtilizationRateAndOutputByDay,
     UtilizationRateAndOutputByHour,
     ErrorFrequencyAndTimeByDay,
-    ErrorFrequency,
-    ErrorTime,
-    subFreqTimeByType
+    subFreqTimeByType,
+    SubFreqTimeByDay,
+    ErrorSolution,
+    SubFreqTimeByHour
   },
   data () {
     console.log(API.dailyCishuShijian);
@@ -215,6 +219,8 @@ export default {
         lineId,
         stationId 
       },
+      subErrorByDayType: '',
+      subErrorByHourDate: '',
       dataset: {
         ...API
       },

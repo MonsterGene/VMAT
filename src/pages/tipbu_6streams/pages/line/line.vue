@@ -33,40 +33,42 @@
       </v-card-text>
     </v-card>
   </v-dialog>
-  <v-layout v-for="line in linesData" :key="line.id" class="line-container" row wrap>
-    <v-card
-      class="line-card"
-      dark hover
-      :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id"
-    >
-      <v-card-title class="pb-0">
-        <h4 style="margin: 0 auto">{{ line.name }}</h4>
-      </v-card-title>
-      <v-card-text>
-        <h5>目标产出：{{ line.totalTarget }}台</h5>
-        <h5>达成率：{{ line.achievingRate }}</h5>
-      </v-card-text>
-    </v-card>
-    <div class="station-container">
-      <template
-        v-for="(station) in line.stations"
-        
+  <vue-perfect-scrollbar class="drawer-menu--scroll">
+    <v-layout v-for="line in linesData" :key="line.id" class="line-container" row wrap>
+      <v-card
+        class="line-card"
+        dark hover
+        :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id"
       >
-        <station-connection
-          v-if="station==='conn'"
-          :key="station.id"
-          :img-src="stationImg.stationConnection"
-        ></station-connection>
-        <station
-          v-else
-          :key="station.id"
-          :station="station"
-          :line-id="line.id"
-          :legends="legends"
-        ></station>
-      </template>
-    </div>
-  </v-layout>
+        <v-card-title class="pb-0">
+          <h4 style="margin: 0 auto">{{ line.name }}</h4>
+        </v-card-title>
+        <v-card-text>
+          <h5>目标产出：{{ line.totalTarget }}台</h5>
+          <h5>达成率：{{ line.achievingRate }}</h5>
+        </v-card-text>
+      </v-card>
+      <div class="station-container">
+        <template
+          v-for="(station) in line.stations"
+          
+        >
+          <station-connection
+            v-if="station==='conn'"
+            :key="station.id"
+            :img-src="stationImg.stationConnection"
+          ></station-connection>
+          <station
+            v-else
+            :key="station.id"
+            :station="station"
+            :line-id="line.id"
+            :legends="legends"
+          ></station>
+        </template>
+      </div>
+    </v-layout>
+  </vue-perfect-scrollbar>
 </v-container>
 </template>
 
@@ -76,9 +78,10 @@ import station from './station.vue';
 import stationConnection from './stationConnection.vue';
 import stateIde from './state-ide.vue';
 const API = { demoApi, lineApi };
+import VuePerfectScrollbar from 'vue-perfect-scrollbar';
 
 export default {
-  components: { station, stationConnection, stateIde },
+  components: { station, stationConnection, stateIde, VuePerfectScrollbar },
   data () {
     return {
       lineInfo: {
@@ -136,8 +139,8 @@ export default {
               station.img = this.stationImg[station.name] || this.stationImg.default;
               return station;
             });
-            line.stations.splice(5, 0, 'conn');
-            line.stations.splice(10, 0, 'conn');
+            line.stations.splice(6, 0, 'conn');
+            line.stations.splice(11, 0, 'conn');
             return line;
           });
         } else {
@@ -179,7 +182,7 @@ export default {
   margin-bottom 10px!important
   margin-left auto!important
   margin-right auto!important
-  width 1890px
+  width 1900px
   background #00000030
   display flex
   position relative
