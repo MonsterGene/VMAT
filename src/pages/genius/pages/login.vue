@@ -68,8 +68,8 @@ export default {
           const display_name = response.data.user;
           const role = response.data.role;
 
-          this.$cookies.set('username', display_name, '1d');
-          this.$cookies.set('role', role, '1d');
+          this.$cookies.set('username', display_name, '8h');
+          this.$cookies.set('role', role, '8h');
           setTimeout(() => {
             this.loading = false;
             this.$router.push('/genius/machine');
@@ -80,9 +80,9 @@ export default {
           this.login_error = 'Incorrect Username or Password...';
           this.model.password = '';
           this.loading = false;
-          this.$cookies.set('username', 'robinwu', '1h');
-          this.$cookies.set('role', 'engineer', '1h');
-          this.$router.push('/genius/machine');
+          // this.$cookies.set('username', 'robinwu', '8h');
+          // this.$cookies.set('role', 'engineer', '8h');
+          // this.$router.push('/genius/machine');
           // this.$router.push('/register');
         });
     },
