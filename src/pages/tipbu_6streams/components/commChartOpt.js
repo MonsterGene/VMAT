@@ -5,7 +5,6 @@ export default [
   ['grid.left', '2%'],
   ['grid.bottom', '5%'],
   ['grid.right', '3%'],
-  ['series[0].type', 'line'],
   ['series[0].label.show', true],
   ['series[0].smooth', true],
   ['xAxis.axisLabel.show', true],
