@@ -8,7 +8,7 @@
     v-model="drawer"
     :stateless="true"
     width="260"
-    :color="$vuetify.theme.sideMenu"
+    :style="{background: $vuetify.theme.sideMenu}"
     >
     <!-- 顶部logo title -->
     <v-toolbar :color="$vuetify.theme.sideNav">
@@ -36,7 +36,7 @@
                       <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-for="(grand, i) in subItem.children" :key="i" :to="genChildTarget(item, grand)" :href="grand.href" ripple="ripple">
+                  <v-list-tile v-for="(grand, i) in subItem.items" :key="i" :to="genChildTarget(item, grand)" :href="grand.href" ripple="ripple">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ grand.title }}</v-list-tile-title>
                     </v-list-tile-content>
