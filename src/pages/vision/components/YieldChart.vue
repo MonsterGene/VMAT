@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import EChart from '@/components/chart/echart';
+import EChart from './echart';
 import VWidget from '@/components/VWidget';
 import Material from 'vuetify/es5/util/colors';
 
