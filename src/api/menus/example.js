@@ -113,6 +113,20 @@ const menu = [
   { divider: true },
   { header: 'Extras' },
   {
+    title: 'Tree',
+    group: 'tree',
+    icon: 'list',
+    items: [
+      { name: 'leave 1', title: 'Leave 1' },
+      {
+        title: 'Tree 1',
+        items: [
+          { name: 'leave 2', title: 'Leave 2' }
+        ]
+      }
+    ]
+  },
+  {
     title: 'Pages',
     group: 'extra',
     icon: 'list',
@@ -121,21 +135,6 @@ const menu = [
       { name: '404', title: '404', component: 'NotFound' },
       { name: '403', title: '403', component: 'AccessDenied' },
       { name: '500', title: '500', component: 'ServerError' },
-    ]
-  },
-  {
-    title: 'Tree',
-    group: 'tree',
-    icon: 'list',
-    items: [
-      { name: 'leave 1', title: 'Leave 1' },
-      {
-        title: 'Tree 1',
-        items: true,
-        children: [
-          { name: 'leave 2', title: 'Leave 2' }
-        ]
-      }
     ]
   }
 ];
