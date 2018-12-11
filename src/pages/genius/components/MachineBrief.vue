@@ -11,7 +11,7 @@
         </v-card-title>
 
         <v-card-actions>
-          <v-btn :href="'#/genius/?machine=' + host.ipAddress" color="primary" @click="activeStation">Explore</v-btn>
+          <v-btn :href="'#/genius/login/?next=/genius/?machine=' + host.ipAddress" color="primary" @click="activeStation">Explore</v-btn>
           <v-btn 
             v-if="host.hostname !== 'fortinet1'" 
             :href="'#/vision/advanced/?machine=' + host.hostname" 

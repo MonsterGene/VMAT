@@ -5,7 +5,7 @@ function getAdvanced (params) {
   const hostname = window.location.hostname;
   if (hostname.includes('localhost')) {
     return axios.post('http://localhost:8000/get_yield_throughput/',
-      { 'data_type': params.data_type, 'start_date': params.start_date, 'end_date': params.end_date, 'uuttype': params.uuttype, 'sernum': params.sernum, 'area': params.area, 'machine': params.machine, 'mode': params.mode, 'result': params.result, 'test': params.test, 'database': '192.168.75.128' });
+      { 'data_type': params.data_type, 'start_date': params.start_date, 'end_date': params.end_date, 'uuttype': params.uuttype, 'sernum': params.sernum, 'area': params.area, 'machine': params.machine, 'mode': params.mode, 'result': params.result, 'test': params.test, 'database': '10.167.6.165' });
   }
   if (currentUrl.includes('fortinet')) {
     console.log('it is fortinet');
@@ -24,7 +24,7 @@ function getAnalysis (params) {
   const hostname = window.location.hostname;
   if (hostname.includes('localhost')) {
     return axios.post('http://localhost:8000/get-failure-analysis/',
-      { 'data_type': params.data_type, 'start_date': params.start_date, 'end_date': params.end_date, 'uuttype': params.uuttype, 'sernum': params.sernum, 'area': params.area, 'machine': params.machine, 'mode': params.mode, 'result': params.result, 'test': params.test, 'database': '192.168.75.128' });
+      { 'data_type': params.data_type, 'start_date': params.start_date, 'end_date': params.end_date, 'uuttype': params.uuttype, 'sernum': params.sernum, 'area': params.area, 'machine': params.machine, 'mode': params.mode, 'result': params.result, 'test': params.test, 'database': '10.167.6.165' });
   }
   if (currentUrl.includes('fortinet')) {
     console.log('it is fortinet');

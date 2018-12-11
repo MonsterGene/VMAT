@@ -8,7 +8,7 @@
     v-model="drawer"
     :stateless="true"
     width="260"
-    :style="{background: $vuetify.theme.sideMenu}"
+    :style="{background: !$vuetify.dark && $vuetify.theme.sideMenu || undefined}"
     >
     <!-- 顶部logo title -->
     <v-toolbar :color="$vuetify.theme.sideNav">
@@ -23,7 +23,7 @@
         <template v-for="(item, i) in menus">
             <!--group with subitems-->
             <v-list-group v-if="item.items" :key="item.name" :group="item.group" :prepend-icon="item.icon" no-action="no-action">
-              <v-list-tile slot="activator" ripple="ripple">
+              <v-list-tile :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'" slot="activator" ripple="ripple">
                 <v-list-tile-content>
                   <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                 </v-list-tile-content>
@@ -57,7 +57,15 @@
             <v-subheader v-else-if="item.header" :key="i">{{ item.header }}</v-subheader>
             <v-divider v-else-if="item.divider" :key="i"></v-divider>
             <!--top-level link-->
-            <v-list-tile v-else :to="!item.href ? { name: item.name, path: item.path } : null" :href="item.href" ripple="ripple" :disabled="item.disabled" :target="item.target" rel="noopener" :key="item.name">
+            <v-list-tile
+              :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'"
+              v-else :to="!item.href ? { name: item.name, path: item.path } : null" :href="item.href"
+              ripple="ripple"
+              :disabled="item.disabled"
+              :target="item.target"
+              rel="noopener"
+              :key="item.name"
+            >
               <v-list-tile-action v-if="item.icon">
                 <v-icon>{{ item.icon }}</v-icon>
               </v-list-tile-action>

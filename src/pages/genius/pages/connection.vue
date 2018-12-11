@@ -89,6 +89,7 @@
 
 <script>
 import Vue from 'vue';
+import VueCookies from 'vue-cookies';
 import VueNativeSock from 'vue-native-websocket';
 import ToolBar from '../components/ToolBar';
 import AskQuestion from '../components/AskQuestion';
@@ -114,6 +115,7 @@ const mutations = {
   SOCKET_RECONNECT,
   SOCKET_RECONNECT_ERROR
 };
+Vue.use(VueCookies);
 
 import { getIpAddress } from '../api/basic';
 const currentUrl = window.location.hash.substring(1);
@@ -196,6 +198,7 @@ export default {
     },
   },
   mounted () {
+    this.username = this.$cookies.get('username');
     this.backPath = window.location.hash.split('/').slice(0, 3).join('/');
     const currentUrl = window.location.hash.substring(1).split('?')[0];
     const hostname = getIpAddress();
@@ -289,7 +292,7 @@ export default {
           'mode': this.mode,
           'name': container_name, 
           'action': action,
-          'user': 'genius'  // TODO, need use logined username.
+          'user': this.username
         }
       );
     },
