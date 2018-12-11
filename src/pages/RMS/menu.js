@@ -1,27 +1,34 @@
 const menu = [
   {
-    title: 'WIP管理&品質反饋',
-    group: 'rms',
-    component: 'rms',
+    title: 'RMS',
+    group: '/rms',
     icon: 'view_compact',
     items: [
-      { 
-        name: 'rms/page1', title: 'WIP trend & Quality feed back', component: 'rms/page1'
-      },
-      { 
-        name: 'rms/page2', title: 'WIP detail status', component: 'rms/page2'
-      },
-      { 
-        name: 'rms/page3', title: 'Check-in/out', component: 'rms/page3'
-      },
-      { 
-        name: 'rms/page4', title: '維修數據錄入', component: 'rms/page4'
-      },
       {
-        name: 'rms/page5', title: '查詢', component: 'rms/page5'
-      }
+        title: 'WIP管理&品質反饋',
+        group: 'wip',
+        component: 'rms',
+        items: [
+          { 
+            name: 'rms/page1', title: 'WIP trend & Quality feed back', component: 'rms/page1'
+          },
+          { 
+            name: 'rms/page2', title: 'WIP detail status', component: 'rms/page2'
+          },
+          { 
+            name: 'rms/page3', title: 'Check-in/out', component: 'rms/page3'
+          },
+          { 
+            name: 'rms/page4', title: '維修數據錄入', component: 'rms/page4'
+          },
+          {
+            name: 'rms/page5', title: '查詢', component: 'rms/page5'
+          }
+        ]
+      },
     ]
   },
+  
   {
     title: 'Smart debug',
     group: 'rms1',
