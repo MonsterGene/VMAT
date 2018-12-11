@@ -66,10 +66,23 @@ const getErrorTime = {
   }
 };
 
+/**
+ * 异常解决方案
+ */
+const errorSolution = {
+  fetch: params => {
+    return axios.post('/AlertConfig/getAlertSolution', params).catch(catchMethod);
+  },
+  edit: params => {
+    return axios.post('/AlertConfig/updateAlertMessage', params).catch(catchMethod);
+  }
+};
+
 export default {
   getStationOutput,
   getUtilizationRate,
   getErrorFrequencyAndTime,
   getErrorFrequency,
-  getErrorTime
+  getErrorTime,
+  errorSolution
 };
