@@ -61,7 +61,7 @@ export default {
         },
         {
           hostname: 'fortinet1',
-          ipAddress: '192.168.5.238',
+          ipAddress: '10.167.5.238',
           details: 'Fortinet Genius Server'
         },
         {
