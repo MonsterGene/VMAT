@@ -10,7 +10,6 @@
           class="elevation-1"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-right">{{ props.item.date }}</td>
             <td class="text-xs-right">{{ props.item.machineName }}</td>
             <td class="text-xs-right">{{ props.item.errorCode }}</td>
             <td class="text-xs-right">{{ props.item.errorInfo }}</td>
@@ -30,9 +29,11 @@
 
 <script>
 import VWidget from '@/components/VWidget';
+import { stationApi } from '../api';
 
 export default {
   components: { VWidget },
+  props: ['stationId', 'errorType'],
   data () {
     return {
       scrollSettings: {
@@ -58,6 +59,14 @@ export default {
         ]
       }
     };
+  },
+  mounted () {
+    stationApi.errorSolution.fetch({
+      areaID: this.stationId,
+      errorType: this.errorType
+    }).then(res => {
+      console.log(res.data);
+    })
   }
 };
 </script>
