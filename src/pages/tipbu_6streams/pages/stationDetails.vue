@@ -154,7 +154,9 @@
     @chart-click="subErrorByHourDate = $event.name;subError.showLevel = 3"
   ></sub-freq-time-by-day>
   <v-flex xs12 v-if="subError.showLevel >= 2">
-    <error-solution></error-solution>
+    <error-solution
+      station-id=""
+    ></error-solution>
   </v-flex>
   <sub-freq-time-by-hour
     v-if="subError.showLevel >= 3"

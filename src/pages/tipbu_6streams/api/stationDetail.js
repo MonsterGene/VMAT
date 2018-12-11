@@ -71,9 +71,15 @@ const getErrorTime = {
  */
 const errorSolution = {
   fetch: params => {
+    /**
+     * params: { areaID: Int, errorType: String }
+     */
     return axios.post('/AlertConfig/getAlertSolution', params).catch(catchMethod);
   },
   edit: params => {
+    /**
+     * params: { areaID: Int, code: String, info: String, rootCourse: String, action: String }
+     */
     return axios.post('/AlertConfig/updateAlertMessage', params).catch(catchMethod);
   }
 };
