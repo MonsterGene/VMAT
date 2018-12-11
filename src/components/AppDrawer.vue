@@ -31,19 +31,19 @@
               <template v-for="(subItem, i) in item.items">
                 <!--sub group-->
                 <v-list-group v-if="subItem.items" :key="subItem.name" :group="subItem.group" sub-group="sub-group">
-                  <v-list-tile slot="activator" ripple="ripple">
+                  <v-list-tile :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'" slot="activator" ripple="ripple">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ subItem.title }}</v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile v-for="(grand, i) in subItem.items" :key="i" :to="genChildTarget(item, grand)" :href="grand.href" ripple="ripple">
+                  <v-list-tile :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'" v-for="(grand, i) in subItem.items" :key="i" :to="genChildTarget(item, grand)" :href="grand.href" ripple="ripple">
                     <v-list-tile-content>
                       <v-list-tile-title>{{ grand.title }}</v-list-tile-title>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list-group>
                 <!--child item-->
-                <v-list-tile v-else :key="i" :to="genChildTarget(item, subItem)" :href="subItem.href" :disabled="subItem.disabled" :target="subItem.target" ripple="ripple">
+                <v-list-tile v-else :key="i" :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'" :to="genChildTarget(item, subItem)" :href="subItem.href" :disabled="subItem.disabled" :target="subItem.target" ripple="ripple">
                   <v-list-tile-content>
                     <v-list-tile-title><span>{{ subItem.title }}</span></v-list-tile-title>
                   </v-list-tile-content>
