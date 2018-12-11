@@ -95,22 +95,22 @@ const menu = [
     icon: 'view_compact',
     items: [
       {
-        name: '#', title: '庫存狀態', component: '#'
+        name: 'rms/stockstatus', title: '庫存狀態', component: 'rms/stockstatus'
       },
       {
-        name: '#', title: '物料使用狀況', component: '#'
+        name: 'rms/usedstatus', title: '維修員物料需求', component: 'rms/usedstatus'
       },
       {
-        name: '#', title: '維修員申請物料', component: '#'
+        name: 'rms/assistantapply', title: '物料員申請', component: 'rms/assistantapply'
       },
       {
-        name: '#', title: '物料管理員申請物料', component: '#'
+        name: 'rms/reneedorreturn', title: '維修員領料/退料', component: 'rms/reneedorreturn'
       },
       {
-        name: '#', title: '物料管理員退料', component: '#'
+        name: 'rms/assistantreturn', title: '物料員退料', component: 'rms/assistantreturn'
       },
       {
-        name: '#', title: '維修員領料/退料', component: '#'
+        name: 'rms/scrap', title: '报废管理', component: 'rms/scrap'
       }
     ]
   },

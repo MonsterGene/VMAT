@@ -46,7 +46,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^2.4.1",
-    "chromedriver": "^2.44.0",
+    "chromedriver": "^2.44.1",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.2.0",
     "cross-spawn": "^5.0.1",
