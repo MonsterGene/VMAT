@@ -73,7 +73,7 @@ export default {
     register () {
       this.loadingRegister = true;
       setTimeout(() => {
-        this.$router.push('/tipbu-6streams');
+        this.$router.push('/rms/page1');
       }, 1000);
     }
 
