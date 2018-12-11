@@ -8,9 +8,9 @@ import RMS from '../../pages/RMS/menu';
 const Menu = [];
 
 Menu.push(...tipbu_6streams_menu);
+Menu.push(...RMS);
 Menu.push(...genius);
 Menu.push(...vision);
-Menu.push(...RMS);
 
 // Menu.push(...project);
 // Menu.push(...example);
