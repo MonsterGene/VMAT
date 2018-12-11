@@ -8,7 +8,7 @@
     v-model="drawer"
     :stateless="true"
     width="260"
-    :style="{background: !$vuetify.dark && $vuetify.theme.sideMenu || undefined}"
+    :style="{background: $vuetify.dark && $vuetify.theme.sideMenu || undefined}"
     >
     <!-- 顶部logo title -->
     <v-toolbar :color="$vuetify.theme.sideNav">
