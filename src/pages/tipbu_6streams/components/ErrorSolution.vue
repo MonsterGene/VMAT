@@ -66,7 +66,7 @@ export default {
       errorType: this.errorType
     }).then(res => {
       console.log(res.data);
-    })
+    });
   }
 };
 </script>
