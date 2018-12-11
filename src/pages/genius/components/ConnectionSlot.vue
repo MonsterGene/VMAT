@@ -118,9 +118,9 @@ export default {
         }
         else if (newLog['testLogController'] === this.controller) {
           const logLength = this.logs.length;
-          if (logLength > 8000) {  // Limit test log length
+          if (logLength > 4000) {  // Limit test log length
             // console.log(this.controller + ' log length - ' + logLength);
-            this.logs = this.logs.substring(logLength - 8000, logLength);
+            this.logs = this.logs.substring(logLength - 4000, logLength);
           }
           this.logs += newLog['testLog'];
           // Make sure the scroll is update to date.
@@ -134,7 +134,7 @@ export default {
       this.logs = '';
     },
   },
-  mounted () {
+  created () {
     if (this.testLogFalg) {
       this.requestInitLog();
     }
@@ -143,7 +143,7 @@ export default {
         // must add some delay, since wesocket neeeds some time to connect backend.
         this.requestInitLog();
         this.testLogFalg = true;
-      }, 700);
+      }, 2000);
     }
     const params = this.$route.query;
     this.machine = params.machine;
