@@ -1,6 +1,6 @@
 const genius_menu = [
   {
-    title: 'Genius',
+    title: 'Genius-测试平台',
     icon: 'filter_vintage',
     name: 'genius/machine',
   }
