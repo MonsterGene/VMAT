@@ -10,13 +10,48 @@
           class="elevation-1"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-right">{{ props.item.machineName }}</td>
-            <td class="text-xs-right">{{ props.item.errorCode }}</td>
-            <td class="text-xs-right">{{ props.item.errorInfo }}</td>
-            <td class="text-xs-right">{{ props.item.errorRoot }}</td>
-            <td class="text-xs-right">{{ props.item.errorAction }}</td>
-            <td class="text-xs-right">{{ props.item.count }}</td>
+            <td class="text-xs-right">{{ props.item.code }}</td>
             <td class="text-xs-right">
+              <v-edit-dialog
+                :return-value.sync="props.item.info"
+                lazy
+              >
+                {{ props.item.info }}
+                <v-text-field
+                  slot="input"
+                  v-model="props.item.info"
+                  single-line
+                  counter
+                ></v-text-field>
+              </v-edit-dialog>
+            </td>
+            <td class="text-xs-right">
+              <v-edit-dialog
+                :return-value.sync="props.item.rootCourse"
+                lazy
+              >
+                {{ props.item.rootCourse }}
+                <v-text-field
+                  slot="input"
+                  v-model="props.item.rootCourse"
+                  counter
+                ></v-text-field>
+              </v-edit-dialog>
+            </td>
+            <td class="text-xs-right">
+              <v-edit-dialog
+                :return-value.sync="props.item.action"
+                lazy
+              >
+                {{ props.item.action }}
+                <v-text-field
+                  slot="input"
+                  v-model="props.item.action"
+                  counter
+                ></v-text-field>
+              </v-edit-dialog>
+            </td>
+            <td class="text-xs-center">
               <v-btn color="success">修改</v-btn>
             </td>
           </template>
@@ -41,12 +76,11 @@ export default {
       },
       solution: {
         tableHeaders: [
-          { text: 'Error code', value: 'errorCode' },
-          { text: 'Error info', value: 'errorInfo' },
-          { text: 'Error rootc', value: 'errorRoot' },
-          { text: 'Error action', value: 'errorAction' },
-          { text: 'Count', value: 'count' },
-          { text: 'Action', value: 'errorCode' }
+          { text: 'Error code', value: 'errorCode', align: 'center' },
+          { text: 'Error info', value: 'errorInfo', align: 'center' },
+          { text: 'Error rootc', value: 'errorRoot', align: 'center' },
+          { text: 'Error action', value: 'errorAction', align: 'center' },
+          { text: 'Action', value: 'errorCode', align: 'center' }
         ],
         data: [
           {
@@ -60,13 +94,23 @@ export default {
       }
     };
   },
-  mounted () {
-    stationApi.errorSolution.fetch({
-      areaID: this.stationId,
-      errorType: this.errorType
-    }).then(res => {
-      console.log(res.data);
-    });
+  watch: {
+    errorType: {
+      handler (val) {
+        stationApi.errorSolution.fetch({
+          areaID: this.stationId,
+          errorType: this.errorType
+        }).then(res => {
+          const data = res.data;
+          if (data.success) {
+            this.solution.data = [data.data];
+          } else {
+            console.log('获取解决异常解决方法失败！');
+          }
+        });
+      },
+      immediate: true
+    }
   }
 };
 </script>

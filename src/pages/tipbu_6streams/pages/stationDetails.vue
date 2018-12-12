@@ -155,7 +155,8 @@
   ></sub-freq-time-by-day>
   <v-flex xs12 v-if="subError.showLevel >= 2">
     <error-solution
-      station-id=""
+      :station-id="subError.stationId"
+      :error-type="subErrorByDayType"
     ></error-solution>
   </v-flex>
   <sub-freq-time-by-hour
