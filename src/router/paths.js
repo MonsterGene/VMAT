@@ -1,4 +1,5 @@
-// import example from './example';
+import defaultRouter from './default';
+import example from './example';
 // import project from '../pages/project/path';
 import tipbu_6streams_path from '../pages/tipbu_6streams/path';
 import vision from '../pages/vision/router';
@@ -8,6 +9,7 @@ import genius from '../pages/genius/router';
 
 const paths = [];
 
+paths.push(...defaultRouter);
 paths.push(...tipbu_6streams_path);
 paths.push(...RMS);
 paths.push(...genius);
