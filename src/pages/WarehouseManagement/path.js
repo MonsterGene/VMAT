@@ -3,12 +3,12 @@ const router = [
     path: '/WMS',
     component: () => import('./WMS.vue'),
     meta: {
-      theme: 'blue'
+      theme: 'black',
     },
     children: [
       {
-        path: 'page0',
-        meta: { breadcrumb: true },
+        path: 'main_interface',
+        meta: { breadcrumb: false },
         component: () => import(
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
@@ -16,24 +16,49 @@ const router = [
         )
       },
       {
-        path: 'page1',
-        meta: { breadcrumb: true },
-        component: () => import(`./pages/TestDeviceM.vue`)
-      },
-      {
-        path: 'page2',
-        meta: { breadcrumb: true },
-        component: () => import(`./pages/Tool&ConsumablesM.vue`)
-      },
-      {
-        path: 'page3',
-        meta: { breadcrumb: true },
-        component: () => import(`./pages/GoldBoardM.vue`)
-      },
-      {
         path: 'asset',
-        meta: { breadcrumb: true },
-        component: () => import(`./pages/GoldBoardM.vue`)
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/TestDeviceManagement/AssetManagement.vue`)
+      },
+      {
+        path: 'maintenance',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/TestDeviceManagement/MaintenanceManagement.vue`)
+      },
+      {
+        path: 'check',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/TestDeviceManagement/CheckManagement.vue`)
+      },
+      {
+        path: 'info',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/Tool&ConsumablesManagement/InfoConsumablesManagement.vue`)
+      },
+      {
+        path: 'sfp',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/Tool&ConsumablesManagement/SFPManagement.vue`)
+      },
+      {
+        path: 'fixture',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/Tool&ConsumablesManagement/TestFixtureManagement.vue`)
+      },
+      {
+        path: 'tools',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/Tool&ConsumablesManagement/ToolsManagement.vue`)
+      },
+      {
+        path: 'wire',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/Tool&ConsumablesManagement/WireManagement.vue`)
+      },
+      {
+        path: 'sample',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/GoldBoardManagement/GoldSample.vue`)
       },
     ]
   }
