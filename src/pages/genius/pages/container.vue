@@ -12,7 +12,7 @@
 
       <!-- Apollo Like Layout -->
       <v-flex lg3 md6 sm12 xs12 pa-1 v-if="!screenStyle">
-        <v-card style="background: rgb(143,143,143);" v-show="idle_qty">
+        <v-card style="background: rgb(143,143,143);">
           <v-card-text>
             <div class="layout row align-center justify-space-between">
                 <div class="subheading ml-2">IDLE Containers</div>
