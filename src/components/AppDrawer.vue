@@ -125,8 +125,6 @@ export default {
       this.drawer = (!this.drawer);
     });
   },
-  
-
   methods: {
     genChildTarget (item, subItem) {
       if (subItem.href) return;
