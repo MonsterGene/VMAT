@@ -192,13 +192,13 @@
                 <div class="details">
                   <v-layout row>
                   <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('First Fail')">
+                    <v-btn flat icon color="error" slot="activator" @click="updateAllFailTable('First Fail'); jumpToDataTable()">
                       <v-icon>trending_down</v-icon>
                     </v-btn>
                     <span>Fail Data Table</span>
                   </v-tooltip>
                   <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('First Pass')">
+                    <v-btn flat icon color="success" slot="activator" @click="updateAllPassTable('First Pass'); jumpToDataTable()">
                       <v-icon>trending_up</v-icon>
                     </v-btn>
                     <span>Pass Data Table</span>
@@ -221,13 +221,13 @@
                 <div class="details">
                   <v-layout row>
                   <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('Test Fail')">
+                    <v-btn flat icon color="error" slot="activator" @click="updateAllFailTable('Test Fail'); jumpToDataTable()">
                       <v-icon>trending_down</v-icon>
                     </v-btn>
                     <span>Fail Data Table</span>
                   </v-tooltip>
                   <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('Test Pass')">
+                    <v-btn flat icon color="success" slot="activator" @click="updateAllPassTable('Test Pass'); jumpToDataTable()">
                       <v-icon>trending_up</v-icon>
                     </v-btn>
                     <span>Pass Data Table</span>
@@ -249,13 +249,13 @@
                 <div class="details">
                   <v-layout row>
                   <v-tooltip top style="margin-right: -15px;">
-                    <v-btn flat icon color="error" slot="activator" href="#test-data-table" @click="updateAllFailTable('Board Fail')">
+                    <v-btn flat icon color="error" slot="activator" @click="updateAllFailTable('Board Fail'); jumpToDataTable()">
                       <v-icon>trending_down</v-icon>
                     </v-btn>
                     <span>Fail Data Table</span>
                   </v-tooltip>
                   <v-tooltip top style="margin-right: -5px;">
-                    <v-btn flat icon color="success" slot="activator" href="#test-data-table" @click="updateAllPassTable('Board Pass')">
+                    <v-btn flat icon color="success" slot="activator" @click="updateAllPassTable('Board Pass'); jumpToDataTable()">
                       <v-icon>trending_up</v-icon>
                     </v-btn>
                     <span>Pass Data Table</span>
@@ -856,6 +856,10 @@ export default {
         this.dataSource = this.board_pass_all_dataSource;
       }
     },
+    jumpToDataTable () {
+      let container = this.$el.querySelector('#test-data-table');
+      document.documentElement.scrollTop = container.scrollHeight + 300;
+    }
   },
 
 };

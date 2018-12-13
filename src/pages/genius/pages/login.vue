@@ -80,8 +80,10 @@ export default {
             this.loading = false;
             return false;
           }
-          const display_name = response.data.user;
-          const role = response.data.role;
+          const display_name = response.data.profile.display_name + '(' + response.data.username + ')';
+          const role = response.data.project[0];
+          // console.log(display_name);
+          // console.log(role);
 
           this.$cookies.set('username', display_name, '8h');
           this.$cookies.set('role', role, '8h');
@@ -95,7 +97,7 @@ export default {
           }, 2000);
         })
         .catch(e => {
-          // console.log(e);
+          console.log(e);
           this.login_error = 'Incorrect Username or Password...';
           this.model.password = '';
           this.loading = false;
