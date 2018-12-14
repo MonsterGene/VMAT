@@ -21,14 +21,14 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   // ...
   NProgress.done();
-  console.log(this);
-  console.log(to);
+  // console.log(this);
+  // console.log(to);
   if ((to.matched[0] && to.matched[0].meta && to.matched[0].meta.theme) || (to.meta && to.meta.theme)) {
     const toTheme = to.matched[0].meta.theme || to.meta.theme;
     console.log('this page require theme ' + toTheme);
     globalMixin.methods.setTheme.call(window.vm, toTheme);
   }
-  console.log(globalMixin);
+  // console.log(globalMixin);
 });
 
 export default router;

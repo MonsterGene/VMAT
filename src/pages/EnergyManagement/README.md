@@ -1,4 +1,5 @@
-## Green Connect 能源管理专案
+## 能源管理专案
+项目名称： 能源管理（Energy Management）
 
 ### 后台接口
 #### 首页第一个Chart
