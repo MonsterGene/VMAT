@@ -42,4 +42,7 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
+pre {
+  overflow: auto;
+}
 </style>
