@@ -8,7 +8,7 @@
     <v-card-text v-if="controller !== 'STEP'">
       <textarea :id="controller"
         class="test-log-area"
-        rows="25"
+        :rows="logRows"
         autofocus
         readonly
         v-model.lazy="logs"
@@ -59,7 +59,7 @@
         color="primary" 
         @click="openCommandPromp" 
         v-if="controller !== 'INFO' && controller !== 'SEQ_LOG' && controller !== 'STEP'"
-      >DEBUG</v-btn>
+      >CMD</v-btn>
       <v-text-field v-if="commandPromp"
         label="Type Commands Here."
         clearable
@@ -98,6 +98,7 @@ export default {
         { title: 'Test Step 8', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
       ],
       machine: '',
+      logRows: 22,
     };
   },
   computed: {
@@ -147,6 +148,11 @@ export default {
     }
     const params = this.$route.query;
     this.machine = params.machine;
+    // dynamically change logs Rows
+    const height = document.documentElement.scrollHeight;
+    if (height < 700) {
+      this.logRows = 18;
+    }
   },
   methods: {
     openCommandPromp () {
