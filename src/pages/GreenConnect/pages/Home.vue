@@ -10,23 +10,17 @@
     <img src="../static/pics/u44.png" width="100%" height="100%">
   </v-flex>
   <v-flex md4>
-    <v-widget title="NSDI电能消耗" :content-bg="$vuetify.theme.primary">
+    <v-widget title="NSDI电能消耗" >
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
             :path-option="[
-              ['dataset.source', barDateChart],
+              ['dataset.source', DemoChartData.barChartDataWeek],
               ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
               ['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisLabel.show', true],
-              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
 
               ['grid.left', '2%'],
               ['grid.bottom', '5%'],
@@ -49,23 +43,94 @@
 </v-layout>
 <v-layout row wrap>
   <v-flex md3>
-    <v-widget title="NSDI电能消耗" :content-bg="$vuetify.theme.primary">
+    <v-widget title="各楼栋电能消耗">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
             :path-option="[
-              ['dataset.source', barDateChart],
+              ['dataset.source', DemoChartData.barChartDataWeek],
+              ['color', 'black'],
+              ['legend.show', true],
+              //['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['toolbox.show', true],
+              ['xAxis.axisLabel.show', true],
+              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              ['yAxis.axisLabel.show', true],
+              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+
+              ['grid.left', '2%'],
+              ['grid.bottom', '5%'],
+              ['grid.right', '3%'],
+
+              ['series[0].type', 'line'],
+              ['series[0].label.show', true],
+              ['series[0].smooth', true],
+              ['series[0].stack', 1],
+              ['series[0].label.position', 'top']
+          
+            ]"
+            height="200px"
+            width="100%"
+            >
+            </e-chart>     
+        </div>
+      </v-widget>
+  </v-flex>
+  <v-flex md3>
+    <v-widget title="NSDI各电力类型能耗占比">
+        <div slot="widget-content">
+            <e-chart
+            ref="yunxingshijian"
+            :path-option="[
+              ['dataset.source', DemoChartData.pieChartDataWeek],
               ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
+              //['legend.show', true],
+              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['toolbox.show', true],
+              ['xAxis.axisLabel.show', true],
+              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLabel.show', true],
+              
+              ['grid.left', '2%'],
+              ['grid.bottom', '5%'],
+              ['grid.right', '3%'],
+
+              ['series[0].type', 'pie'],
+              ['series[0].label.show', true],
+              ['series[0].smooth', true],
+              ['series[0].stack', 1],
+              ['series[0].label.position', 'top']
+          
+            ]"
+            height="200px"
+            width="100%"
+            >
+            </e-chart>     
+        </div>
+      </v-widget>
+  </v-flex>
+  <v-flex md3>
+    <v-widget title="各BU累计电能耗">
+        <div slot="widget-content">
+            <e-chart
+            ref="yunxingshijian"
+            :path-option="[
+              ['dataset.source', DemoChartData.barChartDataWeek],
+              ['color', 'gold'],
               ['legend.show', true],
               ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
               ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisLabel.show', true],
-              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
 
               ['grid.left', '2%'],
               ['grid.bottom', '5%'],
@@ -86,103 +151,29 @@
       </v-widget>
   </v-flex>
   <v-flex md3>
-    <v-widget title="NSDI电能消耗" :content-bg="$vuetify.theme.primary">
+    <v-widget title="NSDI电能耗趋势">
         <div slot="widget-content">
             <e-chart
             ref="yunxingshijian"
             :path-option="[
-              ['dataset.source', barDateChart],
-              ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
+              ['dataset.source', DemoChartData.barChartDataWeek],
+              ['color', 'red'],
               ['legend.show', true],
               ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
               ['toolbox.show', true],
               ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              //['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisLabel.show', true],
-              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
               ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
 
               ['grid.left', '2%'],
               ['grid.bottom', '5%'],
               ['grid.right', '3%'],
 
-              ['series[0].type', 'bar'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-            height="200px"
-            width="100%"
-            >
-            </e-chart>     
-        </div>
-      </v-widget>
-  </v-flex>
-  <v-flex md3>
-    <v-widget title="NSDI电能消耗" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content">
-            <e-chart
-            ref="yunxingshijian"
-            :path-option="[
-              ['dataset.source', barDateChart],
-              ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
-              ['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.show', true],
-              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'bar'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-            height="200px"
-            width="100%"
-            >
-            </e-chart>     
-        </div>
-      </v-widget>
-  </v-flex>
-  <v-flex md3>
-    <v-widget title="NSDI电能消耗" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content">
-            <e-chart
-            ref="yunxingshijian"
-            :path-option="[
-              ['dataset.source', barDateChart],
-              ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
-              ['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.show', true],
-              ['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'bar'],
+              ['series[0].type', 'line'],
               ['series[0].label.show', true],
               ['series[0].smooth', true],
               ['series[0].stack', 1],
@@ -211,7 +202,7 @@
  *   //后台实际返回的数据 res.data
  * });
  */
-import { barDateChart } from '../api';
+import { DemoChartData } from '../api';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 
@@ -222,7 +213,7 @@ export default {
   },
   data () {
     return {
-      barDateChart
+      DemoChartData
     };
   }
 };

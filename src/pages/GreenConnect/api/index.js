@@ -1,9 +1,9 @@
 import demoApi from './demoApi';
 import pageApi from './pageApi';
-import barDateChart from './chartDemo';
+import DemoChartData from './chartDemo';
 
 export {
   demoApi,
   pageApi,
-  barDateChart
+  DemoChartData
 };
