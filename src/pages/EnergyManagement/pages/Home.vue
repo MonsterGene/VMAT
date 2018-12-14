@@ -31,7 +31,7 @@
         <img
           src="../static/pics/u44.png"
           width="100%"
-          height="100%"
+          height="300px"
         >
       </v-flex>
       <v-flex md4>
@@ -361,11 +361,17 @@ export default {
     };
   },
   mounted () {
-    homeApi.homeFistChart({
+    const params = new FormData();
+    const data = {
       startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
       endTime: moment().format('YYYY-MM-DD'),
       building: 'E515'
-    }).then(res => {
+    };
+    Object.keys(data).forEach(key => {
+      params.append(key, data[key]);
+    });
+    
+    homeApi.homeFistChart(params).then(res => {
       console.log(res);
       const data = res.data;
       if (data.success === 'true') {
