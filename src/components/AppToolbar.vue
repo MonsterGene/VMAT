@@ -17,9 +17,9 @@
         >
       </v-text-field>
       <v-spacer></v-spacer>     
-      <v-btn icon href="http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB" target="_blank">
+      <!-- <v-btn icon href="http://10.132.45.143/f1331865/FII_FG_BEACON_VMAT_WEB" target="_blank">
         <v-icon>fa fa-github</v-icon>
-      </v-btn>
+      </v-btn> -->
       <v-btn icon @click="handleFullScreen()">
         <v-icon>fullscreen</v-icon>
       </v-btn>

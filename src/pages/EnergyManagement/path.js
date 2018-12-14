@@ -1,6 +1,6 @@
 const router = [
   {
-    path: '/green_connect',
+    path: '/energy_management',
     meta: { theme: 'blue' },
     component: () => import('./GC.vue'),
     children: [

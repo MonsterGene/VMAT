@@ -102,7 +102,7 @@ export default {
   },
   data: () => ({
     mini: false,
-    drawer: false,
+    drawer: true,
     menus: menu,
     scrollSettings: {
       maxScrollbarLength: 160
@@ -125,8 +125,6 @@ export default {
       this.drawer = (!this.drawer);
     });
   },
-  
-
   methods: {
     genChildTarget (item, subItem) {
       if (subItem.href) return;

@@ -202,7 +202,8 @@
  *   //后台实际返回的数据 res.data
  * });
  */
-import { DemoChartData } from '../api';
+import moment from 'moment';
+import { DemoChartData, homeApi } from '../api';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 
@@ -215,6 +216,15 @@ export default {
     return {
       DemoChartData
     };
+  },
+  mounted () {
+    homeApi.homeFistChart({
+      startTime: moment().subtract('days', 1).format('YYYY-MM-DD'),
+      endTime: moment().format('YYYY-MM-DD'),
+      building: 'D1015'
+    }).then(res => {
+      console.log(res);
+    });
   }
 };
 </script>
