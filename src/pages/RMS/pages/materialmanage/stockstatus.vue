@@ -1,73 +1,73 @@
 <template>
 <v-container grid-list-xl fluid>
-  <v-layout row wrap>
+  <v-layout row wrap>      
     <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart1.chartOption"
+        :path-option="chart5.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart2.chartOption"
+        :path-option="chart6.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart3.chartOption"
+        :path-option="chart7.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart4.chartOption"
+        :path-option="chart8.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-     <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart2.chartOption"
+        :path-option="chart9.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart3.chartOption"
+        :path-option="chart10.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart4.chartOption"
+        :path-option="chart11.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-     <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart2.chartOption"
+        :path-option="chart12.chartOption"
         height="350px"
         width="100%"
         >
       </e-chart>
     </v-flex>
-    <v-flex lg4 sm4 xs4>
+    <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
-        :path-option="chart3.chartOption"
+        :path-option="chart13.chartOption"
         height="350px"
         width="100%"
         >
@@ -79,9 +79,10 @@
 
 <script>
 import EChart from '@/components/chart/echart';
-import { WipAPI } from '../../api';
-import EchartAPI from '../../api/chart';
-const API = { WipAPI };
+// import {ChartApi1} from '@/components/chart/echart1';
+import { ChartApi } from '../../api/index';
+import EchartAPI from '../../api/materialmanage';
+const API = { ChartApi };
 
 export default {
   components: {
@@ -91,143 +92,90 @@ export default {
     return {
       expandss: [true],
       color: ['red'],
-      chart1: {
+      chart5: {
         chartOption: [
-          ['dataset.source', EchartAPI.wipChart1],
-          ['title.text', 'WIP Trend Chart'],
+          ['dataset.source', ChartApi.wipChart5],
+          ['title.text', '各處維修庫存金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],    // 定义标题字体颜色
+          ['color', ['#4F81BD', 'green', 'yellow', 'blue', 'red', '#9C27B0', '#F33958']],
           ['legend.show', true],
           ['legend.top', '9%'],
           ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-          ['toolbox.show', true],
-          ['yAxis', new Array(2).fill({
-            type: 'value',
-            splitLine: {
-              show: true,
-              lineStyle: {
-                type: 'dashed'
-              }
-            }, 
-            axisLabel: {
-              formatter: '{value}'
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#757575',
-                type: 'dashed'
-              }
-            }
-          })],
-          ['xAxis.axisLabel.show', true],
-          ['xAxis.axisLabel.rotate', 20],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '2%'],
+          // ['toolbox.show', true],
+          ['xAxis.axisLine.show', false],
+          ['yAxis.axisLine.show', false],  // 在echarts中，去掉X轴、Y轴和网格线，只留数据图形
+          ['grid.left', '1%'],
           ['grid.bottom', '5%'],
           ['grid.right', '3%'],
           ['grid.top', '20%'],
-          ['series[0].type', 'bar'],
+          ['series[0].type', 'pie'],
+          ['series[0].center', ['50%', '60%']],    // 设置图的上下左右的位置
+          ['series[0].radius', ['30%', '50%']],      // 定义设置图的大小
           ['series[0].label.show', true],
-          ['series[0].smooth', true], 
-          ['series[0].label.position', 'top'],
-          ['series[0].stack', 'input'],        
-          ['series[1].type', 'bar'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true], 
-          ['series[1].stack', 'input'],
-          ['series[1].label.position', 'top'],
-          ['series[2].type', 'bar'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],
-          ['series[2].stack', 'output'],
-          ['series[2].label.position', 'top'],
-          ['series[3].type', 'bar'],
-          ['series[3].label.show', true],
-          ['series[3].smooth', true],
-          ['series[3].stack', 'output'],
-          ['series[3].label.position', 'top'],
-          ['series[4].type', 'line'],
-          ['series[4].label.show', true],
-          ['series[4].smooth', true],
-          ['series[4].yAxisIndex', '1'],
-          ['series[5].type', 'line'],
-          ['series[5].label.show', true],
-          ['series[5].smooth', true],        
+          ['series[0].smooth', true],              // 定义平滑度
+          ['series[0].label.formatter', '{c}']     // 定义数值是否显示
+
         ]
       },
-      chart2: {
+      chart6: {
         chartOption: [
-          ['dataset.source', EchartAPI.wipChart2],
-          ['title.text', 'Production Yield(Fail Qty:164,Packing Qty:3510)'],
-          ['color', ['#3F51B5', '#E91E63']],
+          ['dataset.source', ChartApi.wipChart6],
+          ['title.text', '各處庫存前五大料號金額匯總（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#4F81BD', 'green', 'yellow']],
           ['legend.show', true],
           ['legend.top', '9%'],
           ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
           ['toolbox.show', true],
-          ['yAxis', [
-            {
-              type: 'value',
-              splitLine: {
-                show: true,
-                lineStyle: {
-                  type: 'dashed'
-                }
-              }, 
-              axisLabel: {
-                formatter: '{value}'
-              },
-              axisLine: {
-                lineStyle: {
-                  color: '#757575',
-                  type: 'dashed'
-                }
-              }
-            },
-            {
-              type: 'value',
-              splitLine: {
-                show: true,
-                lineStyle: {
-                  type: 'dashed'
-                }
-              }, 
-              axisLabel: {
-                formatter: '{value}%'
-              },
-              axisLine: {
-                lineStyle: {
-                  color: '#757575',
-                  type: 'dashed'
-                }
-              }
-            }],
-          ],
           ['xAxis.axisLabel.show', true],
           ['yAxis.axisLabel.show', true],
           ['grid.left', '2%'],
           ['grid.bottom', '5%'],
           ['grid.right', '3%'],
           ['grid.top', '20%'],
-
           ['series[0].type', 'bar'],
           ['series[0].label.show', true],
           ['series[0].smooth', true],
-          ['series[0].label.position', 'top'],       
+        ]
+      },
+      chart7: {
+        chartOption: [
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGI每月庫存總金額（K台幣）'],
+          ['title.left', '1%'],
+          ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
+          ['legend.show', true],
+          ['legend.top', '9%'],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
+          ['grid.top', '20%'],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', false],
           ['series[1].type', 'line'],
           ['series[1].label.show', true],
-          ['series[1].yAxisIndex', '1'],
-          ['series[1].smooth', true],      
+          ['series[1].smooth', false],
         ]
       },
-      chart3: {
+      chart8: {
         chartOption: [
-          ['dataset.source', EchartAPI.hoursData],
-          ['title.text', 'ICT Fail Root cause distrlbution(Total output 117pcs)'],
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
-          ['color', ['red', 'green', 'yellow']],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
           ['legend.show', true],
           ['legend.top', '9%'],
           ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
@@ -238,25 +186,22 @@ export default {
           ['grid.bottom', '5%'],
           ['grid.right', '3%'],
           ['grid.top', '20%'],
-
-          ['series[0].type', 'bar'],
+          ['series[0].type', 'line'],
           ['series[0].label.show', true],
-          ['series[0].smooth', true],         
-          ['series[1].type', 'bar'],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
           ['series[1].label.show', true],
-          ['series[1].smooth', true],
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],         
+          ['series[1].smooth', false],
         ]
       },
-      chart4: {
+      chart9: {
         chartOption: [
-          ['dataset.source', EchartAPI.hoursData],
-          ['title.text', 'Top 10 FT Fail Root Cause 278(Total Output 315)'],
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGIII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
-          ['color', ['red', 'green']],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
           ['legend.show', true],
           ['legend.top', '9%'],
           ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
@@ -267,18 +212,118 @@ export default {
           ['grid.bottom', '5%'],
           ['grid.right', '3%'],
           ['grid.top', '20%'],
-
-          ['series[0].type', 'bar'],
+          ['series[0].type', 'line'],
           ['series[0].label.show', true],
-          ['series[0].smooth', true],         
-          ['series[1].type', 'bar'],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
           ['series[1].label.show', true],
-          ['series[1].smooth', true],
-          ['series[2].type', 'line'],
-          ['series[2].label.show', true],
-          ['series[2].smooth', true],           
+          ['series[1].smooth', false],
         ]
-      }                
+      },
+      chart10: {
+        chartOption: [
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGIV每月庫存總金額（K台幣）'],
+          ['title.left', '1%'],
+          ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
+          ['legend.show', true],
+          ['legend.top', '9%'],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
+          ['grid.top', '20%'],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
+          ['series[1].label.show', true],
+          ['series[1].smooth', false],
+        ]
+      },
+      chart11: {
+        chartOption: [
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGV每月庫存總金額（K台幣）'],
+          ['title.left', '1%'],
+          ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
+          ['legend.show', true],
+          ['legend.top', '9%'],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
+          ['grid.top', '20%'],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
+          ['series[1].label.show', true],
+          ['series[1].smooth', false],
+        ]
+      },
+      chart12: {
+        chartOption: [
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGVI每月庫存總金額（K台幣）'],
+          ['title.left', '1%'],
+          ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
+          ['legend.show', true],
+          ['legend.top', '9%'],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
+          ['grid.top', '20%'],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
+          ['series[1].label.show', true],
+          ['series[1].smooth', false],
+        ]
+      },
+      chart13: {
+        chartOption: [
+          ['dataset.source', ChartApi.wipChart7],
+          ['title.text', 'MFGVII每月庫存總金額（K台幣）'],
+          ['title.left', '1%'],
+          ['title.top', '1%'],
+          ['title.textStyle.color', ['#F34941']],
+          ['color', ['#EB786C', '#002060']],
+          ['legend.show', true],
+          ['legend.top', '9%'],
+          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
+          ['toolbox.show', true],
+          ['xAxis.axisLabel.show', true],
+          ['yAxis.axisLabel.show', true],
+          ['grid.left', '2%'],
+          ['grid.bottom', '5%'],
+          ['grid.right', '3%'],
+          ['grid.top', '20%'],
+          ['series[0].type', 'line'],
+          ['series[0].label.show', true],
+          ['series[0].smooth', false],
+          ['series[1].type', 'line'],
+          ['series[1].label.show', true],
+          ['series[1].smooth', false],
+        ]
+      },
     };
   },
   mounted () {

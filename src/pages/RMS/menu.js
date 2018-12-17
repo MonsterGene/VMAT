@@ -61,7 +61,7 @@ const menu = [
           { title: '物料員申請', path: 'assistantapply' },
           { title: '維修員領料/退料', path: 'reneedorreturn' },
           { title: '物料員退料', path: 'assistantreturn' },
-          { title: '报废管理', path: 'scrap' }
+          { title: '報廢管理', path: 'scrap' }
         ]
       },
       {
