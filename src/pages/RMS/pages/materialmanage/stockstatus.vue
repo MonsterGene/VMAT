@@ -223,7 +223,7 @@ export default {
       chart10: {
         chartOption: [
           ['dataset.source', ChartApi.wipChart7],
-          ['title.text', 'MFGIV每月庫存總金額（K台幣）'],
+          ['title.text', 'MFGV每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
           ['title.textStyle.color', ['#F34941']],
@@ -249,7 +249,7 @@ export default {
       chart11: {
         chartOption: [
           ['dataset.source', ChartApi.wipChart7],
-          ['title.text', 'MFGV每月庫存總金額（K台幣）'],
+          ['title.text', 'MFGVI每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
           ['title.textStyle.color', ['#F34941']],
@@ -275,7 +275,7 @@ export default {
       chart12: {
         chartOption: [
           ['dataset.source', ChartApi.wipChart7],
-          ['title.text', 'MFGVI每月庫存總金額（K台幣）'],
+          ['title.text', 'MFGVII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
           ['title.textStyle.color', ['#F34941']],
