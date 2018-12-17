@@ -11,7 +11,7 @@
         rows="25"
         autofocus
         readonly
-        v-model="logs"
+        v-model.lazy="logs"
       ></textarea>
     </v-card-text>
 
