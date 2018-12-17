@@ -13,10 +13,10 @@
         <v-card-actions>
           <v-btn :href="'#/genius/login/?next=/genius/?machine=' + host.ipAddress" color="primary" @click="activeStation">Explore</v-btn>
           <v-btn 
-            v-if="host.hostname !== 'fortinet1'" 
+            v-if="host.hostname !== 'fortinet1' && host.profile" 
             :href="'#/vision/advanced/?machine=' + host.hostname" 
             color="success">Profile</v-btn>
-          <v-btn v-if="host.hostname === 'fortinet1'" :href="'#/fortinet/advanced/?machine=' + host.hostname" color="success">Profile</v-btn>
+          <v-btn v-if="host.hostname === 'fortinet1' && host.profile" :href="'#/fortinet/advanced/?machine=' + host.hostname" color="success">Profile</v-btn>
         </v-card-actions>
       </v-card>
     </v-flex>
