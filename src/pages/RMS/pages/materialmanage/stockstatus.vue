@@ -1,6 +1,6 @@
 <template>
 <v-container grid-list-xl fluid>
-  <v-layout row wrap>
+  <v-layout row wrap>      
     <v-flex lg4 sm4 xs4>         
       <e-chart class="echarts"
         :path-option="chart5.chartOption"
@@ -80,9 +80,9 @@
 <script>
 import EChart from '@/components/chart/echart';
 // import {ChartApi1} from '@/components/chart/echart1';
-import { WipAPI, ChartApi } from '../../api';
-import EchartAPI from '../../api/chart';
-const API = { WipAPI };
+import { ChartApi } from '../../api/index';
+import EchartAPI from '../../api/materialmanage';
+const API = { ChartApi };
 
 export default {
   components: {
@@ -170,7 +170,7 @@ export default {
       },
       chart8: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart8],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
@@ -196,7 +196,7 @@ export default {
       },
       chart9: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart9],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGIII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
@@ -222,7 +222,7 @@ export default {
       },
       chart10: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart10],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGIV每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
@@ -248,7 +248,7 @@ export default {
       },
       chart11: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart11],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGV每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
@@ -274,7 +274,7 @@ export default {
       },
       chart12: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart12],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGVI每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
@@ -300,7 +300,7 @@ export default {
       },
       chart13: {
         chartOption: [
-          ['dataset.source', ChartApi.wipChart13],
+          ['dataset.source', ChartApi.wipChart7],
           ['title.text', 'MFGVII每月庫存總金額（K台幣）'],
           ['title.left', '1%'],
           ['title.top', '1%'],
