@@ -59,8 +59,8 @@ export default {
     login () {
       this.loading = true;
       if (this.model.username === 'genius' && this.model.password === 'genius') {
-        this.$cookies.set('username', 'genius', '8h');
-        this.$cookies.set('role', 'operator', '8h');
+        this.$cookies.set('username', 'genius', '12h');
+        this.$cookies.set('role', 'operator', '12h');
         this.loading = false;
         if (!this.next) {
           this.$router.push('/genius/machine');
@@ -85,8 +85,8 @@ export default {
           // console.log(display_name);
           // console.log(role);
 
-          this.$cookies.set('username', display_name, '8h');
-          this.$cookies.set('role', role, '8h');
+          this.$cookies.set('username', display_name, '12h');
+          this.$cookies.set('role', role, '12h');
           setTimeout(() => {
             this.loading = false;
             if (!this.next) {

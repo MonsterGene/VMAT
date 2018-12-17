@@ -62,11 +62,10 @@
       <h3><v-icon>menu</v-icon>Lock/Unlock Container:</h3>
       <v-layout row>
         <v-flex>
-          <v-select
-            :items="containerList"
-            label="Choose Container Name"
+          <v-text-field
+            label="Input Container Name"
             v-model="selectContainer"
-          ></v-select>
+          ></v-text-field>
         </v-flex>
         <v-flex>
           <v-btn large
@@ -103,7 +102,7 @@
             >
               Upgrade Engine
             </v-btn>
-            <v-btn v-show="versions === ver"
+            <v-btn v-show="version === ver"
               disabled
               color="primary"
               @click="engineAction('Upgrade Engine to - ' + ver, 'first')"
@@ -123,10 +122,9 @@
     </v-flex>
 
     <v-divider vertical></v-divider>
-
     <v-flex lg4 md4 sm4 xs4>
       <h3><v-icon>menu</v-icon>Action History:</h3>
-      <pre v-for="h of history" :key="h">{{ h }}</pre>
+      <pre v-for="h of history" :key="h">{{ h }}<v-divider></v-divider></pre>
       <v-divider></v-divider>
       <h3><v-icon>menu</v-icon>Message:</h3>
       <pre>{{ message }}</pre>
@@ -221,15 +219,11 @@ export default {
       openDialogs: false,
       titleDialogs: '',
       contentDialogs: 'Please Double Confirm ???',
-      // all container from all stations.
-      containerList: ['DEMO1:UUT00', 'DEMO1:UUT01'],
       // Choose container to be lock/unlock.
       selectContainer: '',
       // Choose the Genius to update.
       version: '',
       all_version: [],
-      versions: 'v1.0.0_20181310',
-      all_versions: ['v0.0.0_20181110', 'v1.0.0_20181310', 'v2.0.0_20181110']
     };
   },
   mounted () {
@@ -264,7 +258,7 @@ export default {
       }
       const history = payload.history;
       if (history) {
-        this.history = history.slice(0, 20);
+        this.history = history.slice(0, 15);
       }
       const message = payload.message;
       if (message) {
@@ -357,4 +351,7 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
+pre {
+  white-space: pre-wrap;
+}
 </style>
