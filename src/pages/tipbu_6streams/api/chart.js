@@ -1,6 +1,14 @@
 import moment from 'moment';
 
-const date = new Array(30).fill(0).map((el, index) => moment().subtract(30 - index, 'days').format('MM-DD'));
+const dateList = (startDate, endDate) => {
+  startDate = moment(startDate);
+  endDate = moment(endDate);
+
+  const daysCount = endDate.diff(startDate, 'days');
+  console.log(daysCount);
+  return new Array(daysCount).fill(0).map((el, index) => moment().subtract(daysCount - index, 'days').format('YYYY-MM-DD'));
+};
+const date = dateList(moment().subtract('days', 30).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
 
 const dailyData1 = date.map(d => {
   return {
@@ -14,23 +22,25 @@ const dailyData1 = date.map(d => {
   };
 });
 
-const dailyData2 = date.map(d => {
-  return {
-    'date': d,
-    'Run 1': Math.floor(Math.random() * 1000) + 100,
-    'Standy 1': Math.floor(Math.random() * 1000) + 450,
-    'Error 1': Math.floor(Math.random() * 1000) + 200,
-    'Unready 1': Math.floor(Math.random() * 1000) + 220,
-    'Run 2': Math.floor(Math.random() * 1000) + 620,
-    'Standy 2': Math.floor(Math.random() * 1000) + 120,
-    'Error 2': Math.floor(Math.random() * 1000) + 120,
-    'Unready 2': Math.floor(Math.random() * 1000) + 120,
-    'Run 3': Math.floor(Math.random() * 1000) + 620,
-    'Standy 3': Math.floor(Math.random() * 1000) + 120,
-    'Error 3': Math.floor(Math.random() * 1000) + 120,
-    'Unready 3': Math.floor(Math.random() * 1000) + 120,
-  };
-});
+const dailyData2 = (startDate, endDate) => {
+  return dateList(startDate, endDate).map(d => {
+    return {
+      'date': d,
+      'Run 1': Math.floor(Math.random() * 1000) + 100,
+      'Standy 1': Math.floor(Math.random() * 1000) + 450,
+      'Error 1': Math.floor(Math.random() * 1000) + 200,
+      'Unready 1': Math.floor(Math.random() * 1000) + 220,
+      // 'Run 2': Math.floor(Math.random() * 1000) + 620,
+      // 'Standy 2': Math.floor(Math.random() * 1000) + 120,
+      // 'Error 2': Math.floor(Math.random() * 1000) + 120,
+      // 'Unready 2': Math.floor(Math.random() * 1000) + 120,
+      // 'Run 3': Math.floor(Math.random() * 1000) + 620,
+      // 'Standy 3': Math.floor(Math.random() * 1000) + 120,
+      // 'Error 3': Math.floor(Math.random() * 1000) + 120,
+      // 'Unready 3': Math.floor(Math.random() * 1000) + 120,
+    };
+  });
+};
 
 const hoursData = new Array(24).fill(
   moment().hours() < 8 ?

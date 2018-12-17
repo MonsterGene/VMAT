@@ -14,6 +14,7 @@
             <td class="text-xs-right">
               <v-edit-dialog
                 :return-value.sync="props.item.info"
+                @save="saveSolution('info', props.item)"
                 lazy
               >
                 {{ props.item.info }}
@@ -28,6 +29,7 @@
             <td class="text-xs-right">
               <v-edit-dialog
                 :return-value.sync="props.item.rootCourse"
+                @save="saveSolution('rootCourse', props.item)"
                 lazy
               >
                 {{ props.item.rootCourse }}
@@ -41,6 +43,7 @@
             <td class="text-xs-right">
               <v-edit-dialog
                 :return-value.sync="props.item.action"
+                @save="saveSolution('action', props.item)"
                 lazy
               >
                 {{ props.item.action }}
@@ -51,9 +54,9 @@
                 ></v-text-field>
               </v-edit-dialog>
             </td>
-            <td class="text-xs-center">
+            <!-- <td class="text-xs-center">
               <v-btn color="success">修改</v-btn>
-            </td>
+            </td> -->
           </template>
         </v-data-table>
       </div>
@@ -80,7 +83,7 @@ export default {
           { text: 'Error info', value: 'errorInfo', align: 'center' },
           { text: 'Error rootc', value: 'errorRoot', align: 'center' },
           { text: 'Error action', value: 'errorAction', align: 'center' },
-          { text: 'Action', value: 'errorCode', align: 'center' }
+          // { text: 'Action', value: 'errorCode', align: 'center' }
         ],
         data: [
           {
@@ -88,7 +91,7 @@ export default {
             errorInfo: '',
             errorRoot: '',
             errorAction: '',
-            acount: ''
+            // acount: ''
           }
         ]
       }
@@ -97,19 +100,36 @@ export default {
   watch: {
     errorType: {
       handler (val) {
-        stationApi.errorSolution.fetch({
-          areaID: this.stationId,
-          errorType: this.errorType
-        }).then(res => {
-          const data = res.data;
-          if (data.success) {
-            this.solution.data = [data.data];
-          } else {
-            console.log('获取解决异常解决方法失败！');
-          }
-        });
+        this.getSolution();
       },
       immediate: true
+    }
+  },
+  methods: {
+    getSolution () {
+      stationApi.errorSolution.fetch({
+        areaID: this.stationId,
+        errorType: this.errorType
+      }).then(res => {
+        const data = res.data;
+        if (data.success) {
+          this.solution.data = [data.data];
+        } else {
+          console.log('获取解决异常解决方法失败！');
+        }
+      });
+    },
+    saveSolution (evt) {
+      console.log(evt);
+      stationApi.errorSolution.edit({
+        areaID: this.stationId,
+        ...evt
+      }).then(res => {
+        const data = res.data;
+        if (!data.success) {
+          this.getSolution();
+        }
+      });
     }
   }
 };

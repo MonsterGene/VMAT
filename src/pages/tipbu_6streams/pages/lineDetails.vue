@@ -44,7 +44,7 @@
         :title="'工站异常次数分析('+ $route.params.lineName +')'" 
         :path-option="yichangcishu_line"
       >
-        <div slot="widget-header-action" style="width:380px;display:flex;height:48px">
+        <div slot="widget-header-action" style="width:380px;display:flex;height:100%">
           <div style="width:120px;">
             <v-select
               :items="['A01', 'A02', 'A03']"
