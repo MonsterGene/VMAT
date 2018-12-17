@@ -1,6 +1,11 @@
+import demoApi from './demoApi';
+import pageApi from './pageApi';
 import Chart from './chart';
-
-export default {
-  getMonthVisit: Chart.monthVisitData,
-  getLocation: Chart.locationData
+const getMonthVisit = Chart.monthVisitData;
+const getLocation = Chart.locationData;
+export {
+  demoApi,
+  pageApi,
+  getMonthVisit,
+  getLocation
 };
