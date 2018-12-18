@@ -13,9 +13,11 @@
 每条线分线头和机台名
 
 ### 信息获取：
+后台主机地址： http://10.167.192.146/SixStream/api
+
 #### 状态图例：
 
-path： http://10.167.192.146/SixStream/api/LineConfig/GetState
+路径： `/LineConfig/GetState`
 
 返回数据：
 ```javascript
@@ -37,9 +39,13 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 }
 ```
 #### 线体数据：
-路径: http://10.167.192.146/SixStream/api/LineConfig/GetLineData
+路径： `/LineConfig/GetLineData`
 
-参数：area //预留参数，用于以后区分需要显示哪几条线的数据
+参数：
+
+参数名称 | 说明 | 示例
+------- | ---- | ---
+area    | 预留参数，用于以后区分需要显示哪几条线的数据|
 
 返回数据：
 ```javascript
@@ -67,17 +73,17 @@ path： http://10.167.192.146/SixStream/api/LineConfig/GetState
 ```
 
 ### 产出与稼动率每天趋势
-产出路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByDay
-稼动率路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByDay
+产出路径： `/GetOutput/getOutputByDay`  
+稼动率路径： `/GetUtilizationRate/ByDay`
 
 参数：
-star_date  // 查询起始日期
 
-end_date   // 查询截止日期
-
-line_id    // 线ID
-
-area_id    // 工站ID
+参数名称   | 说明       | 示例
+--------- | ---------- | ---
+star_date | 查询起始日期|
+end_date  | 查询截止日期|
+line_id   | 线ID       |
+area_id   | 工站ID     |
 
 
 返回数据：
@@ -105,14 +111,16 @@ area_id    // 工站ID
 ```
 
 ### 产出与稼动率每小时趋势
-产出路径： http://10.167.192.146/Sixstream/api/GetOutput/getOutputByHour 
+产出路径： `/GetOutput/getOutputByHour`  
+稼动率路径： `/GetUtilizationRate/ByHour`
 
-稼动率路径： http://10.167.192.146/Sixstream/api/GetUtilizationRate/ByHour
+参数：
 
-参数：  
-date  
-line_id  
-area_id
+参数名称 | 说明    | 示例
+------- | ------- | ---
+date    | 查询日期 |
+line_id | 线ID    |
+area_id | 工站ID  |
 
 返回数据：
 ```javascript
@@ -138,6 +146,8 @@ area_id
 
 ### 异常次数/时间
 提交数据：
+
+
 startDate   // 开始日期
 
 endDate     // 结束日期
