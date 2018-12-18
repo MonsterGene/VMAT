@@ -15,7 +15,7 @@
 ### 信息获取：
 后台主机地址： http://10.167.192.146/SixStream/api
 
-#### [状态图例](#/getLegendList)：
+#### <a id="/getLegendList">状态图例</a>：
 
 路径： `/LineConfig/GetState`
 
