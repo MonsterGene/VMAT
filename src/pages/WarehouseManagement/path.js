@@ -4,7 +4,7 @@ const router = [
     path: '/WMS',
     component: () => import('./WMS.vue'),
     meta: {
-      theme: 'black',   // 默認主題為黑色
+      theme: 'jean-black',   // 默認主題為黑色
     },
     // 定義子路由
     children: [
