@@ -45,15 +45,11 @@ export default {
       password: ''
     }, 
     login_error: '',
-    next: '',
   }),
 
   mounted () {
     this.$cookies.remove('username');
     this.$cookies.remove('role');
-    const params = this.$route.query;
-    this.next = params.next;
-    // console.log(params);
   },
   methods: {
     login () {
@@ -62,11 +58,7 @@ export default {
         this.$cookies.set('username', 'genius', '12h');
         this.$cookies.set('role', 'operator', '12h');
         this.loading = false;
-        if (!this.next) {
-          this.$router.push('/genius/machine');
-          return false;
-        }
-        this.$router.push(this.next);
+        this.$router.push('/genius');
         return false;
       }
 
@@ -89,11 +81,8 @@ export default {
           this.$cookies.set('role', role, '12h');
           setTimeout(() => {
             this.loading = false;
-            if (!this.next) {
-              this.$router.push('/genius/machine');
-              return false;
-            }
-            this.$router.push(this.next);
+            this.$router.push('/genius');
+            return false;
           }, 2000);
         })
         .catch(e => {

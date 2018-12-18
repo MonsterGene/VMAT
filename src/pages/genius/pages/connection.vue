@@ -145,7 +145,6 @@ export default {
     return {
       snackTitle: '',
       openSnack: false,
-      machine: '',
       // Question
       openQuestion: false,
       questionTitle: '',
@@ -200,16 +199,10 @@ export default {
   mounted () {
     this.username = this.$cookies.get('username');
     this.backPath = window.location.hash.split('/').slice(0, 3).join('/');
+    // console.log('backpath - ' + this.backPath);
     const currentUrl = window.location.hash.substring(1).split('?')[0];
     const hostname = getIpAddress();
-    const params = this.$route.query;
-    this.machine = params.machine;
     let ws = 'ws://' + hostname + currentUrl;
-    if (this.machine) {
-      ws = 'ws://' + this.machine + ':8000' + currentUrl;
-      this.backPath += '/?machine=' + this.machine;
-      // console.log(this.backPath);
-    }
     if (ws.endsWith('/')) {
       ws = ws.substring(0, ws.length - 1);
     }

@@ -55,7 +55,7 @@ const genius_router = [
     path: '/genius',
     meta: {
       breadcrumb: false,
-      theme: 'purple'
+      theme: 'purple',
     },
     name: 'genius',
     component: () => import(

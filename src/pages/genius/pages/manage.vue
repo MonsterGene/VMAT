@@ -208,7 +208,6 @@ export default {
       username: '',
       openScreenStyle: false,
       openChangeMode: false,
-      machine: '',
       // msg from backend
       message: '',
       notification: '',
@@ -229,12 +228,7 @@ export default {
   mounted () {
     this.username = this.$cookies.get('username');
     const hostname = getIpAddress();
-    const params = this.$route.query;
-    this.machine = params.machine;
     let ws = 'ws://' + hostname + '/version';
-    if (this.machine) {
-      ws = 'ws://' + this.machine + ':8000/version';
-    }
     if (ws.endsWith('/')) {
       ws = ws.substring(0, ws.length - 1);
     }
@@ -313,6 +307,7 @@ export default {
         this.openDialogs = true;
         return false;
       }
+      this.message = '';  // clean message for next action.
       let obj = {};
       if (action === 'Start Engine') {
         console.log(action);

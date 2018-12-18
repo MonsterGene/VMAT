@@ -49,7 +49,7 @@
       <v-btn
         style="padding: 1; min-width: 0;"
         color="error" 
-        :href="machine? '#/genius/logs/' + connection_name + '/?machine=' + machine: '#/genius/logs/' + connection_name" 
+        :href="'#/genius/logs/' + connection_name" 
         target="_blank"
         v-if="controller !== 'STEP' && controller !== 'INFO'"
       >LOG</v-btn>
@@ -97,7 +97,6 @@ export default {
         { title: 'Test Step 7', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
         { title: 'Test Step 8', avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg' },
       ],
-      machine: '',
       logRows: 22,
     };
   },
@@ -146,8 +145,6 @@ export default {
         this.testLogFalg = true;
       }, 2000);
     }
-    const params = this.$route.query;
-    this.machine = params.machine;
     // dynamically change logs Rows
     const height = document.documentElement.scrollHeight;
     if (height < 700) {

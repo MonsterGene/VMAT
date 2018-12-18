@@ -11,7 +11,11 @@
         </v-card-title>
 
         <v-card-actions>
-          <v-btn :href="'#/genius/login/?next=/genius/?machine=' + host.ipAddress" color="primary" @click="activeStation">Explore</v-btn>
+          <v-btn 
+            :href="'http://' + host.ipAddress + '/#/genius'"
+            target="_blank"
+            color="primary" 
+          >Explore</v-btn>
           <v-btn 
             v-if="host.hostname !== 'fortinet1' && host.profile" 
             :href="'#/vision/advanced/?machine=' + host.hostname" 
@@ -30,9 +34,6 @@ export default {
     };
   },
   methods: {
-    activeStation () {
-      this.$emit('activeStation');
-    }
   }
 };
 </script>

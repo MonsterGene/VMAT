@@ -30,12 +30,6 @@ export default {
     return {
       hosts: [
         {
-          hostname: '10.1.1.1',
-          ipAddress: '10.1.1.1',
-          details: 'localhost Genius Server',
-          profile: false,
-        },
-        {
           hostname: 'focwnbu1',
           ipAddress: '10.167.192.122',
           details: 'WNBU Genius Server',

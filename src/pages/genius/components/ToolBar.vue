@@ -1,7 +1,6 @@
 <template>
   <v-toolbar :color="toolBarColor" pa-0 ma-0 height="50px">
-    <a v-if="!machine" href="#/genius"><span :class="titleColor"><h4>Genius Solution</h4></span></a>
-    <a v-if="machine" :href="'#/genius' + '/?machine=' + machine"><span :class="titleColor"><h4>Genius Solution</h4></span></a>
+    <a href="#/genius"><span :class="titleColor"><h4>Genius Solution</h4></span></a>
 
     <v-tooltip bottom>
       <v-btn
@@ -61,6 +60,7 @@ import Vue from 'vue';
 import VueCookies from 'vue-cookies';
 import { getGeniusVersion } from '../api/getGeniusVersion';
 import { getProdVersion } from '../api/getProdVersion';
+import { getServerName } from '../api/getServerName';
 
 Vue.use(VueCookies);
 
@@ -70,9 +70,9 @@ export default {
   props: ['openScreenStyle', 'openChangeMode'],
   data () {
     return {
+      serverName: 'Genius',
       username: '',
       role: '',
-      machine: '',
       manageUrl: '#/genius/manage',
       mode: 'PROD',
       toolBarColor: 'primary',
@@ -101,18 +101,11 @@ export default {
       new_prod_version_visible: false,
     };
   },
-  watch: {
-  },
   mounted () {
-    const params = this.$route.query;
-    this.machine = params.machine;
-    if (this.machine) {
-      this.manageUrl = '#/genius/manage/?machine=' + this.machine;
-    }
     this.username = this.$cookies.get('username');
     this.role = this.$cookies.get('role');
     if (!this.username) {
-      this.$router.push('/genius/login/?machine=' + this.machine);
+      this.$router.push('/genius/login');
       return false;
     }
     if (this.role === 'operator') {
@@ -123,6 +116,8 @@ export default {
         },
       ];
     }
+    // change title here
+    this.getCurrentServerName();
   },
   created () {
     this.toggleFullScreen();
@@ -130,6 +125,17 @@ export default {
     this.getProdCodeVersion();
   },
   methods: {
+    getCurrentServerName () {
+      getServerName()
+        .then(response => {
+          this.serverName = response.data.name;
+          document.title = this.serverName + ' | Genius';
+          // console.log(this.serverName);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    },
     getCurrentVersion () {
       getGeniusVersion()
         .then(response => {

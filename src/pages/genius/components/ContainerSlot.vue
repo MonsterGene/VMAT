@@ -9,8 +9,7 @@
       <v-card-title>
         <v-layout row wrap>
           <v-flex lg10 sm10 pa-2>
-            <span v-if="!machine"><a :href="'#' + container.url"><h4>{{ container.name }}</h4></a></span>
-            <span v-if="machine"><a :href="'#' + container.url + '/?machine=' + machine"><h4>{{ container.name }}</h4></a></span>
+            <span><a :href="'#' + container.url"><h4>{{ container.name }}</h4></a></span>
 
             <span class="black--text">{{ container.test_time }}</span><br>
             <div v-show="container.display1">
@@ -118,7 +117,6 @@ export default {
     return {
       snackTitle: '',
       openSnack: false,
-      machine: '',
       // Question
       openQuestion2: false,   // it is for nested Ask Quesiton.
     };
@@ -166,10 +164,6 @@ export default {
     }
   },
   watch: {
-  },
-  mounted () {
-    const params = this.$route.query;
-    this.machine = params.machine;
   },
   methods: {
     clickAction (action) {
