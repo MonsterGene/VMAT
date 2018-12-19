@@ -42,7 +42,7 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          this.content = 'Genius Service Error, Could not get Notification...';
+          this.content = 'Genius Service Meet Error...';
         });
     },
   }

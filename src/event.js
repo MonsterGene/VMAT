@@ -13,7 +13,7 @@ export default [
         color: 'green',
         text: 'Logout successfully.'
       };
-      this.$router.replace({ path: '/login' });
+      this.$router.replace({ path: '/genius/login' });
     }
   },
   {
