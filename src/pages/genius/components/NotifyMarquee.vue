@@ -42,7 +42,7 @@ export default {
         })
         .catch(e => {
           console.log(e);
-          this.content = 'Genius Service Meet Error...';
+          this.content = 'Genius Engine Service Meet Errors...Make Sure Genius Engine is Launched!';
         });
     },
   }

@@ -6,7 +6,7 @@
       v-bind:openChangeMode="openChangeMode"
     ></tool-bar>
     <notify-marquee :notify="currentNotification"></notify-marquee>
-    <v-flex lg7 md7 sm7 xs7>
+    <v-flex lg7 md7 sm12 xs12>
       <h3><v-icon>menu</v-icon>Notification:</h3>
       
       <v-layout row>
@@ -44,7 +44,10 @@
           >
             Stop Engine
           </v-btn>
-          <v-divider vertical></v-divider>
+      </v-layout>
+      <v-divider></v-divider>
+      <h3><v-icon>menu</v-icon>Script Manipulation:</h3>
+      <v-layout row>
           <v-btn large
             color="primary"
             @click="engineAction('Update DEBUG', 'first')"
@@ -63,7 +66,7 @@
       <v-layout row>
         <v-flex>
           <v-text-field
-            label="Input Container Name"
+            label="Input Container Name Here."
             v-model="selectContainer"
           ></v-text-field>
         </v-flex>
@@ -72,13 +75,13 @@
             color="primary"
             @click="engineAction('Lock Container', 'first')"
           >
-            Lock Container
+            Lock
           </v-btn>
           <v-btn large
             color="primary"
             @click="engineAction('Unlock Container', 'first')"
           >
-            Unlock Container
+            Unlock
           </v-btn>
         </v-flex>
       </v-layout>
@@ -121,12 +124,13 @@
 
     </v-flex>
 
-    <v-divider vertical></v-divider>
-    <v-flex lg4 md4 sm4 xs4>
+    <!-- <v-divider vertical></v-divider> -->
+    <!-- <v-spacer></v-spacer> -->
+    <v-flex lg5 md5 sm12 xs12>
       <h3><v-icon>menu</v-icon>Action History:</h3>
       <pre v-for="h of history" :key="h">{{ h }}<v-divider></v-divider></pre>
       <v-divider></v-divider>
-      <h3><v-icon>menu</v-icon>Message:</h3>
+      <h3><v-icon>menu</v-icon>Message: time cost - <time-counter :start="startCounter" :stop="stopCounter"></time-counter></h3>
       <pre>{{ message }}</pre>
     </v-flex>
     </v-layout>
@@ -155,6 +159,8 @@ import ToolBar from '../components/ToolBar';
 import NotifyMarquee from '../components/NotifyMarquee';
 import StationSlot from '../components/StationSlot';
 import store from '../store';
+import TimeCounter from '../components/TimeCounter';
+
 import {
   SOCKET_ONOPEN,
   SOCKET_ONCLOSE,
@@ -202,9 +208,13 @@ export default {
     ToolBar,
     NotifyMarquee,
     StationSlot,
+    TimeCounter,
   },
   data () {
     return {
+      stopCounter: false,
+      startCounter: false,
+      //
       username: '',
       openScreenStyle: false,
       openChangeMode: false,
@@ -293,7 +303,7 @@ export default {
     getCurrentVersion () {
       getGeniusVersion()
         .then(response => {
-          console.log(response.data);
+          // console.log(response.data);
           this.version = response.data.version;
           this.all_version = response.data.all_version;
         })
@@ -307,35 +317,36 @@ export default {
         this.openDialogs = true;
         return false;
       }
-      this.message = '';  // clean message for next action.
+      this.message = 'Please wait about 1 minute..';  // clean message for next action.
+      this.startCounter = !this.startCounter;
       let obj = {};
       if (action === 'Start Engine') {
-        console.log(action);
+        // console.log(action);
         obj = { 'action': 'start_engine', 'user': this.username };
       }
       if (action === 'Stop Engine') {
-        console.log(action);
+        // console.log(action);
         obj = { 'action': 'stop_engine', 'user': this.username };
       }
       if (action.includes('Upgrade Engine')) {
         const version = action.split('-')[1];
-        console.log(version);
+        // console.log(version);
         obj = { 'action': 'upgrade_engine', 'version': version, 'user': this.username };
       }
       if (action === 'Update DEBUG') {
-        console.log(action);
+        // console.log(action);
         obj = { 'action': 'update_te', 'user': this.username };
       }
       if (action === 'Update PROD') {
-        console.log(action);
+        // console.log(action);
         obj = { 'action': 'update_prod', 'user': this.username };
       }
       if (action === 'Lock Container') {
-        console.log(action + this.selectContainer);
+        // console.log(action + this.selectContainer);
         obj = { 'action': 'lock', 'container': this.selectContainer, 'user': this.username };
       }
       if (action === 'Unlock Container') {
-        console.log(action + this.selectContainer);
+        // console.log(action + this.selectContainer);
         obj = { 'action': 'unlock', 'container': this.selectContainer, 'user': this.username };
       }
       this.$socket.sendObj(obj);
