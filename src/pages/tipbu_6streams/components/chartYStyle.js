@@ -1,6 +1,7 @@
 export default {
   show: true,
   type: 'value',
+  minInterval: 1,
   axisLine: {
     lineStyle: {
       color: 'rgba(255, 255, 255, .54)',

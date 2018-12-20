@@ -3,6 +3,47 @@
   <v-flex xs12>
     <v-widget title="异常处理方法：" :content-bg="$vuetify.theme.primary">
       <div slot="widget-content">
+        <v-dialog v-model="editorDialog" max-width="500px">
+          <v-card>
+            <v-card-title>
+              <span class="headline">编辑异常信息</span>
+            </v-card-title>
+
+            <v-card-text>
+              <v-container grid-list-md>
+                <v-layout wrap>
+                  <v-flex xs12>
+                    <v-text-field
+                      label="Info"
+                      v-model="editedItem.info"
+                      counter
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field
+                      label="Course"
+                      v-model="editedItem.rootCourse"
+                      counter
+                    ></v-text-field>
+                  </v-flex>
+                  <v-flex xs12>
+                    <v-text-field
+                      label="Action"
+                      v-model="editedItem.action"
+                      counter
+                    ></v-text-field>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" flat @click="dialogClose" :disabled="dialogBtnLoading">取消</v-btn>
+              <v-btn color="blue darken-1" flat @click="dialogSave" :loading="dialogBtnLoading">保存</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
         <v-data-table
           :headers="solution.tableHeaders"
           :items="solution.data"
@@ -10,53 +51,19 @@
           class="elevation-1"
         >
           <template slot="items" slot-scope="props">
-            <td class="text-xs-right">{{ props.item.code }}</td>
-            <td class="text-xs-right">
-              <v-edit-dialog
-                :return-value.sync="props.item.info"
-                @save="saveSolution('info', props.item)"
-                lazy
+            <td class="text-xs-center">{{ props.item.code }}</td>
+            <td class="text-xs-center">{{ props.item.info }}</td>
+            <td class="text-xs-center">{{ props.item.rootCourse }}</td>
+            <td class="text-xs-center">{{ props.item.action }}</td>
+            <td class="text-xs-center">
+              <v-icon
+                small
+                class="mr-2"
+                @click="editItem(props.item)"
               >
-                {{ props.item.info }}
-                <v-text-field
-                  slot="input"
-                  v-model="props.item.info"
-                  single-line
-                  counter
-                ></v-text-field>
-              </v-edit-dialog>
+                edit
+              </v-icon>
             </td>
-            <td class="text-xs-right">
-              <v-edit-dialog
-                :return-value.sync="props.item.rootCourse"
-                @save="saveSolution('rootCourse', props.item)"
-                lazy
-              >
-                {{ props.item.rootCourse }}
-                <v-text-field
-                  slot="input"
-                  v-model="props.item.rootCourse"
-                  counter
-                ></v-text-field>
-              </v-edit-dialog>
-            </td>
-            <td class="text-xs-right">
-              <v-edit-dialog
-                :return-value.sync="props.item.action"
-                @save="saveSolution('action', props.item)"
-                lazy
-              >
-                {{ props.item.action }}
-                <v-text-field
-                  slot="input"
-                  v-model="props.item.action"
-                  counter
-                ></v-text-field>
-              </v-edit-dialog>
-            </td>
-            <!-- <td class="text-xs-center">
-              <v-btn color="success">修改</v-btn>
-            </td> -->
           </template>
         </v-data-table>
       </div>
@@ -77,13 +84,16 @@ export default {
       scrollSettings: {
         maxScrollbarLength: 160
       },
+      editorDialog: false,
+      editedItem: {},
+      dialogBtnLoading: false,
       solution: {
         tableHeaders: [
           { text: 'Error code', value: 'errorCode', align: 'center' },
           { text: 'Error info', value: 'errorInfo', align: 'center' },
           { text: 'Error rootc', value: 'errorRoot', align: 'center' },
           { text: 'Error action', value: 'errorAction', align: 'center' },
-          // { text: 'Action', value: 'errorCode', align: 'center' }
+          { text: 'Action', value: 'errorCode', align: 'center' }
         ],
         data: [
           {
@@ -119,16 +129,33 @@ export default {
         }
       });
     },
-    saveSolution (evt) {
-      console.log(evt);
+    editItem (item) {
+      this.editedItem = item;
+      this.editorDialog = true;
+    },
+    dialogClose () {
+      this.editorDialog = false;
+      this.editedItem = {};
+    },
+    dialogSave () {
+      this.dialogBtnLoading = true;
       stationApi.errorSolution.edit({
         areaID: this.stationId,
-        ...evt
+        ...this.editedItem
       }).then(res => {
         const data = res.data;
-        if (!data.success) {
-          this.getSolution();
-        }
+        // if (!data.success) {
+          
+        //   // this.getSolution();
+        // } else {
+
+        // }
+        
+        setTimeout(() => {
+          this.dialogBtnLoading = false;
+          this.editorDialog = false;
+        }, 2000);
+        
       });
     }
   }

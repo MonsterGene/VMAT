@@ -50,6 +50,10 @@ export default {
       endDate: moment().format('YYYY-MM-DD'),
       frequencyChartData: { date: [] },
       timeChartData: { date: [] },
+      loadingStyle: {
+        textColor: '#CCC',
+        maskColor: 'rgba(255, 255, 255, 0.1)'
+      }
     };
   },
   computed: {
@@ -75,12 +79,28 @@ export default {
   watch: {
     type: {
       handler (val) {
+        this.$nextTick(() => {
+          this.showFreqChartLoading();
+          this.showTimeChartLoading();
+        });
         this.getChartData();
       },
       immediate: true
     }
   },
   methods: {
+    showFreqChartLoading () {
+      this.$refs.frequencyChart.chartInstance.showLoading(this.loadingStyle);
+    },
+    showTimeChartLoading () {
+      this.$refs.timeChart.chartInstance.showLoading(this.loadingStyle);
+    },
+    hideFreqChartLoading () {
+      this.$refs.frequencyChart.chartInstance.hideLoading();
+    },
+    hideTimeChartLoading () {
+      this.$refs.timeChart.chartInstance.hideLoading();
+    },
     getChartData () {
       const reqFreqAndTime = stationApi.getErrorFrequency.byDay({
         startDate: this.startDate,
@@ -101,6 +121,8 @@ export default {
             time: data.data.time
           };
           this.$nextTick(() => {
+            this.hideFreqChartLoading();
+            this.hideTimeChartLoading();
             this.$refs.frequencyChart.update();
             this.$refs.timeChart.update();
           });
