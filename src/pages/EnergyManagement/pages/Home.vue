@@ -31,7 +31,7 @@
         <img
           src="../static/pics/sz_map.jpg"
           width="100%"
-          height="300px"
+          height="419px"
         >
       </v-flex>
       <v-flex md4>
