@@ -1,0 +1,1 @@
+import { axios, catchMethod } from './config';
