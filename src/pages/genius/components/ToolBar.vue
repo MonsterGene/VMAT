@@ -9,7 +9,7 @@
         :class="titleColor"
         @click="goManagePage"
       >
-        {{ version || 'v0.0.0_00000000' }}
+        {{ version || 'v0.0.0_xxxxxxxx' }}
         <v-icon v-if="new_version_visible" color="error">error</v-icon>
       </v-btn>
       <span>Latest Genius Version: {{ latest_version }}</span>
@@ -22,7 +22,7 @@
         :class="titleColor"
         @click="goManagePage"
       >
-        PROD: {{ prod_version || 'v0.0.0_00000000' }}
+        PROD: {{ prod_version || 'v0.0.0_xxxxxxxx' }}
         <v-icon v-if="new_prod_version_visible" color="error">error</v-icon>
       </v-btn>
       <span>Latest Prod Version:  {{ latest_prod_version }}</span>

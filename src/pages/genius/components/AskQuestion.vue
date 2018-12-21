@@ -20,7 +20,7 @@
                 >clear</v-icon>
                 <span>To Close Question</span>
               </v-tooltip>
-              <v-spacer></v-spacer>
+              <time-counter :start="startCounter" :stop="stopCounter"></time-counter>
               <h3>[ {{ container }} ]: {{ title }}</h3>
             </v-flex>
             <v-flex lg12 xs12 sm12 md12 mt-0 pb-0>
@@ -71,14 +71,18 @@
 </template>
 
 <script>
+import TimeCounter from '../components/TimeCounter';
 
 export default {
   components: {
+    TimeCounter,
   },
   props: ['title', 'open', 'type', 'options', 'image', 'container'],
   data () {
     return {
       userInput: '',
+      stopCounter: false,
+      startCounter: false,
     };
   },
   computed: {
@@ -87,10 +91,14 @@ export default {
     }
   },
   watch: {
-  },   
+    title () {
+      this.startCounter = !this.startCounter;
+    }
+  },
   methods: {
     submitUserInput () {
       // this.openQuestion = false;
+      // this.stopCounter = !this.stopCounter;
       this.$emit('answerQuestion', this.userInput, this.container);
       this.userInput = '';
     },
