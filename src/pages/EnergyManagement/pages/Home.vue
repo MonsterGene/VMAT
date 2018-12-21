@@ -29,120 +29,43 @@
     >
       <v-flex md8>
         <img
-          src="../static/pics/u44.png"
+          src="../static/pics/sz_map.jpg"
           width="100%"
           height="300px"
         >
       </v-flex>
       <v-flex md4>
-        <v-widget title="NSDI电能消耗" style="height:100%">
-          <div slot="widget-content" style="height:220px;padding-top:60px">
-            <v-card>
-              <v-card-text class="pa-0">
-                <v-container class="pa-0">
-                  <div class="layout row ma-0 align-center justify-center">
-                    <div class="sm6 xs6 flex">
-                      <div class="layout column ma-0 justify-center align-center">
-                        <span class="icon-shandianquan"></span>
-                      </div>
-                    </div>
-                    <div class="sm6 xs6 flex text-sm-center py-3 white--text light-blue">
-                      <div class="headline">{{ energyData }}</div>
-                      <span class="caption">KWH</span>
-                    </div>
-                  </div>
-                </v-container>
-              </v-card-text>
-            </v-card> 
-          </div>
-          <!-- <div slot="widget-content">
-            <e-chart
-              ref="yunxingshijian"
-              :path-option="[
-                ['series[0].name', '刻度'],
-                ['series[0].type', 'gauge'],
-                ['series[0].radius', '80%'],
-                ['series[0].min', '0'],
-                ['series[0].max', '100'],
-                ['series[0].endAngle', '0'],
-                ['series[0].axisLine.show', false],
-                ['series[0].axisLine.lineStyle.width', '1'],
-                ['series[0].axisLine.lineStyle.color', ['1', 'rgba(0,0,0,0)']],
-                ['series[0].axisLabel.show', true],
-                ['series[0].axisLabel.color', '#3B53A2'],
-                ['series[0].axisLabel.distance', '15'],
-                ['series[0].axisLabel.fontSize', '11'],
-                ['series[0].axisLabel.formatter', '{value}'],
-                ['series[0].axisTick.show', true],
-                ['series[0].axisTick.lineStyle.color.type', 'radial'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '0'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#77C664'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '0.2'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#2CB7C7'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '0.4'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#1DB2DD'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '0.6'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#2D89ED'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '0.8'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#7765B4'],
-                ['series[0].axisTick.lineStyle.color.colorStops.offset', '1'],
-                ['series[0].axisTick.lineStyle.color.colorStops.color', '#EB3457'],
-                ['series[0].axisTick.lineStyle.color.globalCoord', false],
-                ['series[0].axisTick.lineStyle.width', '2'],
-                ['series[0].axisTick.lineStyle.length', '20'],
-                ['series[0].axisTick.length', true],
-                ['series[0].splitLine.show', '-5'],
-                ['series[0].splitLine.length', '-5'],
-                ['series[0].detail.show', false],
-                ['series[0].pointer.show', false],
-                ['series[1].type', 'gauge'],
-                ['series[1].radius', '85%'],
-                ['series[1].min', '0'],
-                ['series[1].max', '100'],
-                ['series[1].center', ['50%', '50%']],
-                ['series[1].splitNumber', '0'],
-                ['series[1].startAngle', '180'],
-                ['series[1].endAngle', '0'],
-                ['series[1].axisLine.show', true],
-                ['series[1].axisLine.lineStyle.width', '13'],
-                ['series[1].axisLine.lineStyle.color', [
-                  '0',
-                  '1',
-                  {
-                    colorStops: [
-                      {
-                        'offset':'0',
-                        'color':'#77C664'
-                      },
-                      { 'offset':'0.2', 'color':'#2CB7C7' },
-                      { 'offset':'0.4', 'color':'#1DB2DD' },
-                      { 'offset':'0.6', 'color':'#2D89ED' },
-                      {'offset':'0.8','color':'#7765B4'},
-                      {'offset':'1','color':'#EB3457'}
-                    ],
-                    global: false,
-                    type: 'linear',
-                    x: '0',
-                    x2: '1',
-                    y: '0',
-                    y2: '0'
-                  }
-                ]],
-                ['series[1].splitLine.show', false],
-                ['series[1].axisLabel.show', false],
-                ['series[1].axisTick.show', false],
-                ['series[1].detail.show', false],
-                ['series[1].detail.offsetCenter', ['0', '0']],
-                ['series[1].detail.color', '#ddd'],
-                ['series[1].detail.formatter', params => params],
-                ['series[1].detail.textStyle.fontSize', '12'],
-                ['series[1].data', [{ value: '5' }]]
-              ]"
-              height="400px"
-              width="100%"
+        <v-widget :title="department + ' 电能消耗'">
+          <div
+            slot="widget-content"
+            style="height:350px"
+          >
+            <v-layout row wrap>
+              <v-flex xs5>
+                监测单位 {{ department }}
+              </v-flex>
+              <v-flex xs7>
+                累计电能耗 {{ (totalEnergyUsage / 1000000).toFixed(2) }} M·KWH
+              </v-flex>
+              <v-flex xs5>
+                同比升降 {{ YOY }} %
+              </v-flex>
+              <v-flex xs7>
+                环比升降 {{ MOM }} %
+              </v-flex>
+              <v-flex xs12>
+                监测点 {{ warchPoint }}
+              </v-flex>
+              <v-flex xs12>
+                采集数据 {{ dataCount }} 个
+              </v-flex>
+            </v-layout>
+            <div
+              ref="chart1"
+              style="height:300px;margin-top: -25px"
             >
-            </e-chart> 
-          </div>-->
+            </div>
+          </div>
         </v-widget>
       </v-flex>
     </v-layout>
@@ -153,150 +76,44 @@
       <v-flex md3>
         <v-widget title="各楼栋电能消耗">
           <div slot="widget-content">
-            <e-chart
-              ref="yunxingshijian"
-              :path-option="[
-              ['dataset.source', DemoChartData.barChartDataWeek],
-              ['color', 'black'],
-              ['legend.show', true],
-              //['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.show', true],
-              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'line'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-              height="200px"
-              width="100%"
-            >
-            </e-chart>
+            <div
+              ref="chart2"
+              style="height:250px"
+            ></div>
           </div>
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="NSDI各电力类型能耗占比">
+        <v-widget title="NSD1各电力类型能耗占比">
           <div slot="widget-content">
-            <e-chart
-              ref="yunxingshijian"
-              :path-option="[
-              ['dataset.source', DemoChartData.pieChartDataWeek],
-              ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
-              //['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              //['yAxis.axisLabel.show', true],
-              
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'pie'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-              height="200px"
-              width="100%"
-            >
-            </e-chart>
+            <div
+              ref="chart3"
+              style="height:250px"
+            ></div>
           </div>
         </v-widget>
       </v-flex>
       <v-flex md3>
         <v-widget title="各BU累计电能耗">
           <div slot="widget-content">
-            <e-chart
-              ref="yunxingshijian"
-              :path-option="[
-              ['dataset.source', DemoChartData.barChartDataWeek],
-              ['color', 'gold'],
-              ['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.show', true],
-              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'bar'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-              height="200px"
-              width="100%"
-            >
-            </e-chart>
+            <div
+              ref="chart4"
+              style="height:250px"
+            ></div>
           </div>
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="NSDI电能耗趋势">
+        <v-widget title="NSD1电能耗趋势">
           <div slot="widget-content">
-            <e-chart
-              ref="yunxingshijian"
-              :path-option="[
-              ['dataset.source', DemoChartData.barChartDataWeek],
-              ['color', 'red'],
-              ['legend.show', true],
-              ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['toolbox.show', true],
-              ['xAxis.axisLabel.show', true],
-              //['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisLabel.show', true],
-              //['yAxis.axisLine.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              ['yAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],
-              //['yAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-
-              ['grid.left', '2%'],
-              ['grid.bottom', '5%'],
-              ['grid.right', '3%'],
-
-              ['series[0].type', 'line'],
-              ['series[0].label.show', true],
-              ['series[0].smooth', true],
-              ['series[0].stack', 1],
-              ['series[0].label.position', 'top']
-          
-            ]"
-              height="200px"
-              width="100%"
-            >
-            </e-chart>
+            <div
+              ref="chart5"
+              style="height:250px"
+            ></div>
           </div>
         </v-widget>
       </v-flex>
     </v-layout>
-
   </v-container>
 </template>
 
@@ -311,54 +128,598 @@
  * });
  */
 import moment from 'moment';
-import { DemoChartData, homeApi } from '../api';
-import EChart from '@/components/chart/echart';
+import { homeApi } from '../api';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 const echarts = window.echarts || undefined;
 
 export default {
   components: {
-    EChart,
     VWidget,
     MiniStatistic
   },
   data () {
     return {
-      DemoChartData,
-      LinearGradient: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-        {
-          offset: '0',
-          color: '#77C664'
-        },
-
-        {
-          offset: '0.2',
-          color: '#2CB7C7'
-        },
-
-        {
-          offset: '0.4',
-          color: '#1DB2DD'
-        },
-
-        {
-          offset: '0.6',
-          color: '#2D89ED'
-        },
-
-        {
-          offset: '0.8',
-          color: '#7765B4'
-        },
-
-        {
-          offset: '1',
-          color: '#EB3457'
-        }
-      ]),
-      energyData: 0
+      department: 'NSD1',
+      totalEnergyUsage: 0,
+      YOY: 45,
+      MOM: 45,
+      warchPoint: 'E5/E6/D9/D10/f12/B3',
+      dataCount: 500
     };
+  },
+  mounted () {
+    this.initCharts();
+    // 第一个chart
+    this.getChart1();
+    // 下面第一个chart
+    this.getChart2();
+    // 下面第二个图
+    this.getChart3();
+    // 下面第三个图
+    this.getChart4();
+    // 下面第4个图
+    this.getChart5();
+
+  },
+  methods: {
+    initCharts () {
+      // 第一个小chart
+      this.chart1DOM = this.$refs.chart1;
+      this.chart1 = echarts.init(this.chart1DOM);
+
+      // 下面第1个图
+      this.chart2DOM = this.$refs.chart2;
+      this.chart2 = echarts.init(this.chart2DOM);
+
+      // 下面第2个图
+      this.chart3DOM = this.$refs.chart3;
+      this.chart3 = echarts.init(this.chart3DOM);
+
+      // 下面第3个图
+      this.chart4DOM = this.$refs.chart4;
+      this.chart4 = echarts.init(this.chart4DOM);
+
+      // 下面第4个图
+      this.chart5DOM = this.$refs.chart5;
+      this.chart5 = echarts.init(this.chart5DOM);
+
+    },
+    firstChartOption (data) {
+      return {
+        series: [
+          {
+            name: '刻度',
+            type: 'gauge',
+            radius: '80%',
+            min: 0,
+            max: 2000000,
+            splitNumber: 2, // 刻度数量
+            startAngle: 180,
+            endAngle: 0,
+            axisLine: {
+              show: false,
+              lineStyle: {
+                width: 1,
+                color: [
+                  [1, 'rgba(0,0,0,0)']
+                ]
+              }
+            }, // 仪表盘轴线
+            axisLabel: {
+              show: true,
+              color: '#3B53A2',
+              distance: 15,
+              fontSize: 11,
+              formatter: '{value}'
+            }, // 刻度标签。
+            axisTick: {
+              show: true,
+              lineStyle: {
+                color: {
+                  type: 'radial',
+                  colorStops: [{
+                    offset: 0,
+                    color: '#77C664'
+                  },
+
+                  {
+                    offset: 0.2,
+                    color: '#2CB7C7'
+                  },
+
+                  {
+                    offset: 0.4,
+                    color: '#1DB2DD'
+                  },
+
+                  {
+                    offset: 0.6,
+                    color: '#2D89ED'
+                  },
+
+                  {
+                    offset: 0.8,
+                    color: '#7765B4'
+                  },
+
+                  {
+                    offset: 1,
+                    color: '#EB3457'
+                  }
+                  ],
+                  globalCoord: false // 缺省为 false
+                },
+                width: 2,
+                length: 20,
+              },
+              length: -5
+            }, // 刻度样式
+            splitLine: {
+              show: true,
+              length: -5,
+            }, // 分隔线样式
+            detail: {
+              show: false
+            },
+            pointer: {
+              show: false
+            }
+          },
+          {
+            type: 'gauge',
+            radius: '85%',
+            min: 0,
+            max: 2000000,
+            // center: ['50%', '50%'],
+            splitNumber: 0, // 刻度数量
+            startAngle: 180,
+            endAngle: 0,
+            axisLine: {
+              show: true,
+              lineStyle: {
+                width: 13,
+                color: [
+                  [
+                    1,
+                    new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                      {
+                        offset: 0,
+                        color: '#77C664'
+                      },
+
+                      {
+                        offset: 0.2,
+                        color: '#2CB7C7'
+                      },
+
+                      {
+                        offset: 0.4,
+                        color: '#1DB2DD'
+                      },
+
+                      {
+                        offset: 0.6,
+                        color: '#2D89ED'
+                      },
+
+                      {
+                        offset: 0.8,
+                        color: '#7765B4'
+                      },
+
+                      {
+                        offset: 1,
+                        color: '#EB3457'
+                      }
+                    ])
+                  ]
+                ],
+              }
+            },
+            // 分隔线样式。
+            splitLine: {
+              show: false,
+            },
+            axisLabel: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            // 仪表盘详情，用于显示数据。
+            detail: {
+              show: true,
+              offsetCenter: [0, 30],
+              color: '#000',
+              formatter: function (params) {
+                return params + ' KWH';
+              },
+              textStyle: {
+                fontSize: 14
+              }
+            },
+            data: [{
+              // name: "当前用户总数",
+              value: data
+            }]
+          }
+        ]
+      };
+    },
+    getChart1 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        // building: 'E515'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      homeApi.homeFistChart(data).then(res => {
+        // console.log(res);
+        const data = res.data;
+        if (data.success === 'true') {
+          this.totalEnergyUsage = data.data.epnet;
+          const chartOption = this.firstChartOption(data.data.epnet);
+          this.chart1.setOption(chartOption);
+        }
+      });
+    },
+    chart2Option (data) {
+      const chartOpts = {
+        dataset: { source: data },
+        legend: {
+          show: true
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            magicType: 'bar',
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        }, 
+        xAxis: [{
+          type: 'category',
+          axisLabel: {
+            interval: 0
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          max: 700
+        }],
+        series: []
+      };
+      let allData = [];
+      Object.keys(data).forEach((key, index) => {
+        if (index > 0) {
+          const defaultSeries = {
+            type: 'bar',
+            barWidth: '40%',
+            label: {
+              normal: {
+                position: 'inside'
+              }
+            },
+          };
+          let curSeries = defaultSeries;
+          chartOpts.series.push(defaultSeries);
+          chartOpts.stack = 1;
+          data[key].forEach((val, index) => {
+            if (allData[index]) {
+              allData[index] += val;
+            } else {
+              allData[index] = val;
+            }                
+          });
+        }
+      });
+      allData.sort();
+      chartOpts.yAxis[0].max = Math.ceil(allData.pop() / 10) * 10;
+      return chartOpts;
+    },
+    getChart2 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      homeApi.chart1Data(data).then(res => {
+        const data = res.data;
+        const chartData = {};
+        const buildingList = Object.keys(data);
+        chartData['楼栋'] = buildingList;
+        buildingList.forEach(key => {
+          Object.keys(data[key].typeData).forEach(subKey => {
+            if (chartData[subKey]) {
+              chartData[subKey].push(data[key].typeData[subKey]);
+            } else {
+              chartData[subKey] = [data[key].typeData[subKey]];
+            }
+          });
+        });
+
+        console.log(chartData);
+
+        const chartOption = this.chart2Option(chartData);
+        this.chart2.setOption(chartOption);
+        this.chart2.on('click', params => {
+          this.$router.push('/energy_management/floors');
+        });
+      });
+    },
+    chart3Option (data) { 
+      const cData = {};
+      cData['类型'] = Object.keys(data);
+      cData['能耗'] = Object.keys(data).map(key => data[key]);
+      const chartOpts = {
+        dataset: { source: cData },
+        title: {
+          x: 'center'
+        },
+        legend: { show: true },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b} : {c} KWH({d}%)'
+        },
+        series: [{
+          name: '',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }]
+      };
+      return chartOpts;
+    },
+    getChart3 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        // building: 'E515'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      homeApi.homeFistChart(data).then(res => {
+        // console.log(res);
+        const data = res.data;
+        if (data.success === 'true') {
+          const chartOption = this.chart3Option(data.data.typeData);
+          this.chart3.setOption(chartOption);
+        }
+      });
+    },
+    chart4Option (data) {
+      const chartOpts = {
+        dataset: { source: null },
+        color: ['#3398DB'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line',
+            lineStyle: {
+              opacity: 0
+            }
+          },
+          formatter: function (prams) {
+            if (prams[0].data === 0) {
+              return '合格率：0%';
+            } else {
+              return '合格率：' + prams[0].data + '%';
+            }
+          }
+        },
+        legend: {
+          data: ['直接访问', '背景'],
+          show: true
+        },
+        grid: {
+          left: '0%',
+          right: '0%',
+          bottom: '5%',
+          top: '7%',
+          height: '85%',
+          containLabel: true,
+          z: 22
+        },
+        xAxis: [{
+          type: 'category',
+          gridIndex: 0
+        }],
+        yAxis: [{
+          type: 'value',
+          gridIndex: 0,
+          min: 0,
+          max: 100,
+        },
+        {
+          type: 'value',
+          gridIndex: 0,
+          min: 0,
+          max: 100,
+          splitNumber: 12,
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false
+          },  
+        }
+        ],
+        series: [],
+      };
+
+      const chartData = {};
+      chartData['BU'] = Object.keys(data);
+      chartData['能耗'] = chartData['BU'].map(name => {
+        return Number(data[name]);
+      });
+      chartOpts.dataset.source = chartData;
+      const defaultSeries = {
+        type: 'bar',
+        barWidth: '30%',
+        xAxisIndex: 0,
+        yAxisIndex: 0,
+        itemStyle: {
+          normal: {
+            barBorderRadius: 30,
+            color: new echarts.graphic.LinearGradient(
+              0, 0, 0, 1, [{
+                offset: 0,
+                color: '#0286ff'
+              },
+              {
+                offset: 0.5,
+                color: '#027eff'
+              },
+              {
+                offset: 1,
+                color: '#00feff'
+              }
+              ]
+            )
+          },
+        },
+      };
+      chartOpts.series.push(defaultSeries);
+      const maxVal = chartData['能耗'].reduce((acc, cur) => {
+        if (cur > acc) {
+          return cur;
+        } else {
+          return acc;
+        }
+      }, 0);
+      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
+      return chartOpts;
+    },
+    getChart4 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        // building: 'E515'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      homeApi.chart3Data(data).then(res => {
+        // console.log(res);
+        const data = res.data;
+        const chartOption = this.chart4Option(data);
+        this.chart4.setOption(chartOption);
+      });
+    },
+    chart5Option (data) {
+      const chartOpts = {
+        dataset: { source: null },
+        tooltip: {
+        },
+        grid: {
+          top: '8%',
+          left: '1%',
+          right: '1%',
+          bottom: '8%',
+          containLabel: true,
+        },
+        xAxis: [{
+          type: 'category',
+          axisLabel: {
+            interval: 0
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          max: 200
+        }],
+        series: []
+      };
+      const chartData = {};
+      chartData['time'] = Object.keys(data);
+      chartData['能耗'] = chartData['time'].map(name => {
+        return Number(data[name]);
+      });
+      chartOpts.dataset.source = chartData;
+      const defaultSeries = {
+        type: 'line',
+        smooth: true, 
+        symbolSize: 0,
+    
+        lineStyle: {
+          normal: {
+            color: '#3deaff'   // 线条颜色
+          }
+        },
+        areaStyle: { // 区域填充样式
+          normal: {
+          // 线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: 'rgba(61,234,255, 0.9) ' }, 
+              { offset: 0.7, color: 'rgba(61,234,255, 0) ' }
+            ], false),
+
+            shadowColor: 'rgba(53,142,215, 0.9)', // 阴影颜色
+            shadowBlur: 20 // shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
+          }
+        },
+      };
+      chartOpts.series.push(defaultSeries);
+      const maxVal = chartData['能耗'].reduce((acc, cur) => {
+        if (cur > acc) {
+          return cur;
+        } else {
+          return acc;
+        }
+      }, 0);
+      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
+      return chartOpts;
+    },
+    getChart5 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        // building: 'E515'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      homeApi.chart5Data(data).then(res => {
+        const data = res.data;
+        console.log(data);
+        const chartOption = this.chart5Option(data);
+        this.chart5.setOption(chartOption);
+      });
+    }
   },
   mounted () {
     const params = new FormData();
@@ -397,8 +758,7 @@ export default {
   }
 }
 
-.icon-shandianquan{
-  content: url(../static/icons/baseline-flash_on-24px.svg);
-  font-size: 24px;
+.chart1-text {
+  text-align: center;
 }
 </style>
