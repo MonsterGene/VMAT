@@ -31,7 +31,7 @@
         <img
           src="../static/pics/sz_map.jpg"
           width="100%"
-          height="100%"
+          height="300px"
         >
       </v-flex>
       <v-flex md4>
@@ -721,6 +721,25 @@ export default {
       });
     }
   },
+  mounted () {
+    const params = new FormData();
+    const data = {
+      startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+      endTime: moment().format('YYYY-MM-DD'),
+      building: 'E515'
+    };
+    Object.keys(data).forEach(key => {
+      params.append(key, data[key]);
+    });
+    
+    homeApi.homeFistChart(params).then(res => {
+      console.log(res);
+      const data = res.data;
+      if (data.success === 'true') {
+        this.energyData = data.data.epnet;
+      }
+    });
+  }
 };
 </script>
 

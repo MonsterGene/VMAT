@@ -9,8 +9,7 @@
         <v-card-text>
           <div class="layout row ma-0 align-center justify-space-between">
             <div class="text-box">
-              <div v-if="!machine" class="subheading pb-2"><a :href="'#' + station.url"><h3>{{ station.name }}</h3></a></div>
-              <div v-if="machine" class="subheading pb-2"><a :href="'#' + station.url + '/?machine=' + machine"><h3>{{ station.name }}</h3></a></div>
+              <div class="subheading pb-2"><a :href="'#' + station.url"><h3>{{ station.name }}</h3></a></div>
             </div>
             <div class="text-xs-center">
               <v-chip style="background: rgb(143,143,143);" text-color="white">IDLE: {{ station.idle_number }}</v-chip>
@@ -33,12 +32,7 @@ export default {
   props: ['station'],
   data () {
     return {
-      machine: '',
     };
-  },
-  mounted () {
-    const params = this.$route.query;
-    this.machine = params.machine;
   },
 };
 </script>

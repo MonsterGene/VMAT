@@ -1,7 +1,7 @@
 const router = [
   {
     path: '/rms/page1',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/page1',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -11,7 +11,7 @@ const router = [
   },
   {
     path: '/rms/page2',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/page2',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -21,7 +21,7 @@ const router = [
   },
   {
     path: '/rms/page3',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/page3',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -31,7 +31,7 @@ const router = [
   },
   {
     path: '/rms/page4',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/page4',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -41,7 +41,7 @@ const router = [
   },
   {
     path: '/rms/page5',
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/page5',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -52,7 +52,7 @@ const router = [
   // 库存管理
   {
     path: '/rms/stockstatus', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/stockstatus',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -62,7 +62,7 @@ const router = [
   },
   {
     path: '/rms/usedstatus', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/usedstatus',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -72,7 +72,7 @@ const router = [
   },
   {
     path: '/rms/assistantapply', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/assistantapply',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -82,7 +82,7 @@ const router = [
   },
   {
     path: '/rms/reneedorreturn', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/reneedorreturn',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -92,7 +92,7 @@ const router = [
   },
   {
     path: '/rms/assistantreturn', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/assistantreturn',
     component: () => import(
       /* webpackChunkName: "routes" */
@@ -102,7 +102,7 @@ const router = [
   },
   {
     path: '/rms/scrap', 
-    meta: { breadcrumb: true },
+    meta: { breadcrumb: false },
     name: 'rms/scrap',
     component: () => import(
       /* webpackChunkName: "routes" */

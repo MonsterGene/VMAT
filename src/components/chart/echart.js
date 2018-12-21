@@ -218,7 +218,6 @@ export default {
   },
 
   beforeDestroy () {
-    console.log('Echart destory!');
     this.clean();
   }
 };

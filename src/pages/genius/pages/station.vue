@@ -67,18 +67,12 @@ export default {
       openScreenStyle: false,
       openChangeMode: false,
       stationList: [],
-      machine: '',
     };
   },
   mounted () {
     const currentUrl = window.location.hash.substring(1).split('?')[0];
     const hostname = getIpAddress();
-    const params = this.$route.query;
-    this.machine = params.machine;
     let ws = 'ws://' + hostname + currentUrl;
-    if (this.machine) {
-      ws = 'ws://' + this.machine + ':8000' + currentUrl;
-    }
     if (ws.endsWith('/')) {
       ws = ws.substring(0, ws.length - 1);
     }

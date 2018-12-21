@@ -62,11 +62,10 @@
       <h3><v-icon>menu</v-icon>Lock/Unlock Container:</h3>
       <v-layout row>
         <v-flex>
-          <v-select
-            :items="containerList"
-            label="Choose Container Name"
+          <v-text-field
+            label="Input Container Name"
             v-model="selectContainer"
-          ></v-select>
+          ></v-text-field>
         </v-flex>
         <v-flex>
           <v-btn large
@@ -103,7 +102,7 @@
             >
               Upgrade Engine
             </v-btn>
-            <v-btn v-show="versions === ver"
+            <v-btn v-show="version === ver"
               disabled
               color="primary"
               @click="engineAction('Upgrade Engine to - ' + ver, 'first')"
@@ -123,10 +122,9 @@
     </v-flex>
 
     <v-divider vertical></v-divider>
-
     <v-flex lg4 md4 sm4 xs4>
       <h3><v-icon>menu</v-icon>Action History:</h3>
-      <pre v-for="h of history" :key="h">{{ h }}</pre>
+      <pre v-for="h of history" :key="h">{{ h }}<v-divider></v-divider></pre>
       <v-divider></v-divider>
       <h3><v-icon>menu</v-icon>Message:</h3>
       <pre>{{ message }}</pre>
@@ -210,7 +208,6 @@ export default {
       username: '',
       openScreenStyle: false,
       openChangeMode: false,
-      machine: '',
       // msg from backend
       message: '',
       notification: '',
@@ -221,26 +218,17 @@ export default {
       openDialogs: false,
       titleDialogs: '',
       contentDialogs: 'Please Double Confirm ???',
-      // all container from all stations.
-      containerList: ['DEMO1:UUT00', 'DEMO1:UUT01'],
       // Choose container to be lock/unlock.
       selectContainer: '',
       // Choose the Genius to update.
       version: '',
       all_version: [],
-      versions: 'v1.0.0_20181310',
-      all_versions: ['v0.0.0_20181110', 'v1.0.0_20181310', 'v2.0.0_20181110']
     };
   },
   mounted () {
     this.username = this.$cookies.get('username');
     const hostname = getIpAddress();
-    const params = this.$route.query;
-    this.machine = params.machine;
     let ws = 'ws://' + hostname + '/version';
-    if (this.machine) {
-      ws = 'ws://' + this.machine + ':8000/version';
-    }
     if (ws.endsWith('/')) {
       ws = ws.substring(0, ws.length - 1);
     }
@@ -264,7 +252,7 @@ export default {
       }
       const history = payload.history;
       if (history) {
-        this.history = history.slice(0, 20);
+        this.history = history.slice(0, 15);
       }
       const message = payload.message;
       if (message) {
@@ -319,6 +307,7 @@ export default {
         this.openDialogs = true;
         return false;
       }
+      this.message = '';  // clean message for next action.
       let obj = {};
       if (action === 'Start Engine') {
         console.log(action);
@@ -357,4 +346,7 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
+pre {
+  white-space: pre-wrap;
+}
 </style>

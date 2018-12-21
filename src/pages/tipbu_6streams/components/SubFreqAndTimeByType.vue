@@ -116,6 +116,10 @@ export default {
       endDate: this.date,
       frequencyChartData: { type: [] },
       timeChartData: { type: [] },
+      loadingStyle: {
+        textColor: '#CCC',
+        maskColor: 'rgba(255, 255, 255, 0.1)'
+      }
     };
   },
   computed: {
@@ -143,6 +147,11 @@ export default {
       handler (val) {
         this.startDate = val;
         this.endDate = val;
+        this.$nextTick(() => {
+          this.showFreqChartLoading();
+          this.showTimeChartLoading();
+        });
+        
         this.getChartData();
       },
       immediate: true
@@ -150,6 +159,18 @@ export default {
   },
   // mounted () {},
   methods: {
+    showFreqChartLoading () {
+      this.$refs.frequencyChart.chartInstance.showLoading(this.loadingStyle);
+    },
+    showTimeChartLoading () {
+      this.$refs.timeChart.chartInstance.showLoading(this.loadingStyle);
+    },
+    hideFreqChartLoading () {
+      this.$refs.frequencyChart.chartInstance.hideLoading();
+    },
+    hideTimeChartLoading () {
+      this.$refs.timeChart.chartInstance.hideLoading();
+    },
     getChartData () {
       const reqFreq = stationApi.getErrorFrequency.byType({
         startDate: this.startDate,
@@ -169,17 +190,21 @@ export default {
         if (freqData.success) {
           this.frequencyChartData = freqData.data;
           this.$nextTick(() => {
+            this.hideFreqChartLoading();
             this.$refs.frequencyChart.update();
           });
         } else {
+          this.hideFreqChartLoading();
           console.log('获取异常类型次数失败！');
         }
         if (timeData.success) {
           this.timeChartData = timeData.data;
           this.$nextTick(() => {
+            this.hideTimeChartLoading();
             this.$refs.timeChart.update();
           });
         } else {
+          this.hideTimeChartLoading();
           console.log('获取异常类型时间失败！');
         }
       }));
