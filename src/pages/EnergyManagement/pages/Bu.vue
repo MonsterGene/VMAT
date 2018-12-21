@@ -295,23 +295,24 @@ export default {
       return chartOpts;
     },
     getChart2 () {
-      // let params = {
-      //   startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-      //   endTime: moment().format('YYYY-MM-DD'),
-      //   building: 'E5'
-      // };
-      // let data = new FormData();
-      // Object.keys(params).forEach(key => {
-      //   data.append(key, params[key]);
-      // });
-      // buApi.chart1Data(data).then(res => {
-      //   const data = res.data;
-      //   const chartOption = this.chart2Option(chartData);
-      //   this.chart2.setOption(chartOption);
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E5'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      buApi.chart1Data(data).then(res => {
+        const data = res.data;
+        const chartData = {};
+        const chartOption = this.chart2Option(chartData);
+        this.chart2.setOption(chartOption);
       //   // this.chart2.on('click', params => {
       //   //   this.$router.push('/energy_management/bu');
       //   // });
-      // });
+      });
     },
     chart3Option (data) { 
       const cData = {};

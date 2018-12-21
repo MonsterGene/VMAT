@@ -460,7 +460,11 @@ export default {
         const chartOption = this.chart2Option(chartData);
         this.chart2.setOption(chartOption);
         this.chart2.on('click', params => {
-          this.$router.push('/energy_management/floors');
+          if (this.$route.path.indexOf('/public') !== 0) {
+            this.$router.push('/energy_management/floors');
+          } else {
+            this.$router.push('/public/energy_management/floors');
+          }
         });
       });
     },
