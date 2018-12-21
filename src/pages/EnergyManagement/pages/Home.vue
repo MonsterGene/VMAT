@@ -160,6 +160,23 @@ export default {
     this.getChart4();
     // 下面第4个图
     this.getChart5();
+    const params = new FormData();
+    const data = {
+      startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+      endTime: moment().format('YYYY-MM-DD'),
+      building: 'E515'
+    };
+    Object.keys(data).forEach(key => {
+      params.append(key, data[key]);
+    });
+    
+    homeApi.homeFistChart(params).then(res => {
+      console.log(res);
+      const data = res.data;
+      if (data.success === 'true') {
+        this.energyData = data.data.epnet;
+      }
+    });
 
   },
   methods: {
@@ -720,25 +737,6 @@ export default {
         this.chart5.setOption(chartOption);
       });
     }
-  },
-  mounted () {
-    const params = new FormData();
-    const data = {
-      startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-      endTime: moment().format('YYYY-MM-DD'),
-      building: 'E515'
-    };
-    Object.keys(data).forEach(key => {
-      params.append(key, data[key]);
-    });
-    
-    homeApi.homeFistChart(params).then(res => {
-      console.log(res);
-      const data = res.data;
-      if (data.success === 'true') {
-        this.energyData = data.data.epnet;
-      }
-    });
   }
 };
 </script>
