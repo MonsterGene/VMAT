@@ -14,6 +14,30 @@ const router = isPublic => ({
         /* webpackMode: "lazy-once" */
         `./pages/Home.vue`
       )
+    },
+    {
+      path: 'floors',
+      meta: {
+        breadcrumb: false,
+        public: isPublic ? true : false
+      },
+      component: () => import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `./pages/Floors.vue`
+      )
+    },
+    {
+      path: 'bu',
+      meta: {
+        breadcrumb: false,
+        public: isPublic ? true : false
+      },
+      component: () => import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `./pages/Bu.vue`
+      )
     }
   ]
 });
