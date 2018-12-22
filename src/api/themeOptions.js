@@ -1,8 +1,20 @@
+/**
+ * name: String 主题名称
+ * isDark: Boolean 主题默认是亮色还是黑暗色
+ * lightSupport: String([light, dark, both]) 主题所支持的模式
+ * colors: 各种颜色值：参照vuetify中自定义主题的配置方法
+ *    另： sideNav： logo 背景色
+ *         mainNav： 头部工具栏背景色
+ *         sideMenu: 左边菜单栏背景色
+ *         app: 最底层的底色
+ *         header: 用作标题的背景色
+ *         content： 用作内文的背景色
+ */
 const themeList = [
   {
     name: 'jean-black',
     isDark: true,
-    darkSettable: false,
+    lightSupport: 'dark',
     colors: {
       primary: '#24262c',
       sideNav: '#24262c',
@@ -16,7 +28,7 @@ const themeList = [
   {
     name: 'blue',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#2196F3',
       sideNav: '#2196F3',
@@ -27,7 +39,7 @@ const themeList = [
   {
     name: 'teal',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#009688',
       sideNav: '#009688',
@@ -38,7 +50,7 @@ const themeList = [
   {
     name: 'red',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#F44336',
       sideNav: '#F44336',
@@ -49,7 +61,7 @@ const themeList = [
   {
     name: 'orange',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#FF9800',
       sideNav: '#FF9800',
@@ -60,7 +72,7 @@ const themeList = [
   {
     name: 'purple',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#9C27B0',
       sideNav: '#9C27B0',
@@ -71,7 +83,7 @@ const themeList = [
   {
     name: 'indigo',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#3F51B5',
       sideNav: '#3F51B5',
@@ -82,7 +94,7 @@ const themeList = [
   {
     name: 'cyan',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#00BCD4',
       sideNav: '#00BCD4',
@@ -93,7 +105,7 @@ const themeList = [
   {
     name: 'pink',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#E91E63',
       sideNav: '#E91E63',
@@ -104,7 +116,7 @@ const themeList = [
   {
     name: 'green',
     isDark: false,
-    darkSettable: false,
+    lightSupport: 'light',
     colors: {
       primary: '#4CAF50',
       sideNav: '#4CAF50',

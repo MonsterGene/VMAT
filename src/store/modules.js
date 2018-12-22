@@ -1,6 +1,6 @@
 const store = {
   state: {
-    theme: {}
+    theme: ''
   },
   mutations: {
     'SET_THEME': (state, theme) => {
