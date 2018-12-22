@@ -74,26 +74,27 @@ export default {
     }
   },
   watch: {
-    'theme.name' (val) {
-      console.log('theme.name changed!');
-      this.themeColor = val;
+    'theme': {
+      handler (theme) {
+        console.log('theme changed!');
+        // this.setTheme(theme);
+        if (theme && theme.name) {
+          console.log(theme.name);
+          this.themeColor = theme.name;
+          this.darkTheme = theme.isDark;
+        }
+      },
+      immediate: true
     },
     themeColor: {
-      handler (val) {
-        const theme = this.themeColorOptions.filter(v => v.name === val)[0];
-        this.$vuetify.theme = Object.assign(JSON.parse(JSON.stringify(this.defaultTheme)), theme.colors);
-        this.darkTheme = theme.isDark;
-        this.setTheme(theme);
+      handler (themeName) {
+        this.refreshTheme(themeName);
       },
-      immediate: true
+      // immediate: true
     },
-    darkTheme: {
-      handler (val) {
-        this.$nextTick(() => {
-          this.$vuetify.dark = val;
-        });
-      },
-      immediate: true
+    darkTheme (isDark) {
+      this.theme.isDark = isDark;
+      this.refreshTheme(this.theme);
     }
   }
 };

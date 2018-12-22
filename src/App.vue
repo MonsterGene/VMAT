@@ -41,11 +41,13 @@
       </v-app>
     </template>
     <template v-else>
-      <transition>
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
-      </transition>
+      <div>
+        <transition>
+          <keep-alive>
+            <router-view></router-view>
+          </keep-alive>
+        </transition>
+      </div>
     </template>
     <v-snackbar
       :timeout="3000"
@@ -58,7 +60,7 @@
       <v-btn dark flat @click.native="snackbar.show = false" icon> 
         <v-icon>close</v-icon>
       </v-btn>
-    </v-snackbar>    
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -69,6 +71,8 @@ import PageHeader from '@/components/PageHeader';
 import menu from '@/api/menus/menu';
 import ThemeSettings from '@/components/ThemeSettings';
 import AppEvents from  './event';
+import { globalMixin } from './util/mixins/globalMixins';
+
 export default {
   components: {
     AppDrawer,
@@ -77,6 +81,7 @@ export default {
     PageHeader,
     ThemeSettings
   },
+  mixins: [globalMixin],
   data: () => ({
     expanded: true,
     rightDrawer: false,
@@ -86,9 +91,18 @@ export default {
       color: '',
     }
   }),
-
-  computed: {
-
+  computed: {},
+  watch: {
+    $route: {
+      handler (r) {
+        console.log(r);
+        console.log(this.$vuetify);
+        if (r.meta && r.meta.theme) {
+          this.refreshTheme(r.meta.theme);
+        }
+      },
+      immediate: true
+    }
   },
 
   created () {

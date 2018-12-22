@@ -8,7 +8,7 @@
     v-model="drawer"
     :stateless="true"
     width="260"
-    :style="{background: $vuetify.dark && $vuetify.theme.sideMenu || undefined}"
+    :style="sideToolbarColor"
     >
     <!-- 顶部logo title -->
     <v-toolbar :color="$vuetify.theme.sideNav">
@@ -117,7 +117,26 @@ export default {
     },
 
     sideToolbarColor () {
-      return this.$vuetify.options.extra.sideNav;
+      const sideMenu = this.$vuetify.theme.sideMenu;
+      if (typeof sideMenu === 'string') {
+        if (this.theme && this.theme.lightSupport === 'light' && !this.$vuetify.dark) {
+          return { background: sideMenu };
+        } else if (this.theme && this.theme.lightSupport === 'dark' && this.$vuetify.dark) {
+          return { background: sideMenu };
+        } else {
+          return {};
+        }
+      } else if (sideMenu && sideMenu.dark || sideMenu.light) {
+        if (this.$vuetify.dark && sideMenu.dark) {
+          return { background: sideMenu.dark };
+        } else if (this.$vuetify.light && sideMenu.light) {
+          return { background: sideMenu.light };
+        } else {
+          return {};
+        }
+      } else {
+        return {};
+      }
     }    
   },
   created () {
