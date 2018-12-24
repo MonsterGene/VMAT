@@ -106,7 +106,7 @@ export default {
     menus: menu,
     scrollSettings: {
       maxScrollbarLength: 160
-    }    
+    }
   }),
   computed: {
     computeGroupActive () {
@@ -126,7 +126,7 @@ export default {
         } else {
           return {};
         }
-      } else if (sideMenu && sideMenu.dark || sideMenu.light) {
+      } else if (sideMenu && (sideMenu.dark || sideMenu.light)) {
         if (this.$vuetify.dark && sideMenu.dark) {
           return { background: sideMenu.dark };
         } else if (this.$vuetify.light && sideMenu.light) {

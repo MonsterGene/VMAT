@@ -95,8 +95,8 @@ export default {
   watch: {
     $route: {
       handler (r) {
-        console.log(r);
-        console.log(this.$vuetify);
+        // console.log(r);
+        // console.log(this.$vuetify);
         if (r.meta && r.meta.theme) {
           this.refreshTheme(r.meta.theme);
         }
