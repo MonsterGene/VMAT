@@ -19,7 +19,10 @@
     </v-flex>
 
     <v-flex lg12 sm12 xs12>
-      <run-time :station-name="$route.params.stationName"></run-time>
+      <run-time
+        :station-name="runtime.stationName"
+        :line-id="runtime.lineId"
+        :station-id="runtime.stationId"></run-time>
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <error-frequency-and-time-by-day
@@ -110,6 +113,11 @@ export default {
       errorFreqAndTimeByDay: {
         startDate: moment().subtract('months', 1).format('YYYY-MM-DD'),
         endDate: moment().format('YYYY-MM-DD'),
+        lineId,
+        stationId
+      },
+      runtime: {
+        stationName: this.$route.params.stationName,
         lineId,
         stationId
       },

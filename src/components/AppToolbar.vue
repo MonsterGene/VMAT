@@ -50,7 +50,6 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-      
   </v-toolbar>
 </template>
 <script>
