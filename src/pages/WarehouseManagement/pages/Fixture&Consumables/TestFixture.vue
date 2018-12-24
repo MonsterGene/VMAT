@@ -1,14 +1,25 @@
 <template>
 <v-container grid-list-xl fluid>
-    <h1>頁面開發中</h1>
+    <v-widget title="Test治具管理" :content-bg="$vuetify.theme.primary">
+        <div slot="widget-content">
+            
+        </div>
+    </v-widget>
 </v-container>
 </template>
 
 <script>
-    
+import VWidget from '@/components/VWidget';
+
+export default {
+  components: {
+    VWidget
+  }
+};
+
 </script>
 
-<style scoped>
+<style lang='stylus' scoped>
 
 </style>
 

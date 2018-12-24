@@ -1,9 +1,24 @@
 <template>
 <v-container grid-list-xl fluid>
-  <v-widget title="Test治具管理" :content-bg="$vuetify.theme.primary">
-    <v-card>
+    <v-widget title="选择仓库" contend-bg="$vuetify.theme.primary">
+        <v-card dark>
+        <v-layout row>
+            <v-flex lg4 sm4 xs4>
+                <v-select :items="items_BU" v-model="BU" label="BU"></v-select>
+            </v-flex>
+            <v-flex lg4 sm4 xs4>
+                <v-select :items="items_Building" v-model="Building" label="Building"></v-select>
+            </v-flex>
+            <v-flex lg4 sm4 xs4>
+                <v-select :items="items_Floor" v-model="Floor" label="Floor"></v-select>
+            </v-flex>
+        </v-layout>
+        </v-card>
+    </v-widget>
+    <v-widget title="Test治具管理" :content-bg="$vuetify.theme.primary">
+    <v-card dark>
         <v-card-title>
-        線材管理
+        信息總覽
         <v-spacer></v-spacer>
         <v-text-field
             v-model="search"
@@ -85,6 +100,28 @@ export default {
   data: () => ({
     search: '',
     dialog: false,
+    items_BU: [
+      { text: 'Manufacturer Ⅰ', value: 'M1' },
+      { text: 'Manufacturer Ⅱ', value: 'M2' },
+      { text: 'Manufacturer Ⅲ', value: 'M3' },
+      { text: 'Manufacturer Ⅴ', value: 'M5' },
+      { text: 'Manufacturer Ⅵ', value: 'M6' },
+      { text: 'Manufacturer Ⅶ', value: 'M7' },
+      { text: 'Manufacturer Ⅷ', value: 'M8' }
+    ],
+    items_Building: [
+      { text: 'D9', value: 'D9' },
+      { text: 'D10', value: 'D10' },
+      { text: 'E5', value: 'E5' },
+      { text: 'E6', value: 'E6' },
+      { text: 'F21', value: 'F21' }
+    ],
+    items_Floor: [
+      { text: 'Floor 1', value: 'F1' },
+      { text: 'Floor 2', value: 'F2' },
+      { text: 'Floor 3', value: 'F3' },
+      { text: 'Floor 4', value: 'F4' }
+    ],
     headers: [
       {
         text: '線材編號',
@@ -136,27 +173,9 @@ export default {
       note: ''
     }
   }),
-
-  componnets: {
-    VWidget
-  },
-
-  // computed: {
-  //   formTitle () {
-  //     return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
-  //   }
+  // components: {
+  //   VWidget
   // },
-
-  // watch: {
-  //   dialog (val) {
-  //     val || this.close();
-  //   }
-  // },
-
-  // created () {
-  //   this.initialize();
-  // },
-
   methods: {
     initialize () {
       this.desserts = [
@@ -267,40 +286,8 @@ export default {
         }, 
       ];
     },
-
-    // editeItem (item) {
-    //   this.editedIndex = this.desserts.indexOf(item);
-    //   this.editeItem = Object.assign({}, item);
-    //   this.dialog = true;
-    // },
-
-    // deleteItem (item) {
-    //   const index = this.desserts.indexOf(item);
-    //   confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
-    // },
-
-    // close () {
-    //   this.dialog = false;
-    //   setTimeout(() => {
-    //     this.editedItem = Object.assign({}, this.defaultItem);
-    //     this.editedIndex = -1;
-    //   }, 300);
-    // },
-
-    // save () {
-    //   if (this.editedIndex > -1) {
-    //     Object.assign(this.desserts[this.editedIndex], this.editedItem);
-    //   } else {
-    //     this.desserts.push(this.editedItem);
-    //   }
-    //   this.close();
-    // }
   },
 }; 
-
 </script>
-
 <style scoped>
-
 </style>
-

@@ -8,12 +8,12 @@
     hide-selected
     label="Search for an option"
     multiple
+    clearable
     small-chips
     solo
-    clearable
-    counter="21"
-    hide-details
-    class="box"
+    @blur="restore(show)"
+    @focus="change(show)"
+    @click="change(show)"
   >
     <template slot="no-data">
       <v-list-tile>
@@ -30,22 +30,39 @@
     <template
       v-if="item === Object(item)"
       slot="selection"
-      slot-scope="{ item, parent, selected }"
+      slot-scope="{ item, parent, selected, index }"
     >
-      <v-chip
-        :color="`${item.color} lighten-3`"
-        :selected="selected"
-        label
-        small
+      <div v-if="show === 1">
+        <v-chip
+          :color="`${item.color} lighten-3`"
+          :selected="selected"
+          label
+          small
       >
         <span class="pr-2">
           {{ item.text }}
         </span>
         <v-icon
+            small
+            @click="parent.selectItem(item)"
+          >close</v-icon>
+        </v-chip>
+      </div>
+      <div v-if="show === 0">
+        <v-chip 
+          v-if="index === 0"
+          :color="`${item.color} lighten-3`"
           small
-          @click="parent.selectItem(item)"
-        >close</v-icon>
-      </v-chip>
+        > 
+          <span>{{ item.text }}</span>
+        </v-chip>
+        <span
+          v-if="index === 1"
+          class="grey--text caption"
+        >(+{{ model.length - 1 }} others)</span>
+      </div>
+      
+      
     </template>
     <template
       slot="item"
@@ -84,17 +101,16 @@
     </template>
   </v-combobox>
 </template>
-
 <script>
 export default {
   data: () => ({
+    show: 0,
     activator: null,
     attach: null,
     colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
     editing: null,
     index: -1,
     items: [
-      { header: 'Select an option or create one' },
       { text: '費用來源', color: 'blue' },
       { text: '申請單號', color: 'red' },
       { text: '廠商', color: 'blue' },
@@ -113,38 +129,6 @@ export default {
       { text: '領用人/負責人', color: 'blue' },
       { text: '樓層', color: 'blue' },
       { text: '存放位置', color: 'blue' },
-      { text: 'Chamber尺寸(內部)', color: 'blue' },
-      { text: 'Chamber尺寸(外部)', color: 'blue' },
-      { text: 'Chamber測試溫度範圍', color: 'blue' },
-      { text: '處理發熱能力', color: 'blue' },
-      { text: '電源', color: 'blue' },
-      { text: '功率', color: 'blue' },
-      { text: '用水規格', color: 'blue' },
-      { text: '使用狀態', color: 'blue' },
-      { text: '濕氣規格', color: 'blue' },
-      { text: '用氣規格', color: 'blue' },
-      { text: '測試CELL數量', color: 'blue' },
-      { text: 'UUT功率數量', color: 'blue' },
-      { text: 'UUT功率規格', color: 'blue' },
-      { text: '熱/冷命令', color: 'blue' },
-      { text: '開始/結束命令', color: 'blue' },
-      { text: '保修截止日期', color: 'blue' },
-      { text: '故障時間', color: 'blue' },
-      { text: '故障現象', color: 'blue' },
-      { text: '故障原因', color: 'blue' },
-      { text: '維修內容', color: 'blue' },
-      { text: '維修人員', color: 'blue' },
-      { text: '備註', color: 'blue' },
-      { text: '申請時間', color: 'blue' },
-      { text: 'Project Name(機種)', color: 'blue' },
-      { text: '需求人', color: 'blue' },
-      { text: '物品名稱', color: 'blue' },
-      { text: '型號/規格', color: 'blue' },
-      { text: '物品數量', color: 'blue' },
-      { text: '單價', color: 'blue' },
-      { text: '使用總金額', color: 'blue' },
-      { text: 'PPV/NRE', color: 'blue' },
-      { text: '入庫管制編號條碼', color: 'blue' },
     ],
     nonce: 1,
     menu: false,
@@ -176,6 +160,14 @@ export default {
   },
 
   methods: {
+    change (show) {
+      this.show = 1;
+      return this.show;
+    },
+    restore (show) {
+      this.show = 0;
+      return this.show;
+    },
     edit (index, item) {
       if (!this.editing) {
         this.editing = item;
@@ -203,7 +195,3 @@ export default {
   }
 };
 </script>
-<style lang='stylus' scoped>
-.box
-  font-size: 1px;
-</style>
