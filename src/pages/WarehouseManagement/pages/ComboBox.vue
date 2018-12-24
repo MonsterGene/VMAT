@@ -1,19 +1,13 @@
 <template>
   <v-combobox
-    v-model="model"
     :filter="filter"
     :hide-no-data="!search"
     :items="items"
     :search-input.sync="search"
-    hide-selected
     label="Search for an option"
     multiple
     small-chips
     solo
-    clearable
-    counter="21"
-    hide-details
-    class="box"
   >
     <template slot="no-data">
       <v-list-tile>
@@ -95,60 +89,23 @@ export default {
     index: -1,
     items: [
       { header: 'Select an option or create one' },
-      { text: '費用來源', color: 'blue' },
-      { text: '申請單號', color: 'red' },
-      { text: '廠商', color: 'blue' },
-      { text: '圖片', color: 'blue' },
-      { text: 'S/N', color: 'blue' },
-      { text: 'Cisco編號', color: 'blue' },
-      { text: '財產編號', color: 'blue' },
-      { text: '管制編號', color: 'blue' },
-      { text: '歸檔號', color: 'blue' },
-      { text: '關務編號', color: 'blue' },
-      { text: '校驗管制編號', color: 'blue' },
-      { text: '數量', color: 'blue' },
-      { text: '到貨時間', color: 'blue' },
-      { text: '驗收人', color: 'blue' },
-      { text: '領用時間', color: 'blue' },
-      { text: '領用人/負責人', color: 'blue' },
-      { text: '樓層', color: 'blue' },
-      { text: '存放位置', color: 'blue' },
-      { text: 'Chamber尺寸(內部)', color: 'blue' },
-      { text: 'Chamber尺寸(外部)', color: 'blue' },
-      { text: 'Chamber測試溫度範圍', color: 'blue' },
-      { text: '處理發熱能力', color: 'blue' },
-      { text: '電源', color: 'blue' },
-      { text: '功率', color: 'blue' },
-      { text: '用水規格', color: 'blue' },
-      { text: '使用狀態', color: 'blue' },
-      { text: '濕氣規格', color: 'blue' },
-      { text: '用氣規格', color: 'blue' },
-      { text: '測試CELL數量', color: 'blue' },
-      { text: 'UUT功率數量', color: 'blue' },
-      { text: 'UUT功率規格', color: 'blue' },
-      { text: '熱/冷命令', color: 'blue' },
-      { text: '開始/結束命令', color: 'blue' },
-      { text: '保修截止日期', color: 'blue' },
-      { text: '故障時間', color: 'blue' },
-      { text: '故障現象', color: 'blue' },
-      { text: '故障原因', color: 'blue' },
-      { text: '維修內容', color: 'blue' },
-      { text: '維修人員', color: 'blue' },
-      { text: '備註', color: 'blue' },
-      { text: '申請時間', color: 'blue' },
-      { text: 'Project Name(機種)', color: 'blue' },
-      { text: '需求人', color: 'blue' },
-      { text: '物品名稱', color: 'blue' },
-      { text: '型號/規格', color: 'blue' },
-      { text: '物品數量', color: 'blue' },
-      { text: '單價', color: 'blue' },
-      { text: '使用總金額', color: 'blue' },
-      { text: 'PPV/NRE', color: 'blue' },
-      { text: '入庫管制編號條碼', color: 'blue' },
+      {
+        text: 'Foo',
+        color: 'blue'
+      },
+      {
+        text: 'Bar',
+        color: 'red'
+      }
     ],
     nonce: 1,
     menu: false,
-    model: null,
+    model: [
+      {
+        text: 'Foo',
+        color: 'blue'
+      }
+    ],
     x: 0,
     search: null,
     y: 0
@@ -203,7 +160,3 @@ export default {
   }
 };
 </script>
-<style lang='stylus' scoped>
-.box
-  font-size: 1px;
-</style>

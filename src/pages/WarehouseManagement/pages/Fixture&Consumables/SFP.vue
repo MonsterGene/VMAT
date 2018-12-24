@@ -215,21 +215,21 @@ export default {
     }
   }),
 
-  computed: {
-    formTitle () {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
-    }
-  },
+  // computed: {
+  //   formTitle () {
+  //     return this.editedIndex === -1 ? 'New Item' : 'Edit Item';
+  //   }
+  // },
 
-  watch: {
-    dialog (val) {
-      val || this.close();
-    }
-  },
+  // watch: {
+  //   dialog (val) {
+  //     val || this.close();
+  //   }
+  // },
 
-  created () {
-    this.initialize();
-  },
+  // created () {
+  //   this.initialize();
+  // },
 
   methods: {
     initialize () {
@@ -332,33 +332,33 @@ export default {
       ];
     },
 
-    editeItem (item) {
-      this.editedIndex = this.desserts.indexOf(item);
-      this.editeItem = Object.assign({}, item);
-      this.dialog = true;
-    },
+    // editeItem (item) {
+    //   this.editedIndex = this.desserts.indexOf(item);
+    //   this.editeItem = Object.assign({}, item);
+    //   this.dialog = true;
+    // },
 
-    deleteItem (item) {
-      const index = this.desserts.indexOf(item);
-      confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
-    },
+    // deleteItem (item) {
+    //   const index = this.desserts.indexOf(item);
+    //   confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1);
+    // },
 
-    close () {
-      this.dialog = false;
-      setTimeout(() => {
-        this.editedItem = Object.assign({}, this.defaultItem);
-        this.editedIndex = -1;
-      }, 300);
-    },
+    // close () {
+    //   this.dialog = false;
+    //   setTimeout(() => {
+    //     this.editedItem = Object.assign({}, this.defaultItem);
+    //     this.editedIndex = -1;
+    //   }, 300);
+    // },
 
-    save () {
-      if (this.editedIndex > -1) {
-        Object.assign(this.desserts[this.editedIndex], this.editedItem);
-      } else {
-        this.desserts.push(this.editedItem);
-      }
-      this.close();
-    }
+    // save () {
+    //   if (this.editedIndex > -1) {
+    //     Object.assign(this.desserts[this.editedIndex], this.editedItem);
+    //   } else {
+    //     this.desserts.push(this.editedItem);
+    //   }
+    //   this.close();
+    // }
   },
 };
 
