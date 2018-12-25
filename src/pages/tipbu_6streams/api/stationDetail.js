@@ -32,6 +32,14 @@ const getUtilizationRate = {
   }
 };
 
+/**
+ * 运行时间
+ * params: {startTime: Date String, endTime: Date String, lineID: Int, areaID: Int}
+ */
+const getRunTime = (params) => {
+  return axios.post('/GetRunTime/GetRunTimeByDay', params).catch(catchMethod);
+};
+
 /** 
  * 异常次数&时间
  * params: {startDate: Date, endDate: Date, areaid: Int, lineid: Int}
@@ -87,6 +95,7 @@ const errorSolution = {
 export default {
   getStationOutput,
   getUtilizationRate,
+  getRunTime,
   getErrorFrequencyAndTime,
   getErrorFrequency,
   getErrorTime,

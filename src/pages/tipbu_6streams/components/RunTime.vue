@@ -3,9 +3,10 @@
   <div slot="widget-header-action" style="width:380px;display:flex;height:100%">
     <div style="width:120px;">
       <v-select
-        :items="['A01', 'A02', 'A03']"
+        :items="lineList"
         label="线别选择"
         solo
+        v-model="lineId"
       ></v-select>
     </div>
     <v-menu
@@ -46,13 +47,9 @@
       ref="runtime"
       :path-option="[
         ['dataset.source', chartData],
-        ['color', ['#454998', '#914d97', '#dc4b98', '#edab82']],
+        ['color', ['#54BE35', '#4496EC', '#FFC000']],//run,standy,error '#dc4b98',unready=>run,wait,
         ['legend.show', true],
-        ['legend.selected', {
-          'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
-          'Run 2': false, 'Standy 2': false, 'Error 2': false, 'Unready 2': false,
-          'Run 3': false, 'Standy 3': false, 'Error 3': false, 'Unready 3': false
-        }],
+        //['legend.selected', {}],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
@@ -84,13 +81,6 @@
         ['series[2].smooth', true],
         ['series[2].stack', 1],
         ['series[2].label.position', 'top'],
-
-        ['series[3].smooth', true],
-        ['series[3].type', 'bar'],
-        ['series[3].label.show', true],
-        ['series[3].stack', 1],
-        ['series[3].label.position', 'top'],
-    
       ]"
       height="400px"
       width="100%"
@@ -102,7 +92,7 @@
 
 <script>
 import moment from 'moment';
-import API from '../api/chart';
+import { stationApi } from '../api';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 
@@ -111,13 +101,17 @@ export default {
     EChart,
     VWidget
   },
-  props: ['stationName'],
+  props: ['stationName', 'lineId', 'stationId'],
   data () {
     return {
       startDate: moment().subtract('months', 1).format('YYYY-MM-DD'),
       endDate: moment().format('YYYY-MM-DD'),
-      API,
-      chartData: { date: [] }
+      chartData: { date: [] },
+      lineList: [
+        { text: '组装1线', value: 1 },
+        { text: '组装2线', value: 2 },
+        { text: '组装3线', value: 3 }
+      ]
     };
   },
   watch: {
@@ -126,17 +120,30 @@ export default {
     },
     endDate () {
       this.getChartData();
-    }
+    },
   },
   mounted () {
     this.getChartData();
   },
   methods: {
     getChartData () {
-      console.log(API.dailyData2(this.startDate, this.endDate));
-      this.chartData = API.dailyData2(this.startDate, this.endDate);
-      this.$nextTick(() => {
-        this.$refs.runtime.update();
+      // console.log(API.dailyData2(this.startDate, this.endDate));
+      stationApi.getRunTime({
+        startTime: this.startDate,
+        endTime: this.endDate,
+        lineID: this.lineId,
+        areaID: this.stationId
+      }).then(res => {
+        const data = res.data;
+        console.log(data);
+        if (data.success) {
+          this.chartData = data.data;
+          this.$nextTick(() => {
+            this.$refs.runtime.update();
+          });
+        } else {
+          console.log('Get runtime data fail!');
+        }
       });
     }
   },
