@@ -26,7 +26,83 @@
     <v-layout
       row
       wrap
+      justify-end
+      align-center
     >
+    <v-flex md2>
+      <v-menu
+        ref="menu1"
+        :close-on-content-click="false"
+        v-model="menu1"
+        :nudge-right="40"
+        lazy
+        transition="scale-transition"
+        offset-y
+        full-width
+        max-width="290px"
+        min-width="290px"
+      >
+        <v-text-field
+          slot="activator"
+          v-model="dateFormatted"
+          label="Start"
+          persistent-hint
+          prepend-icon="event"
+          @blur="date = parseDate(dateFormatted)"
+        ></v-text-field>
+        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+      </v-menu>
+    </v-flex>
+    <v-flex md2>
+      <v-menu
+        ref="menu2"
+        :close-on-content-click="false"
+        v-model="menu2"
+        :nudge-right="40"
+        lazy
+        transition="scale-transition"
+        offset-y
+        full-width
+        max-width="290px"
+        min-width="290px"
+      >
+        <v-text-field
+          slot="activator"
+          v-model="dateFormatted"
+          label="End"
+          persistent-hint
+          @blur="date = parseDate(dateFormatted)"
+        ></v-text-field>
+        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+      </v-menu>
+    </v-flex>
+    <v-flex md1 d-flex>
+      <v-select
+        :items="items4"
+        label="班别："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md2 class="py-2">
+      <v-btn-toggle v-model="text">
+        <v-btn flat value="left">
+          日
+        </v-btn>
+        <v-btn flat value="center">
+          月
+        </v-btn>
+        <v-btn flat value="right">
+          季度
+        </v-btn>
+        <v-btn flat value="justify">
+          年
+        </v-btn>
+      </v-btn-toggle>
+    </v-flex>
+    
+     <div>
+        <v-btn small color="primary">查询</v-btn>
+      </div>
       <v-flex md8>
         <img
           src="../static/pics/sz_map.jpg"
@@ -220,32 +296,32 @@ export default {
                   type: 'radial',
                   colorStops: [{
                     offset: 0,
-                    color: '#77C664'
+                    color: 'rgb(189,249,219)'
                   },
 
                   {
                     offset: 0.2,
-                    color: '#2CB7C7'
+                    color: 'rgb(173,242,202)'
                   },
 
                   {
                     offset: 0.4,
-                    color: '#1DB2DD'
+                    color: 'rgb(205,226,181)'
                   },
 
                   {
                     offset: 0.6,
-                    color: '#2D89ED'
+                    color: 'rgb(254,191,149)'
                   },
 
                   {
                     offset: 0.8,
-                    color: '#7765B4'
+                    color: 'rgb(254,161,142)'
                   },
 
                   {
                     offset: 1,
-                    color: '#EB3457'
+                    color: 'rgb(255,173,168)'
                   }
                   ],
                   globalCoord: false // 缺省为 false
@@ -285,32 +361,32 @@ export default {
                     new echarts.graphic.LinearGradient(0, 0, 1, 0, [
                       {
                         offset: 0,
-                        color: '#77C664'
+                        color: 'rgb(189,249,219)'
                       },
 
                       {
                         offset: 0.2,
-                        color: '#2CB7C7'
+                        color: 'rgb(173,242,202)'
                       },
 
                       {
                         offset: 0.4,
-                        color: '#1DB2DD'
+                        color: 'rgb(205,226,181)'
                       },
 
                       {
                         offset: 0.6,
-                        color: '#2D89ED'
+                        color: 'rgb(254,191,149)'
                       },
 
                       {
                         offset: 0.8,
-                        color: '#7765B4'
+                        color: 'rgb(254,161,142)'
                       },
 
                       {
                         offset: 1,
-                        color: '#EB3457'
+                        color: 'rgb(255,173,168)'
                       }
                     ])
                   ]
@@ -370,6 +446,7 @@ export default {
     chart2Option (data) {
       const chartOpts = {
         dataset: { source: data },
+        color: ['rgb(228,228,228)', 'rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)'],
         legend: {
           show: true
         },
@@ -389,7 +466,7 @@ export default {
           left: '3%',
           right: '4%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         }, 
         xAxis: [{
           type: 'category',
@@ -423,7 +500,7 @@ export default {
               allData[index] += val;
             } else {
               allData[index] = val;
-            }                
+            }
           });
         }
       });
@@ -455,7 +532,7 @@ export default {
           });
         });
 
-        console.log(chartData);
+        // console.log(chartData);
 
         const chartOption = this.chart2Option(chartData);
         this.chart2.setOption(chartOption);
@@ -477,6 +554,7 @@ export default {
         title: {
           x: 'center'
         },
+        color: ['rgb(228,228,228)', 'rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)'],
         legend: { show: true },
         tooltip: {
           trigger: 'item',
@@ -529,13 +607,7 @@ export default {
               opacity: 0
             }
           },
-          formatter: function (prams) {
-            if (prams[0].data === 0) {
-              return '合格率：0%';
-            } else {
-              return '合格率：' + prams[0].data + '%';
-            }
-          }
+          formatter: '{b} : {c} KWH'
         },
         legend: {
           data: ['直接访问', '背景'],
@@ -600,15 +672,15 @@ export default {
             color: new echarts.graphic.LinearGradient(
               0, 0, 0, 1, [{
                 offset: 0,
-                color: '#0286ff'
+                color: 'rgb(255,108,105)'
               },
               {
                 offset: 0.5,
-                color: '#027eff'
+                color: 'rgb(255,193,147)'
               },
               {
                 offset: 1,
-                color: '#00feff'
+                color: 'rgb(255,249,153)'
               }
               ]
             )
@@ -677,21 +749,20 @@ export default {
         type: 'line',
         smooth: true, 
         symbolSize: 0,
-    
         lineStyle: {
           normal: {
-            color: '#3deaff'   // 线条颜色
-          }
+            color: 'rgb(138,167,246)'
+          },
         },
         areaStyle: { // 区域填充样式
           normal: {
           // 线性渐变，前4个参数分别是x0,y0,x2,y2(范围0~1);相当于图形包围盒中的百分比。如果最后一个参数是‘true’，则该四个值是绝对像素位置。
             color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: 'rgba(61,234,255, 0.9) ' }, 
-              { offset: 0.7, color: 'rgba(61,234,255, 0) ' }
+              { offset: 0, color: 'rgba(125,158,246, 0.9) ' }, 
+              { offset: 0.7, color: 'rgba(237,241,251, 0) ' }
             ], false),
 
-            shadowColor: 'rgba(53,142,215, 0.9)', // 阴影颜色
+            shadowColor: 'rgba(125,158,246, 0.9)', // 阴影颜色
             shadowBlur: 20 // shadowBlur设图形阴影的模糊大小。配合shadowColor,shadowOffsetX/Y, 设置图形的阴影效果。
           }
         },
