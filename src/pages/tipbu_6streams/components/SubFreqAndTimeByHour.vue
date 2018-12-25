@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
 import commChartOpt from './commChartOpt';
