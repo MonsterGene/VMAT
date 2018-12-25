@@ -1,7 +1,7 @@
 <template>
   <div id="v-widget">
-    <v-card :dark="$vuetify.dark" :color="contentBg">
-      <v-toolbar :color="contentBg" flat dense card v-if="enableHeader">
+    <v-card :dark="isDark" :color="contentBg">
+      <v-toolbar :dark="headerDark" :color="headerBg" flat dense card v-if="enableHeader">
         <v-toolbar-title><h4>{{title}}</h4></v-toolbar-title>
         <v-spacer></v-spacer>
         <slot name="widget-header-action"></slot>
@@ -28,6 +28,14 @@ export default {
     contentBg: {
       type: String,
       default: 'white'
+    },
+    headerBg: {
+      type: String,
+      default: 'white'
+    },
+    headerDark: {
+      type: Boolean,
+      default: false
     }
   },
 
@@ -37,7 +45,13 @@ export default {
     };
   },
   computed: {
-
+    isDark () {
+      if (typeof this.dark !== 'undefined') {
+        return this.dark;
+      } else {
+        return this.$vuetify.dark;
+      }
+    }
   },  
 };
 </script>
