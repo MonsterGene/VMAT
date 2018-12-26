@@ -24,6 +24,11 @@ export default {
       ],
       currentType: 1
     };
+  },
+  methods: {
+    click (type) {
+      this.currentType = type;
+    }
   }
 };
 </script>

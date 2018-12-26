@@ -2,143 +2,116 @@
   <v-container
     grid-list-xl
     fluid
+    v-resize="onWindowResize"
   >
-    <div
-      id="header"
-      class="primary"
-    >
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="电"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="水"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="气"
-      />
-    </div>
+    <source-type-bar></source-type-bar>
     <v-layout
       row
       wrap
       justify-end
       align-center
     >
-    <v-flex md2>
-      <v-menu
-        ref="menu1"
-        :close-on-content-click="false"
-        v-model="menu1"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        max-width="290px"
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="dateFormatted"
-          label="Start"
-          persistent-hint
-          prepend-icon="event"
-          @blur="date = parseDate(dateFormatted)"
-        ></v-text-field>
-        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-      </v-menu>
-    </v-flex>
-    <v-flex md2>
-      <v-menu
-        ref="menu2"
-        :close-on-content-click="false"
-        v-model="menu2"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        max-width="290px"
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="dateFormatted"
-          label="End"
-          persistent-hint
-          @blur="date = parseDate(dateFormatted)"
-        ></v-text-field>
-        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-      </v-menu>
-    </v-flex>
-    <v-flex md1 d-flex>
-      <v-select
-        :items="items4"
-        label="班别："
-        dense
-      ></v-select>
-    </v-flex>
-    <v-flex md2 class="py-2">
-      <v-btn-toggle v-model="text">
-        <v-btn flat value="left">
-          日
-        </v-btn>
-        <v-btn flat value="center">
-          月
-        </v-btn>
-        <v-btn flat value="right">
-          季度
-        </v-btn>
-        <v-btn flat value="justify">
-          年
-        </v-btn>
-      </v-btn-toggle>
-    </v-flex>
-    
-     <div>
+      <v-flex md2>
+        <v-menu
+          ref="menu1"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <v-text-field
+            slot="activator"
+            label="Start"
+            persistent-hint
+            prepend-icon="event"
+          ></v-text-field>
+          <v-date-picker no-title></v-date-picker>
+        </v-menu>
+      </v-flex>
+      <v-flex md2>
+        <v-menu
+          ref="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <v-text-field
+            slot="activator"
+            label="End"
+            persistent-hint
+          ></v-text-field>
+          <v-date-picker no-title></v-date-picker>
+        </v-menu>
+      </v-flex>
+      <v-flex md1 d-flex>
+        <v-select
+          label="班别："
+          dense
+        ></v-select>
+      </v-flex>
+      <v-flex md2 class="py-2">
+        <v-btn-toggle>
+          <v-btn flat value="left">
+            日
+          </v-btn>
+          <v-btn flat value="center">
+            月
+          </v-btn>
+          <v-btn flat value="right">
+            季度
+          </v-btn>
+          <v-btn flat value="justify">
+            年
+          </v-btn>
+        </v-btn-toggle>
+      </v-flex>
+      
+      <div>
         <v-btn small color="primary">查询</v-btn>
       </div>
+    </v-layout>
+    <v-layout row wrap>
       <v-flex md8>
-        <img
-          src="../static/pics/sz_map.jpg"
-          width="100%"
-          height="419px"
-        >
+        <layout-map></layout-map>
       </v-flex>
       <v-flex md4>
-        <v-widget :title="department + ' 电能消耗'">
+        <v-widget :title="department + ' 电能消耗'" header-bg="blue accent-2" header-dark>
           <div
             slot="widget-content"
-            style="height:350px"
+            class="first-panel"
           >
-            <v-layout row wrap>
+            <v-layout row wrap class="first-panel-top">
               <v-flex xs5>
-                监测单位 {{ department }}
+                监测单位 <span class="grey-text">{{ department }}</span>
               </v-flex>
               <v-flex xs7>
-                累计电能耗 {{ (totalEnergyUsage / 1000000).toFixed(2) }} M·KWH
+                累计电能耗 <span class="grey-text">{{ totalEnergyUsage }}</span>
               </v-flex>
               <v-flex xs5>
-                同比升降 {{ YOY }} %
+                同比升降 <span class="grey-text">{{ YOY }} % <span class="gcem-arrow-up"></span></span>
               </v-flex>
               <v-flex xs7>
-                环比升降 {{ MOM }} %
+                环比升降 <span class="grey-text">{{ MOM }} % <span class="gcem-arrow-down"></span></span>
               </v-flex>
               <v-flex xs12>
                 监测点 {{ warchPoint }}
               </v-flex>
               <v-flex xs12>
-                采集数据 {{ dataCount }} 个
+                采集数据 <span class="grey-text">{{ dataCount }} 个</span>
               </v-flex>
             </v-layout>
             <div
               ref="chart1"
-              style="height:300px;margin-top: -25px"
+              style="height:170px;"
             >
             </div>
           </div>
@@ -206,22 +179,24 @@
 import moment from 'moment';
 import { homeApi } from '../api';
 import VWidget from '@/components/VWidget';
-import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
+import SourceTypeBar from '../components/home/SourceTypeBar.vue';
+import LayoutMap from '../components/home/LayoutMap.vue';
 const echarts = window.echarts || undefined;
-
 export default {
   components: {
     VWidget,
-    MiniStatistic
+    SourceTypeBar,
+    LayoutMap
   },
   data () {
     return {
       department: 'NSD1',
-      totalEnergyUsage: 0,
+      totalEnergyUsage: '0 KWH',
       YOY: 45,
       MOM: 45,
-      warchPoint: 'E5/E6/D9/D10/f12/B3',
-      dataCount: 500
+      warchPoint: 'E5/E6/D9/D10/F21/B3',
+      dataCount: 500,
+      chartInstance: {}
     };
   },
   mounted () {
@@ -248,6 +223,7 @@ export default {
     
     homeApi.homeFistChart(params).then(res => {
       console.log(res);
+      if (!res || !res.status || res.status !== 200) return;
       const data = res.data;
       if (data.success === 'true') {
         this.energyData = data.data.epnet;
@@ -256,122 +232,135 @@ export default {
 
   },
   methods: {
+    onWindowResize () {
+      console.log('window resize');
+      Object.keys(this.chartInstance).forEach(key => {
+        this.chartInstance[key].resize();
+      });
+    },
     initCharts () {
       // 第一个小chart
       this.chart1DOM = this.$refs.chart1;
       this.chart1 = echarts.init(this.chart1DOM);
+      this.chartInstance.chart1 = this.chart1;
 
       // 下面第1个图
       this.chart2DOM = this.$refs.chart2;
       this.chart2 = echarts.init(this.chart2DOM);
+      this.chartInstance.chart2 = this.chart2;
 
       // 下面第2个图
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
+      this.chartInstance.chart3 = this.chart3;
 
       // 下面第3个图
       this.chart4DOM = this.$refs.chart4;
       this.chart4 = echarts.init(this.chart4DOM);
+      this.chartInstance.chart4 = this.chart4;
 
       // 下面第4个图
       this.chart5DOM = this.$refs.chart5;
       this.chart5 = echarts.init(this.chart5DOM);
+      this.chartInstance.chart5 = this.chart5;
 
     },
     firstChartOption (data) {
+      const minVal = 0;
+      const maxVal = 1000000;
       return {
         series: [
+          // {
+          //   name: '刻度',
+          //   type: 'gauge',
+          //   radius: '80%',
+          //   min: 0,
+          //   max: 2000000,
+          //   splitNumber: 2, // 刻度数量
+          //   startAngle: 180,
+          //   endAngle: 0,
+          //   axisLine: {
+          //     show: false,
+          //     lineStyle: {
+          //       width: 1,
+          //       color: [
+          //         [1, 'rgba(0,0,0,0)']
+          //       ]
+          //     }
+          //   }, // 仪表盘轴线
+          //   axisLabel: {
+          //     show: true,
+          //     color: '#3B53A2',
+          //     distance: 15,
+          //     fontSize: 11,
+          //     formatter: '{value}'
+          //   }, // 刻度标签。
+          //   axisTick: {
+          //     show: true,
+          //     lineStyle: {
+          //       color: {
+          //         type: 'radial',
+          //         colorStops: [{
+          //           offset: 0,
+          //           color: 'rgb(189,249,219)'
+          //         },
+
+          //         {
+          //           offset: 0.2,
+          //           color: 'rgb(173,242,202)'
+          //         },
+
+          //         {
+          //           offset: 0.4,
+          //           color: 'rgb(205,226,181)'
+          //         },
+
+          //         {
+          //           offset: 0.6,
+          //           color: 'rgb(254,191,149)'
+          //         },
+
+          //         {
+          //           offset: 0.8,
+          //           color: 'rgb(254,161,142)'
+          //         },
+
+          //         {
+          //           offset: 1,
+          //           color: 'rgb(255,173,168)'
+          //         }
+          //         ],
+          //         globalCoord: false // 缺省为 false
+          //       },
+          //       width: 2,
+          //       length: 20,
+          //     },
+          //     length: -5
+          //   }, // 刻度样式
+          //   splitLine: {
+          //     show: true,
+          //     length: -5,
+          //   }, // 分隔线样式
+          //   detail: {
+          //     show: false
+          //   },
+          //   pointer: {
+          //     show: false
+          //   }
+          // },
           {
-            name: '刻度',
             type: 'gauge',
-            radius: '80%',
-            min: 0,
-            max: 2000000,
-            splitNumber: 2, // 刻度数量
-            startAngle: 180,
-            endAngle: 0,
-            axisLine: {
-              show: false,
-              lineStyle: {
-                width: 1,
-                color: [
-                  [1, 'rgba(0,0,0,0)']
-                ]
-              }
-            }, // 仪表盘轴线
-            axisLabel: {
-              show: true,
-              color: '#3B53A2',
-              distance: 15,
-              fontSize: 11,
-              formatter: '{value}'
-            }, // 刻度标签。
-            axisTick: {
-              show: true,
-              lineStyle: {
-                color: {
-                  type: 'radial',
-                  colorStops: [{
-                    offset: 0,
-                    color: 'rgb(189,249,219)'
-                  },
-
-                  {
-                    offset: 0.2,
-                    color: 'rgb(173,242,202)'
-                  },
-
-                  {
-                    offset: 0.4,
-                    color: 'rgb(205,226,181)'
-                  },
-
-                  {
-                    offset: 0.6,
-                    color: 'rgb(254,191,149)'
-                  },
-
-                  {
-                    offset: 0.8,
-                    color: 'rgb(254,161,142)'
-                  },
-
-                  {
-                    offset: 1,
-                    color: 'rgb(255,173,168)'
-                  }
-                  ],
-                  globalCoord: false // 缺省为 false
-                },
-                width: 2,
-                length: 20,
-              },
-              length: -5
-            }, // 刻度样式
-            splitLine: {
-              show: true,
-              length: -5,
-            }, // 分隔线样式
-            detail: {
-              show: false
-            },
-            pointer: {
-              show: false
-            }
-          },
-          {
-            type: 'gauge',
-            radius: '85%',
-            min: 0,
-            max: 2000000,
-            // center: ['50%', '50%'],
+            radius: '120%',
+            center: ['50%', '60%'],
+            min: minVal,
+            max: maxVal,
             splitNumber: 0, // 刻度数量
             startAngle: 180,
             endAngle: 0,
             axisLine: {
               show: true,
               lineStyle: {
-                width: 13,
+                width: 18,
                 color: [
                   [
                     1,
@@ -452,11 +441,17 @@ export default {
       });
       homeApi.homeFistChart(data).then(res => {
         // console.log(res);
+        if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         if (data.success === 'true') {
           this.totalEnergyUsage = data.data.epnet;
-          const chartOption = this.firstChartOption(data.data.epnet);
-          this.chart1.setOption(chartOption);
+          setInterval(() => {
+            const demo = (Math.random() * 1000000).toFixed(2) - 0;
+            const chartOption = this.firstChartOption(demo);
+            this.chart1.setOption(chartOption);
+          }, 2000);
+          // const chartOption = this.firstChartOption(data.data.epnet);
+          // this.chart1.setOption(chartOption);
         }
       });
     },
@@ -535,6 +530,7 @@ export default {
         data.append(key, params[key]);
       });
       homeApi.chart1Data(data).then(res => {
+        if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         const chartData = {};
         const buildingList = Object.keys(data);
@@ -605,6 +601,7 @@ export default {
       });
       homeApi.homeFistChart(data).then(res => {
         // console.log(res);
+        if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         if (data.success === 'true') {
           const chartOption = this.chart3Option(data.data.typeData);
@@ -727,6 +724,7 @@ export default {
       });
       homeApi.chart3Data(data).then(res => {
         // console.log(res);
+        if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         const chartOption = this.chart4Option(data);
         this.chart4.setOption(chartOption);
@@ -806,6 +804,7 @@ export default {
         data.append(key, params[key]);
       });
       homeApi.chart5Data(data).then(res => {
+        if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         console.log(data);
         const chartOption = this.chart5Option(data);
@@ -817,21 +816,14 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-#header {
-  width: 100%;
-  height: 40px;
-
-  input {
-    width: 100px;
-    height: 30px;
-    margin: 15px;
-    margin-top: 5px;
-    color: #FFFFFF;
-    margin-left: 50px;
-  }
+.gcem-arrow-up {
+  color: #ff3366;
 }
-
-.chart1-text {
-  text-align: center;
+.gcem-arrow-down {
+  color: #00cc66;
 }
+.first-panel
+  height 350px
+  .grey-text
+    color #666
 </style>
