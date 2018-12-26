@@ -3,26 +3,7 @@
     grid-list-xl
     fluid
   >
-    <div
-      id="header"
-      class="primary"
-    >
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="电"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="水"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="气"
-      />
-    </div>
+    <source-type-bar></source-type-bar>
     <v-layout
       row
       wrap
@@ -125,9 +106,9 @@
         </v-btn>
       </v-btn-toggle>
     </v-flex>
-    <img src="../static/pics/u655.png" width="100%" height="100%"/>
+    <img src="../assets/pics/u655.png" width="100%" height="100%"/>
     <v-flex md8>
-      <img src="../static/pics/u652.png" width="100%" height="450px"/>
+      <img src="../assets/pics/u652.png" width="100%" height="450px"/>
     </v-flex>
     <v-flex md4>
       <v-widget title="各楼层电能能耗">
@@ -164,13 +145,13 @@
 import moment from 'moment';
 import { floorsApi } from '../api';
 import VWidget from '@/components/VWidget';
-import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
+import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 const echarts = window.echarts || undefined;
 
 export default {
   components: {
     VWidget,
-    MiniStatistic
+    SourceTypeBar
   },
   data: vm => ({
     date: new Date().toISOString().substr(0, 10),

@@ -179,7 +179,7 @@
 import moment from 'moment';
 import { homeApi } from '../api';
 import VWidget from '@/components/VWidget';
-import SourceTypeBar from '../components/home/SourceTypeBar.vue';
+import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import LayoutMap from '../components/home/LayoutMap.vue';
 const echarts = window.echarts || undefined;
 export default {
