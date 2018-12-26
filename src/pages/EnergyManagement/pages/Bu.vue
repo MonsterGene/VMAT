@@ -27,6 +27,7 @@
       row
       wrap
       justify-end
+      align-center
     >
       <!-- <embed
       type="application/pdf"
@@ -129,7 +130,7 @@
         ></v-select>
       </v-flex>
       <v-flex md2 class="py-2">
-            <v-btn-toggle v-model="text">
+            <v-btn-toggle>
               <v-btn flat value="left">
                 日
               </v-btn>
@@ -164,6 +165,68 @@
           </div>
         </v-widget>
       </v-flex>
+      <v-flex md1 d-flex>
+      <v-select
+        :items="items5"
+        label="BU："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md1 d-flex>
+      <v-select
+        :items="items6"
+        label="楼层："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md2 d-flex>
+      <v-select
+        :items="items7"
+        label="电表状态："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md2 d-flex>
+      <v-select
+        :items="items8"
+        label="电力类型："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md2 d-flex>
+      <v-select
+        :items="items9"
+        label="电能类型："
+        dense
+      ></v-select>
+    </v-flex>
+    <v-flex md1 d-flex>
+      <v-select
+        :items="items10"
+        label="Level："
+        dense
+      ></v-select>
+    </v-flex>
+          <input type="text" style="width:100px;height:30px;border:1px solid;border-radius:20px;outline:none" value=" " />
+        <div>
+        <v-btn small color="primary">查询</v-btn>
+      </div>
+      <v-flex md12>
+       <v-data-table
+    :headers="headers"
+    :items="desserts"
+    class="elevation-1"
+  >
+    <template slot="items" slot-scope="props">
+      <td>{{ props.item.name }}</td>
+      <td class="text-xs-right">{{ props.item.calories }}</td>
+      <td class="text-xs-right">{{ props.item.fat }}</td>
+      <td class="text-xs-right">{{ props.item.carbs }}</td>
+      <td class="text-xs-right">{{ props.item.protein }}</td>
+      <td class="text-xs-right">{{ props.item.iron }}</td>
+    </template>
+  </v-data-table>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -189,6 +252,7 @@ export default {
     VWidget,
     MiniStatistic
   },
+  
   data: vm => ({
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
@@ -197,7 +261,120 @@ export default {
     items: ['E5', 'D10'],
     items2: ['BU', '楼层'],
     items3: ['CSD', 'MFG6', 'NWE'],
-    items4: ['白班', '晚班']
+    items4: ['白班', '晚班'],
+    items5: ['SQA', 'MFG6', 'CSD'],
+    items6: ['1F', '1.5F', '2F'],
+    items7: ['未上电使用', '数据测试OK', '数据不能解析', '未采集到数据'],
+    items8: ['3Φ380', '3Φ220', '10kv'],
+    items9: ['照明', '空调', '生产动力'],
+    items10: ['1', '2', '3'],
+    headers: [
+      { text: '序号', value: 'calories' },
+      { text: 'BU', value: 'fat' },
+      { text: '栋别-楼层', value: 'carbs' },
+      { text: '网关箱安装位置', value: 'protein' },
+      { text: '电表状态', value: 'iron' },
+      { text: '电力类型', value: 'calories' },
+      { text: '电表名称', value: 'fat' },
+      { text: '电能类型', value: 'carbs' },
+      { text: '工段类别', value: 'protein' },
+      { text: '工站类别', value: 'iron' },
+      { text: '设备类别', value: 'calories' },
+      { text: 'Level', value: 'fat' },
+      { text: '能耗', value: 'carbs' }
+    ],
+    desserts: [
+      {
+        value: false,
+        name: 'Frozen Yogurt',
+        calories: '159',
+        fat: 6.0,
+        carbs: 24,
+        protein: 4.0,
+        iron: '1%'
+      },
+      {
+        value: false,
+        name: 'Ice cream sandwich',
+        calories: 237,
+        fat: 9.0,
+        carbs: 37,
+        protein: 4.3,
+        iron: '1%'
+      },
+      {
+        value: false,
+        name: 'Eclair',
+        calories: 262,
+        fat: 16.0,
+        carbs: 23,
+        protein: 6.0,
+        iron: '7%'
+      },
+      {
+        value: false,
+        name: 'Cupcake',
+        calories: 305,
+        fat: 3.7,
+        carbs: 67,
+        protein: 4.3,
+        iron: '8%'
+      },
+      {
+        value: false,
+        name: 'Gingerbread',
+        calories: 356,
+        fat: 16.0,
+        carbs: 49,
+        protein: 3.9,
+        iron: '16%'
+      },
+      {
+        value: false,
+        name: 'Jelly bean',
+        calories: 375,
+        fat: 0.0,
+        carbs: 94,
+        protein: 0.0,
+        iron: '0%'
+      },
+      {
+        value: false,
+        name: 'Lollipop',
+        calories: 392,
+        fat: 0.2,
+        carbs: 98,
+        protein: 0,
+        iron: '2%'
+      },
+      {
+        value: false,
+        name: 'Honeycomb',
+        calories: 408,
+        fat: 3.2,
+        carbs: 87,
+        protein: 6.5,
+        iron: '45%'
+      },
+      {
+        value: false,
+        name: 'Donut',
+        calories: 452,
+        fat: 25.0,
+        carbs: 51,
+        protein: 4.9,
+        iron: '22%'
+      },
+      {
+        value: false,
+        name: 'KitKat',
+        calories: 518,
+        fat: 26.0,
+        carbs: 65,
+        protein: 7,
+        iron: '6%'
+      }
+    ]
   }),
   // data: () => ({
   // }),
@@ -214,11 +391,18 @@ export default {
     }
   },
   mounted () {
+    this.initCharts();
     this.getChart2();
-    // this.getChart3();
+    this.getChart3();
   },
   methods: {
-    // initCharts () {},
+    initCharts () {
+      this.chart2DOM = this.$refs.chart2;
+      this.chart2 = echarts.init(this.chart2DOM);
+
+      this.chart3DOM = this.$refs.chart3;
+      this.chart3 = echarts.init(this.chart3DOM);
+    },
     formatDate (date) {
       if (!date) return null;
 
@@ -233,6 +417,7 @@ export default {
     chart2Option (data) {
       const chartOpts = {
         dataset: { source: data },
+        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
         legend: {
           show: true
         },
@@ -266,32 +451,36 @@ export default {
         }],
         series: []
       };
-      let allData = [];
-      Object.keys(data).forEach((key, index) => {
-        if (index > 0) {
-          const defaultSeries = {
-            type: 'bar',
-            barWidth: '40%',
-            label: {
-              normal: {
-                position: 'inside'
-              }
-            },
-          };
-          let curSeries = defaultSeries;
-          chartOpts.series.push(defaultSeries);
-          chartOpts.stack = 1;
-          data[key].forEach((val, index) => {
-            if (allData[index]) {
-              allData[index] += val;
-            } else {
-              allData[index] = val;
-            }                
-          });
-        }
+      let allData = {};
+      Object.keys(data[0]).forEach((v, i) => {
+        if (i === 0) return;
+        const defaultSeries = {
+          type: 'bar',
+          barWidth: '40%',
+          stack: 1,
+          label: {
+            normal: {
+              position: 'inside'
+            }
+          },
+        };
+        chartOpts.series.push(defaultSeries);
       });
-      allData.sort();
-      chartOpts.yAxis[0].max = Math.ceil(allData.pop() / 10) * 10;
+      data.forEach((item, index) => {
+        Object.keys(item).forEach((key, index2) => {
+          if (index > 0) {
+            if (allData[key]) {
+              allData[key] += Number(item[key]);
+            } else {
+              allData[key] = Number(item[key]);
+            }
+          }
+        });
+      });
+      const maxVal = Object.keys(allData).reduce((acc, cur) => {
+        return acc >= allData[cur] ? acc : allData[cur];
+      }, 0);
+      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
       return chartOpts;
     },
     getChart2 () {
@@ -305,30 +494,43 @@ export default {
         data.append(key, params[key]);
       });
       buApi.chart1Data(data).then(res => {
+        // console.log(res);
         const data = res.data;
-        const chartData = {};
-        const chartOption = this.chart2Option(chartData);
+        // console.log(data);
+        const chartOption = this.chart2Option(data);
+        // console.log(chartOption);
         this.chart2.setOption(chartOption);
-      //   // this.chart2.on('click', params => {
-      //   //   this.$router.push('/energy_management/bu');
-      //   // });
+
+        this.chart2.on('click', params => {
+          
+        });
+
+
       });
     },
     chart3Option (data) { 
       const cData = {};
-      cData['类型'] = Object.keys(data);
-      cData['能耗'] = Object.keys(data).map(key => data[key]);
       const chartOpts = {
         dataset: { source: cData },
         title: {
           x: 'center'
         },
+        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
         legend: { show: true },
         tooltip: {
           trigger: 'item',
           formatter: '{b} : {c} KWH({d}%)'
         },
-        series: [{
+        series: []
+      };
+      
+      cData['类型'] = Object.keys(data);
+      cData['能耗'] = cData['类型'].map(name => {
+        return Number(data[name]);
+      });
+      Object.keys(data[0]).forEach((v, i) => {
+        if (i === 0) return;
+        const defaultSeries = {
           name: '',
           type: 'pie',
           radius: '55%',
@@ -340,29 +542,28 @@ export default {
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
           }
-        }]
-      };
+        };
+        chartOpts.series.push(defaultSeries);
+      });
       return chartOpts;
     },
-    // getChart3 () {
-    //   let params = {
-    //     startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-    //     endTime: moment().format('YYYY-MM-DD'),
-    //     // building: 'E515'
-    //   };
-    //   let data = new FormData();
-    //   Object.keys(params).forEach(key => {
-    //     data.append(key, params[key]);
-    //   });
-    //   buApi.chart1Data(data).then(res => {
-    //     // console.log(res);
-    //     const data = res.data;
-    //     if (data.success === 'true') {
-    //       const chartOption = this.chart3Option(data.data.typeData);
-    //       this.chart3.setOption(chartOption);
-    //     }
-    //   });
-    // },
+    getChart3 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E5'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      buApi.chart1Data(data).then(res => {
+        console.log(res);
+        const data = res.data;
+        const chartOption = this.chart3Option(data);
+        this.chart3.setOption(chartOption);
+      });
+    },
   },
   
 };
