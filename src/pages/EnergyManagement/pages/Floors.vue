@@ -27,6 +27,7 @@
       row
       wrap
       justify-end
+      align-center
     >
     <!-- <embed
       type="application/pdf"
@@ -124,7 +125,28 @@
         </v-btn>
       </v-btn-toggle>
     </v-flex>
-    <img src="../static/pics/E5_1F.png" width="100%" height="100%"/>
+    <img src="../static/pics/u655.png" width="100%" height="100%"/>
+    <v-flex md8>
+      <img src="../static/pics/u652.png" width="100%" height="450px"/>
+    </v-flex>
+    <v-flex md4>
+      <v-widget title="各楼层电能能耗">
+          <div slot="widget-content">
+            <div
+              ref="chart2"
+              style="height:150px"
+            ></div>
+          </div>
+        </v-widget>
+        <v-widget title="各电能类型能耗占比">
+          <div slot="widget-content">
+            <div
+              ref="chart3"
+              style="height:150px"
+            ></div>
+          </div>
+        </v-widget>
+    </v-flex>
   </v-layout>
 </v-container>
 </template>
@@ -140,7 +162,7 @@
  * });
  */
 import moment from 'moment';
-import { homeApi } from '../api';
+import { floorsApi } from '../api';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 const echarts = window.echarts || undefined;
@@ -170,9 +192,18 @@ export default {
       this.dateFormatted = this.formatDate(this.date);
     }
   },
-  // mounted () {},
+  mounted () {
+    this.getChart2();
+    this.getChart3();
+  },
   methods: {
-    // initCharts () {},
+    initCharts () {
+      this.chart2DOM = this.$refs.chart2;
+      this.chart2 = echarts.init(this.chart2DOM);
+
+      this.chart3DOM = this.$refs.chart3;
+      this.chart3 = echarts.init(this.chart3DOM);
+    },
     formatDate (date) {
       if (!date) return null;
 
@@ -183,7 +214,138 @@ export default {
       if (!date) return null;
       const [month, day, year] = date.split('/');
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    }
+    },
+    chart2Option (data) {
+      const chartOpts = {
+        dataset: { source: data },
+        legend: {
+          show: true
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: { // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        toolbox: {
+          show: true,
+          feature: {
+            magicType: 'bar',
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        }, 
+        xAxis: [{
+          type: 'category',
+          axisLabel: {
+            interval: 0
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          max: 700
+        }],
+        series: []
+      };
+      let allData = [];
+      Object.keys(data).forEach((key, index) => {
+        if (index > 0) {
+          const defaultSeries = {
+            type: 'bar',
+            barWidth: '40%',
+            label: {
+              normal: {
+                position: 'inside'
+              }
+            },
+          };
+          let curSeries = defaultSeries;
+          chartOpts.series.push(defaultSeries);
+          chartOpts.stack = 1;
+          data[key].forEach((val, index) => {
+            if (allData[index]) {
+              allData[index] += val;
+            } else {
+              allData[index] = val;
+            }                
+          });
+        }
+      });
+      allData.sort();
+      chartOpts.yAxis[0].max = Math.ceil(allData.pop() / 10) * 10;
+      return chartOpts;
+    },
+    getChart2 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E5'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      floorsApi.chart1Data(data).then(res => {
+        const data = res.data;
+        const chartData = {};
+        const chartOption = this.chart2Option(chartData);
+        this.chart2.setOption(chartOption);
+      //   // this.chart2.on('click', params => {
+      //   //   this.$router.push('/energy_management/bu');
+      //   // });
+      });
+    },
+    chart3Option (data) { 
+      const cData = {};
+      cData['类型'] = Object.keys(data);
+      cData['能耗'] = Object.keys(data).map(key => data[key]);
+      const chartOpts = {
+        dataset: { source: cData },
+        title: {
+          x: 'center'
+        },
+        legend: { show: true },
+        tooltip: {
+          trigger: 'item',
+          formatter: '{b} : {c} KWH({d}%)'
+        },
+        series: [{
+          name: '',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }]
+      };
+      return chartOpts;
+    },
+    getChart3 () {
+      let params = {
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E515'
+      };
+      let data = new FormData();
+      Object.keys(params).forEach(key => {
+        data.append(key, params[key]);
+      });
+      floorsApi.chart1Data(data).then(res => {
+        // console.log(res);
+        const data = res.data;
+        const chartOption = this.chart3Option(data.data.typeData);
+        this.chart3.setOption(chartOption);
+      });
+    },
   },
 };
 </script>
