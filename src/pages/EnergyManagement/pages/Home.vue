@@ -446,7 +446,7 @@ export default {
     chart2Option (data) {
       const chartOpts = {
         dataset: { source: data },
-        color: ['rgb(228,228,228)', 'rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)'],
+        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
         legend: {
           show: true
         },
@@ -554,7 +554,7 @@ export default {
         title: {
           x: 'center'
         },
-        color: ['rgb(228,228,228)', 'rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)'],
+        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
         legend: { show: true },
         tooltip: {
           trigger: 'item',
@@ -790,7 +790,7 @@ export default {
       });
       homeApi.chart5Data(data).then(res => {
         const data = res.data;
-        console.log(data);
+        // console.log(data);
         const chartOption = this.chart5Option(data);
         this.chart5.setOption(chartOption);
       });
