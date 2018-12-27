@@ -3,26 +3,7 @@
     grid-list-xl
     fluid
   >
-    <div
-      id="header"
-      class="primary"
-    >
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="电"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="水"
-      />
-      <input
-        class="primary lighten-2"
-        type="button"
-        value="气"
-      />
-    </div>
+    <source-type-bar></source-type-bar>
     <v-layout
       row
       wrap
@@ -245,11 +226,13 @@ import moment from 'moment';
 import { buApi } from '../api';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
+import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 const echarts = window.echarts || undefined;
 
 export default {
   components: {
     VWidget,
+    SourceTypeBar,
     MiniStatistic
   },
   
