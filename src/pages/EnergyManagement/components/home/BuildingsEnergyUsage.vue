@@ -14,7 +14,7 @@ const echarts = window.echarts || undefined;
 
 export default {
   mixins: [energyManageMixin],
-  props: ['height', 'width', 'title', 'wSize'],
+  props: ['height', 'width', 'title', 'wSize', 'chartData'],
   data () {
     return {
     };
@@ -22,6 +22,9 @@ export default {
   watch: {
     wSize (s) {
       this.chart.resize();
+    },
+    chartData (d) {
+      this.getChartData();
     }
   },
   mounted () {
@@ -57,14 +60,14 @@ export default {
           },
           backgroundColor: '#FFF0',
           formatter: params => {
-            // console.log(params);
+            console.log(params);
             const building = `<div>${params[0].name}</div>`;
             let seriesInfo = ``;
-            let total = 0;
+            let total = Number(params[0].data['总耗电']);
             params.forEach(item => {
               let itemValue = Number(item.data[item.seriesName]);
               let itemValueText;
-              total += itemValue;
+              // total += itemValue;
               if (itemValue >= 100000) {
                 itemValueText = (itemValue / 1000000).toFixed(2) + ' M·KWH';
               } else {
@@ -77,7 +80,7 @@ export default {
                 </div>
               `;
             });
-            total = total >= 100000 ? (total / 1000000).toFixed(2) + ' M·KWH' : total + ' KWH';
+            total = total >= 100000 ? (total / 1000000).toFixed(2) + ' M·KWH' : total.toFixed(2) + ' KWH';
             seriesInfo += `
               <div>
                 <span style="color:#ffcc33">总和</span>
@@ -122,8 +125,9 @@ export default {
         series: []
       };
       // let allData = [];
-      data.forEach((key, index) => {
+      Object.keys(data[0]).forEach((key, index) => {
         if (index > 0) {
+          if (key === '总耗电') return;
           const defaultSeries = {
             type: 'bar',
             barWidth: '40%',
@@ -135,20 +139,18 @@ export default {
             },
           };
           chartOpts.series.push(defaultSeries);
-          // data[key].forEach((val, index) => {
-          //   if (allData[index]) {
-          //     allData[index] += val;
-          //   } else {
-          //     allData[index] = val;
-          //   }
-          // });
         }
       });
-      // allData.sort();
-      // chartOpts.yAxis[0].max = Math.ceil(allData.pop() / 10) * 10;
+      console.log(chartOpts);
       return chartOpts;
     },
     getChartData () {
+      if (this.chartData) {
+        
+        const chartOpts = this.chartOptions(this.chartData);
+        this.chart.setOption(chartOpts);
+        return;
+      }
       homeApi.chart1Data(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD')

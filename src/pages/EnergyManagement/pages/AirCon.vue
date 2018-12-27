@@ -111,10 +111,7 @@
       <v-flex md4>
         <v-widget title="空调主机总能耗">
           <div slot="widget-content">
-            <div
-              ref="chart1"
-              style="height:200px"
-            ></div>
+            <energy-guage :value="acHostTotalEnergy"></energy-guage>
           </div>
         </v-widget>
       </v-flex>
@@ -240,15 +237,22 @@
 <script>
 import moment from 'moment';
 import { airConApi } from '../api';
+import { energyManageMixin } from '../../../util/mixins/globalMixins';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
-const echarts = window.echarts || undefined;
+import EnergyGuage from '../components/common/EnergyGuage.vue';
+
+const echarts = window.echarts || null;
+
 export default {
   components: {
     VWidget,
-    SourceTypeBar
+    SourceTypeBar,
+    EnergyGuage
   },
+  mixins: [energyManageMixin],
   data: vm => ({
+    acHostTotalEnergy: 0,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -313,26 +317,26 @@ export default {
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
     onWindowResize () {
-      console.log('window resize');
-      Object.keys(this.chartInstance).forEach(key => {
-        this.chartInstance[key].resize();
-      });
+      // console.log('window resize');
+      // Object.keys(this.chartInstance).forEach(key => {
+      //   this.chartInstance[key].resize();
+      // });
     },
     initCharts () {
       // 上面左边仪表盘
-      this.chart1DOM = this.$refs.chart1;
-      this.chart1 = echarts.init(this.chart1DOM);
-      this.chartInstance.chart1 = this.chart1;
+      // this.chart1DOM = this.$refs.chart1;
+      // this.chart1 = echarts.init(this.chart1DOM);
+      // this.chartInstance.chart1 = this.chart1;
 
       // 上面右边折线图
       this.chart2DOM = this.$refs.chart2;
       this.chart2 = echarts.init(this.chart2DOM);
-      this.chartInstance.chart2 = this.chart2;
+      // this.chartInstance.chart2 = this.chart2;
 
       // 下面左边第一个折线图
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
-      this.chartInstance.chart3 = this.chart3;
+      // this.chartInstance.chart3 = this.chart3;
     },
     // 上面左边仪表盘
     firstChartOption (data) {
@@ -500,28 +504,14 @@ export default {
       };
     },
     getChart1 () {
-      let params = {
+      airConApi.homeFistChart(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
         building: 'E5'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
-      });
-      airConApi.homeFistChart(data).then(res => {
-        // console.log(res);
-        if (!res || !res.status || res.status !== 200) return;
-        const data = res.data;
-        if (data.success === 'true') {
-          this.totalEnergyUsage = data.data.epnet;
-          // setInterval(() => {
-          //   const demo = (Math.random() * 1000000).toFixed(2) - 0;
-          //   const chartOption = this.firstChartOption(demo);
-          //   this.chart1.setOption(chartOption);
-          // }, 2000);
-          const chartOption = this.firstChartOption(data.data.epnet);
-          this.chart1.setOption(chartOption);
+      })).then(res => {
+        console.log(res);
+        if (res && res.status === 200) {
+          this.acHostTotalEnergy = Number(res.data['总耗电']);
         }
       });
     },
@@ -601,7 +591,7 @@ export default {
           return acc;
         }
       }, 0);
-      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
+      // chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
       return chartOpts;
     },
     getChart2 () {
@@ -693,13 +683,13 @@ export default {
       Object.keys(params).forEach(key => {
         data.append(key, params[key]);
       });
-      airConApi.chart1Data(data).then(res => {
-        if (!res || !res.status || res.status !== 200) return;
-        const data = res.data;
-        // console.log(data);
-        const chartOption = this.chart3Option(data);
-        this.chart3.setOption(chartOption);
-      });
+      // airConApi.chart1Data(data).then(res => {
+      //   if (!res || !res.status || res.status !== 200) return;
+      //   const data = res.data;
+      //   // console.log(data);
+      //   const chartOption = this.chart3Option(data);
+      //   this.chart3.setOption(chartOption);
+      // });
     }
   }
 };
