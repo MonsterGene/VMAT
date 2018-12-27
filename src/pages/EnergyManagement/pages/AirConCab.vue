@@ -1,16 +1,11 @@
 <template>
-  <v-container
-    grid-list-xl
-    fluid
-    v-resize="onWindowResize"
-  >
-    <source-type-bar></source-type-bar>
+<v-container grid-list-xl fluid v-resize="onWindowResize">
+  <source-type-bar></source-type-bar>
     <v-layout
       row
       wrap
       justify-end
-      align-center
-    >
+      align-center>
       <v-flex md1>
         <div class="text-xs-center">
           <v-btn round>空调主机</v-btn>
@@ -109,7 +104,7 @@
         ></v-select>
       </v-flex>
       <v-flex md4>
-        <v-widget title="空调主机总能耗">
+        <v-widget title="空调风柜总能耗">
           <div slot="widget-content">
             <div
               ref="chart1"
@@ -119,7 +114,7 @@
         </v-widget>
       </v-flex>
       <v-flex md8>
-        <v-widget title="当月每日空调主机能耗">
+        <v-widget title="当月每日空调风柜能耗">
           <div slot="widget-content">
             <div
               ref="chart2"
@@ -129,14 +124,14 @@
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="空调主机1">
+        <v-widget title="空调风柜1">
           <div slot="widget-content">
             <div
               ref="airCon1"
               style="height:100px;float:left;margin-right:30px"
             >
-            <img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
-            <div>
+            <img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
+          <div>
               电表名称&emsp;<span>E5-4PP1</span><br />
               设备名称&emsp;<span>foxconn</span><br />
               设备编号&emsp;<span>123456</span><br />
@@ -146,12 +141,12 @@
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="空调主机2">
+        <v-widget title="空调风柜2">
           <div slot="widget-content">
             <div
               ref="airCon2"
               style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
+            ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
               电表名称&emsp;<span>E5-4PP1</span><br />
               设备名称&emsp;<span>foxconn</span><br />
@@ -162,12 +157,12 @@
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="空调主机3">
+        <v-widget title="空调风柜3">
           <div slot="widget-content">
             <div
               ref="airCon3"
               style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
+            ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
               电表名称&emsp;<span>E5-4PP1</span><br />
               设备名称&emsp;<span>foxconn</span><br />
@@ -178,12 +173,12 @@
         </v-widget>
       </v-flex>
       <v-flex md3>
-        <v-widget title="空调主机4">
+        <v-widget title="空调风柜4">
           <div slot="widget-content">
             <div
               ref="airCon4"
               style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
+            ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
               电表名称&emsp;<span>E5-4PP1</span><br />
               设备名称&emsp;<span>foxconn</span><br />
@@ -234,12 +229,12 @@
         </v-widget>
       </v-flex>
     </v-layout>
-  </v-container>
+</v-container>
 </template>
 
 <script>
 import moment from 'moment';
-import { airConApi } from '../api';
+import { airConCabApi } from '../api';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 const echarts = window.echarts || undefined;
@@ -283,13 +278,13 @@ export default {
     const data = {
       startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
       endTime: moment().format('YYYY-MM-DD'),
-      building: 'E5'
+      building: 'E515'
     };
     Object.keys(data).forEach(key => {
       params.append(key, data[key]);
     });
     
-    airConApi.homeFistChart(params).then(res => {
+    airConCabApi.homeFistChart(params).then(res => {
       console.log(res);
       if (!res || !res.status || res.status !== 200) return;
       const data = res.data;
@@ -299,7 +294,6 @@ export default {
     });
 
   },
-  
   methods: {
     formatDate (date) {
       if (!date) return null;
@@ -328,12 +322,13 @@ export default {
       this.chart2DOM = this.$refs.chart2;
       this.chart2 = echarts.init(this.chart2DOM);
       this.chartInstance.chart2 = this.chart2;
-
+      
       // 下面左边第一个折线图
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
       this.chartInstance.chart3 = this.chart3;
     },
+
     // 上面左边仪表盘
     firstChartOption (data) {
       const minVal = 0;
@@ -503,25 +498,25 @@ export default {
       let params = {
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
+        // building: 'E515'
       };
       let data = new FormData();
       Object.keys(params).forEach(key => {
         data.append(key, params[key]);
       });
-      airConApi.homeFistChart(data).then(res => {
+      airConCabApi.homeFistChart(data).then(res => {
         // console.log(res);
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         if (data.success === 'true') {
           this.totalEnergyUsage = data.data.epnet;
-          // setInterval(() => {
-          //   const demo = (Math.random() * 1000000).toFixed(2) - 0;
-          //   const chartOption = this.firstChartOption(demo);
-          //   this.chart1.setOption(chartOption);
-          // }, 2000);
-          const chartOption = this.firstChartOption(data.data.epnet);
-          this.chart1.setOption(chartOption);
+          setInterval(() => {
+            const demo = (Math.random() * 1000000).toFixed(2) - 0;
+            const chartOption = this.firstChartOption(demo);
+            this.chart1.setOption(chartOption);
+          }, 2000);
+          // const chartOption = this.firstChartOption(data.data.epnet);
+          // this.chart1.setOption(chartOption);
         }
       });
     },
@@ -529,7 +524,6 @@ export default {
     // 上面右边折线图
     chart2Option (data) {
       const chartOpts = {
-        dataset: { source: null },
         title: {
           textStyle: {
             color: '#000'
@@ -546,7 +540,7 @@ export default {
             show: true,
             fontSize: 16
           },
-          data: data
+          data: ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36']
         },
         yAxis: {
           axisLine: {
@@ -563,58 +557,41 @@ export default {
             show: true,
           },
         },
-        series: []
+        series: [{
+          type: 'line',
+          symbol: 'rect',
+          symbolSize: 6,
+          lineStyle: {
+            width: 2,
+            color: {
+              type: 'linear',
+              x: 0,
+              y: 0,
+              x2: 1,
+              y2: 0,
+              colorStops: [{
+                offset: 0, color: '#1a4285' // 0% 处的颜色
+              }, {
+                offset: 1, color: '#16387c' // 100% 处的颜色
+              }],
+              globalCoord: false // 缺省为 false
+            }  
+          },
+          data: ['122', '132', '176', '654', '462', '422']
+        }]
       };
-      const chartData = {};
-      chartData['time'] = Object.keys(data);
-      chartData['能耗'] = chartData['time'].map(name => {
-        return Number(data[name]);
-      });
-      chartOpts.dataset.source = chartData;
-      const defaultSeries = {
-        type: 'line',
-        symbol: 'rect',
-        symbolSize: 6,
-        lineStyle: {
-          width: 2,
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [{
-              offset: 0, color: '#1a4285' // 0% 处的颜色
-            }, {
-              offset: 1, color: '#16387c' // 100% 处的颜色
-            }],
-            globalCoord: false // 缺省为 false
-          }  
-        },
-        data: data
-      };
-      chartOpts.series.push(defaultSeries);
-      const maxVal = chartData['能耗'].reduce((acc, cur) => {
-        if (cur > acc) {
-          return cur;
-        } else {
-          return acc;
-        }
-      }, 0);
-      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
-      return chartOpts;
     },
     getChart2 () {
       let params = {
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
+        building: 'E515'
       };
       let data = new FormData();
       Object.keys(params).forEach(key => {
         data.append(key, params[key]);
       });
-      airConApi.homeFistChart(data).then(res => {
+      airConCabApi.chart1Data(data).then(res => {
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         // console.log(data);
@@ -693,7 +670,7 @@ export default {
       Object.keys(params).forEach(key => {
         data.append(key, params[key]);
       });
-      airConApi.chart1Data(data).then(res => {
+      airConCabApi.chart1Data(data).then(res => {
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         // console.log(data);
@@ -706,4 +683,5 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+
 </style>
