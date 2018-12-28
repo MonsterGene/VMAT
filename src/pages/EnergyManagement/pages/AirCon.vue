@@ -18,7 +18,7 @@
       &emsp;&emsp;
       <v-flex md1>
         <div class="text-xs-center">
-          <v-btn round>空调风柜</v-btn>
+          <v-btn round @click="airfenggui">空调风柜</v-btn>
         </div>
       </v-flex>
       <v-flex md2></v-flex>
@@ -250,7 +250,12 @@ export default {
     menu2: false,
     items: ['E5', 'D10'],
     items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班']
+    items2: ['白班', '晚班'],
+    dianbiaoname: 'E5-4PP1',
+    shebeiname: 'foxconn',
+    shebeinumber: '123456',
+    building: 'E5',
+    airCon: '12345kwh'
   }),
   computed: {
     computedDateFormatted () {
@@ -267,7 +272,12 @@ export default {
     this.getChart1();
 
     // 上面右边折线图
-    this.getChart2();
+    // this.getChartData();
+    if (echarts) {
+      // console.log(this.$refs.chart);
+      this.chart2 = echarts.init(this.$refs.chart2);
+      this.getChartData();
+    }
 
     // 下面左边第一个折线图
     this.getChart3();
@@ -292,7 +302,6 @@ export default {
     });
 
   },
-  
   methods: {
     takeInt,
     formatDate (date) {
@@ -374,10 +383,11 @@ export default {
           this.airconIntensityTrendData = I_Data;
           this.airconPowerTrendData = P_Data;
           this.airconPowerFactorTrendData = F_Data;
-          console.log(U_Data);
-          console.log(I_Data);
         }
       });
+    },
+    airfenggui: function () {
+      this.$router.push('/energy_management/airConCab');
     }
   }
 };
