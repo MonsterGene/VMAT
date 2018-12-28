@@ -272,35 +272,10 @@ export default {
     this.getChart1();
 
     // 上面右边折线图
-    // this.getChartData();
-    if (echarts) {
-      // console.log(this.$refs.chart);
-      this.chart2 = echarts.init(this.$refs.chart2);
-      this.getChartData();
-    }
+    this.getChart2();
 
-    // 下面左边第一个折线图
+    // 下面折线图
     this.getChart3();
-
-    const params = new FormData();
-    const data = {
-      startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-      endTime: moment().format('YYYY-MM-DD'),
-      building: 'E5'
-    };
-    Object.keys(data).forEach(key => {
-      params.append(key, data[key]);
-    });
-    
-    airConApi.homeFistChart(params).then(res => {
-      console.log(res);
-      if (!res || !res.status || res.status !== 200) return;
-      const data = res.data;
-      if (data.success === 'true') {
-        this.energyData = data.data.epnet;
-      }
-    });
-
   },
   methods: {
     takeInt,
