@@ -27,7 +27,7 @@
         采集数据 <span class="grey-text">{{ dataCount }} 个</span>
       </v-flex>
     </v-layout>
-    <energy-guage :value="totalEnergyUsage" min="100000"></energy-guage>
+    <energy-guage :value="totalEnergyUsage" :min="100000"></energy-guage>
   </div>
 </v-widget>
 </template>

@@ -17,7 +17,7 @@
       <v-flex class="date-control">
         <v-menu
           ref="menu1"
-          class="border-radius-24"
+          class="date-picker border-radius-24"
           :close-on-content-click="false"
           :nudge-right="40"
           lazy
@@ -28,6 +28,7 @@
           min-width="290px"
         >
           <v-text-field
+            class="date-picker-field"
             slot="activator"
             label="Solo"
             persistent-hint

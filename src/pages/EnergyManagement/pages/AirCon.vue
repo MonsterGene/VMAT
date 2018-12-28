@@ -120,77 +120,14 @@
         <line-chart
           title="当月每日空调主机能耗"
           :dataset-source="acHostEnergyUsageByDay"
-          @click="test"
           colors="#6699ff"
           bg-color="#FFF"
           height="280px"></line-chart>
       </v-flex>
     </v-layout>
     <v-layout row wrap align-center>
-      <v-flex md3>
-        <v-widget title="空调主机1">
-          <div slot="widget-content">
-            <div
-              ref="airCon1"
-              style="height:100px;float:left;margin-right:30px"
-            >
-            <img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
-            <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
-            </div>
-          </div>
-        </v-widget>
-      </v-flex>
-      <v-flex md3>
-        <v-widget title="空调主机2">
-          <div slot="widget-content">
-            <div
-              ref="airCon2"
-              style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
-          <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
-            </div>
-          </div>
-        </v-widget>
-      </v-flex>
-      <v-flex md3>
-        <v-widget title="空调主机3">
-          <div slot="widget-content">
-            <div
-              ref="airCon3"
-              style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
-          <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
-            </div>
-          </div>
-        </v-widget>
-      </v-flex>
-      <v-flex md3>
-        <v-widget title="空调主机4">
-          <div slot="widget-content">
-            <div
-              ref="airCon4"
-              style="height:100px;float:left;margin-right:30px"
-            ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
-          <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
-            </div>
-          </div>
-        </v-widget>
+      <v-flex md3 v-for="(aircon, index) in airconList" :key="index">
+        <air-con-status :aircon-info="aircon" current-aircon="111"></air-con-status>
       </v-flex>
     </v-layout>
     <v-layout row wrap align-center>
@@ -200,7 +137,7 @@
           :dataset-source="airconVoltageTrendData"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
-          :colors="[colors.yellow.base, colors.green.base, colors.red.base]"
+          :colors="['#e3d842', '#66cc33', '#e75c12']"
           y-name="电压(V)"
           x-name="时间"
           height="300px"></line-chart>
@@ -211,7 +148,7 @@
           :dataset-source="airconIntensityTrendData"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
-          :colors="[colors.yellow.base, colors.green.base, colors.red.base]"
+          :colors="['#e3d842', '#66cc33', '#e75c12']"
           y-name="电流(A)"
           x-name="时间"
           height="300px"></line-chart>
@@ -256,6 +193,7 @@ import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
+import AirConStatus from '../components/AirCon/AirConStatus.vue';
 
 const echarts = window.echarts || null;
 
@@ -264,7 +202,8 @@ export default {
     VWidget,
     SourceTypeBar,
     EnergyGuage,
-    LineChart
+    LineChart,
+    AirConStatus
   },
   mixins: [energyManageMixin],
   data: vm => ({
@@ -275,6 +214,36 @@ export default {
     airconIntensityTrendData: {},
     airconPowerTrendData: {},
     airconPowerFactorTrendData: {},
+    airconList: [
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '111',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '222',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '333',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '444',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      }
+    ],
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -325,9 +294,6 @@ export default {
   },
   
   methods: {
-    test (evt) {
-      console.log(evt);
-    },
     takeInt,
     formatDate (date) {
       if (!date) return null;

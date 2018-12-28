@@ -48,7 +48,7 @@ export default {
         },
         backgroundColor: '#FFFFFF',
         dataset: { source: data },
-        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
+        color: ['#3ac0a9', '#4e7af3', '#515151', '#f7a35c'],
         legend: {
           show: true,
           top: '48'
