@@ -17,8 +17,11 @@
       <v-flex xs7>
         环比升降 <span class="grey-text">{{ MOM }} % <span class="gcem-arrow-down"></span></span>
       </v-flex>
-      <v-flex xs12>
-        监测点 {{ warchPoint }}
+      <v-flex class="watch-point-wrapper" xs12>
+        监测点 
+        <span class="watch-point-list" v-for="(p, i) in watchPointList" :key="p.name">
+          <span v-if="i > 0">/</span><span class="watch-point-item" :class="{'watch-active': p.isWatched}">{{ p.name }}</span>
+        </span>
       </v-flex>
       <v-flex xs12>
         采集数据 <span class="grey-text">{{ dataCount }} 个</span>
@@ -50,7 +53,14 @@ export default {
       totalEnergyUsage: 0,
       YOY: 45,
       MOM: 45,
-      warchPoint: 'E5/E6/D9/D10/F21/B3',
+      watchPointList: [
+        { name: 'E5', isWatched: true },
+        { name: 'E6', isWatched: false },
+        { name: 'D9', isWatched: false },
+        { name: 'D10', isWatched: false },
+        { name: 'F21', isWatched: false },
+        { name: 'B3', isWatched: false }
+      ],
       dataCount: 500
     };
   },
@@ -87,6 +97,13 @@ export default {
 }
 .first-panel
   height 350px
-  .grey-text
-    color #666
+  .first-panel-top
+    .grey-text
+      color #666
+    .watch-point-wrapper
+      .watch-point-list
+        .watch-point-item
+          color: #bcbcbc
+          &.watch-active
+            color: #7094f5
 </style>

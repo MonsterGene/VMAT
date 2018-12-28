@@ -71,7 +71,7 @@ export default {
               shadowColor: 'rgba(0, 0, 0, 0.5)'
             }
           },
-          labelLine: { show: false },
+          labelLine: { show: true },
           label: {
             show: true,
             color: '#5e5e5e',
