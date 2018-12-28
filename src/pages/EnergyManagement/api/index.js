@@ -6,6 +6,7 @@ import floorsApi from './floors';
 import buApi from './bu';
 import airConApi from './airCon';
 import airConCabApi from './airConCab';
+import testApi from './test';
 
 export {
   demoApi,
@@ -15,5 +16,6 @@ export {
   floorsApi,
   buApi,
   airConApi,
-  airConCabApi
+  airConCabApi,
+  testApi
 };
