@@ -2,7 +2,6 @@
   <v-container
     grid-list-xl
     fluid
-    v-resize="onWindowResize"
   >
     <source-type-bar></source-type-bar>
     <v-layout
@@ -120,7 +119,8 @@
       <v-flex md8>
         <line-chart
           title="当月每日空调主机能耗"
-          :chart-data="acHostEnergyUsageByDay"
+          :dataset-source="acHostEnergyUsageByDay"
+          @click="test"
           colors="#6699ff"
           bg-color="#FFF"
           height="280px"></line-chart>
@@ -197,7 +197,7 @@
       <v-flex md6>
         <line-chart
           title="电压走势"
-          :chart-data="airconVoltageTrendData"
+          :dataset-source="airconVoltageTrendData"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           :colors="[colors.yellow.base, colors.green.base, colors.red.base]"
@@ -208,7 +208,7 @@
       <v-flex md6>
         <line-chart
           title="电流走势"
-          :chart-data="airconIntensityTrendData"
+          :dataset-source="airconIntensityTrendData"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           :colors="[colors.yellow.base, colors.green.base, colors.red.base]"
@@ -219,7 +219,7 @@
       <v-flex md6>
         <line-chart
           title="功率走势"
-          :chart-data="airconPowerTrendData"
+          :dataset-source="airconPowerTrendData"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           y-name="功率(W)"
@@ -232,7 +232,7 @@
       <v-flex md6>
         <line-chart
           title="功率因素走势"
-          :chart-data="airconPowerFactorTrendData"
+          :dataset-source="airconPowerFactorTrendData"
           :max-value="v => (v.max + 0.05).toFixed(2)"
           :min-value="v => (v.min - 0.05).toFixed(2)"
           y-name="功率因素"
@@ -255,7 +255,7 @@ import { energyManageMixin } from '../../../util/mixins/globalMixins';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
-import LineChart from '../components/common/LineChart.vue';
+import LineChart from '../../../components/chart/SimpleChart.vue';
 
 const echarts = window.echarts || null;
 
@@ -325,6 +325,9 @@ export default {
   },
   
   methods: {
+    test (evt) {
+      console.log(evt);
+    },
     takeInt,
     formatDate (date) {
       if (!date) return null;
@@ -336,12 +339,6 @@ export default {
       if (!date) return null;
       const [month, day, year] = date.split('/');
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    },
-    onWindowResize () {
-      // console.log('window resize');
-      // Object.keys(this.chartInstance).forEach(key => {
-      //   this.chartInstance[key].resize();
-      // });
     },
     getChart1 () {
       airConApi.homeFistChart(this.simpleParseParams({

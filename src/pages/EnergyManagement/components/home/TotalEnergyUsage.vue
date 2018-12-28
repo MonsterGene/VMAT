@@ -58,8 +58,7 @@ export default {
         { name: 'E6', isWatched: false },
         { name: 'D9', isWatched: false },
         { name: 'D10', isWatched: false },
-        { name: 'F21', isWatched: false },
-        { name: 'B3', isWatched: false }
+        { name: 'F21', isWatched: false }
       ],
       dataCount: 500
     };

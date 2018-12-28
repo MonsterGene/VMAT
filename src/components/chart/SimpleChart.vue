@@ -1,19 +1,42 @@
 <template>
-<div
-  ref="chart"
-  :style="{width: width, height: height}"
-></div>
+<div ref="chart" :style="{width: width, height: height}"></div>
 </template>
 
 <script>
 import moment from 'moment';
-import { _isArray, _isObject } from '../../../../util/utils';
+import {
+  _isArray,
+  _isObject
+} from '../../util/utils';
 
 const echarts = window.echarts || undefined;
 
+(function () {
+  const throttle = function (type, name, obj) {
+    obj = obj || window;
+    let running = false;
+    const func = function () {
+      if (running) {
+        return;
+      }
+      running = true;
+      requestAnimationFrame(function () {
+        obj.dispatchEvent(new CustomEvent(name));
+        running = false;
+      });
+    };
+    obj.addEventListener(type, func);
+  };
+
+  /* init - you can init any event */
+  throttle('resize', 'optimizedResize');
+})();
+
 export default {
   props: {
-    title: { type: String },
+    title: {
+      type: String
+    },
     type: {
       type: [String, Array],
       default: 'line',
@@ -31,43 +54,84 @@ export default {
         }
       }
     },
-    width: { type: String, default: '100%' },
-    height: { type: String, default: '150px' },
-    legendList: { type: Array },
+    width: {
+      type: String,
+      default: '100%'
+    },
+    height: {
+      type: String,
+      default: '150px'
+    },
+    legendList: {
+      type: Array
+    },
     /**
      * type:
      * Object   则每个系列固定配置项
      * Function 则遍历每个系列的数据其返回值则为对应 series 的配置信息
      *  */
-    seriesConfig: { type: [Object, Function] },
-    chartData: { type: [Object, Array], required: true },
-    maxValue: { type: [Number, Array, String, Function] },
-    minValue: { type: [Number, Array, String, Function] },
-    stack: { type: [Boolean] },
-    yName: { type: String },
-    xName: { type: String },
-    colors: { type: [Array, String] },
-    bgColor: { type: String },
-    wSize: {}
+    seriesConfig: {
+      type: [Object, Function]
+    },
+    datasetSource: {
+      type: [Object, Array],
+      required: true
+    },
+    maxValue: {
+      type: [Number, Array, String, Function]
+    },
+    minValue: {
+      type: [Number, Array, String, Function]
+    },
+    stack: {
+      type: [Boolean]
+    },
+    yName: {
+      type: String
+    },
+    xName: {
+      type: String
+    },
+    colors: {
+      type: [Array, String]
+    },
+    bgColor: {
+      type: String
+    },
+    // resize delay
+    resizeDelay: {
+      type: Number,
+      default: 450
+    }
   },
   data () {
     return {};
   },
   watch: {
-    wSize (s) {
-      this.chart.resize();
-    },
-    chartData (d) {
+    datasetSource (d) {
       this.renderChart();
     }
   },
   mounted () {
-    if (echarts) {
-      this.chart = echarts.init(this.$refs.chart);
-      this.renderChart();
-    }
+    this.init();
+    console.log(this.$listeners);
+  },
+  beforeDestroy () {
+    this.clean();
   },
   methods: {
+    init () {
+      if (echarts) {
+        this.chart = echarts.init(this.$refs.chart);
+        Object.entries(this.$listeners).forEach(([evtName, handler]) => {
+          this.chart.on(evtName, handler);
+        });
+        window.addEventListener('optimizedResize', this.resize);
+        this.renderChart();
+      } else {
+        console.log('echarts is undefined!');
+      }
+    },
     defineSeries (data) {
       const doSeries = (t, isLeg) => {
         let series;
@@ -76,7 +140,9 @@ export default {
         } else if (typeof this.seriesConfig === 'function') {
           series = t.map(this.seriesConfig);
         } else {
-          series = t.map(v => ({ type: 'line' }));
+          series = t.map(v => ({
+            type: 'line'
+          }));
         }
         t.forEach((v, i) => {
           if (isLeg && typeof series[i].datasetIndex === 'undefined') {
@@ -201,13 +267,23 @@ export default {
       return chartOpts;
     },
     renderChart () {
-      if (this.chartData) {
-        if (Object.keys(this.chartData).length === 0) return;
-        const chartOption = this.chartOptions(this.chartData);
+      if (this.datasetSource) {
+        if (Object.keys(this.datasetSource).length === 0) return;
+        const chartOption = this.chartOptions(this.datasetSource);
         this.chart.setOption(chartOption);
         return;
       }
+    },
+    resize (e) {
+      console.log('resize');
+      setTimeout(() => {
+        this.chart.resize();
+      }, this.resizeDelay);
+    },
+    clean () {
+      window.removeEventListener('resize', this.resize);
+      this.chart.clear();
     }
-  }
+  },
 };
 </script>
