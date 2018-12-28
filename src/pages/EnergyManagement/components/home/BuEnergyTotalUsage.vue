@@ -43,7 +43,7 @@ export default {
           left: 'center'
         },
         dataset: { source: null },
-        color: ['#3398DB'],
+        color: ['#4e7af3'],
         backgroundColor: '#FFF',
         tooltip: {
           show: false,
@@ -64,12 +64,13 @@ export default {
         grid: {
           top: 100,
           left: '3%',
-          right: '4%',
+          right: '5%',
           bottom: '3%',
           containLabel: true,
         },
         xAxis: [{
           type: 'category',
+          name: 'BU',
           gridIndex: 0,
           axisLabel: {
             interval: 0
@@ -119,26 +120,26 @@ export default {
         barWidth: '30%',
         xAxisIndex: 0,
         yAxisIndex: 0,
-        itemStyle: {
-          normal: {
-            // barBorderRadius: 30,
-            color: new echarts.graphic.LinearGradient(
-              0, 0, 0, 1, [{
-                offset: 0,
-                color: '#ff6c69'
-              },
-              {
-                offset: 0.5,
-                color: '#ffbc91'
-              },
-              {
-                offset: 1,
-                color: '#fffb99'
-              }
-              ]
-            )
-          },
-        },
+        // itemStyle: {
+        //   normal: {
+        //     // barBorderRadius: 30,
+        //     color: new echarts.graphic.LinearGradient(
+        //       0, 0, 0, 1, [{
+        //         offset: 0,
+        //         color: '#ff6c69'
+        //       },
+        //       {
+        //         offset: 0.5,
+        //         color: '#ffbc91'
+        //       },
+        //       {
+        //         offset: 1,
+        //         color: '#fffb99'
+        //       }
+        //       ]
+        //     )
+        //   },
+        // },
       };
       chartOpts.series.push(defaultSeries);
       return chartOpts;

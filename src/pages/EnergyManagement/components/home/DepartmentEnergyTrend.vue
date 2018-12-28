@@ -14,18 +14,20 @@ const echarts = window.echarts || undefined;
 
 export default {
   mixins: [energyManageMixin],
-  props: ['title', 'height', 'width', 'wSize'],
+  props: ['title', 'height', 'width', 'wSize', 'chartData'],
   data () {
     return {};
   },
   watch: {
     wSize (s) {
       this.chart.resize();
+    },
+    chartData (d) {
+      this.getChartData();
     }
   },
   mounted () {
     if (echarts) {
-      // console.log(this.$refs.chart);
       this.chart = echarts.init(this.$refs.chart);
       this.getChartData();
     }
@@ -85,6 +87,12 @@ export default {
       return chartOpts;
     },
     getChartData () {
+      if (this.chartData) {
+        if (typeof this.chartData === 'boolean') return;
+        const chartOption = this.chartOptions(this.chartData);
+        this.chart.setOption(chartOption);
+        return;
+      }
       homeApi.chart5Data(this.simpleParseParams({
         startTime: moment().subtract('days', 5).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
@@ -93,7 +101,6 @@ export default {
         const data = res.data;
         // console.log(data);
         const chartOption = this.chartOptions(data);
-        console.log(chartOption);
         this.chart.setOption(chartOption);
       });
     }

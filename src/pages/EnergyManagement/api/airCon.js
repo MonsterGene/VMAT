@@ -13,7 +13,12 @@ const chart1Data = function () {
   };
 };
 
+const AirConVIPFTrend = (params) => {
+  return axios.post('/get/air/host/detail', params).catch(catchMethod);
+};
+
 export default {
   homeFistChart,
-  chart1Data
+  chart1Data,
+  AirConVIPFTrend
 };

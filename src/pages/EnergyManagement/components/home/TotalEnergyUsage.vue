@@ -27,7 +27,7 @@
         采集数据 <span class="grey-text">{{ dataCount }} 个</span>
       </v-flex>
     </v-layout>
-    <energy-guage :value="totalEnergyUsage"></energy-guage>
+    <energy-guage :value="totalEnergyUsage" :min="100000"></energy-guage>
   </div>
 </v-widget>
 </template>
@@ -58,8 +58,7 @@ export default {
         { name: 'E6', isWatched: false },
         { name: 'D9', isWatched: false },
         { name: 'D10', isWatched: false },
-        { name: 'F21', isWatched: false },
-        { name: 'B3', isWatched: false }
+        { name: 'F21', isWatched: false }
       ],
       dataCount: 500
     };
