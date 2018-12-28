@@ -4,7 +4,7 @@ const homeFistChart = params => {
   /** 
    * params: { startTime: Date, endTime:Date, building: String, [bu: String] }
    */
-  return axios.post('/get/building/epnet', params).catch(catchMethod);
+  return axios.post('/get/air/cabinet', params).catch(catchMethod);
 };
 
 export default {

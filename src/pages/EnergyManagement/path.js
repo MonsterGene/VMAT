@@ -62,6 +62,18 @@ const router = isPublic => ({
         /* webpackMode: "lazy-once" */
         `./pages/AirConCab.vue`
       )
+    },
+    {
+      path: 'test',
+      meta: {
+        breadcrumb: false,
+        public: isPublic ? true : false
+      },
+      component: () => import(
+        /* webpackChunkName: "routes" */
+        /* webpackMode: "lazy-once" */
+        `./pages/Test.vue`
+      )
     }
   ]
 });
