@@ -1,0 +1,213 @@
+<template>
+<div
+  ref="chart"
+  :style="{width: width, height: height}"
+></div>
+</template>
+
+<script>
+import moment from 'moment';
+import { _isArray, _isObject } from '../../../../util/utils';
+
+const echarts = window.echarts || undefined;
+
+export default {
+  props: {
+    title: { type: String },
+    type: {
+      type: [String, Array],
+      default: 'line',
+      validator: function (value) {
+        if (typeof value === 'string') {
+          return ['line', 'bar'].indexOf(value) !== -1;
+        } else if (_isArray(value)) {
+          return value.reduce((acc, cur) => {
+            if (acc) {
+              return ['line', 'bar'].indexOf(cur) !== -1;
+            } else {
+              return false;
+            }
+          }, true);
+        }
+      }
+    },
+    width: { type: String, default: '100%' },
+    height: { type: String, default: '150px' },
+    legendList: { type: Array },
+    /**
+     * type:
+     * Object   则每个系列固定配置项
+     * Function 则遍历每个系列的数据其返回值则为对应 series 的配置信息
+     *  */
+    seriesConfig: { type: [Object, Function] },
+    chartData: { type: [Object, Array], required: true },
+    maxValue: { type: [Number, Array, String, Function] },
+    minValue: { type: [Number, Array, String, Function] },
+    stack: { type: [Boolean] },
+    yName: { type: String },
+    xName: { type: String },
+    colors: { type: [Array, String] },
+    bgColor: { type: String },
+    wSize: {}
+  },
+  data () {
+    return {};
+  },
+  watch: {
+    wSize (s) {
+      this.chart.resize();
+    },
+    chartData (d) {
+      this.renderChart();
+    }
+  },
+  mounted () {
+    if (echarts) {
+      this.chart = echarts.init(this.$refs.chart);
+      this.renderChart();
+    }
+  },
+  methods: {
+    defineSeries (data) {
+      const doSeries = (t, isLeg) => {
+        let series;
+        if (typeof this.seriesConfig === 'object') {
+          series = t.map(v => this.seriesConfig);
+        } else if (typeof this.seriesConfig === 'function') {
+          series = t.map(this.seriesConfig);
+        } else {
+          series = t.map(v => ({ type: 'line' }));
+        }
+        t.forEach((v, i) => {
+          if (isLeg && typeof series[i].datasetIndex === 'undefined') {
+            series[i].datasetIndex = v;
+          }
+          if (this.stack && typeof series[i].stack === 'undefined') {
+            series[i].stack = 1;
+          }
+        });
+        return series;
+      };
+      if (this.legendList) {
+        let t = Array(this.legendList.length).fill(0);
+        const forSeries = a => {
+          a.forEach((item, index) => {
+            let i = this.legendList.indexOf(item[0]);
+            a[index] = i;
+          });
+          a = a.filter(v => v !== -1);
+          return a;
+        };
+        if (_isArray(data)) {
+          if (_isArray(data[0])) {
+            t = forSeries(data.filter((v, i) => i !== 0));
+            return this.doSeries(t, true);
+          } else {
+            t = forSeries(data.map(v => Object.keys(v)[0]));
+            return this.doSeries(t, true);
+          }
+        } else {
+          t = forSeries(Object.keys(data).filter((v, i) => i !== 0));
+          return this.doSeries(t, true);
+        }
+      } else {
+        let t;
+        if (_isArray(data)) {
+          if (_isArray(data[0])) {
+            t = Array(data[0].length - 1).fill(0);
+          } else {
+            t = Array(Object.keys(data[0]).length - 1).fill(0);
+          }
+          return doSeries(t);
+        } else if (_isObject(data)) {
+          t = Array(Object.keys(data).length - 1).fill(0);
+          return doSeries(t);
+        }
+      }
+    },
+    chartOptions (data) {
+      const chartOpts = {
+        title: {
+          text: this.title,
+          textStyle: {
+            color: '#5e5e5e',
+            fortSize: 20
+          },
+          top: 14,
+          left: 'center'
+        },
+        dataset: {},
+        legend: {
+          show: true,
+          top: '40',
+          right: '5%'
+        },
+        tooltip: {
+          show: true,
+          trigger: 'axis'
+        },
+        grid: {
+          top: 80,
+          left: '5%',
+          right: '6%',
+          bottom: '5%',
+          containLabel: true,
+        },
+        xAxis: [{
+          type: 'category',
+          name: this.xName || '',
+          axisLabel: {
+            show: true
+          }
+        }],
+        yAxis: [{
+          type: 'value',
+          name: this.yName || ''
+        }],
+        series: [],
+      };
+      if (this.maxValue) {
+        if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
+          // 默认Y轴为数值轴
+          chartOpts.yAxis[0].max = this.maxValue;
+        } else if (_isArray(this.maxValue)) {
+          this.maxValue.forEach((v, i) => {
+            if (chartOpts.yAxis[i]) {
+              chartOpts.yAxis[i].max = v;
+            }
+          });
+        }
+      }
+      if (this.minValue) {
+        if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
+          // 默认Y轴为数值轴
+          chartOpts.yAxis[0].min = this.minValue;
+        } else {
+          this.minValue.forEach((v, i) => {
+            if (chartOpts.yAxis[i]) {
+              chartOpts.yAxis[i].min = v;
+            }
+          });
+        }
+      }
+      if (this.colors) {
+        chartOpts.color = this.colors;
+      }
+      if (this.bgColor) {
+        chartOpts.backgroundColor = this.bgColor;
+      }
+      chartOpts.series = this.defineSeries(data);
+      chartOpts.dataset.source = data;
+      return chartOpts;
+    },
+    renderChart () {
+      if (this.chartData) {
+        if (Object.keys(this.chartData).length === 0) return;
+        const chartOption = this.chartOptions(this.chartData);
+        this.chart.setOption(chartOption);
+        return;
+      }
+    }
+  }
+};
+</script>

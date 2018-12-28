@@ -158,18 +158,6 @@ export default {
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         console.log(data);
-        // const chartData = {};
-        // const buildingList = Object.keys(data);
-        // chartData['楼栋'] = buildingList;
-        // buildingList.forEach(key => {
-        //   Object.keys(data[key].typeData).forEach(subKey => {
-        //     if (chartData[subKey]) {
-        //       chartData[subKey].push(data[key].typeData[subKey]);
-        //     } else {
-        //       chartData[subKey] = [data[key].typeData[subKey]];
-        //     }
-        //   });
-        // });
         const chartOption = this.chartOptions(data);
         // console.log(chartOption);
         this.chart.setOption(chartOption);

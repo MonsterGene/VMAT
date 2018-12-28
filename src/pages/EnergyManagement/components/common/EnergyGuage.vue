@@ -12,7 +12,9 @@ const echarts = window.echarts || null;
 export default {
   props: {
     height: { type: String, default: '170px' },
-    value: { type: Number, default: 0 }
+    value: { type: Number, default: 0 },
+    max: { type: Number, default: 10000000 },
+    min: { type: Number, default: 0 }
   },
   data () {
     return {
@@ -43,16 +45,14 @@ export default {
   },
   methods: {
     chartOptions (data) {
-      const minVal = 0;
-      const maxVal = 10;
       return {
         series: [
           {
             type: 'gauge',
             radius: '120%',
-            center: ['50%', '60%'],
-            min: minVal,
-            max: maxVal,
+            center: ['50%', '65%'],
+            min: this.min,
+            max: this.max,
             splitNumber: 1, // 刻度数量
             startAngle: 180,
             endAngle: 0,
@@ -83,7 +83,9 @@ export default {
               show: true,
               distance: -50,
               padding: [20, 0, 0, 0],
-              formatter: '{value} M·KWH'
+              formatter: function (value) {
+                return `${value / 1000000} M·KWH`;
+              }
             },
             axisTick: {
               show: false
@@ -91,7 +93,7 @@ export default {
             // 仪表盘详情，用于显示数据。
             detail: {
               show: true,
-              offsetCenter: [0, 30],
+              offsetCenter: [0, 40],
               color: '#2f4574',
               formatter: params => {
                 return this.totalEnergyUsageText;
