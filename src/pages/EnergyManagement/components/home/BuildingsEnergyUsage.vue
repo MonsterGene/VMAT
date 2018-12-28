@@ -60,7 +60,7 @@ export default {
           },
           backgroundColor: '#FFF0',
           formatter: params => {
-            console.log(params);
+            // console.log(params);
             const building = `<div>${params[0].name}</div>`;
             let seriesInfo = ``;
             let total = Number(params[0].data['总耗电']);
@@ -146,7 +146,7 @@ export default {
     },
     getChartData () {
       if (this.chartData) {
-        
+        if (typeof this.chartData === 'boolean') return;
         const chartOpts = this.chartOptions(this.chartData);
         this.chart.setOption(chartOpts);
         return;

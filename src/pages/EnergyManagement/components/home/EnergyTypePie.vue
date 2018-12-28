@@ -11,13 +11,16 @@ const echarts = window.echarts || undefined;
 
 export default {
   mixins: [energyManageMixin],
-  props: ['height', 'width', 'title', 'wSize'],
+  props: ['height', 'width', 'title', 'wSize', 'chartData'],
   data () {
     return {};
   },
   watch: {
     wSize (s) {
       this.chart.resize();
+    },
+    chartData (d) {
+      this.getChartData();
     }
   },
   mounted () {
@@ -79,6 +82,12 @@ export default {
       return chartOpts;
     },
     getChartData () {
+      if (this.chartData) {
+        if (typeof this.chartData === 'boolean') return;
+        const chartOpts = this.chartOptions(this.chartData);
+        this.chart.setOption(chartOpts);
+        return;
+      }
       homeApi.homeFistChart(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),

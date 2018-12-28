@@ -91,7 +91,7 @@
       ></v-select>
     </v-flex>
     <v-flex md2 class="py-2">
-      <v-btn-toggle v-model="text">
+      <v-btn-toggle>
         <v-btn flat value="left">
           日
         </v-btn>
@@ -155,7 +155,8 @@ export default {
     items2: ['BU', '楼层'],
     items3: ['1F', '1.5F', '2F'],
     items4: ['白班', '晚班'],
-    floorsTypeEnergyData: true
+    floorsTypeEnergyData: true,
+    typeEnergyData: true
   }),
   computed: {
     computedDateFormatted () {
@@ -191,15 +192,16 @@ export default {
       })).then(res => {
         if (res && res.status === 200) {
           const chartData = [];
-          const keys = Object.keys(this.chartData[0]);
+          const keys = Object.keys(res.data[0]);
           keys.pop();
-          this.chartData.forEach(item => {
+          res.data.forEach(item => {
             let t = { '楼层': item.floor };
             keys.forEach(key => {
               t[key] = item[key];
             });
             chartData.push(t);
           });
+          console.log(chartData);
           this.floorsTypeEnergyData = chartData;
         }
       });
@@ -211,6 +213,7 @@ export default {
         building: 'E515'
       })).then(res => {
         if (res && res.status === 200) {
+          console.log(res.data);
           this.typeEnergyData = res.data;
         }
       });
