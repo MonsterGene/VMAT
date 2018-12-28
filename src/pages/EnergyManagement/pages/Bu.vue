@@ -127,24 +127,10 @@
             </v-btn-toggle>
           </v-flex>
       <v-flex md8>
-        <v-widget title="该楼栋各BU电能能耗">
-          <div slot="widget-content">
-            <div
-              ref="chart2"
-              style="height:300px"
-            ></div>
-          </div>
-        </v-widget>
+        <buildings-energy-usage title="该楼栋各BU电能能耗" :chart-data="buildingBuTypeData" width="100%" height="380px"></buildings-energy-usage>
       </v-flex>
       <v-flex md4>
-        <v-widget title="各BU电能类型能耗占比">
-          <div slot="widget-content">
-            <div
-              ref="chart3"
-              style="height:300px"
-            ></div>
-          </div>
-        </v-widget>
+        <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
       </v-flex>
       <v-flex md1 d-flex>
       <v-select
@@ -224,19 +210,26 @@
  */
 import moment from 'moment';
 import { buApi } from '../api';
+import { energyManageMixin } from '../../../util/mixins/globalMixins';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
+import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
+import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+
 const echarts = window.echarts || undefined;
 
 export default {
   components: {
     VWidget,
     SourceTypeBar,
-    MiniStatistic
+    MiniStatistic,
+    BuildingsEnergyUsage,
+    EnergyTypePie
   },
-  
+  mixins: [energyManageMixin],
   data: vm => ({
+    buildingBuTypeData: true,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -374,14 +367,13 @@ export default {
     }
   },
   mounted () {
-    this.initCharts();
     this.getChart2();
     this.getChart3();
   },
   methods: {
     initCharts () {
-      this.chart2DOM = this.$refs.chart2;
-      this.chart2 = echarts.init(this.chart2DOM);
+      // this.chart2DOM = this.$refs.chart2;
+      // this.chart2 = echarts.init(this.chart2DOM);
 
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
@@ -397,98 +389,24 @@ export default {
       const [month, day, year] = date.split('/');
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
-    chart2Option (data) {
-      const chartOpts = {
-        dataset: { source: data },
-        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
-        legend: {
-          show: true
-        },
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            magicType: 'bar',
-          }
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        }, 
-        xAxis: [{
-          type: 'category',
-          axisLabel: {
-            interval: 0
-          }
-        }],
-        yAxis: [{
-          type: 'value',
-          max: 700
-        }],
-        series: []
-      };
-      let allData = {};
-      Object.keys(data[0]).forEach((v, i) => {
-        if (i === 0) return;
-        const defaultSeries = {
-          type: 'bar',
-          barWidth: '40%',
-          stack: 1,
-          label: {
-            normal: {
-              position: 'inside'
-            }
-          },
-        };
-        chartOpts.series.push(defaultSeries);
-      });
-      data.forEach((item, index) => {
-        Object.keys(item).forEach((key, index2) => {
-          if (index > 0) {
-            if (allData[key]) {
-              allData[key] += Number(item[key]);
-            } else {
-              allData[key] = Number(item[key]);
-            }
-          }
-        });
-      });
-      const maxVal = Object.keys(allData).reduce((acc, cur) => {
-        return acc >= allData[cur] ? acc : allData[cur];
-      }, 0);
-      chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
-      return chartOpts;
-    },
     getChart2 () {
-      let params = {
+      buApi.chart1Data(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
         building: 'E5'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
-      });
-      buApi.chart1Data(data).then(res => {
-        // console.log(res);
-        const data = res.data;
-        // console.log(data);
-        const chartOption = this.chart2Option(data);
-        // console.log(chartOption);
-        this.chart2.setOption(chartOption);
-
-        this.chart2.on('click', params => {
-          
-        });
-
-
+      })).then(res => {
+        if (res && res.status === 200) {
+          res.data.forEach(item => {
+            item['总耗电'] = Object.keys(item).reduce((acc, cur, index) => {
+              if (index > 0) {
+                return acc + Number(item[cur]);
+              } else {
+                return acc;
+              }
+            }, 0);
+          });
+          this.buildingBuTypeData = res.data;
+        }
       });
     },
     chart3Option (data) { 
