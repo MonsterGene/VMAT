@@ -19,7 +19,7 @@
       &emsp;&emsp;
       <v-flex md1>
         <div class="text-xs-center">
-          <v-btn round>空调风柜</v-btn>
+          <v-btn round @click="airfenggui">空调风柜</v-btn>
         </div>
       </v-flex>
       <v-flex md2></v-flex>
@@ -134,11 +134,12 @@
             >
             <img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
             <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -150,11 +151,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -166,11 +168,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -182,11 +185,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调主机.jpg" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -259,7 +263,12 @@ export default {
     menu2: false,
     items: ['E5', 'D10'],
     items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班']
+    items2: ['白班', '晚班'],
+    dianbiaoname: 'E5-4PP1',
+    shebeiname: 'foxconn',
+    shebeinumber: '123456',
+    building: 'E5',
+    airCon: '12345kwh'
   }),
   computed: {
     computedDateFormatted () {
@@ -278,7 +287,12 @@ export default {
     this.getChart1();
 
     // 上面右边折线图
-    this.getChart2();
+    // this.getChartData();
+    if (echarts) {
+      // console.log(this.$refs.chart);
+      this.chart2 = echarts.init(this.$refs.chart2);
+      this.getChartData();
+    }
 
     // 下面左边第一个折线图
     this.getChart3();
@@ -303,7 +317,6 @@ export default {
     });
 
   },
-  
   methods: {
     formatDate (date) {
       if (!date) return null;
@@ -329,8 +342,8 @@ export default {
       // this.chartInstance.chart1 = this.chart1;
 
       // 上面右边折线图
-      this.chart2DOM = this.$refs.chart2;
-      this.chart2 = echarts.init(this.chart2DOM);
+      // this.chart2DOM = this.$refs.chart2;
+      // this.chart2 = echarts.init(this.chart2DOM);
       // this.chartInstance.chart2 = this.chart2;
 
       // 下面左边第一个折线图
@@ -519,99 +532,89 @@ export default {
     // 上面右边折线图
     chart2Option (data) {
       const chartOpts = {
-        dataset: { source: null },
         title: {
+          text: this.title,
           textStyle: {
-            color: '#000'
+            color: '#5e5e5e',
+            fortSize: 20
+          },
+          top: 14,
+          left: 'center'
+        },
+        dataset: { source: null },
+        color: '#4e7af3',
+        backgroundColor: '#FFF',
+        tooltip: {
+          show: true,
+          trigger: 'axis'
+        },
+        grid: {
+          top: 80,
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [{
+          type: 'category',
+          axisLabel: {
+            show: true,
+            interval: 0
           }
-        },
-        xAxis: {
-          axisTick: {
-            show: false  
-          },
-          axisLine: {
-            show: true,
-          },
-          axisLabel: {
-            show: true,
-            fontSize: 16
-          },
-          data: data
-        },
-        yAxis: {
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLabel: {
-            show: true,
-                
-          },
-          splitLine: {
-            show: true,
-          },
-        },
-        series: []
+        }],
+        yAxis: [{
+          type: 'value',
+          name: '能耗（KWH）'
+        }],
+        series: [],
+        
       };
       const chartData = {};
-      chartData['time'] = Object.keys(data);
-      chartData['能耗'] = chartData['time'].map(name => {
-        return Number(data[name]);
+      chartData['日期'] = Object.keys(data).sort();
+      chartData['能耗'] = chartData['日期'].map(date => {
+        return Number(data[date]);
       });
+      chartData['日期'] = chartData['日期'].map(date => moment(date).format('MM月DD日'));
       chartOpts.dataset.source = chartData;
       const defaultSeries = {
         type: 'line',
-        symbol: 'rect',
-        symbolSize: 6,
-        lineStyle: {
-          width: 2,
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 1,
-            y2: 0,
-            colorStops: [{
-              offset: 0, color: '#1a4285' // 0% 处的颜色
-            }, {
-              offset: 1, color: '#16387c' // 100% 处的颜色
-            }],
-            globalCoord: false // 缺省为 false
-          }  
-        },
-        data: data
+        symbolSize: 6
       };
       chartOpts.series.push(defaultSeries);
-      const maxVal = chartData['能耗'].reduce((acc, cur) => {
-        if (cur > acc) {
-          return cur;
-        } else {
-          return acc;
-        }
-      }, 0);
-      // chartOpts.yAxis[0].max = Math.ceil(maxVal / 10) * 10;
       return chartOpts;
     },
-    getChart2 () {
-      let params = {
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+    getChartData () {
+      airConApi.homeFistChart(this.simpleParseParams({
+        startTime: moment().subtract('days', 5).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
         building: 'E5'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
-      });
-      airConApi.homeFistChart(data).then(res => {
+      })).then(res => {
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         // console.log(data);
-        const chartOption = this.chart2Option(data);
+        const chartOption = this.chart2Option(data.each);
+        console.log(chartOption);
         this.chart2.setOption(chartOption);
       });
     },
+    // getChart2 () {
+    //   let params = {
+    //     startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+    //     endTime: moment().format('YYYY-MM-DD'),
+    //     building: 'E5'
+    //   };
+    //   let data = new FormData();
+    //   Object.keys(params).forEach(key => {
+    //     data.append(key, params[key]);
+    //   });
+    //   airConApi.homeFistChart(data).then(res => {
+    //     if (!res || !res.status || res.status !== 200) return;
+    //     const data = res.data;
+    //     // console.log(data);
+    //     const chartOption = this.chart2Option(data);
+    //     this.chart2.setOption(chartOption);
+    //   });
+    // },
 
     // 下面左边第一个折线图
     chart3Option (data) {
@@ -690,6 +693,10 @@ export default {
       //   const chartOption = this.chart3Option(data);
       //   this.chart3.setOption(chartOption);
       // });
+    },
+
+    airfenggui: function () {
+      this.$router.push('/energy_management/airConCab');
     }
   }
 };

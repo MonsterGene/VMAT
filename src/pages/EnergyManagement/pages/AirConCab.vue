@@ -8,7 +8,7 @@
       align-center>
       <v-flex md1>
         <div class="text-xs-center">
-          <v-btn round>空调主机</v-btn>
+          <v-btn round @click="airzhuji">空调主机</v-btn>
         </div>
       </v-flex>
       &emsp;&emsp;
@@ -106,10 +106,7 @@
       <v-flex md4>
         <v-widget title="空调风柜总能耗">
           <div slot="widget-content">
-            <div
-              ref="chart1"
-              style="height:200px"
-            ></div>
+            <energy-guage :value="acHostTotalEnergy"></energy-guage>
           </div>
         </v-widget>
       </v-flex>
@@ -125,18 +122,19 @@
       </v-flex>
       <v-flex md3>
         <v-widget title="空调风柜1">
-          <div slot="widget-content">
+          <div slot="widget-content" class="first-panel">
             <div
               ref="airCon1"
               style="height:100px;float:left;margin-right:30px"
             >
             <img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -148,11 +146,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -164,11 +163,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -180,11 +180,12 @@
               style="height:100px;float:left;margin-right:30px"
             ><img src="../assets/pics/空调风柜.png" style="width:100px;height:80px"/></div>
           <div>
-              电表名称&emsp;<span>E5-4PP1</span><br />
-              设备名称&emsp;<span>foxconn</span><br />
-              设备编号&emsp;<span>123456</span><br />
-              楼栋&emsp;<span>E5</span>
+              电表名称&emsp;<span class="grey-text">{{ dianbiaoname }}</span><br />
+              设备名称&emsp;<span class="grey-text">{{ shebeiname }}</span><br />
+              设备编号&emsp;<span class="grey-text">{{ shebeinumber }}</span><br />
+              楼栋&emsp;<span class="grey-text">{{ building }}</span>
             </div>
+            月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
       </v-flex>
@@ -235,22 +236,34 @@
 <script>
 import moment from 'moment';
 import { airConCabApi } from '../api';
+import { energyManageMixin } from '../../../util/mixins/globalMixins';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
-const echarts = window.echarts || undefined;
+import EnergyGuage from '../components/common/EnergyGuage.vue';
+
+const echarts = window.echarts || null;
+
 export default {
   components: {
     VWidget,
-    SourceTypeBar
+    SourceTypeBar,
+    EnergyGuage
   },
+  mixins: [energyManageMixin],
   data: vm => ({
+    acHostTotalEnergy: 0,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
     menu2: false,
     items: ['E5', 'D10'],
     items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班']
+    items2: ['白班', '晚班'],
+    dianbiaoname: 'E5-4PP1',
+    shebeiname: 'foxconn',
+    shebeinumber: '123456',
+    building: 'E5',
+    airCon: '12345kwh'
   }),
   computed: {
     computedDateFormatted () {
@@ -269,7 +282,12 @@ export default {
     this.getChart1();
 
     // 上面右边折线图
-    this.getChart2();
+    // this.getChartData();
+    if (echarts) {
+      // console.log(this.$refs.chart);
+      this.chart2 = echarts.init(this.$refs.chart2);
+      this.getChartData();
+    }
 
     // 下面左边第一个折线图
     this.getChart3();
@@ -278,7 +296,7 @@ export default {
     const data = {
       startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
       endTime: moment().format('YYYY-MM-DD'),
-      building: 'E515'
+      building: 'E5'
     };
     Object.keys(data).forEach(key => {
       params.append(key, data[key]);
@@ -307,28 +325,27 @@ export default {
       return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     },
     onWindowResize () {
-      console.log('window resize');
-      Object.keys(this.chartInstance).forEach(key => {
-        this.chartInstance[key].resize();
-      });
+      // console.log('window resize');
+      // Object.keys(this.chartInstance).forEach(key => {
+      //   this.chartInstance[key].resize();
+      // });
     },
     initCharts () {
       // 上面左边仪表盘
-      this.chart1DOM = this.$refs.chart1;
-      this.chart1 = echarts.init(this.chart1DOM);
-      this.chartInstance.chart1 = this.chart1;
+      // this.chart1DOM = this.$refs.chart1;
+      // this.chart1 = echarts.init(this.chart1DOM);
+      // this.chartInstance.chart1 = this.chart1;
 
       // 上面右边折线图
-      this.chart2DOM = this.$refs.chart2;
-      this.chart2 = echarts.init(this.chart2DOM);
-      this.chartInstance.chart2 = this.chart2;
-      
+      // this.chart2DOM = this.$refs.chart2;
+      // this.chart2 = echarts.init(this.chart2DOM);
+      // this.chartInstance.chart2 = this.chart2;
+
       // 下面左边第一个折线图
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
-      this.chartInstance.chart3 = this.chart3;
+      // this.chartInstance.chart3 = this.chart3;
     },
-
     // 上面左边仪表盘
     firstChartOption (data) {
       const minVal = 0;
@@ -495,28 +512,14 @@ export default {
       };
     },
     getChart1 () {
-      let params = {
+      airConCabApi.homeFistChart(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
-        // building: 'E515'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
-      });
-      airConCabApi.homeFistChart(data).then(res => {
-        // console.log(res);
-        if (!res || !res.status || res.status !== 200) return;
-        const data = res.data;
-        if (data.success === 'true') {
-          this.totalEnergyUsage = data.data.epnet;
-          setInterval(() => {
-            const demo = (Math.random() * 1000000).toFixed(2) - 0;
-            const chartOption = this.firstChartOption(demo);
-            this.chart1.setOption(chartOption);
-          }, 2000);
-          // const chartOption = this.firstChartOption(data.data.epnet);
-          // this.chart1.setOption(chartOption);
+        building: 'E5'
+      })).then(res => {
+        console.log(res);
+        if (res && res.status === 200) {
+          this.acHostTotalEnergy = Number(res.data['总耗电']);
         }
       });
     },
@@ -525,80 +528,88 @@ export default {
     chart2Option (data) {
       const chartOpts = {
         title: {
+          text: this.title,
           textStyle: {
-            color: '#000'
+            color: '#5e5e5e',
+            fortSize: 20
+          },
+          top: 14,
+          left: 'center'
+        },
+        dataset: { source: null },
+        color: '#4e7af3',
+        backgroundColor: '#FFF',
+        tooltip: {
+          show: true,
+          trigger: 'axis'
+        },
+        grid: {
+          top: 80,
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true,
+        },
+        xAxis: [{
+          type: 'category',
+          axisLabel: {
+            show: true,
+            interval: 0
           }
-        },
-        xAxis: {
-          axisTick: {
-            show: false  
-          },
-          axisLine: {
-            show: true,
-          },
-          axisLabel: {
-            show: true,
-            fontSize: 16
-          },
-          data: ['3', '6', '9', '12', '15', '18', '21', '24', '27', '30', '33', '36']
-        },
-        yAxis: {
-          axisLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLabel: {
-            show: true,
-                
-          },
-          splitLine: {
-            show: true,
-          },
-        },
-        series: [{
-          type: 'line',
-          symbol: 'rect',
-          symbolSize: 6,
-          lineStyle: {
-            width: 2,
-            color: {
-              type: 'linear',
-              x: 0,
-              y: 0,
-              x2: 1,
-              y2: 0,
-              colorStops: [{
-                offset: 0, color: '#1a4285' // 0% 处的颜色
-              }, {
-                offset: 1, color: '#16387c' // 100% 处的颜色
-              }],
-              globalCoord: false // 缺省为 false
-            }  
-          },
-          data: ['122', '132', '176', '654', '462', '422']
-        }]
+        }],
+        yAxis: [{
+          type: 'value',
+          name: '能耗（KWH）'
+        }],
+        series: [],
+        
       };
-    },
-    getChart2 () {
-      let params = {
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E515'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
+      const chartData = {};
+      chartData['日期'] = Object.keys(data).sort();
+      chartData['能耗'] = chartData['日期'].map(date => {
+        return Number(data[date]);
       });
-      airConCabApi.chart1Data(data).then(res => {
+      chartData['日期'] = chartData['日期'].map(date => moment(date).format('MM月DD日'));
+      chartOpts.dataset.source = chartData;
+      const defaultSeries = {
+        type: 'line',
+        symbolSize: 6
+      };
+      chartOpts.series.push(defaultSeries);
+      return chartOpts;
+    },
+    getChartData () {
+      airConCabApi.homeFistChart(this.simpleParseParams({
+        startTime: moment().subtract('days', 5).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E5'
+      })).then(res => {
         if (!res || !res.status || res.status !== 200) return;
         const data = res.data;
         // console.log(data);
-        const chartOption = this.chart2Option(data);
+        const chartOption = this.chart2Option(data.each);
+        console.log(chartOption);
         this.chart2.setOption(chartOption);
       });
     },
+    // getChart2 () {
+    //   let params = {
+    //     startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+    //     endTime: moment().format('YYYY-MM-DD'),
+    //     building: 'E5'
+    //   };
+    //   let data = new FormData();
+    //   Object.keys(params).forEach(key => {
+    //     data.append(key, params[key]);
+    //   });
+    //   airConApi.homeFistChart(data).then(res => {
+    //     if (!res || !res.status || res.status !== 200) return;
+    //     const data = res.data;
+    //     // console.log(data);
+    //     const chartOption = this.chart2Option(data);
+    //     this.chart2.setOption(chartOption);
+    //   });
+    // },
 
     // 下面左边第一个折线图
     chart3Option (data) {
@@ -670,14 +681,18 @@ export default {
       Object.keys(params).forEach(key => {
         data.append(key, params[key]);
       });
-      airConCabApi.chart1Data(data).then(res => {
-        if (!res || !res.status || res.status !== 200) return;
-        const data = res.data;
-        // console.log(data);
-        const chartOption = this.chart3Option(data);
-        this.chart3.setOption(chartOption);
-      });
-    }
+      // airConApi.chart1Data(data).then(res => {
+      //   if (!res || !res.status || res.status !== 200) return;
+      //   const data = res.data;
+      //   // console.log(data);
+      //   const chartOption = this.chart3Option(data);
+      //   this.chart3.setOption(chartOption);
+      // });
+    },
+
+    airzhuji: function () {
+      this.$router.push('/energy_management/airCon');
+    },
   }
 };
 </script>
