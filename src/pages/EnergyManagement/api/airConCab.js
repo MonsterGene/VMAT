@@ -6,7 +6,11 @@ const homeFistChart = params => {
    */
   return axios.post('/get/air/cabinet', params).catch(catchMethod);
 };
+const AirConCabVIPFTrend = (params) => {
+  return axios.post('/get/air/cabinet/detail', params).catch(catchMethod);
+};
 
 export default {
-  homeFistChart
+  homeFistChart,
+  AirConCabVIPFTrend
 };
