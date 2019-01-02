@@ -102,6 +102,9 @@ export default {
     resizeDelay: {
       type: Number,
       default: 450
+    },
+    customTooltip: {
+      type: Object
     }
   },
   data () {
@@ -208,10 +211,6 @@ export default {
           top: '40',
           right: '5%'
         },
-        tooltip: {
-          show: true,
-          trigger: 'axis'
-        },
         grid: {
           top: 80,
           left: '5%',
@@ -261,6 +260,9 @@ export default {
       }
       if (this.bgColor) {
         chartOpts.backgroundColor = this.bgColor;
+      }
+      if (this.customTooltip) {
+        chartOpts.tooltip = this.customTooltip;
       }
       chartOpts.series = this.defineSeries(data);
       chartOpts.dataset.source = data;

@@ -1,7 +1,7 @@
 <template>
 <v-layout row>
   <v-flex xs6>
-    <v-widget :title="'机故次数走势（'+ date +' '+ type +'）'" :content-bg="$vuetify.theme.primary">
+    <v-widget :title="'机故次数走势（'+ date +' '+ type +'）'" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
       <div slot="widget-content">
         <e-chart
           ref="frequencyChart"
@@ -14,7 +14,7 @@
     </v-widget>
   </v-flex>
   <v-flex xs6>
-      <v-widget :title="'机故时间走势('+ date +' '+ type +')'" :content-bg="$vuetify.theme.primary">
+      <v-widget :title="'机故时间走势('+ date +' '+ type +')'" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
         <div slot="widget-content">
           <e-chart
             ref="timeChart"

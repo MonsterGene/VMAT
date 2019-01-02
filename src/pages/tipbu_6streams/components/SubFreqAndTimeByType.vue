@@ -1,7 +1,7 @@
 <template>
 <v-layout row>
   <v-flex xs6>
-    <v-widget :title="'机故类型次数分析'" :content-bg="$vuetify.theme.primary">
+    <v-widget :title="'机故类型次数分析'" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
       <div slot="widget-header-action" style="width:260px;display:flex;">
         <v-menu
           :close-on-content-click="false"
@@ -49,7 +49,7 @@
     </v-widget> 
   </v-flex>
   <v-flex xs6>
-      <v-widget :title="'异常类型分析'" :content-bg="$vuetify.theme.primary">
+      <v-widget :title="'异常类型分析'" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
         <div slot="widget-header-action" style="width:260px;display:flex;">
           <v-menu
             :close-on-content-click="false"
