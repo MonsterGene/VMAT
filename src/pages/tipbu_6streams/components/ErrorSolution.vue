@@ -1,7 +1,7 @@
 <template>
 <v-layout row>
   <v-flex xs12>
-    <v-widget title="异常处理方法：" :content-bg="$vuetify.theme.primary">
+    <v-widget title="异常处理方法：" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
       <div slot="widget-content">
         <v-dialog v-model="editorDialog" max-width="500px">
           <v-card>

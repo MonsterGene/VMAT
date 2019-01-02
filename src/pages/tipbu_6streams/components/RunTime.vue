@@ -1,5 +1,5 @@
 <template>
-<v-widget :title="'運行時間('+ stationName +')'" :content-bg="$vuetify.theme.primary">
+<v-widget :title="'運行時間('+ stationName +')'" :content-bg="$vuetify.theme.primary" :header-bg="$vuetify.theme.primary">
   <div slot="widget-header-action" style="width:380px;display:flex;height:100%">
     <div style="width:120px;">
       <v-select

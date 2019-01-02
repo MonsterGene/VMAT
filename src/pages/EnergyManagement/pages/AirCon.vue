@@ -120,6 +120,7 @@
         <line-chart
           title="当月每日空调主机能耗"
           :dataset-source="acHostEnergyUsageByDay"
+          :custom-tooltip="DefaultChartTooltip"
           colors="#6699ff"
           bg-color="#FFF"
           height="280px"></line-chart>
@@ -135,6 +136,7 @@
         <line-chart
           title="电压走势"
           :dataset-source="airconVoltageTrendData"
+          :custom-tooltip="DefaultChartTooltip"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
@@ -146,6 +148,7 @@
         <line-chart
           title="电流走势"
           :dataset-source="airconIntensityTrendData"
+          :custom-tooltip="DefaultChartTooltip"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
@@ -157,6 +160,7 @@
         <line-chart
           title="功率走势"
           :dataset-source="airconPowerTrendData"
+          :custom-tooltip="DefaultChartTooltip"
           :max-value="v => takeInt(v.max + 1, true)"
           :min-value="v => takeInt(v.min - 1)"
           y-name="功率(W)"
@@ -170,6 +174,7 @@
         <line-chart
           title="功率因素走势"
           :dataset-source="airconPowerFactorTrendData"
+          :custom-tooltip="DefaultChartTooltip"
           :max-value="v => (v.max + 0.05).toFixed(2)"
           :min-value="v => (v.min - 0.05).toFixed(2)"
           y-name="功率因素"
@@ -186,16 +191,19 @@
 <script>
 import moment from 'moment';
 import colors from 'vuetify/es5/util/colors';
-import { takeInt } from '../../../util/utils';
+import { takeInt, _isArray } from '../../../util/utils';
 import { airConApi } from '../api';
 import { energyManageMixin } from '../../../util/mixins/globalMixins';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
+import { DefaultChartTooltip } from '../components/common/ChartTooltip';
 import AirConStatus from '../components/AirCon/AirConStatus.vue';
 
 const echarts = window.echarts || null;
+
+console.log(DefaultChartTooltip);
 
 export default {
   components: {
@@ -244,6 +252,7 @@ export default {
         monthEnergyUsage: 54813
       }
     ],
+    DefaultChartTooltip,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -310,7 +319,7 @@ export default {
       })).then(res => {
         if (res && res.status === 200) {
           const data = res.data;
-          const chartData = Object.entries(data.each).sort().map(([k, v]) => ({ '日期': k, '耗电(KWH)': v }));
+          const chartData = Object.entries(data.each).sort().map(([k, v]) => ({ '日期': k, '耗电': v }));
           this.acHostEnergyUsageByDay = chartData;
         }
       });
