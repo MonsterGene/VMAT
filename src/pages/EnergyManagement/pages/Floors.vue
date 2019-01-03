@@ -171,7 +171,8 @@ export default {
     items3: ['1F', '1.5F', '2F'],
     items4: ['白班', '晚班'],
     floorsTypeEnergyData: {},
-    typeEnergyData: true
+    typeEnergyData: true,
+    DefaultChartTooltip
   }),
   computed: {
     computedDateFormatted () {
@@ -206,17 +207,6 @@ export default {
         building: 'E5'
       })).then(res => {
         if (res && res.status === 200) {
-          // const chartData = [];
-          // const keys = Object.keys(res.data[0]);
-          // keys.pop();
-          // res.data.forEach(item => {
-          //   let t = { '楼层': item.floor };
-          //   keys.forEach(key => {
-          //     t[key] = item[key];
-          //   });
-          //   chartData.push(t);
-          // });
-          // console.log(chartData);
           this.floorsTypeEnergyData = res.data;
         }
       });

@@ -10,6 +10,10 @@ export function _isObject (obj) {
   return Object.prototype.toString.call(obj) === '[object Object]';
 }
 
+export function deepCopyObject (obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
+
 export function takeInt (v, t) {
   if (t) {
     return Math.ceil(v);

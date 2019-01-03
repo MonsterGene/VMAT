@@ -4,10 +4,10 @@
   series-type="bar"
   :stack="true"
   :dataset-source="chartData"
-  :legend-list="['动力', '照明', '空调主机', '空调风柜']"
+  :legend-list="energyTypeColors.types"
   :custom-tooltip="DefaultChartTooltip"
   y-name="用电量(KWH)"
-  :colors="['#3ac0a9', '#4e7af3', '#515151', '#f7a35c']"
+  :colors="energyTypeColors.colors"
   bg-color="#FFF"
   :height="height"
   @click="chartClick"
@@ -17,9 +17,18 @@
 <script>
 import moment from 'moment';
 import { homeApi } from '../../api';
+import { deepCopyObject } from '../../../../util/utils';
 import { energyManageMixin } from '../../mixin.js';
 import SimpleChart from '../../../../components/chart/SimpleChart.vue';
-import { DefaultChartTooltip } from '../common/ChartTooltip';
+import { ChartTooltip, defaultTooltipOption } from '../common/ChartTooltip';
+const defTooltipOpt = deepCopyObject(defaultTooltipOption);
+defTooltipOpt.formatter.countTotal = {
+  show: true,
+  name: '总耗电',
+  nameColor: '#ffcc33',
+  valueColor: '#99ff00'
+};
+const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 
 export default {
   components: { SimpleChart },

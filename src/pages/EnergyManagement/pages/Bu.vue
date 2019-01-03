@@ -127,7 +127,18 @@
             </v-btn-toggle>
           </v-flex>
       <v-flex md8>
-        <buildings-energy-usage title="该楼栋各BU电能能耗" :chart-data="buildingBuTypeData" width="100%" height="380px"></buildings-energy-usage>
+        <simple-chart
+          title="该楼栋各BU电能能耗"
+          series-type="bar"
+          :stack="true"
+          :dataset-source="buildingBuTypeData"
+          :legend-list="['动力', '照明', '空调主机', '空调风柜']"
+          :custom-tooltip="DefaultChartTooltip"
+          y-name="用电量(KWH)"
+          :colors="['#3ac0a9', '#4e7af3', '#515151', '#f7a35c']"
+          bg-color="#FFF"
+          height="380px"
+        ></simple-chart>
       </v-flex>
       <v-flex md4>
         <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
@@ -210,12 +221,23 @@
  */
 import moment from 'moment';
 import { buApi } from '../api';
+import { deepCopyObject } from '../../../util/utils';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+import SimpleChart from '../../../components/chart/SimpleChart.vue';
+import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
+const defTooltipOpt = deepCopyObject(defaultTooltipOption);
+defTooltipOpt.formatter.countTotal = {
+  show: true,
+  name: '总耗电',
+  nameColor: '#ffcc33',
+  valueColor: '#99ff00'
+};
+const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 
 const echarts = window.echarts || undefined;
 
@@ -225,11 +247,13 @@ export default {
     SourceTypeBar,
     MiniStatistic,
     BuildingsEnergyUsage,
-    EnergyTypePie
+    EnergyTypePie,
+    SimpleChart
   },
   mixins: [energyManageMixin],
   data: vm => ({
-    buildingBuTypeData: true,
+    buildingBuTypeData: {},
+    DefaultChartTooltip,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -396,15 +420,15 @@ export default {
         building: 'E5'
       })).then(res => {
         if (res && res.status === 200) {
-          res.data.forEach(item => {
-            item['总耗电'] = Object.keys(item).reduce((acc, cur, index) => {
-              if (index > 0) {
-                return acc + Number(item[cur]);
-              } else {
-                return acc;
-              }
-            }, 0);
-          });
+          // res.data.forEach(item => {
+          //   item['总耗电'] = Object.keys(item).reduce((acc, cur, index) => {
+          //     if (index > 0) {
+          //       return acc + Number(item[cur]);
+          //     } else {
+          //       return acc;
+          //     }
+          //   }, 0);
+          // });
           this.buildingBuTypeData = res.data;
         }
       });
