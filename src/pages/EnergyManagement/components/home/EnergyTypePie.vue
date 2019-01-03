@@ -5,7 +5,7 @@
 <script>
 import moment from 'moment';
 import { homeApi } from '../../api';
-import { energyManageMixin } from '../../../../util/mixins/globalMixins';
+import { energyManageMixin } from '../../mixin.js';
 
 const echarts = window.echarts || undefined;
 

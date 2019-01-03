@@ -37,7 +37,7 @@ export default {
     title: {
       type: String
     },
-    type: {
+    seriesType: {
       type: [String, Array],
       default: 'line',
       validator: function (value) {
@@ -65,6 +65,9 @@ export default {
     legendList: {
       type: Array
     },
+    grid: {
+      type: Object
+    },
     /**
      * type:
      * Object   则每个系列固定配置项
@@ -77,12 +80,12 @@ export default {
       type: [Object, Array],
       required: true
     },
-    maxValue: {
-      type: [Number, Array, String, Function]
-    },
-    minValue: {
-      type: [Number, Array, String, Function]
-    },
+    // maxValue: {
+    //   type: [Number, Array, String, Function]
+    // },
+    // minValue: {
+    //   type: [Number, Array, String, Function]
+    // },
     stack: {
       type: [Boolean]
     },
@@ -92,6 +95,8 @@ export default {
     xName: {
       type: String
     },
+    xAxis: { type: [Object, Array] },
+    yAxis: { type: [Object, Array] },
     colors: {
       type: [Array, String]
     },
@@ -149,35 +154,43 @@ export default {
         }
         t.forEach((v, i) => {
           if (isLeg && typeof series[i].datasetIndex === 'undefined') {
-            series[i].datasetIndex = v;
+            series[i].datasetIndex = 0;
           }
           if (this.stack && typeof series[i].stack === 'undefined') {
             series[i].stack = 1;
           }
+          if (this.seriesType && typeof this.seriesType === 'string') {
+            series[i].type = this.seriesType;
+          } else if (this.seriesType && _isArray(this.seriesType) && this.seriesType.length > 0) {
+            series[i].type = this.seriesType[i] || this.seriesType[this.seriesType.length - 1];
+          }
         });
+        console.log(series);
         return series;
       };
       if (this.legendList) {
         let t = Array(this.legendList.length).fill(0);
         const forSeries = a => {
+          console.log(a);
           a.forEach((item, index) => {
-            let i = this.legendList.indexOf(item[0]);
+            let i = this.legendList.indexOf(item);
             a[index] = i;
           });
           a = a.filter(v => v !== -1);
+          console.log(a);
           return a;
         };
         if (_isArray(data)) {
           if (_isArray(data[0])) {
             t = forSeries(data.filter((v, i) => i !== 0));
-            return this.doSeries(t, true);
+            return doSeries(t, true);
           } else {
-            t = forSeries(data.map(v => Object.keys(v)[0]));
-            return this.doSeries(t, true);
+            t = forSeries(Object.keys(data[0]));
+            return doSeries(t, true);
           }
         } else {
           t = forSeries(Object.keys(data).filter((v, i) => i !== 0));
-          return this.doSeries(t, true);
+          return doSeries(t, true);
         }
       } else {
         let t;
@@ -212,7 +225,7 @@ export default {
           right: '5%'
         },
         grid: {
-          top: 80,
+          top: 100,
           left: '5%',
           right: '6%',
           bottom: '5%',
@@ -231,29 +244,62 @@ export default {
         }],
         series: [],
       };
-      if (this.maxValue) {
-        if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
-          // 默认Y轴为数值轴
-          chartOpts.yAxis[0].max = this.maxValue;
-        } else if (_isArray(this.maxValue)) {
-          this.maxValue.forEach((v, i) => {
-            if (chartOpts.yAxis[i]) {
-              chartOpts.yAxis[i].max = v;
+      // if (this.maxValue) {
+      //   if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
+      //     // 默认Y轴为数值轴
+      //     chartOpts.yAxis[0].max = this.maxValue;
+      //   } else if (_isArray(this.maxValue)) {
+      //     this.maxValue.forEach((v, i) => {
+      //       if (chartOpts.yAxis[i]) {
+      //         chartOpts.yAxis[i].max = v;
+      //       }
+      //     });
+      //   }
+      // }
+      // if (this.minValue) {
+      //   if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
+      //     // 默认Y轴为数值轴
+      //     chartOpts.yAxis[0].min = this.minValue;
+      //   } else {
+      //     this.minValue.forEach((v, i) => {
+      //       if (chartOpts.yAxis[i]) {
+      //         chartOpts.yAxis[i].min = v;
+      //       }
+      //     });
+      //   }
+      // }
+      if (this.xAxis) {
+        if (_isArray(this.xAxis)) {
+          chartOpts.xAxis = this.xAxis;
+        } else if (_isObject(this.xAxis)) {
+          chartOpts.xAxis = [this.xAxis];
+        } else {
+          chartOpts.xAxis = [{
+            type: 'category',
+            name: this.xName || '',
+            axisLabel: {
+              show: true
             }
-          });
+          }];
         }
       }
-      if (this.minValue) {
-        if (['number', 'string', 'function'].indexOf(typeof this.maxValue) > -1) {
-          // 默认Y轴为数值轴
-          chartOpts.yAxis[0].min = this.minValue;
+      if (this.yAxis) {
+        if (_isArray(this.yAxis)) {
+          chartOpts.yAxis = this.yAxis;
+        } else if (_isObject(this.yAxis)) {
+          chartOpts.yAxis = [this.yAxis];
         } else {
-          this.minValue.forEach((v, i) => {
-            if (chartOpts.yAxis[i]) {
-              chartOpts.yAxis[i].min = v;
+          chartOpts.yAxis = [{
+            type: 'value',
+            name: this.yName || '',
+            axisLabel: {
+              show: true
             }
-          });
+          }];
         }
+      }
+      if (this.grid) {
+        Object.assign(chartOpts.grid, this.grid);
       }
       if (this.colors) {
         chartOpts.color = this.colors;

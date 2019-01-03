@@ -111,7 +111,18 @@
       <img src="../assets/pics/u652.png" width="100%" height="450px"/>
     </v-flex>
     <v-flex md4>
-      <buildings-energy-usage title="各楼层电能能耗" :chart-data="floorsTypeEnergyData" width="100%" height="230px"></buildings-energy-usage>
+      <simple-chart
+        title="各楼层电能能耗"
+        series-type="bar"
+        :stack="true"
+        :dataset-source="floorsTypeEnergyData"
+        :legend-list="['动力', '照明', '空调主机', '空调风柜']"
+        :custom-tooltip="DefaultChartTooltip"
+        y-name="用电量(KWH)"
+        :colors="['#3ac0a9', '#4e7af3', '#515151', '#f7a35c']"
+        bg-color="#FFF"
+        height="230px"
+      ></simple-chart>
       <energy-type-pie title="各电能类型能耗占比" :chart-data="typeEnergyData" building="E515" width="100%" height="230px"></energy-type-pie>
     </v-flex>
   </v-layout>
@@ -130,11 +141,14 @@
  */
 import moment from 'moment';
 import { floorsApi } from '../api';
-import { energyManageMixin } from '../../../util/mixins/globalMixins';
+import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+
+import SimpleChart from '../../../components/chart/SimpleChart.vue';
+import { DefaultChartTooltip } from '../components/common/ChartTooltip';
 
 const echarts = window.echarts || undefined;
 
@@ -143,7 +157,8 @@ export default {
     VWidget,
     SourceTypeBar,
     BuildingsEnergyUsage,
-    EnergyTypePie
+    EnergyTypePie,
+    SimpleChart
   },
   mixins: [energyManageMixin],
   data: vm => ({
@@ -155,7 +170,7 @@ export default {
     items2: ['BU', '楼层'],
     items3: ['1F', '1.5F', '2F'],
     items4: ['白班', '晚班'],
-    floorsTypeEnergyData: true,
+    floorsTypeEnergyData: {},
     typeEnergyData: true
   }),
   computed: {
@@ -191,18 +206,18 @@ export default {
         building: 'E5'
       })).then(res => {
         if (res && res.status === 200) {
-          const chartData = [];
-          const keys = Object.keys(res.data[0]);
-          keys.pop();
-          res.data.forEach(item => {
-            let t = { '楼层': item.floor };
-            keys.forEach(key => {
-              t[key] = item[key];
-            });
-            chartData.push(t);
-          });
-          console.log(chartData);
-          this.floorsTypeEnergyData = chartData;
+          // const chartData = [];
+          // const keys = Object.keys(res.data[0]);
+          // keys.pop();
+          // res.data.forEach(item => {
+          //   let t = { '楼层': item.floor };
+          //   keys.forEach(key => {
+          //     t[key] = item[key];
+          //   });
+          //   chartData.push(t);
+          // });
+          // console.log(chartData);
+          this.floorsTypeEnergyData = res.data;
         }
       });
     },

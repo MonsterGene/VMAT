@@ -193,7 +193,7 @@ import moment from 'moment';
 import colors from 'vuetify/es5/util/colors';
 import { takeInt, _isArray } from '../../../util/utils';
 import { airConApi } from '../api';
-import { energyManageMixin } from '../../../util/mixins/globalMixins';
+import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
