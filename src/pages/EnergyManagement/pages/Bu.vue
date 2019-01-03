@@ -210,7 +210,7 @@
  */
 import moment from 'moment';
 import { buApi } from '../api';
-import { energyManageMixin } from '../../../util/mixins/globalMixins';
+import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';

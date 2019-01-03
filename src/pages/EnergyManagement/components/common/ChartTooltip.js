@@ -76,7 +76,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
             acc.finish = true;
           }
         }
-        console.log(acc);
+        // console.log(acc);
         return acc;
       }, {
         lv: 0,
@@ -141,7 +141,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
     if (opts.countTotal && opts.countTotal.isCount) {
       total += itemValue;
     }
-    console.log(itemValue, itemValueText);
+    // console.log(itemValue, itemValueText);
     seriesInfo += `
       <div>
         ${legendStr}
@@ -166,7 +166,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
       </div>
     `;
   }
-  console.log(seriesInfo);
+  // console.log(seriesInfo);
   return seriesInfo;
 };
 

@@ -35,7 +35,7 @@
 <script>
 import moment from 'moment';
 import { homeApi } from '../../api';
-import { energyManageMixin } from '../../../../util/mixins/globalMixins';
+import { energyManageMixin } from '../../mixin.js';
 import VWidget from '../../../../components/VWidget.vue';
 import EnergyGuage from '../common/EnergyGuage.vue';
 
