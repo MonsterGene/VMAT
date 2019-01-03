@@ -259,12 +259,12 @@ export default {
     menu2: false,
     items: ['E5', 'D10'],
     items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班'],
-    dianbiaoname: 'E5-4PP1',
-    shebeiname: 'foxconn',
-    shebeinumber: '123456',
-    building: 'E5',
-    airCon: '12345kwh'
+    items2: ['白班', '晚班']
+    // dianbiaoname: 'E5-4PP1',
+    // shebeiname: 'foxconn',
+    // shebeinumber: '123456',
+    // building: 'E5',
+    // airCon: '12345kwh'
   }),
   computed: {
     computedDateFormatted () {
