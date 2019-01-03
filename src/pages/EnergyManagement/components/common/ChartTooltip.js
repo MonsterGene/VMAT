@@ -21,11 +21,14 @@ import { _isObject, _isArray } from '../../../../util/utils';
  * @param {(string|array)} opts.dataValue.conversion
  * @param {number} opts.dataValue.conversionCondition
  * @param {object} opts.countTotal
+ * @param {boolean} opts.countTotal.show
+ * @param {string} opts.countTotal.name
  * @param {boolean} opts.countTotal.isCount
  * @param {string} opts.countTotal.nameColor
  * @param {string} opts.countTotal.valueColor
  *  */
 const defaultFormatterFunction = (params, t, cb, opts) => {
+  // console.log(params);
   let seriesInfo = ``;
   if (opts.seriesName && opts.seriesName.show) {
     let sStr = params[0].seriesName;
@@ -62,17 +65,19 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
               acc.finish = true;
             }
           } else {
+            acc.val = acc.val / cur[1];
             acc.finish = true;
           }
         } else {
           if (arr[i + 1]) {
-            if (acc.val > arr[i + 1][1]) {
+            if (acc.val > cvsCon) {
               acc.val = acc.val / cur[1];
               acc.lv++;
             } else {
               acc.finish = true;
             }
           } else {
+            acc.val = acc.val / cur[1];
             acc.finish = true;
           }
         }
@@ -151,20 +156,30 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
     `;
   });
   let totalText = '';
-  if (opts.countTotal && opts.countTotal.isCount) {
-    totalText = makeValueText(total);
+  if (opts.countTotal && opts.countTotal.show) {
     let totalStyleStr = '';
     if (opts.legend && opts.legend.show) {
       totalStyleStr = `padding-left: 10px`;
     }
     let totalNameColor = opts.countTotal && opts.countTotal.nameColor && 'color:' + opts.countTotal.nameColor + ';' || '';
-    let totalValueColor = opts.countTotal && opts.countTotal.nameColor && `color:${opts.countTotal.valueColor};` || '';
-    seriesInfo += `
+    let totalValueColor = opts.countTotal && opts.countTotal.valueColor && `color:${opts.countTotal.valueColor};` || '';
+    if (opts.countTotal.isCount) {
+      totalText = makeValueText(total);
+      seriesInfo += `
+        <div style="${totalStyleStr}">
+          <span style="${totalNameColor}">总和</span>
+          <span style="${totalValueColor}">${totalText}</span>
+        </div>
+      `;
+    } else if (opts.countTotal.name) {
+      totalText = makeValueText(params[0].data[opts.countTotal.name]);
+      seriesInfo += `
       <div style="${totalStyleStr}">
         <span style="${totalNameColor}">总和</span>
         <span style="${totalValueColor}">${totalText}</span>
       </div>
-    `;
+      `;
+    }
   }
   // console.log(seriesInfo);
   return seriesInfo;
@@ -235,7 +250,7 @@ export const ChartTooltip = function (opts = {}) {
   return _obj;
 };
 
-const defaultTooltipOption = {
+export const defaultTooltipOption = {
   backgroundColor: 'rgba(51, 51, 204, 0.5)',
   borderColor: 'rgba(255, 255, 255, 0.2)',
   borderWidth: 5,

@@ -120,7 +120,7 @@
         <line-chart
           title="当月每日空调主机能耗"
           :dataset-source="acHostEnergyUsageByDay"
-          :custom-tooltip="DefaultChartTooltip"
+          :custom-tooltip="chartTooltipOpt('default')"
           colors="#6699ff"
           bg-color="#FFF"
           height="280px"></line-chart>
@@ -136,11 +136,13 @@
         <line-chart
           title="电压走势"
           :dataset-source="airconVoltageTrendData"
-          :custom-tooltip="DefaultChartTooltip"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
+          :custom-tooltip="chartTooltipOpt('V')"
+          :y-axis="{
+            name: '电压(V)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1)
+          }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
-          y-name="电压(V)"
           x-name="时间"
           height="300px"></line-chart>
       </v-flex>
@@ -148,11 +150,14 @@
         <line-chart
           title="电流走势"
           :dataset-source="airconIntensityTrendData"
-          :custom-tooltip="DefaultChartTooltip"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
+          :custom-tooltip="chartTooltipOpt('A')"
+          :y-axis="{
+            name: '电流(A)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1)
+          }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
-          y-name="电流(A)"
+          y-name=""
           x-name="时间"
           height="300px"></line-chart>
       </v-flex>
@@ -160,10 +165,12 @@
         <line-chart
           title="功率走势"
           :dataset-source="airconPowerTrendData"
-          :custom-tooltip="DefaultChartTooltip"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
-          y-name="功率(W)"
+          :custom-tooltip="chartTooltipOpt('W')"
+          :y-axis="{
+            name: '功率(W)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1),
+          }"
           x-name="时间"
           height="300px"
           colors="#6699ff"
@@ -174,10 +181,12 @@
         <line-chart
           title="功率因素走势"
           :dataset-source="airconPowerFactorTrendData"
-          :custom-tooltip="DefaultChartTooltip"
-          :max-value="v => (v.max + 0.05).toFixed(2)"
-          :min-value="v => (v.min - 0.05).toFixed(2)"
-          y-name="功率因素"
+          :custom-tooltip="chartTooltipOpt()"
+          :y-axis="{
+            name: '功率因素',
+            max: v => (v.max + 0.05).toFixed(2),
+            min: v => (v.min - 0.05).toFixed(2)
+          }"
           x-name="时间"
           height="300px"
           colors="#6699ff"
@@ -191,19 +200,17 @@
 <script>
 import moment from 'moment';
 import colors from 'vuetify/es5/util/colors';
-import { takeInt, _isArray } from '../../../util/utils';
+import { takeInt, _isArray, deepCopyObject } from '../../../util/utils';
 import { airConApi } from '../api';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
-import { DefaultChartTooltip } from '../components/common/ChartTooltip';
+import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 import AirConStatus from '../components/AirCon/AirConStatus.vue';
 
 const echarts = window.echarts || null;
-
-console.log(DefaultChartTooltip);
 
 export default {
   components: {
@@ -252,7 +259,6 @@ export default {
         monthEnergyUsage: 54813
       }
     ],
-    DefaultChartTooltip,
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
@@ -288,9 +294,17 @@ export default {
   },
   methods: {
     takeInt,
+    chartTooltipOpt (cvs, cvsCon) {
+      const defTtOpt = deepCopyObject(defaultTooltipOption);
+      if (cvs === 'default') {
+        return ChartTooltip(defTtOpt);
+      }
+      defTtOpt.formatter.dataValue.conversion = cvs;
+      defTtOpt.formatter.dataValue.conversionCondition = cvsCon;
+      return ChartTooltip(defTtOpt);
+    },
     formatDate (date) {
       if (!date) return null;
-
       const [year, month, day] = date.split('-');
       return `${month}/${day}/${year}`;
     },
