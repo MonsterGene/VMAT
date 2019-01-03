@@ -233,7 +233,7 @@ import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTo
 const defTooltipOpt = deepCopyObject(defaultTooltipOption);
 defTooltipOpt.formatter.countTotal = {
   show: true,
-  name: '总耗电',
+  isCount: true,
   nameColor: '#ffcc33',
   valueColor: '#99ff00'
 };

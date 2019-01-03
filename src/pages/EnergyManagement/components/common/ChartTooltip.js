@@ -28,7 +28,7 @@ import { _isObject, _isArray } from '../../../../util/utils';
  * @param {string} opts.countTotal.valueColor
  *  */
 const defaultFormatterFunction = (params, t, cb, opts) => {
-  console.log(params);
+  // console.log(params);
   let seriesInfo = ``;
   if (opts.seriesName && opts.seriesName.show) {
     let sStr = params[0].seriesName;
@@ -81,7 +81,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
             acc.finish = true;
           }
         }
-        console.log(acc);
+        // console.log(acc);
         return acc;
       }, {
         lv: 0,
@@ -156,9 +156,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
     `;
   });
   let totalText = '';
-  console.log(opts.countTotal);
   if (opts.countTotal && opts.countTotal.show) {
-    console.log('show total');
     let totalStyleStr = '';
     if (opts.legend && opts.legend.show) {
       totalStyleStr = `padding-left: 10px`;
