@@ -1,29 +1,29 @@
 <template>
-<div class="aircon-status-wrapper" :class="{'active': currentAircon === airconInfo.machineSerialNumber}">
-  <div class="aircon-status-top" :class="{'active': currentAircon === airconInfo.machineSerialNumber}">
-    <h4>空调主机</h4>
+<div class="aircon-status-wrapper" :class="{'active': currentAirconcab === airconcabInfo.machineSerialNumber}">
+  <div class="aircon-status-top" :class="{'active': currentAirconcab === airconcabInfo.machineSerialNumber}">
+    <h4>空调风柜</h4>
   </div>
   <div class="aircon-status-middle">
     <div class="img">
       <img src="../../assets/pics/空调主机.jpg" />
     </div>
     <div class="aircon-details">
-      <div><div>电表名称</div><div>{{ airconInfo.electricityMeterName }}</div></div>
-      <div><div>设备名称</div><div>{{ airconInfo.machineName }}</div></div>
-      <div><div>设备编号</div><div>{{ airconInfo.machineSerialNumber }}</div></div>
-      <div><div>楼栋</div><div>{{ airconInfo.building }}</div></div>
+      <div><div>电表名称</div><div>{{ airconcabInfo.electricityMeterName }}</div></div>
+      <div><div>设备名称</div><div>{{ airconcabInfo.machineName }}</div></div>
+      <div><div>设备编号</div><div>{{ airconcabInfo.machineSerialNumber }}</div></div>
+      <div><div>楼栋</div><div>{{ airconcabInfo.building }}</div></div>
     </div>
   </div>
   <div class="aircon-status-bottom">
     <div>月累积能耗</div>
-    <div>{{ airconInfo.monthEnergyUsage }} KWH</div>
+    <div>{{ airconcabInfo.monthEnergyUsage }} KWH</div>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-  props: ['airconInfo', 'currentAircon'],
+  props: ['airconcabInfo', 'currentAirconcab'],
   data () {
     return {};
   }

@@ -147,7 +147,7 @@
       wrap
       align-center
     >
-      <v-flex md3>
+      <!-- <v-flex md3>
         <v-widget title="空调风柜1">
           <div
             slot="widget-content"
@@ -230,10 +230,10 @@
             月累积能耗&emsp;<span class="grey-text">{{ airCon }}</span>
           </div>
         </v-widget>
-      </v-flex>
-      <!-- <v-flex md3 v-for="(aircon, index) in airconList" :key="index">
-        <air-con-status :aircon-info="aircon" current-aircon="111"></air-con-status>
       </v-flex> -->
+      <v-flex md3 v-for="(airconcab, index) in airconList" :key="index">
+        <air-con-cab-status :airconcab-info="airconcab" current-airconcab="111"></air-con-cab-status>
+      </v-flex>
     </v-layout>
     <!-- <v-flex md6>
         <v-widget title="电压走势">
@@ -344,7 +344,7 @@ import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
-// import AirConStatus from '../components/AirCon/AirConStatus.vue';
+import AirConCabStatus from '../components/AirCon/AirConCabStatus.vue';
 
 const echarts = window.echarts || null;
 
@@ -353,8 +353,8 @@ export default {
     VWidget,
     SourceTypeBar,
     LineChart,
-    EnergyGuage
-    // AirConStatus
+    EnergyGuage,
+    AirConCabStatus
   },
   mixins: [energyManageMixin],
   data: vm => ({
@@ -364,48 +364,48 @@ export default {
     airconIntensityTrendData: {},
     airconPowerTrendData: {},
     airconPowerFactorTrendData: {},
-    // airconList: [
-    //   {
-    //     electricityMeterName: 'E5-4PP1',
-    //     machineName: 'foxconn',
-    //     machineSerialNumber: '111',
-    //     building: 'E5',
-    //     monthEnergyUsage: 54813
-    //   },
-    //   {
-    //     electricityMeterName: 'E5-4PP1',
-    //     machineName: 'foxconn',
-    //     machineSerialNumber: '222',
-    //     building: 'E5',
-    //     monthEnergyUsage: 54813
-    //   },
-    //   {
-    //     electricityMeterName: 'E5-4PP1',
-    //     machineName: 'foxconn',
-    //     machineSerialNumber: '333',
-    //     building: 'E5',
-    //     monthEnergyUsage: 54813
-    //   },
-    //   {
-    //     electricityMeterName: 'E5-4PP1',
-    //     machineName: 'foxconn',
-    //     machineSerialNumber: '444',
-    //     building: 'E5',
-    //     monthEnergyUsage: 54813
-    //   }
-    // ],
+    airconList: [
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '111',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '222',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '333',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      },
+      {
+        electricityMeterName: 'E5-4PP1',
+        machineName: 'foxconn',
+        machineSerialNumber: '444',
+        building: 'E5',
+        monthEnergyUsage: 54813
+      }
+    ],
     date: new Date().toISOString().substr(0, 10),
     dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
     menu1: false,
     menu2: false,
     items: ['E5', 'D10'],
     items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班'],
-    dianbiaoname: 'E5-4PP1',
-    shebeiname: 'foxconn',
-    shebeinumber: '123456',
-    building: 'E5',
-    airCon: '12345kwh'
+    items2: ['白班', '晚班']
+    // dianbiaoname: 'E5-4PP1',
+    // shebeiname: 'foxconn',
+    // shebeinumber: '123456',
+    // building: 'E5',
+    // airCon: '12345kwh'
   }),
   computed: {
     computedDateFormatted () {
