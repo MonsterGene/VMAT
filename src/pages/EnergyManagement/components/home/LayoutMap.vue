@@ -1,8 +1,10 @@
 <template>
-<div class="home-layout-map" @mousewheel="imgScale">
+<div class="home-layout-map">
   <img
+    @mousewheel="imgScale"
     @mousedown.left.stop.prevent="onMouseEnter"
-    @mousemove.left="onMouseMove"
+    @mousemove.left.ctrl.exact="imgScale2"
+    @mousemove.left.exact="onMouseMove"
     @mouseup.left.stop.prevent="onMouseEnd"
     @mouseout="onMouseOut"
     @load="imgLoaded"
@@ -67,6 +69,7 @@ export default {
     moveImg (e) {
       const et = e.target;
       console.log([et]);
+      console.log(this.imgScaleState);
       const reg = new RegExp(/([-]?\d+)/);
       let top = et.style.top;
       let left = et.style.left;
@@ -94,6 +97,9 @@ export default {
         this.moveImg(e);
       }
     },
+    onMouseMove2 () {
+      console.log('have ');
+    },
     onMouseEnd (e) {
       const time = e.timeStamp - this.mouseStartTime;
       this.mouseState = 0;
@@ -105,6 +111,8 @@ export default {
     },
     imgScale (evt) {
       evt.preventDefault();
+      evt.stopPropagation();
+      console.log('image scale');
       let width = evt.target.width;
       if (evt.deltaY < 0) {
         evt.target.style.width = width + 20 + 'px';
@@ -115,9 +123,15 @@ export default {
       }
       console.log(this.imgScaleState);
     },
+    imgScale2 (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log(e);
+    },
     imgLoaded (e) {
       console.log(e);
-      const img = e.path[0];
+      const img = e.path && e.path[0] || e.target || null;
+      if (!img) return;
       this.imgScaleState = img.width / img.naturalWidth;
       this.imgNatWidth = img.naturalWidth;
     }
@@ -137,7 +151,6 @@ export default {
     position absolute
     top 0
     left 0
-    width 98%
     max-width 130%
     min-width 50%
   .watch-point-wrapper

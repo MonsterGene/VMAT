@@ -35,7 +35,7 @@ const echarts = window.echarts || undefined;
 export default {
   props: {
     title: {
-      type: String
+      type: [String, Object]
     },
     seriesType: {
       type: [String, Array],
@@ -213,7 +213,9 @@ export default {
           text: this.title,
           textStyle: {
             color: '#5e5e5e',
-            fortSize: 20
+            fortSize: 20,
+            fontFamily: 'Microsoft YaHei',
+            fontWeight: 500
           },
           top: 14,
           left: 'center'
