@@ -86,7 +86,7 @@ import EChart from '@/components/chart/echart';
 // import {ChartApi1} from '@/components/chart/echart1';
 import { ChartApi } from '../../api/index';
 import EchartAPI from '../../api/materialmanage';
-// import motaikuang from './stockMTK.vue';
+// import motaikuang from '../../components/MTK.vue';
 // import { globalMixin } from '../../../../util/mixins/globalMixins.js';
 const API = { ChartApi };
 
