@@ -112,7 +112,7 @@
       <v-flex md4>
         <v-widget title="空调主机总能耗">
           <div slot="widget-content">
-            <energy-guage title="" :value="acHostTotalEnergy" height="200px"></energy-guage>
+            <energy-guage title="" :value="acHostTotalEnergy" :max="1000000" height="200px"></energy-guage>
           </div>
         </v-widget>
       </v-flex>
@@ -128,7 +128,7 @@
     </v-layout>
     <v-layout row wrap align-center>
       <v-flex md3 v-for="(aircon, index) in airconList" :key="index">
-        <air-con-status :aircon-info="aircon" current-aircon="111"></air-con-status>
+        <air-con-status :aircon-info="aircon" :current-type="0" current-aircon="111"></air-con-status>
       </v-flex>
     </v-layout>
     <v-layout row wrap align-center>

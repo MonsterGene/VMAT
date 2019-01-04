@@ -5,7 +5,7 @@
   </div>
   <div class="aircon-status-middle">
     <div class="img">
-      <img src="../../assets/pics/空调主机.jpg" />
+      <img :src="deviceImg" />
     </div>
     <div class="aircon-details">
       <div><div>电表名称</div><div>{{ airconInfo.electricityMeterName }}</div></div>
@@ -22,10 +22,23 @@
 </template>
 
 <script>
+
 export default {
-  props: ['airconInfo', 'currentAircon'],
+  props: ['airconInfo', 'currentAircon', 'currentType'],
   data () {
-    return {};
+    return {
+      airconImg: require('../../assets/pics/aircon.jpg'),
+      airconCabImg: require('../../assets/pics/airconCab.png')
+    };
+  },
+  computed: {
+    deviceImg () {
+      if (this.currentType === 0) {
+        return this.airconImg;
+      } else {
+        return this.airconCabImg;
+      }
+    }
   }
 };
 </script>

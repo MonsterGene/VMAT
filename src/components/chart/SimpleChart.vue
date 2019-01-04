@@ -316,7 +316,11 @@ export default {
     },
     renderChart () {
       if (this.datasetSource) {
-        if (Object.keys(this.datasetSource).length === 0) return;
+        if (Object.keys(this.datasetSource).length === 0) {
+          return this.chart.showLoading();
+        } else {
+          this.chart.hideLoading();
+        }
         const chartOption = this.chartOptions(this.datasetSource);
         this.chart.setOption(chartOption);
         return;

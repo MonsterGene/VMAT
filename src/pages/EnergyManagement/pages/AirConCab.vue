@@ -119,7 +119,7 @@
       <v-flex md4>
         <v-widget title="空调风柜总能耗">
           <div slot="widget-content">
-            <energy-guage :value="acHostTotalEnergy"></energy-guage>
+            <energy-guage :value="acHostTotalEnergy" height="200px" :max="1000000"></energy-guage>
           </div>
         </v-widget>
       </v-flex>
@@ -232,7 +232,7 @@
         </v-widget>
       </v-flex> -->
       <v-flex md3 v-for="(airconcab, index) in airconList" :key="index">
-        <air-con-cab-status :airconcab-info="airconcab" current-airconcab="111"></air-con-cab-status>
+        <air-con-cab-status :airconcab-info="airconcab" :current-type="1" current-airconcab="111"></air-con-cab-status>
       </v-flex>
     </v-layout>
     <!-- <v-flex md6>
@@ -284,10 +284,13 @@
         <line-chart
           title="电压走势"
           :dataset-source="airconVoltageTrendData"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
+          :custom-tooltip="chartTooltipOpt('V')"
+          :y-axis="{
+            name: '电压(V)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1)
+          }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
-          y-name="电压(V)"
           x-name="时间"
           height="300px"
         ></line-chart>
@@ -296,10 +299,14 @@
         <line-chart
           title="电流走势"
           :dataset-source="airconIntensityTrendData"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
+          :custom-tooltip="chartTooltipOpt('A')"
+          :y-axis="{
+            name: '电流(A)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1)
+          }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
-          y-name="电流(A)"
+          y-name=""
           x-name="时间"
           height="300px"
         ></line-chart>
@@ -308,9 +315,12 @@
         <line-chart
           title="功率走势"
           :dataset-source="airconPowerTrendData"
-          :max-value="v => takeInt(v.max + 1, true)"
-          :min-value="v => takeInt(v.min - 1)"
-          y-name="功率(W)"
+          :custom-tooltip="chartTooltipOpt('W')"
+          :y-axis="{
+            name: '功率(W)',
+            max: v => takeInt(v.max + 1, true),
+            min: v => takeInt(v.min - 1),
+          }"
           x-name="时间"
           height="300px"
           colors="#6699ff"
@@ -321,9 +331,12 @@
         <line-chart
           title="功率因素走势"
           :dataset-source="airconPowerFactorTrendData"
-          :max-value="v => (v.max + 0.05).toFixed(2)"
-          :min-value="v => (v.min - 0.05).toFixed(2)"
-          y-name="功率因素"
+          :custom-tooltip="chartTooltipOpt()"
+          :y-axis="{
+            name: '功率因素',
+            max: v => (v.max + 0.05).toFixed(2),
+            min: v => (v.min - 0.05).toFixed(2)
+          }"
           x-name="时间"
           height="300px"
           colors="#6699ff"
@@ -337,13 +350,14 @@
 <script>
 import moment from 'moment';
 import colors from 'vuetify/es5/util/colors';
-import { takeInt } from '../../../util/utils';
+import { takeInt, _isArray, deepCopyObject } from '../../../util/utils';
 import { airConCabApi } from '../api';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
+import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 import AirConCabStatus from '../components/AirCon/AirConCabStatus.vue';
 
 const echarts = window.echarts || null;
@@ -451,6 +465,15 @@ export default {
   },
   methods: {
     takeInt,
+    chartTooltipOpt (cvs, cvsCon) {
+      const defTtOpt = deepCopyObject(defaultTooltipOption);
+      if (cvs === 'default') {
+        return ChartTooltip(defTtOpt);
+      }
+      defTtOpt.formatter.dataValue.conversion = cvs;
+      defTtOpt.formatter.dataValue.conversionCondition = cvsCon;
+      return ChartTooltip(defTtOpt);
+    },
     formatDate (date) {
       if (!date) return null;
 
@@ -744,9 +767,9 @@ export default {
             const time = moment(item._timestamp).format('MM-DD HH:mm');
             U_Data.push({
               '时间': time,
-              'A相电': item.v_ab,
-              'B相电': item.v_bc,
-              'C相电': item.v_ac
+              'A相电': item.voltage_a,
+              'B相电': item.voltage_b,
+              'C相电': item.voltage_c
             });
             I_Data.push({
               '时间': time,
@@ -760,7 +783,7 @@ export default {
             });
             F_Data.push({
               '时间': time,
-              '功率因素': item.powerfactor
+              '功率因素': item.pf_total
             });
           });
           U_Data.sort((a, b) => a['时间'] - b['时间']);
