@@ -31,7 +31,7 @@ export default {
     },
     headerBg: {
       type: String,
-      default: 'white'
+      default: 'transparent'
     },
     headerDark: {
       type: Boolean,

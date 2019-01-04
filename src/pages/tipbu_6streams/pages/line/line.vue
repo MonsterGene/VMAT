@@ -38,7 +38,7 @@
       <v-card
         class="line-card"
         dark hover
-        :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id"
+        :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id + '&s=' + line.stations[line.stations.length - 1].id"
       >
         <v-card-title class="pb-0">
           <h4 style="margin: 0 auto">{{ line.name }}</h4>
