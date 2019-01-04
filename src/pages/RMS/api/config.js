@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverAddr = 'http://10.167.194.27/exception';
+const serverAddr = 'http://10.167.192.233:7777/';
 
 const catchMethod = function (error) {
   if (error.response) {
