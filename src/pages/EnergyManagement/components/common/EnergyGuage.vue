@@ -51,7 +51,7 @@ export default {
             type: 'gauge',
             radius: '120%',
             center: ['50%', '65%'],
-            min: this.min,
+            min: this.min || 0,
             max: this.max,
             splitNumber: 1, // 刻度数量
             startAngle: 180,
@@ -104,7 +104,7 @@ export default {
             },
             data: [
               // name: "当前用户总数",
-              { value: (data / (1000 * 1000)).toFixed(2) }
+              { value: data }
             ]
           }
         ]

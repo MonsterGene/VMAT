@@ -212,7 +212,7 @@ export default {
       });
     },
     getChart3 () {
-      floorsApi.chart1Data(this.simpleParseParams({
+      floorsApi.buildingTypeEnergy(this.simpleParseParams({
         startTime: moment().subtract('days', 5).format('YYYY-MM-DD'),
         endTime: moment().format('YYYY-MM-DD'),
         building: 'E515'
