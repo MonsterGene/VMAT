@@ -779,7 +779,7 @@ export default {
             });
             P_Data.push({
               '时间': time,
-              '功率': item.power
+              '功率': item.psum_total
             });
             F_Data.push({
               '时间': time,

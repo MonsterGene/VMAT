@@ -6,7 +6,7 @@
       <utilization-rate-and-output-by-day
         :header-text="'产出与达成率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
         :line-id="$route.query.l"
-        :station-id="13"
+        :station-id="$route.query.s"
         :open="true"
         @chart-click="yieldOutputByDayClick"
       ></utilization-rate-and-output-by-day>
@@ -16,7 +16,7 @@
         :header-text="'产出与达成率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ yieldOutputByHour.date +'）'"
         :date="yieldOutputByHour.date"
         :line-id="yieldOutputByHour.lineId"
-        :station-id="13"
+        :station-id="$route.query.s"
       ></utilization-rate-and-output-by-hour>
     </v-flex>
 
@@ -24,7 +24,7 @@
       <utilization-rate-and-output-by-day
         :header-text="'产出与稼动率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
         :line-id="$route.query.l"
-        :station-id="13"
+        :station-id="$route.query.s"
         :open="true"
         @chart-click="utilOutputByDayClick"
       ></utilization-rate-and-output-by-day>
@@ -34,7 +34,7 @@
         :header-text="'产出与稼动率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
         :date="utilOutputByHour.date"
         :line-id="utilOutputByHour.lineId"
-        :station-id="13"
+        :station-id="$route.query.s"
       ></utilization-rate-and-output-by-hour>
     </v-flex>
 
