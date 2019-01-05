@@ -1,7 +1,7 @@
 <template>
 <v-list-tile
   :active-class="$vuetify.dark && 'primary--text text--lighten-5' || 'primary--text'"
-  :to="!item.href ? { name: item.name, path: item.path } : null"
+  :to="!item.href ? getChildRoute(item) : null"
   :href="item.href"
   ripple="ripple"
   :disabled="item.disabled"
@@ -26,7 +26,24 @@
 <script>
 export default {
   props: [
-    'item'
-  ]
+    'item',
+    'parentPath'
+  ],
+  methods: {
+    getChildRoute (item) {
+      if (item.name) {
+        return { name: item.name, path: item.path };
+      }
+      if (typeof item.path === 'string' && item.path.indexOf('/') === 0) {
+        return { path: item.path };
+      }
+      if (this.parentPath) {
+        console.log(this.parentPath, item.path);
+        return { path: this.parentPath + '/' + item.path };
+      } else {
+        return { path: item.path };
+      }
+    }
+  }
 };
 </script>
