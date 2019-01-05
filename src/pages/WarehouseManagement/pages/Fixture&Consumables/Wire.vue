@@ -1,6 +1,6 @@
 <template>
 <v-container grid-list-xl fluid>
-  <v-widget title="Test治具管理" :content-bg="$vuetify.theme.primary">
+  <v-widget title="线材管理" :content-bg="$vuetify.theme.primary">
     <v-card>
         <v-card-title>
         線材管理

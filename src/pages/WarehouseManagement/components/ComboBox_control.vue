@@ -6,7 +6,7 @@
     :items="items"
     :search-input.sync="search"
     hide-selected
-    label="Search for an option"
+    label="人工錄入屬性選擇"
     multiple
     clearable
     small-chips
@@ -129,6 +129,29 @@ export default {
       { text: '領用人/負責人', color: 'blue' },
       { text: '樓層', color: 'blue' },
       { text: '存放位置', color: 'blue' },
+      { text: 'Chamber尺寸(內部)', color: 'blue' },
+      { text: 'Chamber尺寸(外部)', color: 'blue' },
+      { text: 'Chamber測試溫度範圍', color: 'blue' },
+      { text: '處理發熱能力', color: 'blue' },
+      { text: '電源', color: 'blue' },
+      { text: '功率', color: 'blue' },
+      { text: '用水規格', color: 'blue' },
+      { text: '使用狀態', color: 'blue' },
+      { text: '濕氣規格', color: 'blue' },
+      { text: '用氣規格', color: 'blue' },
+      { text: '測試CELL數量', color: 'blue' },
+      { text: 'UUT功率數量', color: 'blue' },
+      { text: 'UUT功率規格', color: 'blue' },
+      { text: '熱/冷命令', color: 'blue' },
+      { text: '開始/結束命令', color: 'blue' },
+      { text: '保修截止日期', color: 'blue' },
+      { text: '保修截止日期', color: 'blue' },
+      { text: '故障時間', color: 'blue' },
+      { text: '故障現象', color: 'blue' },
+      { text: '故障原因', color: 'blue' },
+      { text: '維修內容', color: 'blue' },
+      { text: '維修人員', color: 'blue' },
+      { text: '備註', color: 'blue' }
     ],
     nonce: 1,
     menu: false,

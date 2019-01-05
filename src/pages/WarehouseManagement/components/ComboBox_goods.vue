@@ -6,7 +6,7 @@
     :items="items"
     :search-input.sync="search"
     hide-selected
-    label="Search for an option"
+    label="自動生成屬性選擇"
     multiple
     clearable
     small-chips

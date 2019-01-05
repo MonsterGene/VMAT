@@ -9,12 +9,12 @@ const router = [
     // 定義子路由
     children: [
       {
-        path: 'main_interface',
+        path: 'home',
         meta: { breadcrumb: false },  // 導航條不顯示
         component: () => import(
           /* webpackChunkName: "routes" */
           /* webpackMode: "lazy-once" */
-          `./pages/MainInterface.vue`
+          `./pages/Home.vue`
         )
       },
       {
@@ -38,19 +38,9 @@ const router = [
         component: () => import(`./pages/Fixture&Consumables/InfoConsumables.vue`)
       },
       {
-        path: 'sfp',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/Fixture&Consumables/SFP.vue`)
-      },
-      {
         path: 'fixture',
         meta: { breadcrumb: false },
         component: () => import(`./pages/Fixture&Consumables/TestFixture.vue`)
-      },
-      {
-        path: 'tools',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/Fixture&Consumables/Tools.vue`)
       },
       {
         path: 'wire',
@@ -58,10 +48,20 @@ const router = [
         component: () => import(`./pages/Fixture&Consumables/Wire.vue`)
       },
       {
-        path: 'sample',
+        path: 'utdGB',
         meta: { breadcrumb: false },
-        component: () => import(`./pages/GoldBoard/GoldSample.vue`)
+        component: () => import(`./pages/GoldBoard/UTDGB.vue`)
       },
+      {
+        path: 'GBc',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/GoldBoard/GBCapacity.vue`)
+      },
+      {
+        path: 'rGB',
+        meta: { breadcrumb: false },
+        component: () => import(`./pages/GoldBoard/RotationGB.vue`)
+      }
     ]
   }
 ];

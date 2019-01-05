@@ -1,65 +1,165 @@
 <template>
 <v-container grid-list-xl fluid>
   <!-- 顶部 仓库管理 -->
-  <v-layout nowarp align-center>
-    <v-flex xs12 sm6 lg3 d-flex>
-      <v-widget title="選擇BU" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content" class="select_div">
+  <o-card :content-bg="$vuetify.theme.primary">
+    <div slot="card-content" class="top">
+      <v-layout nowarp align-center>
+        <v-flex xs12 sm6 lg3 d-flex>
           <v-select
-            :items="items_bu"
+            :items="bus"
             label="BU"
             solo
-          ></v-select>
-        </div>
-      </v-widget>
-    </v-flex>
-    <v-flex xs12 sm3 lg3 d-flex>
-      <v-widget title="選擇樓棟" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content" class="select_div">
+            v-model="selected_bu"
+          >
+          </v-select>
+        </v-flex>
+        <v-flex xs12 sm6 lg3 d-flex>
           <v-select
-            :items="items_building"
+            :items="buildings"
             label="Building"
             solo
+            v-model="selected_building"
           ></v-select>
-        </div>
-      </v-widget>
-    </v-flex>
-    <v-flex lg3 d-flex>
-      <v-widget title="選擇樓層" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content" class="select_div">
+        </v-flex>
+        <v-flex lg3 d-flex>
           <v-select
-            :items="items_floor"
+            :items="floors"
             label="Floor"
             solo
+            v-model="selected_floor"
           ></v-select>
-        </div>
-      </v-widget>
-    </v-flex>
-    <v-flex xs3 sm3 lg3 d-flex>
-      <v-widget title="倉庫管理" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-content" class="select_div">
+        </v-flex>
+        <v-flex xs3 sm3 lg3 d-flex>
           <div class="btn_div">
-            <v-btn color="primary" fab small value="新增">
-              <v-icon>add</v-icon>
-            </v-btn>
-            <v-btn color="primary" fab small value="刪除">
-              <v-icon>delete</v-icon>
-            </v-btn>
-            <v-btn color="primary" fab small value="修改">
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn color="primary" fab small value="查看">
-              <v-icon>list</v-icon>
-            </v-btn>
+            <v-layout nowarp align-center>
+              <v-flex lg4 d-flex>
+                <Dialog>
+                  <div slot="icon"><v-icon color="green">add</v-icon></div>
+                  <div slot="dialog_header">添加数据</div>
+                  <div slot="dialog_content">
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter BU*" required></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter Building*"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter Floor*" required></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </div>
+                </Dialog>
+              </v-flex>
+              <v-flex lg4 d-flex>
+                <Dialog>
+                  <div slot="icon"><v-icon color="red">delete</v-icon></div>
+                  <div slot="dialog_header">刪除数据</div>
+                  <div slot="dialog_content">
+                    Are you sure?
+                  </div>
+                </Dialog>
+              </v-flex>
+              <v-flex lg4 d-flex>
+                <Dialog>
+                  <div slot="icon"><v-icon color="yellow">edit</v-icon></div>
+                  <div slot="dialog_header">修改数据</div>
+                  <div slot="dialog_content">
+                    <v-container grid-list-md>
+                      <v-layout wrap>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter BU*" required value=""></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter Building*"></v-text-field>
+                        </v-flex>
+                        <v-flex xs12 sm6 md4>
+                          <v-text-field label="Enter Floor*" required></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                  </div>
+                </Dialog> 
+              </v-flex>
+              <v-flex lg4 d-flex>
+                <Dialog class="col-sm-12 col-md-6 col-lg-6">
+                  <div slot="icon"><v-icon color="blue darken-2">list</v-icon></div>
+                  <div slot="dialog_header">显示数据</div>
+                  <div slot="dialog_content">
+                    <v-card>
+                      <v-card-title>
+                      倉庫信息
+                      <v-spacer></v-spacer>
+                      <v-text-field
+                          v-model="search_warehouse"
+                          append-icon="search"
+                          label="Search"
+                          single-line
+                          hide-details
+                      ></v-text-field>
+                      </v-card-title>
+                      
+                      <v-data-table
+                      :headers="headers"
+                      :items="warehouses"
+                      :search="search_warehouse"
+                      >
+                          <template slot="items" slot-scope="props">
+                            <td>
+                              <v-edit-dialog
+                                :return-value.sync="props.item.bu"
+                                lazy
+                                @save="save"
+                                @cancel="cancel"
+                                @open="open"
+                                @close="close"
+                              > {{ props.item.bu }}
+                                <v-text-field
+                                  slot="input"
+                                  v-model="props.item.bu"
+                                  :rules="[max25chars]"
+                                  label="Edit"
+                                  single-line
+                                  counter
+                                ></v-text-field>
+                              </v-edit-dialog>
+                            </td>
+                            <td class="text-xs-center">{{ props.item.building }}</td>
+                            <td class="text-xs-center">{{ props.item.floor }}</td>
+                          </template>
+                          <template slot="no-data">
+                            <v-btn color="primary" @click="initialize">Reset</v-btn>
+                          </template>
+                          <v-alert slot="no-results" :value="true" color="error" icon="warning">
+                              Your search for "{{ search }}" found no results.
+                          </v-alert>
+                      </v-data-table>
+                    </v-card>
+                  </div>
+                </Dialog>
+              </v-flex>
+            </v-layout>
           </div>
-        </div>
-      </v-widget>
-    </v-flex>
-  </v-layout>
+        </v-flex>
+      </v-layout>
+    </div>
+  </o-card>
+  
   <!-- 中间 数据操作 -->
   <v-layout warp align-center>
     <v-flex>
       <v-widget title="数据展示" :content-bg="$vuetify.theme.primary">
+        <div slot="widget-header-action">
+          <v-text-field
+              v-model="search"
+              append-icon="search"
+              label="Search"
+              single-line
+              hide-details
+          ></v-text-field>
+        </div>
         <div slot="widget-content" class="show">
           <!-- 数据迭代器 -->
           <v-data-iterator
@@ -79,38 +179,52 @@
               color="primary"
               flat
             >
-              <!-- 工具栏标题 -->
-              <v-toolbar-title>
-                <!-- 全局搜索框 -->
-                <v-text-field
-                    v-model="search"
-                    append-icon="search"
-                    label="Search"
-                    single-line
-                    hide-details
-                ></v-text-field>
-              </v-toolbar-title>
-                <Control></Control>
-                <Property></Property>
-                <Repair></Repair>
-                <Goods></Goods>
-                
-              <v-toolbar-items>
-                
-              </v-toolbar-items>
+            <v-layout warp align-center>
+            <v-flex lg8>
+              <Control></Control>
+            </v-flex>
+            <v-flex lg4>
+              <Goods class="goods"></Goods>
+            </v-flex>
+            </v-layout>
             </v-toolbar>
             <!-- 数据展示 -->
             <v-flex
               slot="item"
               slot-scope="props"
               xs12
-              sm6
-              md4
-              lg3
+              sm4
+              md3
+              lg2
+            >
+              <v-card>
+                <v-card-title>
+                  <h5>{{ props.item.name }}</h5>
+                  <float-btn></float-btn>
+                </v-card-title>
+                <v-divider></v-divider>
+                <v-list dense class="show">
+                  <v-list-tile>
+                    <v-list-tile-content>費用來源:</v-list-tile-content>
+                    <v-list-tile-content class="align-end">{{ props.item.cost_source }}</v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+              </v-card>
+            </v-flex>
+            <v-flex
+              slot="item"
+              slot-scope="props"
+              xs12
+              sm4
+              md3
+              lg2
             >
               <!-- 数据展示卡片 -->
               <v-card>
-                <v-card-title><h4>{{ props.item.name }}</h4></v-card-title>
+                <v-card-title>
+                  <h5>{{ props.item.name }}</h5>
+                  <float-btn></float-btn>
+                </v-card-title>
                 <v-divider></v-divider>
                 <v-list dense class="show">
                   <v-list-tile>
@@ -339,465 +453,68 @@
     </v-flex>
     
   </v-layout>
-  
 </v-container>
 </template>
 
 <script>
-import VWidget from '@/components/VWidget';   // 导入视觉组件
-import Repair from '../components/Combobox_repair';
-import Property from '../components/Combobox_property';
+import VWidget from '@/components/VWidget';   
 import Goods from '../components/Combobox_goods';
 import Control from '../components/Combobox_control';
+import FloatBtn from '../components/FloatBtn';
+import { getBU, getBuilding, getFloor, getWarehouse } from '../api/warehouse';
+import { getMainList } from '../api/mainList';
+import Dialog from '../components/dialog';
+import OCard from '../components/OCard';
 
 export default {
   components: {
     VWidget,
-    Repair,
-    Property,
     Goods,
-    Control
+    Control,
+    FloatBtn,
+    Dialog,
+    OCard,
   },
   data: () => ({
+    selected_bu: '',
+    selected_building: '',
+    selected_floor: '',
     search: '',
-    // 仓库选择器items
-    items_bu: ['815', 'CDBU', 'CSPG', 'CVEBU', 'CVTG',  
-      'EDVT', 'ERBU', 'FTX', 'ICT', 'MKD', 'MTP', 'NWE', 
-      'PABU', 'RCFA', 'SCBU', 'SERE', 'SFPG', 'SRG', 'TIPBU',
-      'UABU', 'UCEBU', 'UAG', 'UCEBU', 'WNG&IoTG', 'WSTG'],
-    items_building: ['D9', 'D10', 'E5', 'E6', 'F21', 'MKD'],
-    items_floor: ['1F', '1.5F', '2F', '3F', '4F'],
+    search_warehouse: '',
+    headers: [
+      { text: 'BU', align: 'left', sortable: false, value: 'bu' },
+      { text: '樓棟', align: 'center', sortable: false, value: 'building' },
+      { text: '樓層', align: 'center', value: 'floor' }
+    ],
     // 迭代器分页选项
-    rowsPerPageItems: [4, 8, 12], // 分页选项设置
+    rowsPerPageItems: [6, 12, 18], // 分页选项设置
     pagination: {
-      rowsPerPage: 4  // 默认每页4个卡片
+      rowsPerPage: 6  // 默认每页6个卡片
     },
-    // 页面数据源
-    items: [
-      {
-        value: false,
-        name: 'first data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 'inbox',
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'second data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'third data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'fourth data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'fifth data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'sixth data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'seventh data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-      {
-        value: false,
-        name: 'eighth data',
-        cost_source: 159,
-        request_no: 6.0,
-        vendor: 24,
-        pic: 4.0,
-        sn: 87,
-        cisco_code: '14%',
-        asset_code: '1%',
-        control_code: 159,
-        archive_no: '1%',
-        cunstom_code: '1%',
-        check_control_no: '1%',
-        quantity: '1%',
-        arrival_time: '1%',
-        acceptor: '1%',
-        use_time: '1%',
-        use_person: '1%',
-        location: '1%',
-        chamber_size_in: '1%',
-        chamber_size_ex: '1%',
-        chamber_temperature: '1%',
-        heat_treat_capacity: '1%',
-        power_supply: '1%',
-        power: '1%',
-        water_norm: '1%',
-        use_status: '1%',
-        moisture_norm: '1%',
-        gas_norm: '1%',
-        cell_num: '1%',
-        UUT_power_num: '1%',
-        UUT_power_norm: '1%',
-        hot_cold_cmd: '1%',
-        start_end_cmd: '1%',
-        repair_time: '1%',
-        failt_time: '1%',
-        fault_phenomenon: '1%',
-        fault_cause: '1%',
-        repair_content: '1%',
-        repairman: '1%',
-        specification: '1%',
-        request_time: '1%',
-        project_name: '1%',
-        demander: '1%',
-        item_name: '1%',
-        item_num: '1%',
-        item_price: '1%',
-        total_amount: '1%',
-        ppv_nre: '1%',
-        入庫管制編號條碼: '1%'
-      },
-    ]
-  })
+  }),
+  computed: {
+    bus () {  // bu选择
+      return getBU();
+    },
+    buildings () {
+      return getBuilding();
+    },
+    floors () {
+      return getFloor();
+    },
+    items () {
+      return getMainList();
+    },
+    warehouses () {
+      return getWarehouse();
+    }
+  }
 };
 
 </script>
 <style lang='stylus' scoped>
-.select_div
-  height: 50px;
-.btn_div 
-  height: 50px;
+.top
+  height: 60px;
+.btn_div
+  margin-top: -30px;
 </style>
