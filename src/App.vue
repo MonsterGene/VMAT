@@ -142,9 +142,9 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.13); 
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.13); 
   background: rgba(0, 0, 0, 0.13);
-  -webkit-border-radius: 10px;
+  border-radius: 10px;
   border-radius: 10px;
 }
 
@@ -153,7 +153,7 @@ export default {
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.2); 
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(187,187,187,0.1); 

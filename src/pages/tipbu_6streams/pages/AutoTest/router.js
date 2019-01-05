@@ -1,18 +1,17 @@
 const RouterView = () => import(`@/components/RouterView.vue`);
 
-const AutoTestPath = '@/pages/tipbu_6streams/pages/AutoTest/';
-const Line = () => import(`${AutoTestPath}Line`);
-const LineDetail = () => import(`${AutoTestPath}LineDetail`);
-const StationDetail = () => import(`${AutoTestPath}StationDetail`);
+const Line = () => import(`./Line`);
+const LineDetail = () => import(`./LineDetail`);
+const StationDetail = () => import(`./StationDetail`);
 // const IntelligentSurveillance = () => import(`${AutoTestPath}IntelligentSurveillance`);
-const StatusBoard = () => import(`${AutoTestPath}StatusBoard`);
-const AT = () => import(`${AutoTestPath}AT`);
-const RunIn = () => import(`${AutoTestPath}RunIn`);
-const FacilitiesMaintenance = () => import(`${AutoTestPath}FacilitiesMaintenance`);
-const Robot = () => import(`${AutoTestPath}Robot`);
+const StatusBoard = () => import(`./StatusBoard`);
+const AT = () => import(`./AT`);
+const RunIn = () => import(`./RunIn`);
+const FacilitiesMaintenance = () => import(`./FacilitiesMaintenance`);
+const Robot = () => import(`./Robot`);
 
 export default {
-  path: 'auto_text',
+  path: 'auto_test',
   meta: { breadcrumb: false },
   component: RouterView,
   children: [

@@ -11,6 +11,7 @@
       v-if="subItem.items"
       :key="subItem.name"
       :item="subItem"
+      :parent-group="parentGroup ? parentGroup + '/' + item.group : item.group"
       sub-group="sub-group"
     ></menu-group>
     <!--child item-->
@@ -18,6 +19,7 @@
       v-else
       :key="i"
       :item="subItem"
+      :parent-path="parentGroup ? parentGroup + '/' + item.group : item.group"
     ></menu-item>
   </template>
 </v-list-group>
@@ -35,6 +37,6 @@ export default {
     MenuGroupTitle,
     MenuItem
   },
-  props: ['item', 'subGroup'],
+  props: ['item', 'subGroup', 'parentGroup'],
 };
 </script>
