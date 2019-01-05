@@ -7,6 +7,8 @@
             <v-divider></v-divider>
             <div>IP Address: {{ host.ipAddress }}</div>
             <div>{{ host.details }}</div>
+            <div>Genius Version: v0.1.1_20190104</div>
+            <div>PROD Version: v0.1.1_20190104</div>
           </div>
         </v-card-title>
 
