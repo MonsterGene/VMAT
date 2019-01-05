@@ -152,8 +152,9 @@ export default {
         ApplyAPI.postApply(this.formModel).then(res => {
           if (res && res.status === 200) {
             this.dialog = false;
-            this.formModel = '';
+            // this.$refs.form.reset();  // 清空表单
           }
+          alert('提交成功');
         });
       }
     },

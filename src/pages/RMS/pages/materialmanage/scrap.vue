@@ -37,7 +37,7 @@ import EChart from '@/components/chart/echart';
 // import {ChartApi1} from '@/components/chart/echart1';
 import { ChartApi } from '../../api/index';
 import EchartAPI from '../../api/materialmanage';
-import motaikuang from './stockMTK.vue';
+// import motaikuang from './stockMTK.vue';
 const API = { ChartApi };
 
 export default {
