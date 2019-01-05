@@ -799,7 +799,11 @@ export default {
     },
 
     airzhuji: function () {
-      this.$router.push('/energy_management/airCon');
+      if (this.$route.path.indexOf('/public') !== 0) {
+        this.$router.push('/energy_management/airCon');
+      } else {
+        this.$router.push('/public/energy_management/airCon');
+      }
     },
   }
 };

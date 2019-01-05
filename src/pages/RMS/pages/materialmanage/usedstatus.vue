@@ -1,289 +1,175 @@
 <template>
 <v-container grid-list-xl fluid>
-  <v-layout row wrap>
-    <v-flex lg6 sm4 xs4>         
-      <e-chart class="echarts"
-        :path-option="chart5.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <!-- <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart2.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart3.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart4.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-     <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart2.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart3.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart4.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-     <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart2.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex>
-    <v-flex lg6 sm4 xs4>
-      <e-chart class="echarts"
-        :path-option="chart3.chartOption"
-        height="350px"
-        width="100%"
-        >
-      </e-chart>
-    </v-flex> -->
-  </v-layout>  
+  <v-form ref="form">
+    <v-layout row wrap>
+      <v-flex xs12 sm12 md12>
+        <label v-bind:style="styleObject" >Material Apply and Dashboard</label>
+      </v-flex>
+      <v-flex xs2 sm2 d-flex class="bg">
+        <v-select
+          :items="items"
+          label="類別"
+          solo
+          v-model="formModel.lb"
+          :rules="[formRules.required]"
+          validate-on-blur
+        ></v-select>
+      </v-flex>
+      <v-flex xs2 sm2 md2 class="bg">
+        <v-text-field
+          label="PCBA/SN"
+          solo
+          v-model="formModel.sn"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs2 sm2 md2 class="bg">
+        <v-text-field
+          label="Location"
+          solo
+          v-model="formModel.location"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs3 sm3 md3 class="bg">
+        <v-text-field
+          label="Failure symptom"
+          solo
+          v-model="formModel.fs"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs2 sm2 md2 class="bg">
+        <v-text-field
+          label="CPN"
+          solo
+          v-model="formModel.cpn"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs3 sm3 md3 class="bg">
+        <v-text-field
+          label="Vendor"
+          solo
+          v-model="formModel.vendors"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs2 sm2 md2 class="bg">
+        <v-text-field
+          label="Q'TY"
+          solo
+          v-model="formModel.qty"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs3 sm3 md3 class="bg">
+        <v-text-field
+          label="chinese name"
+          solo
+          v-model="formModel.chinese"
+          :rules="[formRules.required]"
+          validate-on-blur
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs3 sm3 md3 class="bg">
+        <v-text-field
+          label="Remark"
+          solo
+          v-model="formModel.remark"
+          clearable
+        ></v-text-field>
+      </v-flex>
+      <v-flex xs12 sm12 md12 class="btn">
+        <!-- <v-btn @click="applys()" color="blue" >APPLY</v-btn> -->
+        <v-dialog v-model="dialog" persistent max-width="290">
+         <v-btn slot="activator" color="blue" dark>APPLY</v-btn>
+          <v-card>
+          <v-card-title class="headline">Confirmation</v-card-title>
+          <v-card-text>Attention: Are you sure to apply {{formModel.qty}} pcs CPN: {{formModel.cpn}} ?</v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click="dialog = false">CANCEL</v-btn>
+            <v-btn color="green darken-1" flat @click="apply">YES</v-btn>
+          </v-card-actions>
+         </v-card>
+       </v-dialog>
+      </v-flex>
+    </v-layout>
+   </v-form>
 </v-container>
 </template>
 
 <script>
-import EChart from '@/components/chart/echart';
-import { WipAPI, REApi } from '../../api';
-import EchartAPI from '../../api/chart';
-// const API = { WipAPI };
-const API = { REApi };
-
-// ChartApi.bingtu
+import { ApplyAPI } from '../../api/index';
+const API = { ApplyAPI };
 
 export default {
   components: {
-    EChart
-  },  
+  }, 
+  // mixins: [globalMixin], 
   data () {
     return {
-      expandss: [true],
-      color: ['blue'],
-      chart5: {
-        chartOption: [
-          ['dataset.source', REApi.wipChart1],
-          ['color', ['#EB786C', '#002060']],
-          ['title.textStyle.color', ['#F34941']],
-          ['title.text', 'MFGI每月庫存總金額（K台幣）'],
-          ['title.left', '1%'],
-          ['title.top', '1%'],    
-          ['legend.show', true],
-          ['legend.top', '9%'],
-          ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-          ['toolbox.show', true],
-          // ['yAxis[0].type', 'value'],
-          // ['yAxis[0].splitLine.show', true],
-          // ['yAxis[0].splitLine.lineStyle.type', 'dashed'],
-          ['yAxis', new Array(2).fill({
-            type: 'value',
-            splitLine: {
-              show: true,
-              lineStyle: {
-                type: 'dashed'
-              }
-            }, 
-            axisLabel: {
-              formatter: '{value}'
-            },
-            axisLine: {
-              lineStyle: {
-                color: '#757575',
-                type: 'dashed'
-              }
-            }
-          })],
-          ['xAxis.axisLabel.show', true],
-          ['xAxis.axisLabel.rotate', 20],
-          ['yAxis.axisLabel.show', true],
-          ['grid.left', '1%'],
-          ['grid.bottom', '2%'],
-          ['grid.right', '1%'],
-          ['grid.top', '20%'],
-          ['grid.backgroundcolor', 'red'],
-          ['series[0].type', 'line'],
-          ['series[0].label.show', true],
-          ['series[0].smooth', true], 
-          ['series[0].label.position', 'top'],
-          ['series[0].stack', 'input'],
-          ['series[1].type', 'line'],
-          ['series[1].label.show', true],
-          ['series[1].smooth', true], 
-          ['series[1].label.position', 'top'],
-          ['series[1].stack', 'input'],
-        ]
+      dialog: false,
+      formModel: {
+        lb: '',
+        sn: '',
+        location: '',
+        fs: '',
+        cpn: '',
+        vendors: '',
+        qty: '',
+        chinese: '',
+        remark: ''
       },
-      // chart2: {
-      //   chartOption: [
-      //     ['dataset.source', ChartApi.wipChart2],
-      //     ['title.text', 'Production Yield(Fail Qty:164,Packing Qty:3510)'],
-      //     ['color', ['#3F51B5', '#E91E63']],
-      //     ['title.left', '1%'],
-      //     ['title.top', '1%'],
-      //     ['legend.show', true],
-      //     ['legend.top', '9%'],
-      //     ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-      //     ['toolbox.show', true],
-      //     ['yAxis', [
-      //       {
-      //         type: 'value',
-      //         splitLine: {
-      //           show: true,
-      //           lineStyle: {
-      //             type: 'dashed'
-      //           }
-      //         }, 
-      //         axisLabel: {
-      //           formatter: '{value}'
-      //         },
-      //         axisLine: {
-      //           lineStyle: {
-      //             color: '#757575',
-      //             type: 'dashed'
-      //           }
-      //         }
-      //       },
-      //       {
-      //         type: 'value',
-      //         splitLine: {
-      //           show: true,
-      //           lineStyle: {
-      //             type: 'dashed'
-      //           }
-      //         }, 
-      //         axisLabel: {
-      //           formatter: '{value}%'
-      //         },
-      //         axisLine: {
-      //           lineStyle: {
-      //             color: '#757575',
-      //             type: 'dashed'
-      //           }
-      //         }
-      //       }],
-      //     ],
-      //     ['xAxis.axisLabel.show', true],
-      //     ['yAxis.axisLabel.show', true],
-      //     ['grid.left', '2%'],
-      //     ['grid.bottom', '5%'],
-      //     ['grid.right', '3%'],
-      //     ['grid.top', '20%'],
-
-      //     ['series[0].type', 'bar'],
-      //     ['series[0].label.show', true],
-      //     ['series[0].smooth', true],
-      //     ['series[0].label.position', 'top'],       
-      //     ['series[1].type', 'line'],
-      //     ['series[1].label.show', true],
-      //     ['series[1].yAxisIndex', '1'],
-      //     ['series[1].smooth', true],      
-      //   ]
-      // },
-      // chart3: {
-      //   chartOption: [
-      //     ['dataset.source', ChartApi.hoursData],
-      //     ['title.text', 'ICT Fail Root cause distrlbution(Total output 117pcs)'],
-      //     ['title.left', '1%'],
-      //     ['title.top', '1%'],
-      //     ['color', ['red', 'green', 'yellow']],
-      //     ['legend.show', true],
-      //     ['legend.top', '9%'],
-      //     ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-      //     ['toolbox.show', true],
-      //     ['xAxis.axisLabel.show', true],
-      //     ['yAxis.axisLabel.show', true],
-      //     ['grid.left', '2%'],
-      //     ['grid.bottom', '5%'],
-      //     ['grid.right', '3%'],
-      //     ['grid.top', '20%'],
-
-      //     ['series[0].type', 'bar'],
-      //     ['series[0].label.show', true],
-      //     ['series[0].smooth', true],         
-      //     ['series[1].type', 'bar'],
-      //     ['series[1].label.show', true],
-      //     ['series[1].smooth', true],
-      //     ['series[2].type', 'line'],
-      //     ['series[2].label.show', true],
-      //     ['series[2].smooth', true],         
-      //   ]
-      // },
-      // chart4: {
-      //   chartOption: [
-      //     ['dataset.source', ChartApi.hoursData],
-      //     ['title.text', 'Top 10 FT Fail Root Cause 278(Total Output 315)'],
-      //     ['title.left', '1%'],
-      //     ['title.top', '1%'],
-      //     ['color', ['red', 'green']],
-      //     ['legend.show', true],
-      //     ['legend.top', '9%'],
-      //     ['legend.selected', { 'Rate 2': false, 'Rate 3': false, 'Num 2': false, 'Num 3': false }],
-      //     ['toolbox.show', true],
-      //     ['xAxis.axisLabel.show', true],
-      //     ['yAxis.axisLabel.show', true],
-      //     ['grid.left', '2%'],
-      //     ['grid.bottom', '5%'],
-      //     ['grid.right', '3%'],
-      //     ['grid.top', '20%'],
-
-      //     ['series[0].type', 'bar'],
-      //     ['series[0].label.show', true],
-      //     ['series[0].smooth', true],         
-      //     ['series[1].type', 'bar'],
-      //     ['series[1].label.show', true],
-      //     ['series[1].smooth', true],
-      //     ['series[2].type', 'line'],
-      //     ['series[2].label.show', true],
-      //     ['series[2].smooth', true],           
-      //   ]
-      // }                
+      formRules: {
+        required: value => !!value || '本项不能为空！',
+      },
+      items: ['ALL', 'NPI', 'ICT', 'Function', 'CRC', 'RMA', 'ORT', 'Other'],
+      styleObject: {
+        color: '#2975E6',
+        fontSize: '30px',
+      },
     };
   },
-  mounted () {
-    API.WipAPI.getBu().then(res => {
-      const data = res.data;
-      console.log(data);
-    });
+  methods: {
+    apply: function (event) {
+      if (this.$refs.form.validate()) {
+        // alert('表单验证成功！');
+        ApplyAPI.postApply(this.formModel).then(res => {
+          if (res && res.status === 200) {
+            this.dialog = false;
+            // this.$refs.form.reset();  // 清空表单
+          }
+          alert('提交成功');
+        });
+      }
+    },
   }
 };
 </script>
 
 <style lang='stylus' scoped>
   .echarts
-    background-color #C6D9F1
+    background-color #FFF
     border-radius 5px
+  .btn{
+    text-align center
+  }
+  .bg{
+    background-color #424242
+  }
 </style>
