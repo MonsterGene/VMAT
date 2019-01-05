@@ -2,7 +2,10 @@ const menu_6streams_tipbu = [
   {
     title: 'NPBG-龙华-MFG3',
     icon: 'view_compact',
-    path: '/tipbu-6streams'
+    group: '/tipbu-6streams',
+    items: [
+      { title: '组装线', path: 'packing' }
+    ]
   }
 ];
 
