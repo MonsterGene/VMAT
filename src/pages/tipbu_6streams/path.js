@@ -1,3 +1,8 @@
+import PackingRouter from './pages/Packing/router';
+import AutoTestRouter from './pages/AutoTest/router';
+
+const Layout = () => import(`@/pages/tipbu_6streams/pages/layout.vue`);
+
 const tipbu_6streams_path = [
   {
     path: '/tipbu-6streams',
@@ -10,32 +15,10 @@ const tipbu_6streams_path = [
       {
         path: '',
         meta: { breadcrumb: false },
-        component: () => import(`@/pages/tipbu_6streams/pages/layout.vue`)
+        component: Layout
       },
-      {
-        path: 'home',
-        meta: { breadcrumb: false },
-        component: () => import(
-          /* webpackChunkName: "routes" */
-          /* webpackMode: "lazy-once" */
-          `@/pages/tipbu_6streams/pages/layout.vue`
-        )
-      },
-      {
-        path: 'line',
-        meta: { breadcrumb: false },
-        component: () => import(`@/pages/tipbu_6streams/pages/line`)
-      },
-      {
-        path: 'line-details/:lineName',
-        meta: { breadcrumb: false },
-        component: () => import(`@/pages/tipbu_6streams/pages/lineDetails.vue`)
-      },
-      {
-        path: 'station-details/:stationName',
-        meta: { breadcrumb: false },
-        component: () => import(`@/pages/tipbu_6streams/pages/stationDetails.vue`)
-      }
+      PackingRouter,
+      AutoTestRouter
     ]
   }
 ];

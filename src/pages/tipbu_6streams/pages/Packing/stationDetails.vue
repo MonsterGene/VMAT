@@ -70,20 +70,20 @@
 
 <script>
 import moment from 'moment';
-import API from '../api/chart';
+import API from '../../api/chart';
 import Material from 'vuetify/es5/util/colors';
-import OutputAnalysis from '../components/outputAnalysis.vue';
-import ErrorAnalysis from '../components/errorAnalysis.vue';
+import OutputAnalysis from '../../components/outputAnalysis.vue';
+import ErrorAnalysis from '../../components/errorAnalysis.vue';
 import EChart from '@/components/chart/echart';
 import VWidget from '@/components/VWidget';
-import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
-import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
-import RunTime from '../components/RunTime.vue';
-import ErrorFrequencyAndTimeByDay from '../components/ErrorFrequencyAndTimeByDay.vue';
-import subFreqTimeByType from '../components/SubFreqAndTimeByType.vue';
-import SubFreqTimeByDay from '../components/SubFreqAndTimeByDay.vue';
-import ErrorSolution from '../components/ErrorSolution.vue';
-import SubFreqTimeByHour from '../components/SubFreqAndTimeByHour.vue';
+import UtilizationRateAndOutputByDay from '../../components/UtilizationRateAndOutputByDay.vue';
+import UtilizationRateAndOutputByHour from '../../components/UtilizationRateAndOutputByHour.vue';
+import RunTime from '../../components/RunTime.vue';
+import ErrorFrequencyAndTimeByDay from '../../components/ErrorFrequencyAndTimeByDay.vue';
+import subFreqTimeByType from '../../components/SubFreqAndTimeByType.vue';
+import SubFreqTimeByDay from '../../components/SubFreqAndTimeByDay.vue';
+import ErrorSolution from '../../components/ErrorSolution.vue';
+import SubFreqTimeByHour from '../../components/SubFreqAndTimeByHour.vue';
 
 export default {
   components: {
