@@ -385,7 +385,11 @@ export default {
       });
     },
     airfenggui: function () {
-      this.$router.push('/energy_management/airConCab');
+      if (this.$route.path.indexOf('/public') !== 0) {
+        this.$router.push('/energy_management/airConCab');
+      } else {
+        this.$router.push('/public/energy_management/airConCab');
+      }
     }
   }
 };
