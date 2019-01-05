@@ -6,7 +6,7 @@ const menu = [
     items: [
       {
         title: 'WIP管理&品質反饋',
-        group: '/wip',
+        group: 'wip',
         icon: 'view_compact',
         items: [
           { title: 'WIP trend & Quality feed back', path: 'page1' },
@@ -18,7 +18,7 @@ const menu = [
       },
       {
         title: 'Smart debug',
-        group: '/smart_debug',
+        group: 'smart_debug',
         icon: 'view_compact',
         items: [
           { title: '不良位置參考', path: '#' },
@@ -28,7 +28,7 @@ const menu = [
       },
       {
         title: '維修績效管理',
-        group: '/kpi',
+        group: 'kpi',
         icon: 'view_compact',
         items: [
           { title: '按件計酬', path: '#' },
@@ -40,7 +40,7 @@ const menu = [
       },
       {
         title: '重工管理',
-        group: '/rework',
+        group: 'rework',
         icon: 'view_compact',
         items: [
           { title: 'PTH/BGA WIP 狀態&重工品質', path: '#' },
@@ -53,7 +53,7 @@ const menu = [
       },
       {
         title: '物料管理',
-        group: '/material_management',
+        group: 'material_management',
         icon: 'view_compact',
         items: [
           { title: '庫存狀態', path: 'stockstatus' },
@@ -66,7 +66,7 @@ const menu = [
       },
       {
         title: '學習園地',
-        group: '/study_space',
+        group: 'study_space',
         icon: 'view_compact',
         items: [
           { title: '維修SOP', component: '#' },

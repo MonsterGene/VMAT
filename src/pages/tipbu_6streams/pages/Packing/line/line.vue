@@ -38,7 +38,7 @@
       <v-card
         class="line-card"
         dark hover
-        :href="'#/tipbu-6streams/line-details/' + line.name + '?l=' + line.id + '&s=' + line.stations[line.stations.length - 1].id"
+        :href="'#/tipbu-6streams/packing/line-details/' + line.name + '?l=' + line.id + '&s=' + line.stations[line.stations.length - 1].id"
       >
         <v-card-title class="pb-0">
           <h4 style="margin: 0 auto">{{ line.name }}</h4>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { demoApi, lineApi } from '../../api/index.js';
+import { demoApi, lineApi } from '../../../api/index.js';
 import station from './station.vue';
 import stationConnection from './stationConnection.vue';
 import stateIde from './state-ide.vue';

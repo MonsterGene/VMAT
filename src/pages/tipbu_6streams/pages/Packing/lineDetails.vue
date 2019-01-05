@@ -146,7 +146,7 @@
 
 <script>
 import moment from 'moment';
-import API from '../api/chart';
+import API from '../../api/chart';
 
 import EChart from '@/components/chart/echart';
 import {
@@ -155,10 +155,10 @@ import {
 import Material from 'vuetify/es5/util/colors';
 import _object from 'lodash/object';
 import VWidget from '@/components/VWidget';
-import OutputAnalysis from '../components/outputAnalysis.vue';
-import ErrorAnalysis from '../components/errorAnalysis.vue';
-import UtilizationRateAndOutputByDay from '../components/UtilizationRateAndOutputByDay.vue';
-import UtilizationRateAndOutputByHour from '../components/UtilizationRateAndOutputByHour.vue';
+import OutputAnalysis from '../../components/outputAnalysis.vue';
+import ErrorAnalysis from '../../components/errorAnalysis.vue';
+import UtilizationRateAndOutputByDay from '../../components/UtilizationRateAndOutputByDay.vue';
+import UtilizationRateAndOutputByHour from '../../components/UtilizationRateAndOutputByHour.vue';
 
 export default {
   components: {
@@ -343,11 +343,11 @@ export default {
     // 次数、时间分析图点击
     this.$refs.cishu.chartInstance.on('click', evt => {
       console.log(evt);
-      this.$router.push({ path: '/tipbu-6streams/station-details/' + evt.name + '?l=' + this.$route.query.l });
+      this.$router.push({ path: '/tipbu-6streams/packing/station-details/' + evt.name + '?l=' + this.$route.query.l });
     });
     this.$refs.shijian.chartInstance.on('click', evt => {
       console.log(evt);
-      this.$router.push({ path: '/tipbu-6streams/station-details/' + evt.name });
+      this.$router.push({ path: '/tipbu-6streams/packing/station-details/' + evt.name });
     });
   },
   methods: {
