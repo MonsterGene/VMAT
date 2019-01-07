@@ -10,87 +10,23 @@
       justify-end
       align-center
     >
-    <!-- <embed
-      type="application/pdf"
-      src="http://10.167.192.146/StaticSource/EnergyManagement/E5_1_5F.pdf"
-      style="width:100%;height:100%;padding:10px"
-    /> -->
-     <v-flex md1 d-flex style="height:">
-      <v-select
-        :items="items"
-        label="楼栋："
-        dense
-      ></v-select>
-    </v-flex>
-    <v-flex md2 d-flex>
-      <v-select
-        :items="items2"
-        label="主体单元："
-        dense
-      ></v-select>
-    </v-flex>
-    <v-flex md1 d-flex>
-      <v-select
-        :items="items3"
-        label="楼层："
-        dense
-      ></v-select>
-    </v-flex>
-    <v-flex md2>
-      <v-menu
-        ref="menu1"
-        :close-on-content-click="false"
-        v-model="menu1"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        max-width="290px"
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="dateFormatted"
-          label="Start"
-          persistent-hint
-          prepend-icon="event"
-          @blur="date = parseDate(dateFormatted)"
-        ></v-text-field>
-        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-      </v-menu>
-    </v-flex>
-    <v-flex md2>
-      <v-menu
-        ref="menu2"
-        :close-on-content-click="false"
-        v-model="menu2"
-        :nudge-right="40"
-        lazy
-        transition="scale-transition"
-        offset-y
-        full-width
-        max-width="290px"
-        min-width="290px"
-      >
-        <v-text-field
-          slot="activator"
-          v-model="dateFormatted"
-          label="End"
-          persistent-hint
-          @blur="date = parseDate(dateFormatted)"
-        ></v-text-field>
-        <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
-      </v-menu>
-    </v-flex>
-    <v-flex md1 d-flex>
-      <v-select
-        :items="items4"
-        label="班别："
-        dense
-      ></v-select>
-    </v-flex>
-    <v-flex md2 class="py-2">
+    <div id="select">
+      楼栋：<Select v-model="loudong" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+    个体单元：<Select v-model="getidanyuan" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+      楼层：<Select v-model="louceng" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+   
+      时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
+      
+      班别：<Select v-model="banbie" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+    
       <v-btn-toggle>
         <v-btn flat value="left">
           日
@@ -105,7 +41,7 @@
           年
         </v-btn>
       </v-btn-toggle>
-    </v-flex>
+    </div>
     <img src="../assets/pics/u655.png" width="100%" height="100%"/>
     <v-flex md8>
       <img src="../assets/pics/u652.png" width="100%" height="450px"/>
@@ -140,6 +76,7 @@
  * });
  */
 import moment from 'moment';
+import { Select, DatePicker } from 'iview';
 import { floorsApi } from '../api';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
@@ -158,48 +95,66 @@ export default {
     SourceTypeBar,
     BuildingsEnergyUsage,
     EnergyTypePie,
-    SimpleChart
+    SimpleChart,
+    Select,
+    DatePicker
   },
   mixins: [energyManageMixin],
   data: vm => ({
-    date: new Date().toISOString().substr(0, 10),
-    dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    menu2: false,
-    items: ['E5', 'D10'],
-    items2: ['BU', '楼层'],
-    items3: ['1F', '1.5F', '2F'],
-    items4: ['白班', '晚班'],
-    floorsTypeEnergyData: {},
-    typeEnergyData: true,
+    // date: new Date().toISOString().substr(0, 10),
+    // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+    // menu1: false,
+    // menu2: false,
+    // items: ['E5', 'D10'],
+    // items2: ['BU', '楼层'],
+    
+    List: [
+      {
+        value: 'E5',
+        label: 'E5'
+      },
+      {
+        value: 'D10',
+        label: 'D10'
+      }
+    ],
+    loudong: '',
+    getidanyuan: '',
+    louceng: '',
+    banbie: '',
+    
+    // items3: ['1F', '1.5F', '2F'],
+    // items4: ['白班', '晚班'],
+    // floorsTypeEnergyData: {},
+    // typeEnergyData: true,
     DefaultChartTooltip
   }),
-  computed: {
-    computedDateFormatted () {
-      return this.formatDate(this.date);
-    }
-  },
-  watch: {
-    date (val) {
-      this.dateFormatted = this.formatDate(this.date);
-    }
-  },
+  // computed: {
+  //   computedDateFormatted () {
+  //     return this.formatDate(this.date);
+  //   }
+  // },
+  // watch: {
+  //   date (val) {
+  //     this.dateFormatted = this.formatDate(this.date);
+  //   }
+  // },
   mounted () {
     this.getChart2();
     this.getChart3();
   },
   methods: {
-    formatDate (date) {
-      if (!date) return null;
+    // formatDate (date) {
+    //   if (!date) return null;
 
-      const [year, month, day] = date.split('-');
-      return `${month}/${day}/${year}`;
-    },
-    parseDate (date) {
-      if (!date) return null;
-      const [month, day, year] = date.split('/');
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    },
+    //   const [year, month, day] = date.split('-');
+    //   return `${month}/${day}/${year}`;
+    // },
+    // parseDate (date) {
+    //   if (!date) return null;
+    //   const [month, day, year] = date.split('/');
+    //   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    // },
     getChart2 () {
       floorsApi.chart1Data(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
@@ -228,5 +183,7 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-
+#select{
+  padding:10px
+}
 </style>

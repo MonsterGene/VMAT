@@ -18,98 +18,28 @@
           >空调主机</v-btn>
         </div>
       </v-flex>
-      &emsp;&emsp;
+      &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
       <v-flex md1>
         <div class="text-xs-center">
           <v-btn round>空调风柜</v-btn>
         </div>
       </v-flex>
       <v-flex md2></v-flex>
-      <v-flex
-        md1
-        d-flex
-      >
-        <v-select
-          :items="items"
-          label="楼栋："
-          dense
-        ></v-select>
-      </v-flex>
-      <v-flex
-        md1
-        d-flex
-      >
-        <v-select
-          :items="items1"
-          label="BU："
-          dense
-        ></v-select>
-      </v-flex>
-      <v-flex md2>
-        <v-menu
-          ref="menu1"
-          :close-on-content-click="false"
-          v-model="menu1"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          max-width="290px"
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="dateFormatted"
-            label="Start"
-            persistent-hint
-            prepend-icon="event"
-            @blur="date = parseDate(dateFormatted)"
-          ></v-text-field>
-          <v-date-picker
-            v-model="date"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-flex>
-      <v-flex md2>
-        <v-menu
-          ref="menu2"
-          :close-on-content-click="false"
-          v-model="menu2"
-          :nudge-right="40"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          max-width="290px"
-          min-width="290px"
-        >
-          <v-text-field
-            slot="activator"
-            v-model="dateFormatted"
-            label="End"
-            persistent-hint
-            @blur="date = parseDate(dateFormatted)"
-          ></v-text-field>
-          <v-date-picker
-            v-model="date"
-            no-title
-            @input="menu1 = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-flex>
-      <v-flex
-        md1
-        d-flex
-      >
-        <v-select
-          :items="items2"
-          label="班别："
-          dense
-        ></v-select>
-      </v-flex>
+      <div id="select">
+      楼栋：<Select v-model="loudong" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+      BU：<Select v-model="bu" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+   
+      时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
+      
+      班别：<Select v-model="banbie" style="width:70px">
+        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+    </Select>&ensp;&ensp;
+    
+    </div>
     </v-layout>
     <v-layout
       row
@@ -349,6 +279,7 @@
 
 <script>
 import moment from 'moment';
+import { Select, DatePicker } from 'iview';
 import colors from 'vuetify/es5/util/colors';
 import { takeInt, _isArray, deepCopyObject } from '../../../util/utils';
 import { airConCabApi } from '../api';
@@ -368,7 +299,9 @@ export default {
     SourceTypeBar,
     LineChart,
     EnergyGuage,
-    AirConCabStatus
+    AirConCabStatus,
+    Select, 
+    DatePicker
   },
   mixins: [energyManageMixin],
   data: vm => ({
@@ -408,30 +341,44 @@ export default {
         monthEnergyUsage: 54813
       }
     ],
-    date: new Date().toISOString().substr(0, 10),
-    dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    menu2: false,
-    items: ['E5', 'D10'],
-    items1: ['MFG6', 'CSD'],
-    items2: ['白班', '晚班']
+    // date: new Date().toISOString().substr(0, 10),
+    // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+    // menu1: false,
+    // menu2: false,
+    // items: ['E5', 'D10'],
+    // items1: ['MFG6', 'CSD'],
+    // items2: ['白班', '晚班']
     // dianbiaoname: 'E5-4PP1',
     // shebeiname: 'foxconn',
     // shebeinumber: '123456',
     // building: 'E5',
     // airCon: '12345kwh'
+    List: [
+      {
+        value: 'E5',
+        label: 'E5'
+      },
+      {
+        value: 'D10',
+        label: 'D10'
+      }
+    ],
+    loudong: '',
+    bu: '',
+    louceng: '',
+    banbie: '',
   }),
-  computed: {
-    computedDateFormatted () {
-      return this.formatDate(this.date);
-    }
-  },
+  // computed: {
+  //   computedDateFormatted () {
+  //     return this.formatDate(this.date);
+  //   }
+  // },
 
-  watch: {
-    date (val) {
-      this.dateFormatted = this.formatDate(this.date);
-    }
-  },
+  // watch: {
+  //   date (val) {
+  //     this.dateFormatted = this.formatDate(this.date);
+  //   }
+  // },
   mounted () {
     
     // 上面左边仪表盘
