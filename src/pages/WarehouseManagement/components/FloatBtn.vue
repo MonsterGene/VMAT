@@ -1,12 +1,4 @@
 <template>
-  <v-card id="create">
-    <v-container fluid grid-list-md>
-      <v-layout child-flex wrap>
-        
-        
-        
-      </v-layout>
-    </v-container>
     <v-speed-dial
       v-model="fab"
       direction="right"
@@ -18,6 +10,7 @@
         v-model="fab"
         color="blue darken-2"
         dark
+        small
         fab
       >
         <v-icon>account_circle</v-icon>
@@ -35,20 +28,11 @@
         fab
         dark
         small
-        color="indigo"
-      >
-        <v-icon>add</v-icon>
-      </v-btn>
-      <v-btn
-        fab
-        dark
-        small
         color="red"
       >
         <v-icon>delete</v-icon>
       </v-btn>
     </v-speed-dial>
-  </v-card>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverAddr = 'http://10.167.192.146/SixStream/api';
+const serverAddr = 'http://10.167.192.146/WMS/api';
 
 const catchMethod = function (error) {
   if (error.response) {

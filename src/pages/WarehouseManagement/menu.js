@@ -6,14 +6,13 @@ const menu = [
     title: '庫房管理系統',   // 系统标题
     icon: 'view_compact',   // 菜單圖標
     group: '/WMS',          // 組名
-    path: 'main_interface',          // 組件地址
 
     // 定义二级菜单
     items: [
       // 主页
       {
         title: '主页',
-        path: 'main_interface'
+        path: 'home'
       },
 
       // 測試設備管理菜單
@@ -35,8 +34,6 @@ const menu = [
         group: '',
         items: [
           { title: '線材管理', path: 'wire' },
-          { title: 'SFP管理', path: 'sfp' },
-          { title: '工具管理', path: 'tools' },
           { title: 'Test治具管理', path: 'fixture' },
           { title: '資訊類耗材管理', path: 'info' }
           
@@ -48,7 +45,9 @@ const menu = [
         title: 'Gold Board管理', 
         group: '',
         items: [
-          { title: 'Gold Sample', path: 'sample' }
+          { title: 'GB Capacity', path: 'GBc' },
+          { title: 'Rotation GB', path: 'rGB' },
+          { title: 'UTD GB', path: 'utdGB' },
         ]
       },
     ]
