@@ -119,7 +119,6 @@
 
 <script>
 import moment from 'moment';
-import { Select, DatePicker } from 'iview';
 import colors from 'vuetify/es5/util/colors';
 import { takeInt, _isArray, deepCopyObject } from '../../../util/utils';
 import { airConApi } from '../api';
@@ -299,10 +298,6 @@ export default {
                 '时间': time,
                 '功率因素': item.powerfactor
               });
-              // U_Data.sort((a, b) => a['时间'] - b['时间']);
-              // I_Data.sort((a, b) => a['时间'] - b['时间']);
-              // P_Data.sort((a, b) => a['时间'] - b['时间']);
-              // F_Data.sort((a, b) => a['时间'] - b['时间']);
             });
             acc[key] = { U_Data, I_Data, P_Data, F_Data };
             return acc;
