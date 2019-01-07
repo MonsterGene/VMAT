@@ -17,7 +17,20 @@ const AirConVIPFTrend = (params) => {
   return axios.post('/get/air/host/detail', params).catch(catchMethod);
 };
 
+
+/**
+ * 获取空调主机详情列表
+ * @param {object} params
+ * @param {string} params.startTime
+ * @param {string} params.endTime
+ * @param {string} params.building
+ */
+const AirConList = (params) => {
+  return axios.post('/get/air/attributes', params).catch(catchMethod);
+};
+
 export default {
   homeFistChart,
-  AirConVIPFTrend
+  AirConVIPFTrend,
+  AirConList
 };
