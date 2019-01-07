@@ -5,29 +5,14 @@
     <div slot="card-content" class="top">
       <v-layout nowarp align-center>
         <v-flex xs12 sm6 lg3 d-flex>
-          <v-select
-            :items="bus"
-            label="BU"
-            solo
-            v-model="selected_bu"
-          >
-          </v-select>
+          <span>請選擇倉庫</span>
         </v-flex>
         <v-flex xs12 sm6 lg3 d-flex>
-          <v-select
-            :items="buildings"
-            label="Building"
-            solo
-            v-model="selected_building"
-          ></v-select>
-        </v-flex>
-        <v-flex lg3 d-flex>
-          <v-select
-            :items="floors"
-            label="Floor"
-            solo
-            v-model="selected_floor"
-          ></v-select>
+          <Cascader 
+            :data="warehouses1" 
+            v-model="value1"
+            size="large"
+          ></Cascader>
         </v-flex>
         <v-flex xs3 sm3 lg3 d-flex>
           <div class="btn_div">
@@ -70,13 +55,13 @@
                     <v-container grid-list-md>
                       <v-layout wrap>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field label="Enter BU*" required value=""></v-text-field>
+                          <v-text-field label="Enter BU*" required v-model="value1[0]"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field label="Enter Building*"></v-text-field>
+                          <v-text-field label="Enter Building*" required v-model="value1[1]"></v-text-field>
                         </v-flex>
                         <v-flex xs12 sm6 md4>
-                          <v-text-field label="Enter Floor*" required></v-text-field>
+                          <v-text-field label="Enter Floor*" required v-model="value1[2]"></v-text-field>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -150,306 +135,11 @@
   <!-- 中间 数据操作 -->
   <v-layout warp align-center>
     <v-flex>
-      <v-widget title="数据展示" :content-bg="$vuetify.theme.primary">
-        <div slot="widget-header-action">
-          <v-text-field
-              v-model="search"
-              append-icon="search"
-              label="Search"
-              single-line
-              hide-details
-          ></v-text-field>
+      <o-card :content-bg="$vuetify.theme.primary">
+        <div slot="card-content" class="show">
+          <Datatable dark></Datatable>
         </div>
-        <div slot="widget-content" class="show">
-          <!-- 数据迭代器 -->
-          <v-data-iterator
-            :items="items"
-            :rows-per-page-items="rowsPerPageItems"
-            :pagination.sync="pagination"
-            :search="search"
-            content-tag="v-layout"
-            no-data-text="$vuetify.noDataText"
-            row
-            wrap
-          >
-            <!-- 工具栏 -->
-            <v-toolbar
-              slot="header"
-              class="mb-2"
-              color="primary"
-              flat
-            >
-            <v-layout warp align-center>
-            <v-flex lg8>
-              <Control></Control>
-            </v-flex>
-            <v-flex lg4>
-              <Goods class="goods"></Goods>
-            </v-flex>
-            </v-layout>
-            </v-toolbar>
-            <!-- 数据展示 -->
-            <v-flex
-              slot="item"
-              slot-scope="props"
-              xs12
-              sm4
-              md3
-              lg2
-            >
-              <v-card>
-                <v-card-title>
-                  <h5>{{ props.item.name }}</h5>
-                  <float-btn></float-btn>
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-list dense class="show">
-                  <v-list-tile>
-                    <v-list-tile-content>費用來源:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.cost_source }}</v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-card>
-            </v-flex>
-            <v-flex
-              slot="item"
-              slot-scope="props"
-              xs12
-              sm4
-              md3
-              lg2
-            >
-              <!-- 数据展示卡片 -->
-              <v-card>
-                <v-card-title>
-                  <h5>{{ props.item.name }}</h5>
-                  <float-btn></float-btn>
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-list dense class="show">
-                  <v-list-tile>
-                    <v-list-tile-content>費用來源:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.cost_source }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>申請單號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.request_no }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>廠商:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.vendor }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>圖片:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.pic }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>S/N:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.sn }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>Cisco編號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.cisco_code }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>財產編號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.asset_code }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>管制編號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.control_code }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>歸檔號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.archive_no }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>關務編號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.cunstom_code }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>校驗管制編號:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.check_control_no }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>數量:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.quantity }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>到貨時間:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.arrival_time }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>驗收人:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.acceptor }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>領用時間:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.use_time }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>領用人/負責人:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.use_person }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>樓層:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.floor }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>存放位置:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.location }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>Chamber尺寸(內部):</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.chamber_size_in }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>Chamber尺寸(外部):</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.chamber_size_ex }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>Chamber測試溫度範圍:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.chamber_temperature }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>處理發熱能力:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.heat_treat_capacity }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>電源:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.power_supply }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>功率:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.power }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>用水規格:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.water_norm }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>使用狀態:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.use_status }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>濕氣規格:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.moisture_norm }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>用氣規格:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.gas_norm }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>測試CELL數量:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.cell_num }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>UUT功率數量:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.UUT_power_num }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>UUT功率規格:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.UUT_power_norm }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>熱/冷命令:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.hot_cold_cmd }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>開始/結束命令:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.start_end_cmd }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>保修截止日期:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.repair_time }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>故障時間:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.failt_time }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>故障現象:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.fault_phenomenon }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>故障原因:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.fault_cause }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>維修內容:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.repair_content }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>維修人員:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.repairman }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>規格說明書:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.specification }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>維修人員:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.repairman }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>備註:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.note }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>申請時間:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.request_time }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>Project Name(機種):</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.project_name }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>需求人:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.demander }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>物品名稱:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.item_name }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>型號/規格:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.model }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>物品數量:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.item_num }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>單價:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.item_price }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>使用總金額:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.total_amount }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>PPV/NRE#:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.ppv_nre }}</v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile>
-                    <v-list-tile-content>入庫管制編號條碼:</v-list-tile-content>
-                    <v-list-tile-content class="align-end">{{ props.item.inbound_control_code }}</v-list-tile-content>
-                  </v-list-tile>
-                </v-list>
-              </v-card>
-            </v-flex>
-            <!-- 无显示数据重置 -->
-            <template slot="no-data">
-              <!-- <v-btn color="primary" @click="initialize">Reset</v-btn> -->
-              no data
-            </template>
-            <!-- 无搜索结果提示 -->
-            <v-alert slot="no-results" :value="true" color="error" icon="warning">
-              Your search for "{{ search }}" found no results.
-            </v-alert>
-          </v-data-iterator>
-        </div>
-      </v-widget>
+      </o-card>
     </v-flex>
     
   </v-layout>
@@ -461,10 +151,12 @@ import VWidget from '@/components/VWidget';
 import Goods from '../components/Combobox_goods';
 import Control from '../components/Combobox_control';
 import FloatBtn from '../components/FloatBtn';
-import { getBU, getBuilding, getFloor, getWarehouse } from '../api/warehouse';
+import { getWarehouse1, getWarehouse } from '../api/warehouse';
 import { getMainList } from '../api/mainList';
 import Dialog from '../components/dialog';
 import OCard from '../components/OCard';
+import { Table, Cascader, Button } from 'iview';
+import Datatable from '../components/datatable';
 
 export default {
   components: {
@@ -474,6 +166,10 @@ export default {
     FloatBtn,
     Dialog,
     OCard,
+    Cascader,
+    Table,
+    Button,
+    Datatable
   },
   data: () => ({
     selected_bu: '',
@@ -491,30 +187,106 @@ export default {
     pagination: {
       rowsPerPage: 6  // 默认每页6个卡片
     },
+    value1: [],
+    data: [
+      {
+        value: '815',
+        label: '815',
+        children: [
+          {
+            value: 'D9',
+            label: 'D9'
+          }
+        ]
+      }
+    ],
+    columns1: [
+      { title: '廠商', key: 'vendor', fixed: 'left' },
+      { title: 'S/N', key: 'sn' },
+      { title: '圖片', key: 'pic' },
+      { title: '樓層', key: 'floor' },
+      { title: '存放位置', key: 'location' },
+      { title: '到貨時間', key: 'arrival_time' },
+      { title: '驗收人', key: 'acceptor' },
+      { title: '備註', key: 'note' },
+      
+    ],
+    data2: [
+      {
+        vendor: 24,
+        pic: 'inbox',
+        sn: 87,
+        arrival_time: '1%',
+        acceptor: '1%',
+        floor: '1F',
+        use_time: '1%',
+        use_person: '1%',
+        location: '1%',
+        note: '###',
+      },
+      {
+        vendor: 24,
+        pic: 'inbox',
+        sn: 87,
+        arrival_time: '1%',
+        acceptor: '1%',
+        floor: '1F',
+        use_time: '1%',
+        use_person: '1%',
+        location: '1%',
+        note: '###',
+      },
+      {
+        vendor: 24,
+        pic: 'inbox',
+        sn: 87,
+        arrival_time: '1%',
+        acceptor: '1%',
+        floor: '1F',
+        use_time: '1%',
+        use_person: '1%',
+        location: '1%',
+        note: '###',
+      },
+    ]
   }),
+
   computed: {
-    bus () {  // bu选择
-      return getBU();
-    },
-    buildings () {
-      return getBuilding();
-    },
-    floors () {
-      return getFloor();
-    },
     items () {
       return getMainList();
     },
     warehouses () {
       return getWarehouse();
+    },
+    warehouses1 () {
+      return getWarehouse1();
     }
+  },
+  methods: {
+    exportData (type) {
+      if (type === 1) {
+        this.$refs.table.exportCsv({
+          filename: 'The original data'
+        });
+      } else if (type === 2) {
+        this.$refs.table.exportCsv({
+          filename: 'Sorting and filtering data',
+          original: false
+        });
+      } else if (type === 3) {
+        this.$refs.table.exportCsv({
+          filename: 'Custom data',
+          columns: this.columns1.filter((col, index) => index < 4),
+          data: this.data2.filter((data, index) => index < 4)
+        });
+      }
+    }      
   }
 };
 
 </script>
 <style lang='stylus' scoped>
 .top
-  height: 60px;
-.btn_div
-  margin-top: -30px;
+  height: 40px;
+
 </style>
