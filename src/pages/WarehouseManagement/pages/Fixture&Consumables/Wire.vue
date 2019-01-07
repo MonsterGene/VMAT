@@ -103,7 +103,7 @@ export default {
       { text: '到貨時間', value: 'arrival_time' },
       { text: '驗收人', value: 'acceptor' },
       { text: '備註', value: 'note' },
-      { text: '操作', value: 'name', sortable: false },
+      { text: '操作', value: 'option', sortable: false },
     ],
     desserts: [],
     editedIndex: -1,

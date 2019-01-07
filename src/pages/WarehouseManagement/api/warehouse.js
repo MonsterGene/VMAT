@@ -1,49 +1,122 @@
 // 仓库总信息
 
-// bu信息
-const bus = [
-  '815', 'CDBU', 'CSPG', 'CVEBU', 'CVTG',  
-  'EDVT', 'ERBU', 'FTX', 'ICT', 'MKD', 'MTP', 'NWE', 
-  'PABU', 'RCFA', 'SCBU', 'SERE', 'SFPG', 'SRG', 'TIPBU',
-  'UABU', 'UCEBU', 'UAG', 'UCEBU', 'WNG&IoTG', 'WSTG'
-];
 
-// 楼栋信息
-const buildings = [
-  'D9', 'D10', 'E5', 'E6', 'F21', 'MKD'
-];
-
-// 楼层信息
-const floors = [
-  '1F', '1.5F', '2F', '3F', '4F'
-];
 
 // 仓库信息
-const warehouses = [
-  { bu: '815', building: 'D9', floor: '1F' },
-  { bu: '815', building: 'E5', floor: '2F' },
-  { bu: 'CDBU', building: 'D9', floor: '2F' },
+const warehouses1 = [
+  {
+    value: 'CDBU',
+    label: 'CDBU',
+    children: [
+      {
+        value: 'F21',
+        label: 'F21',
+        children: [
+          {
+            value: '3F',
+            label: '3F'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    value: 'CSPG',
+    label: 'CSPG',
+    children: [
+      {
+        value: 'E6',
+        label: 'E6',
+        children: [
+          {
+            value: '2F',
+            label: '2F'
+          },
+          {
+            value: '3F',
+            label: '3F'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    value: 'EDVT',
+    label: 'EDVT',
+    children: [
+      {
+        value: 'D10',
+        label: 'D10',
+        children: [
+          {
+            value: '4F',
+            label: '4F'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    value: 'ERBU',
+    label: 'ERBU',
+    children: [
+      {
+        value: 'F21',
+        label: 'F21',
+        children: [
+          {
+            value: '2F',
+            label: '2F'
+          },
+          {
+            value: '3F',
+            label: '3F'
+          },
+          {
+            value: '4F',
+            label: '4F'
+          }
+        ]
+      }
+    ]
+  },
+  {
+    value: 'ICT',
+    label: 'ICT',
+    children: [
+      {
+        value: 'D10',
+        label: 'D10',
+        children: [
+          {
+            value: '4F',
+            label: '4F'
+          }
+        ]
+      }
+    ]
+  },
 ];
-
-const getBU = (limit) => {
-  return (limit) ? bus.slice(0, limit) : bus;
-};
-
-const getBuilding = (limit) => {
-  return (limit) ? buildings.slice(0, limit) : buildings;
-};
-
-const getFloor = (limit) => {
-  return (limit) ? floors.slice(0, limit) : floors;
-};
+const warehouses = [
+  { bu: 'CDBU', building: 'F21', floor: '3F' },
+  { bu: 'CSPG', building: 'E6', floor: '2F' },
+  { bu: 'CSPG', building: 'E6', floor: '3F' },
+  { bu: 'EDVT', building: 'D10', floor: '4F' },
+  { bu: 'ERBU', building: 'F21', floor: '2F' },
+  { bu: 'ERBU', building: 'F21', floor: '3F' },
+  { bu: 'ERBU', building: 'F21', floor: '2F' },
+  { bu: 'ICT', building: 'D10', floor: '4F' },
+];
 
 const getWarehouse = (limit) => {
   return (limit) ? warehouses.slice(0, limit) : warehouses;
 };
 
+const getWarehouse1 = (limit) => {
+  return (limit) ? warehouses1.slice(0, limit) : warehouses1;
+};
+
 export {
-  getBU,
-  getBuilding,
-  getFloor,
+  getWarehouse1,
   getWarehouse
 };
