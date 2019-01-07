@@ -11,7 +11,7 @@
       v-if="subItem.items"
       :key="subItem.name"
       :item="subItem"
-      :parent-group="parentGroup ? parentGroup + '/' + item.group : item.group"
+      :parent-group="getParentPath(item.group)"
       sub-group="sub-group"
     ></menu-group>
     <!--child item-->
@@ -19,7 +19,7 @@
       v-else
       :key="i"
       :item="subItem"
-      :parent-path="parentGroup ? parentGroup + '/' + item.group : item.group"
+      :parent-path="getParentPath(item.group)"
     ></menu-item>
   </template>
 </v-list-group>
@@ -38,5 +38,18 @@ export default {
     MenuItem
   },
   props: ['item', 'subGroup', 'parentGroup'],
+  methods: {
+    getParentPath (group) {
+      if (this.parentGroup) {
+        if (group) {
+          return this.parentGroup + '/' + group;
+        } else {
+          return this.parentGroup;
+        }
+      } else {
+        return group;
+      }
+    }
+  }
 };
 </script>
