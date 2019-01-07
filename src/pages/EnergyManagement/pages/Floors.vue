@@ -131,6 +131,7 @@
 
 <script>
 import moment from 'moment';
+import { Select, DatePicker } from 'iview';
 import { floorsApi } from '../api';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
@@ -151,48 +152,66 @@ export default {
     FloorMap,
     BuildingsEnergyUsage,
     EnergyTypePie,
-    SimpleChart
+    SimpleChart,
+    Select,
+    DatePicker
   },
   mixins: [energyManageMixin],
   data: vm => ({
-    date: new Date().toISOString().substr(0, 10),
-    dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    menu1: false,
-    menu2: false,
-    items: ['E5', 'D10'],
-    items2: ['BU', '楼层'],
-    items3: ['1F', '1.5F', '2F'],
-    items4: ['白班', '晚班'],
-    floorsTypeEnergyData: {},
-    typeEnergyData: true,
+    // date: new Date().toISOString().substr(0, 10),
+    // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
+    // menu1: false,
+    // menu2: false,
+    // items: ['E5', 'D10'],
+    // items2: ['BU', '楼层'],
+    
+    List: [
+      {
+        value: 'E5',
+        label: 'E5'
+      },
+      {
+        value: 'D10',
+        label: 'D10'
+      }
+    ],
+    loudong: '',
+    getidanyuan: '',
+    louceng: '',
+    banbie: '',
+    
+    // items3: ['1F', '1.5F', '2F'],
+    // items4: ['白班', '晚班'],
+    // floorsTypeEnergyData: {},
+    // typeEnergyData: true,
     DefaultChartTooltip
   }),
-  computed: {
-    computedDateFormatted () {
-      return this.formatDate(this.date);
-    }
-  },
-  watch: {
-    date (val) {
-      this.dateFormatted = this.formatDate(this.date);
-    }
-  },
+  // computed: {
+  //   computedDateFormatted () {
+  //     return this.formatDate(this.date);
+  //   }
+  // },
+  // watch: {
+  //   date (val) {
+  //     this.dateFormatted = this.formatDate(this.date);
+  //   }
+  // },
   mounted () {
     this.getChart2();
     this.getChart3();
   },
   methods: {
-    formatDate (date) {
-      if (!date) return null;
+    // formatDate (date) {
+    //   if (!date) return null;
 
-      const [year, month, day] = date.split('-');
-      return `${month}/${day}/${year}`;
-    },
-    parseDate (date) {
-      if (!date) return null;
-      const [month, day, year] = date.split('/');
-      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    },
+    //   const [year, month, day] = date.split('-');
+    //   return `${month}/${day}/${year}`;
+    // },
+    // parseDate (date) {
+    //   if (!date) return null;
+    //   const [month, day, year] = date.split('/');
+    //   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    // },
     getChart2 () {
       floorsApi.chart1Data(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
@@ -221,5 +240,7 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-
+#select{
+  padding:10px
+}
 </style>
