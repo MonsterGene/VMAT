@@ -1,7 +1,8 @@
 <template>
-<div class="aircon-status-wrapper" :class="{'active': currentAircon === airconInfo.machineSerialNumber}">
-  <div class="aircon-status-top" :class="{'active': currentAircon === airconInfo.machineSerialNumber}">
-    <h4>空调主机</h4>
+<div @click="airconClick" class="aircon-status-wrapper" :class="{'active': currentAircon === airconInfo.electricityMeterID}">
+  <div class="aircon-status-top" :class="{'active': currentAircon === airconInfo.electricityMeterID}">
+    <h4 v-if="currentType === 0">空调主机</h4>
+    <h4 v-else>空调风柜</h4>
   </div>
   <div class="aircon-status-middle">
     <div class="img">
@@ -14,7 +15,7 @@
       <div><div>楼栋</div><div>{{ airconInfo.building }}</div></div>
     </div>
   </div>
-  <div class="aircon-status-bottom">
+  <div class="aircon-status-bottom" :class="{'active': currentAircon === airconInfo.electricityMeterID}">
     <div>月累积能耗</div>
     <div>{{ airconInfo.monthEnergyUsage }} KWH</div>
   </div>
@@ -39,6 +40,11 @@ export default {
         return this.airconCabImg;
       }
     }
+  },
+  methods: {
+    airconClick () {
+      this.$emit('select', this.airconInfo);
+    }
   }
 };
 </script>
@@ -62,7 +68,9 @@ export default {
   .aircon-status-middle
     flex 1
     color #343434
+    background #f5f5f5
     display flex
+    align-items: center;
     .img
       flex 3
       text-align center
@@ -70,7 +78,7 @@ export default {
         max-width 100%
         max-height 100%
     .aircon-details
-      flex 2
+      flex 4
       font-size 14px
       line-height 20px
       padding 10px
@@ -81,7 +89,6 @@ export default {
         flex 1
         div
           flex 1
-      
   .aircon-status-bottom
     flex 0 0 0 55px
     height 55px
@@ -89,9 +96,10 @@ export default {
     font-size 20px
     text-align center
     display flex
+    &.active
+      background #e1e9fd
     div
       flex 1
       color #171f33
       line-height 55px
-      background #e1e9fd
 </style>

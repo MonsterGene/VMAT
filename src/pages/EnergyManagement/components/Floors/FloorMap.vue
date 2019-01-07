@@ -8,7 +8,7 @@
     @mouseup.left.stop.prevent="onMouseEnd"
     @mouseout="onMouseOut"
     @load="imgLoaded"
-    src="../../assets/pics/sz_map.jpg"
+    src="../../assets/pics/u655.png"
     class="img"
     alt=""
   />
@@ -17,11 +17,10 @@
     :key="index"
     class="watch-point-wrapper"
     :style="{
-      background: item.color,
       left: item.left * imgScaleState + imgPos.x + 'px',
       top: item.top * imgScaleState + imgPos.y + 'px'
     }">
-    <div class="static-point animation" :style="{ background: item.color }"></div>
+    <div class="static-point gcem-location" :style="{ color: item.color }"></div>
   </div>
 </div>
 </template>
@@ -29,11 +28,6 @@
 <script>
 export default {
   data () {
-    const pointColor = {
-      green: '#16BD37',
-      red: '#F33',
-      grey: '#666'
-    };
     return {
       imgPos: {
         x: 0,
@@ -43,29 +37,49 @@ export default {
       imgNatWidth: 0,
       watchPointList: [
         {
-          left: 585,
-          top: 495,
-          color: pointColor.grey
+          left: 415,
+          top: 133,
+          color: 'red'
         },
         {
-          left: 628,
-          top: 485,
-          color: pointColor.grey
+          left: 640,
+          top: 133,
+          color: 'green'
         },
         {
-          left: 733,
-          top: 465,
-          color: pointColor.green
+          left: 745,
+          top: 133,
+          color: 'red'
         },
         {
-          left: 775,
-          top: 455,
-          color: pointColor.grey
+          left: 850,
+          top: 133,
+          color: 'red'
         },
         {
-          left: 905,
-          top: 55,
-          color: pointColor.grey
+          left: 1066,
+          top: 133,
+          color: 'green'
+        },
+        {
+          left: 630,
+          top: 238,
+          color: 'red'
+        },
+        {
+          left: 640,
+          top: 340,
+          color: 'green'
+        },
+        {
+          left: 520,
+          top: 340,
+          color: 'green'
+        },
+        {
+          left: 740,
+          top: 340,
+          color: 'green'
         }
       ]
     };
@@ -159,43 +173,9 @@ export default {
     max-width 130%
     min-width 50%
   .watch-point-wrapper
-    width 10px
-    height 10px
-    border-radius 5px
-    background pink
     position absolute
     left 0
     top 0
-    
     .static-point
-      width 10px
-      height 10px
-      border-radius 5px
-      background red
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      margin: auto;
-      &.animation
-        animation scale 1s linear infinite;
-      @keyframes scale {
-        0% {
-          transform scale(1)
-          opacity 1
-        }
-        50% {
-          transform scale(1.6)
-          opacity 0.5
-        }
-        75% {
-          transform scale(1.8)
-          opacity 0.3
-        }
-        100% {
-          transform scale(2)
-          opacity 0
-        }
-      }
+      font-size 30px
 </style>

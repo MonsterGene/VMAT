@@ -8,41 +8,105 @@
       row
       wrap
       justify-end
-      align-center
-    >
-    <div id="select">
-      楼栋：<Select v-model="loudong" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-    个体单元：<Select v-model="getidanyuan" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-      楼层：<Select v-model="louceng" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-   
-      时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
-      
-      班别：<Select v-model="banbie" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-    
-      <v-btn-toggle>
-        <v-btn flat value="left">
-          日
-        </v-btn>
-        <v-btn flat value="center">
-          月
-        </v-btn>
-        <v-btn flat value="right">
-          季度
-        </v-btn>
-        <v-btn flat value="justify">
-          年
-        </v-btn>
-      </v-btn-toggle>
-    </div>
-    <img src="../assets/pics/u655.png" width="100%" height="100%"/>
+      align-center>
+      <v-flex md1 d-flex style="height:">
+        <v-select
+          :items="items"
+          label="楼栋："
+          dense
+        ></v-select>
+      </v-flex>
+      <v-flex md2 d-flex>
+        <v-select
+          :items="items2"
+          label="主体单元："
+          dense
+        ></v-select>
+      </v-flex>
+      <v-flex md1 d-flex>
+        <v-select
+          :items="items3"
+          label="楼层："
+          dense
+        ></v-select>
+      </v-flex>
+      <v-flex md2>
+        <v-menu
+          ref="menu1"
+          :close-on-content-click="false"
+          v-model="menu1"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <v-text-field
+            slot="activator"
+            v-model="dateFormatted"
+            label="Start"
+            persistent-hint
+            prepend-icon="event"
+            @blur="date = parseDate(dateFormatted)"
+          ></v-text-field>
+          <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+        </v-menu>
+      </v-flex>
+      <v-flex md2>
+        <v-menu
+          ref="menu2"
+          :close-on-content-click="false"
+          v-model="menu2"
+          :nudge-right="40"
+          lazy
+          transition="scale-transition"
+          offset-y
+          full-width
+          max-width="290px"
+          min-width="290px"
+        >
+          <v-text-field
+            slot="activator"
+            v-model="dateFormatted"
+            label="End"
+            persistent-hint
+            @blur="date = parseDate(dateFormatted)"
+          ></v-text-field>
+          <v-date-picker v-model="date" no-title @input="menu1 = false"></v-date-picker>
+        </v-menu>
+      </v-flex>
+      <v-flex md1 d-flex>
+        <v-select
+          :items="items4"
+          label="班别："
+          dense
+        ></v-select>
+      </v-flex>
+      <v-flex md2 class="py-2">
+        <v-btn-toggle>
+          <v-btn flat value="left">
+            日
+          </v-btn>
+          <v-btn flat value="center">
+            月
+          </v-btn>
+          <v-btn flat value="right">
+            季度
+          </v-btn>
+          <v-btn flat value="justify">
+            年
+          </v-btn>
+        </v-btn-toggle>
+      </v-flex>
+    </v-layout>
+    <v-layout row wrap>
+      <v-flex xs-12>
+        <floor-map></floor-map>
+      </v-flex>
+    </v-layout>
+  <v-layout>
     <v-flex md8>
       <img src="../assets/pics/u652.png" width="100%" height="450px"/>
     </v-flex>
@@ -66,15 +130,6 @@
 </template>
 
 <script>
-/**
- * import { demoApi, pageApi } from '../api';
- * fetch legends data 使用api接口代码示例
- * pageApi.lineApi.getStateLegends().then(response => {
- *   //你的处理程序
- *   //response 是请求的响应信息 response
- *   //后台实际返回的数据 res.data
- * });
- */
 import moment from 'moment';
 import { Select, DatePicker } from 'iview';
 import { floorsApi } from '../api';
@@ -83,6 +138,7 @@ import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+import FloorMap from '../components/Floors/FloorMap.vue';
 
 import SimpleChart from '../../../components/chart/SimpleChart.vue';
 import { DefaultChartTooltip } from '../components/common/ChartTooltip';
@@ -93,6 +149,7 @@ export default {
   components: {
     VWidget,
     SourceTypeBar,
+    FloorMap,
     BuildingsEnergyUsage,
     EnergyTypePie,
     SimpleChart,
