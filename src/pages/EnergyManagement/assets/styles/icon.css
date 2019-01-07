@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon';
-  src:  url('fonts/icon.eot?j749h5');
-  src:  url('fonts/icon.eot?j749h5#iefix') format('embedded-opentype'),
-    url('fonts/icon.ttf?j749h5') format('truetype'),
-    url('fonts/icon.woff?j749h5') format('woff'),
-    url('fonts/icon.svg?j749h5#icon') format('svg');
+  src:  url('fonts/icon.eot?l54xdw');
+  src:  url('fonts/icon.eot?l54xdw#iefix') format('embedded-opentype'),
+    url('fonts/icon.ttf?l54xdw') format('truetype'),
+    url('fonts/icon.woff?l54xdw') format('woff'),
+    url('fonts/icon.svg?l54xdw#icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,9 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gcem-location:before {
+  content: "\e900";
+}
 .gcem-arrow-up:before {
   content: "\ea3a";
 }
