@@ -31,7 +31,7 @@ const defaultFormatterFunction = (params, t, cb, opts) => {
   // console.log(params);
   let seriesInfo = ``;
   if (opts.seriesName && opts.seriesName.show) {
-    let sStr = params[0].seriesName;
+    let sStr = params[0].name;
     let styleStr = '';
     if (opts.seriesName.formatter) {
       sStr = opts.seriesName.formatter.replace(/\$0/, sStr);
@@ -255,6 +255,7 @@ export const defaultTooltipOption = {
   borderColor: 'rgba(255, 255, 255, 0.2)',
   borderWidth: 5,
   formatter: {
+    seriesName: { show: true, color: '#ffcc33' },
     dataName: { show: true, color: '#ffcc33' },
     dataValue: {
       show: true,

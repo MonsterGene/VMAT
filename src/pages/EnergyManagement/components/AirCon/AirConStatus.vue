@@ -28,7 +28,7 @@ export default {
   props: ['airconInfo', 'currentAircon', 'currentType'],
   data () {
     return {
-      airconImg: require('../../assets/pics/aircon.jpg'),
+      airconImg: require('../../assets/pics/aircon.png'),
       airconCabImg: require('../../assets/pics/airconCab.png')
     };
   },
