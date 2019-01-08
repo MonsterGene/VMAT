@@ -2,7 +2,7 @@
 <template>
   <div class="primary">
     <v-toolbar flat color="white" dark class="primary top">
-      <v-toolbar-title>DATA</v-toolbar-title>
+      <v-toolbar-title>DATA TABLE</v-toolbar-title>
       <v-divider
         class="mx-2"
         inset
@@ -70,6 +70,7 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+      <v-btn @click="export2Excel" class="mb-2" color="green">GET EXCEL</v-btn>
     </v-toolbar>
     <v-data-table
       :headers="headers"
@@ -339,131 +340,76 @@ export default {
       this.desserts = [
         {
           value: false,
-          name: '1',
-          cost_source: 159,
-          request_no: 6.0,
-          vendor: 24,
-          pic: 'inbox',
-          sn: 87,
-          cisco_code: '14%',
-          asset_code: '1%',
-          control_code: 159,
-          archive_no: '1%',
-          cunstom_code: '1%',
-          check_control_no: '1%',
-          quantity: '100',
-          arrival_time: '1%',
-          acceptor: '1%',
-          floor: '1F',
-          use_time: '1%',
-          use_person: '1%',
-          location: '1%',
-          chamber_size_in: '1%',
-          chamber_size_ex: '1%',
-          chamber_temperature: '1%',
-          heat_treat_capacity: '1%',
-          power_supply: '1%',
-          power: '1%',
-          water_norm: '1%',
-          use_status: '1%',
-          moisture_norm: '1%',
-          gas_norm: '1%',
-          cell_num: '1%',
-          UUT_power_num: '1%',
-          UUT_power_norm: '1%',
-          hot_cold_cmd: '1%',
-          start_end_cmd: '1%',
-          repair_time: '1%',
-          failt_time: '1%',
-          fault_phenomenon: '1%',
-          fault_cause: '1%',
-          repair_content: '1%',
-          repairman: '1%',
-          note: '###',
-          specification: '1%',
-          request_time: '1%',
-          project_name: '1%',
-          model: '###',
-          demander: '1%',
-          item_name: '1%',
-          item_num: '1%',
-          item_price: '1%',
-          total_amount: '1%',
-          ppv_nre: '1%',
-          inbound_control_code: '1%'
-        },
-        {
-          value: false,
           project_name: '###2',
-          sn: '$$$',
-          pic: '',
+          sn: '$$$2',
+          pic: 'none',
           vendor: '@@@',
-          safe_num: 1111,
+          safe_num: 50,
           service_life: 1,
-          floor: 1,
-          location: 'WHS',
-          use_state: '使用中',
-          arrival_time: '2018/12/14',
+          floor: 3,
+          location: 'D9',
+          use_state: '使用',
+          arrival_time: '2019/01/06',
           acceptor: '!!!',
           note: 'none',
         },
         {
           value: false,
           project_name: '###3',
-          sn: '$$$',
+          sn: '$$$3',
           pic: 'none',
           vendor: '@@@',
-          safe_num: 1111,
-          service_life: 1,
-          floor: 1,
-          location: 'WHS',
-          use_state: '使用中',
-          arrival_time: '2018/12/14',
+          safe_num: 35,
+          service_life: 2,
+          floor: 4,
+          location: 'D10',
+          use_state: '閒置',
+          arrival_time: '2019/01/06',
           acceptor: '!!!',
           note: 'none',
         },
         {
           value: false,
           project_name: '###4',
-          sn: '$$$',
+          sn: '$$$4',
           pic: 'none',
           vendor: '@@@',
-          safe_num: 1111,
-          service_life: 1,
-          floor: 1,
-          location: 'WHS',
-          use_state: '使用中',
-          arrival_time: '2018/12/14',
+          safe_num: 45,
+          service_life: 1.5,
+          floor: 4,
+          location: 'E5',
+          use_state: '待修',
+          arrival_time: '2019/01/06',
           acceptor: '!!!',
           note: 'none',
         },
         {
           value: false,
           project_name: '###5',
-          sn: '$$$',
+          sn: '$$$5',
           pic: 'none',
           vendor: '@@@',
-          safe_num: 1111,
-          service_life: 1,
-          floor: 1,
-          location: 'WHS',
-          use_state: '使用中',
-          arrival_time: '2018/12/14',
+          safe_num: 65,
+          service_life: 1.5,
+          floor: 3,
+          location: 'E6',
+          use_state: '報廢',
+          arrival_time: '2019/01/06',
           acceptor: '!!!',
           note: 'none',
         },
         {
           value: false,
           project_name: '###6',
-          sn: '$$$',
+          sn: '$$$6',
           pic: 'none',
           vendor: '@@@',
-          safe_num: 1111,
-          service_life: 1,
-          floor: 1,
-          location: 'WHS',
-          use_state: '使用中',
-          arrival_time: '2018/12/14',
+          safe_num: 100,
+          service_life: 2,
+          floor: 3,
+          location: 'F21',
+          use_state: '轉出',
+          arrival_time: '2019/01/06',
           acceptor: '!!!',
           note: 'none',
         },
@@ -475,7 +421,7 @@ export default {
           vendor: '@@@',
           safe_num: 1111,
           service_life: 1,
-          floor: 1,
+          floor: 3,
           location: 'WHS',
           use_state: '使用中',
           arrival_time: '2018/12/14',
@@ -490,7 +436,7 @@ export default {
           vendor: '@@@',
           safe_num: 1111,
           service_life: 1,
-          floor: 1,
+          floor: 4,
           location: 'WHS',
           use_state: '使用中',
           arrival_time: '2018/12/14',
@@ -529,7 +475,20 @@ export default {
         }
       ];
     },
-
+    export2Excel () {
+      require.ensure([], () => {
+        const { export_json_to_excel } = require('../vendor/Export2Excel');
+        const tHeader = ['物品名称'];
+        const filterVal = ['project_name'];
+        const list = this.desserts;
+        const data = this.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, '列表excel');
+      });
+    },
+    formatJson (filterVal, jsonData) {
+      console.log(jsonData);
+      return jsonData.map(v => filterVal.map(j => v[j]));
+    },
     editItem (item) {
       this.editedIndex = this.desserts.indexOf(item);
       this.editedItem = Object.assign({}, item);
