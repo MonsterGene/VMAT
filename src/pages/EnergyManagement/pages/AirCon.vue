@@ -10,21 +10,17 @@
       justify-end
       align-center
     >
-      <v-flex md4>
+      <v-flex md3>
         <v-layout row wrap>
-          <v-flex md6>
-            <div class="text-xs-center">
-              <v-btn round @click="machineSwitch(0)">空调主机</v-btn>
-            </div>
+          <v-flex md6 class="text-xs-center">
+            <v-btn round @click="machineSwitch(0)" :input-value="machineType === 0">空调主机</v-btn>
           </v-flex>
-          <v-flex md6>
-            <div class="text-xs-center">
-              <v-btn round @click="machineSwitch(1)">空调风柜</v-btn>
-            </div>
+          <v-flex md6 class="text-xs-center">
+            <v-btn round @click="machineSwitch(1)" :input-value="machineType === 1">空调风柜</v-btn>
           </v-flex>
         </v-layout>
       </v-flex>
-      <v-flex md8>
+      <v-flex md9>
         <search-bar @condition-change="searchBarChange"></search-bar>
       </v-flex>
     </v-layout>
@@ -63,6 +59,7 @@
             min: v => takeInt(v.min - 1)
           }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
+          bg-color="#FFF"
           x-name="时间"
           height="300px"></line-chart>
       </v-flex>
@@ -77,6 +74,7 @@
             min: v => takeInt(v.min - 1)
           }"
           :colors="['#e3d842', '#66cc33', '#e75c12']"
+          bg-color="#FFF"
           y-name=""
           x-name="时间"
           height="300px"></line-chart>
@@ -87,7 +85,7 @@
           :dataset-source="airconPowerTrendData"
           :custom-tooltip="chartTooltipOpt('W')"
           :y-axis="{
-            name: '功率(W)',
+            name: '功率(KW)',
             max: v => takeInt(v.max + 1, true),
             min: v => takeInt(v.min - 1),
           }"
@@ -312,8 +310,12 @@ export default {
       });
     },
     searchBarChange (evt) {
+      console.log(evt);
       this.searchConditions = evt;
       this.init();
+      this.getChart3(this.currentAirCon).then(data => {
+        this.changeAirconData(data);
+      });
     },
     machineSwitch (type) {
       this.machineType = type;

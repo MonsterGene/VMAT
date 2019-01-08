@@ -131,8 +131,8 @@
 
 <script>
 import moment from 'moment';
-import { Select, DatePicker } from 'iview';
 import { floorsApi } from '../api';
+import { deepCopyObject } from '../../../util/utils';
 import { energyManageMixin } from '../mixin.js';
 import VWidget from '@/components/VWidget';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
@@ -141,7 +141,16 @@ import EnergyTypePie from '../components/home/EnergyTypePie.vue';
 import FloorMap from '../components/Floors/FloorMap.vue';
 
 import SimpleChart from '../../../components/chart/SimpleChart.vue';
-import { DefaultChartTooltip } from '../components/common/ChartTooltip';
+import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
+
+const defTooltipOpt = deepCopyObject(defaultTooltipOption);
+defTooltipOpt.formatter.countTotal = {
+  show: true,
+  name: '总耗电',
+  nameColor: '#ffcc33',
+  valueColor: '#99ff00'
+};
+const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 
 const echarts = window.echarts || undefined;
 
@@ -152,18 +161,16 @@ export default {
     FloorMap,
     BuildingsEnergyUsage,
     EnergyTypePie,
-    SimpleChart,
-    Select,
-    DatePicker
+    SimpleChart
   },
   mixins: [energyManageMixin],
   data: vm => ({
-    // date: new Date().toISOString().substr(0, 10),
-    // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    // menu1: false,
-    // menu2: false,
-    // items: ['E5', 'D10'],
-    // items2: ['BU', '楼层'],
+    date: moment().subtract('days', 30).format('YYYY-MM-DD'),
+    dateFormatted: moment().format('YYYY-MM-DD'),
+    menu1: false,
+    menu2: false,
+    items: ['E5', 'D10'],
+    items2: ['BU', '楼层'],
     
     List: [
       {
@@ -180,10 +187,10 @@ export default {
     louceng: '',
     banbie: '',
     
-    // items3: ['1F', '1.5F', '2F'],
-    // items4: ['白班', '晚班'],
-    // floorsTypeEnergyData: {},
-    // typeEnergyData: true,
+    items3: ['1F', '1.5F', '2F'],
+    items4: ['白班', '晚班'],
+    floorsTypeEnergyData: {},
+    typeEnergyData: true,
     DefaultChartTooltip
   }),
   // computed: {

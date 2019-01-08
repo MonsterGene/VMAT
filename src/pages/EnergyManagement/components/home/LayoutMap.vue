@@ -159,18 +159,18 @@ export default {
     max-width 130%
     min-width 50%
   .watch-point-wrapper
-    width 10px
-    height 10px
-    border-radius 5px
+    width 15px
+    height 15px
+    border-radius 50%
     background pink
     position absolute
     left 0
     top 0
     
     .static-point
-      width 10px
-      height 10px
-      border-radius 5px
+      width 15px
+      height 15px
+      border-radius 50%
       background red
       position: absolute;
       top: 0;
@@ -186,15 +186,15 @@ export default {
           opacity 1
         }
         50% {
-          transform scale(1.6)
+          transform scale(1.8)
           opacity 0.5
         }
         75% {
-          transform scale(1.8)
+          transform scale(2.2)
           opacity 0.3
         }
         100% {
-          transform scale(2)
+          transform scale(2.4)
           opacity 0
         }
       }
