@@ -11,6 +11,10 @@ import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import Truncate from 'lodash.truncate';
 import store from './store';
+import Axios from 'axios';
+
+Vue.prototype.$axios = Axios;
+
 Vue.config.productionTip = false;
 // Helpers
 // Global filters
