@@ -1,5 +1,3 @@
-import { axios, catchMethod } from './config';
-
 // 主界面列表数据
 const items = [
   {
@@ -7,9 +5,9 @@ const items = [
     name: '1',
     cost_source: 159,
     request_no: 6.0,
-    vendor: '@@@1',
-    pic: 'none',
-    sn: '$$$1',
+    vendor: 24,
+    pic: 'inbox',
+    sn: 87,
     cisco_code: '14%',
     asset_code: '1%',
     control_code: 159,
@@ -47,10 +45,10 @@ const items = [
     note: '###',
     specification: '1%',
     request_time: '1%',
-    project_name: '###1',
+    project_name: '1%',
     model: '###',
     demander: '1%',
-    item_name: '###1',
+    item_name: '1%',
     item_num: '1%',
     item_price: '1%',
     total_amount: '1%',
@@ -554,17 +552,8 @@ const items = [
   },
 ];
 
-const getMainList = (params, demo) => {
-  if (!demo) {
-    return axios.post('form', params).catch(catchMethod);
-  } else {
-    return new Promise(resolve => {
-      resolve({
-        status: 200,
-        data: items
-      });
-    });
-  }
+const getMainList = (limit) => {
+  return (limit) ? items.slice(0, limit) : items;
 };
 
 export {
