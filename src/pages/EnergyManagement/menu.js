@@ -8,7 +8,6 @@ const menu = [
       { title: '楼栋', path: 'floors' },
       { title: 'BU', path: 'bu' },
       { title: '空调主机', path: 'airCon' },
-      { title: '空调风柜', path: 'airConCab' },
       { title: 'Bella', path: 'test' }
     ]
   },
