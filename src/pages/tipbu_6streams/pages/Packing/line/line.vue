@@ -143,6 +143,22 @@ export default {
             line.stations.splice(11, 0, 'conn');
             return line;
           });
+          const copyData = JSON.stringify(this.linesData);
+          this.linesData = this.linesData.concat(JSON.parse(copyData), JSON.parse(copyData)).map((line, index) => {
+            line.id = index + 1;
+            if (index > 0) {
+              line.achievingRate = '0.00%';
+              line.name = `组装${index + 1 === 2 ? '二' : '三'}线`;
+              line.stations = line.stations.map(station => {
+                if (typeof station === 'object') {
+                  station.output = 0;
+                  station.stateCode = 0;
+                }
+                return station;
+              });
+            }
+            return line;
+          });
         } else {
           console.log(data.message);
           this.alertOpts.text = '获取生产数据失败！';
