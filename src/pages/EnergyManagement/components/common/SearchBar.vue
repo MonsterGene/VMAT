@@ -2,7 +2,7 @@
 <v-layout row wrap justify-end>
   <v-flex
     v-if="field.indexOf('building') > -1"
-    md2
+    md1
     d-flex
   >
     <v-select
@@ -27,6 +27,22 @@
       item-text="text"
       item-value="value"
       label="BU："
+      hide-details
+      dense
+      solo
+    ></v-select>
+  </v-flex>
+  <v-flex
+    v-if="field.indexOf('floor') > -1"
+    md1
+    d-flex
+  >
+    <v-select
+      v-model="floorList.select"
+      :items="floorList.options"
+      item-text="text"
+      item-value="value"
+      label="楼层："
       hide-details
       dense
       solo
@@ -140,7 +156,7 @@ export default {
     // building, bu, startTime, endTime, shiftType, typeTime
     field: {
       type: Array,
-      default: () => ['building', 'bu', 'startTime', 'endTime', 'shiftType', 'typeTime']
+      default: () => ['building', 'bu', 'floor', 'startTime', 'endTime', 'shiftType', 'typeTime']
     }
   },
   data () {
@@ -149,7 +165,19 @@ export default {
         select: 'E5',
         options: [
           { text: 'E5', value: 'E5' },
-          { text: 'D10', value: 'E5' }
+          { text: 'E6', value: 'E6' },
+          { text: 'D9', value: 'D9' },
+          { text: 'D10', value: 'D10' }
+        ]
+      },
+      floorList: {
+        select: '1.5F',
+        options: [
+          { text: '1F', value: '1F' },
+          { text: '1.5F', value: '1.5F' },
+          { text: '2F', value: '2F' },
+          { text: '3F', value: '3F' },
+          { text: '4F', value: '4F' }
         ]
       },
       buList: {

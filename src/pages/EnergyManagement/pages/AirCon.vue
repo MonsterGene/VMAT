@@ -47,7 +47,7 @@
         <air-con-status @select="airconSelect" :aircon-info="aircon" :current-type="machineType" :current-aircon="currentAirCon"></air-con-status>
       </v-flex>
     </v-layout>
-    <v-layout v-if="currentAirCon" row wrap align-center>
+    <v-layout v-if="currentAirCon && airconList.length > 0" row wrap align-center>
       <v-flex md6>
         <line-chart
           title="电压走势"
@@ -127,7 +127,7 @@ import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
 import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 import AirConStatus from '../components/AirCon/AirConStatus.vue';
-import SearchBar from '../components/common/SearchBar.vue';
+import SearchBar from '../components/AirCon/SearchBar.vue';
 
 const echarts = window.echarts || null;
 
@@ -143,7 +143,7 @@ export default {
   mixins: [energyManageMixin],
   data: vm => ({
     colors,
-    machineType: 0,
+    machineType: vm.$route.query.m || 0,
     searchConditions: {},
     acHostTotalEnergy: 0,
     acHostEnergyUsageByDay: {},
@@ -157,24 +157,25 @@ export default {
   }),
   watch: {
     currentAirCon: {
-      handler (val) {
+      handler (val, old) {
         console.log(val);
-        if (val) {
+        if (val && val !== old) {
           if (this.airconData[val]) {
             this.changeAirconData(this.airconData[val]);
           } else {
+            console.log('#####################');
             this.getChart3(val).then(data => {
               this.changeAirconData(data);
             });
           }
         }
       },
-      immediate: true
+      immediate: false
     }
   },
-  // mounted () {
-  //   this.init();
-  // },
+  mounted () {
+    // console.log(this.$route);
+  },
   methods: {
     init () {
       // 上面右边折线图
@@ -195,7 +196,8 @@ export default {
       this.airconData = {};
     },
     changeAirconData (data) {
-      console.log(data);
+      // console.log(data);
+      if (!data) return;
       this.airconVoltageTrendData = data.U_Data;
       this.airconIntensityTrendData = data.I_Data;
       this.airconPowerTrendData = data.P_Data;
@@ -233,7 +235,7 @@ export default {
       airConApi.AirConList(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building,
+        building: this.searchConditions.building + (this.searchConditions.floor && this.searchConditions.floor.replace(/\D/g, '') || ''),
         type: this.machineType
       })).then(res => {
         // 月累积能耗: null
@@ -243,7 +245,7 @@ export default {
         // 设备编号: "1#"
         if (res && res.status === 200) {
           const data = res.data;
-          console.log(data);
+          // console.log(data);
           this.airconList = data.map((v, i) => {
             if (i === 0) {
               this.currentAirCon = v['电表ID'];
@@ -261,6 +263,7 @@ export default {
       });
     },
     getChart3 (type) {
+      console.log(type);
       return airConApi.AirConVIPFTrend(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
@@ -270,7 +273,7 @@ export default {
         if (res && res.status === 200) {
           const data = res.data;
           this.airconData = Object.entries(data).reduce((acc, cur) => {
-            console.log(cur);
+            // console.log(cur);
             const [key, value] = cur;
 
             const U_Data = []; // 电压
@@ -303,7 +306,7 @@ export default {
             acc[key] = { U_Data, I_Data, P_Data, F_Data };
             return acc;
           }, {});
-          console.log(this.airconData);
+          // console.log(this.airconData);
           if (type) {
             return new Promise(res => {
               res(this.airconData[type]);
@@ -316,9 +319,11 @@ export default {
       console.log(evt);
       this.searchConditions = evt;
       this.init();
-      this.getChart3(this.currentAirCon).then(data => {
-        this.changeAirconData(data);
-      });
+      if (this.currentAirCon !== '') {
+        this.getChart3(this.currentAirCon).then(data => {
+          this.changeAirconData(data);
+        });
+      }
     },
     machineSwitch (type) {
       this.machineType = type;

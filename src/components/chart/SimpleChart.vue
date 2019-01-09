@@ -122,7 +122,7 @@ export default {
   },
   mounted () {
     this.init();
-    console.log(this.$listeners);
+    // console.log(this.$listeners);
   },
   beforeDestroy () {
     this.clean();
@@ -143,6 +143,7 @@ export default {
     defineSeries (data) {
       const doSeries = (t, isLeg) => {
         let series;
+        // console.log(typeof this.seriesConfig === 'object');
         if (typeof this.seriesConfig === 'object') {
           series = t.map(v => this.seriesConfig);
         } else if (typeof this.seriesConfig === 'function') {
@@ -159,25 +160,25 @@ export default {
           if (this.stack && typeof series[i].stack === 'undefined') {
             series[i].stack = 1;
           }
-          if (this.seriesType && typeof this.seriesType === 'string') {
+          if (!this.seriesConfig && this.seriesType && typeof this.seriesType === 'string') {
             series[i].type = this.seriesType;
-          } else if (this.seriesType && _isArray(this.seriesType) && this.seriesType.length > 0) {
+          } else if (!this.seriesConfig && this.seriesType && _isArray(this.seriesType) && this.seriesType.length > 0) {
             series[i].type = this.seriesType[i] || this.seriesType[this.seriesType.length - 1];
           }
         });
-        console.log(series);
+        // console.log(series);
         return series;
       };
       if (this.legendList) {
         let t = Array(this.legendList.length).fill(0);
         const forSeries = a => {
-          console.log(a);
+          // console.log(a);
           a.forEach((item, index) => {
             let i = this.legendList.indexOf(item);
             a[index] = i;
           });
           a = a.filter(v => v !== -1);
-          console.log(a);
+          // console.log(a);
           return a;
         };
         if (_isArray(data)) {
@@ -329,7 +330,7 @@ export default {
       }
     },
     resize (e) {
-      console.log('resize');
+      // console.log('resize');
       setTimeout(() => {
         this.chart.resize();
       }, this.resizeDelay);
