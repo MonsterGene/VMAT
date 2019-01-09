@@ -202,6 +202,9 @@ export default {
 <style lang='stylus' scoped>
 .btn-group
   height 48px
-  padding 0 5px
-  border-radius 50%
+  // padding 0 5px
+  border-radius 24px
+  overflow hidden
+  .sub-btn
+    height 100%
 </style>

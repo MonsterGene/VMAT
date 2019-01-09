@@ -83,7 +83,7 @@
         <line-chart
           title="功率走势"
           :dataset-source="airconPowerTrendData"
-          :custom-tooltip="chartTooltipOpt('W')"
+          :custom-tooltip="chartTooltipOpt('KW')"
           :y-axis="{
             name: '功率(KW)',
             max: v => takeInt(v.max + 1, true),
@@ -127,7 +127,7 @@ import EnergyGuage from '../components/common/EnergyGuage.vue';
 import LineChart from '../../../components/chart/SimpleChart.vue';
 import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 import AirConStatus from '../components/AirCon/AirConStatus.vue';
-import SearchBar from '../components/AirCon/SearchBar.vue';
+import SearchBar from '../components/common/SearchBar.vue';
 
 const echarts = window.echarts || null;
 
@@ -218,7 +218,8 @@ export default {
       airConApi.homeFistChart(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building
+        building: this.searchConditions.building,
+        type: this.machineType
       })).then(res => {
         if (res && res.status === 200) {
           const data = res.data;
@@ -232,7 +233,8 @@ export default {
       airConApi.AirConList(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building
+        building: this.searchConditions.building,
+        type: this.machineType
       })).then(res => {
         // 月累积能耗: null
         // 楼栋: "E5-E5-4F-4AP1"
@@ -262,7 +264,8 @@ export default {
       return airConApi.AirConVIPFTrend(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building
+        building: this.searchConditions.building,
+        type: this.machineType
       })).then(res => {
         if (res && res.status === 200) {
           const data = res.data;

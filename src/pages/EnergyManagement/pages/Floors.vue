@@ -4,7 +4,7 @@
     fluid
   >
     <source-type-bar></source-type-bar>
-    <v-layout
+    <!-- <v-layout
       row
       wrap
       justify-end
@@ -100,6 +100,11 @@
           </v-btn>
         </v-btn-toggle>
       </v-flex>
+    </v-layout> -->
+    <v-layout row wrap justify-end align-center>
+      <v-flex md9>
+        <search-bar :field="['building', 'bu', 'startTime', 'endTime', 'shiftType', 'typeTime']"></search-bar>
+      </v-flex>
     </v-layout>
     <v-layout row wrap>
       <v-flex xs-12>
@@ -139,7 +144,7 @@ import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
 import FloorMap from '../components/Floors/FloorMap.vue';
-
+import SearchBar from '../components/common/SearchBar.vue';
 import SimpleChart from '../../../components/chart/SimpleChart.vue';
 import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 
@@ -161,7 +166,8 @@ export default {
     FloorMap,
     BuildingsEnergyUsage,
     EnergyTypePie,
-    SimpleChart
+    SimpleChart,
+    SearchBar
   },
   mixins: [energyManageMixin],
   data: vm => ({

@@ -3,10 +3,9 @@
     grid-list-xl
     fluid
     v-resize="onWindowResize"
-    class="gcem-home"
   >
     <source-type-bar></source-type-bar>
-    <v-layout
+    <!-- <v-layout
       row
       wrap
       fill-height
@@ -91,6 +90,11 @@
       <v-flex style="flex: 0 0 128px;width: 128px;">
         <v-btn color="primary">查询</v-btn>
       </v-flex>
+    </v-layout> -->
+    <v-layout row wrap justify-end align-center>
+      <v-flex md9>
+        <search-bar :field="['startTime', 'endTime', 'shiftType', 'typeTime']"></search-bar>
+      </v-flex>
     </v-layout>
     <v-layout row wrap>
       <v-flex md8>
@@ -138,6 +142,7 @@ import LayoutMap from '../components/home/LayoutMap.vue';
 import TotalEnergyUsage from '../components/home/TotalEnergyUsage.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+import SearchBar from '../components/common/SearchBar.vue';
 import BuEnergyTotalUsage from '../components/home/BuEnergyTotalUsage.vue';
 import DepartmentEnergyTrend from '../components/home/DepartmentEnergyTrend.vue';
 
@@ -152,7 +157,8 @@ export default {
     BuildingsEnergyUsage,
     EnergyTypePie,
     BuEnergyTotalUsage,
-    DepartmentEnergyTrend
+    DepartmentEnergyTrend,
+    SearchBar
   },
   data () {
     return {
@@ -171,29 +177,5 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-.gcem-home
-  .gcem-home-form-bar
-    .date-control
-      flex 0 0 200px
-      width 200px
-    .gcem-home-form-select-wrapper
-      flex: 0 0 150px
-      width: 150px
-    .border-radius-24
-      border-radius 24px
-      border 1px solid #4e7af3
-      overflow hidden
-    .btn-group-wrapper
-      flex 0 0 165px
-      width 165px
-      align-self center
-      .btn-group
-        border 1px solid #4e7af3
-        border-radius 24px
-        height 48px
-        .sub-btn
-          color #4e7af3
-          height 100%
-          &.btn-border-r
-            border-right: 1px solid #4e7af3
+
 </style>
