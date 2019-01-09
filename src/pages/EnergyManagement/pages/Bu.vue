@@ -1,36 +1,37 @@
 <template>
-  <v-container
-    grid-list-xl
-    fluid
+<v-container
+  grid-list-xl
+  fluid
+>
+  <source-type-bar></source-type-bar>
+  <v-layout
+    row
+    wrap
+    justify-end
+    align-center
   >
-    <source-type-bar></source-type-bar>
-    <v-layout
-      row
-      wrap
-      justify-end
-      align-center
-    >
-      <!-- <embed
+    <!-- <embed
       type="application/pdf"
       src="http://10.167.192.146/StaticSource/EnergyManagement/E5_1_5F.pdf"
       style="width:100%;height:100%;padding:10px"
     /> -->
-      <div id="select">
-      楼栋：<Select v-model="loudong" style="width:70px">
+    <!-- <div id="select">
+      楼栋：
+      <Select v-model="loudong" style="width:70px">
         <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-    个体单元：<Select v-model="getidanyuan" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-      BU：<Select v-model="bu" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
-   
-      时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
-      
-      班别：<Select v-model="banbie" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-    </Select>&ensp;&ensp;
+      </Select>&ensp;&ensp;
+      个体单元：<Select v-model="getidanyuan" style="width:70px">
+          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>&ensp;&ensp;
+        BU：<Select v-model="bu" style="width:70px">
+          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>&ensp;&ensp;
+    
+        时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
+        
+        班别：<Select v-model="banbie" style="width:70px">
+          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
+      </Select>&ensp;&ensp;
     
       <v-btn-toggle>
         <v-btn flat value="left">
@@ -46,30 +47,34 @@
           年
         </v-btn>
       </v-btn-toggle>
-    </div>
-      <v-flex md8>
-        <simple-chart
-          title="该楼栋各BU电能能耗"
-          series-type="bar"
-          :stack="true"
-          :dataset-source="buildingBuTypeData"
-          :legend-list="['动力', '照明', '空调主机', '空调风柜']"
-          :custom-tooltip="DefaultChartTooltip"
-          y-name="用电量(KWH)"
-          :colors="['#3ac0a9', '#4e7af3', '#515151', '#f7a35c']"
-          bg-color="#FFF"
-          height="380px"
-        ></simple-chart>
-      </v-flex>
-      <v-flex md4>
-        <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
-      </v-flex>
-      <v-flex md1 d-flex>
+    </div> -->
+    <v-flex md9>
+      <search-bar :field="['building', 'bu', 'startTime', 'endTime', 'shiftType', 'typeTime']"></search-bar>
+    </v-flex>
+  </v-layout>
+  <v-layout row wrap>
+    <v-flex md8>
+      <simple-chart
+        title="该楼栋各BU电能能耗"
+        series-type="bar"
+        :stack="true"
+        :dataset-source="buildingBuTypeData"
+        :legend-list="['动力', '照明', '空调主机', '空调风柜']"
+        :custom-tooltip="DefaultChartTooltip"
+        y-name="用电量(KWH)"
+        :colors="['#3ac0a9', '#4e7af3', '#515151', '#f7a35c']"
+        bg-color="#FFF"
+        height="380px"
+      ></simple-chart>
+    </v-flex>
+    <v-flex md4>
+      <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
+    </v-flex>
+    <v-flex md1 d-flex>
       <v-select
         :items="items5"
         label="BU："
-        dense
-      ></v-select>
+        dense></v-select>
     </v-flex>
     <v-flex md1 d-flex>
       <v-select
@@ -106,28 +111,30 @@
         dense
       ></v-select>
     </v-flex>
-          <input type="text" style="width:100px;height:30px;border:1px solid;border-radius:20px;outline:none" value=" " />
-        <div>
-        <v-btn small color="primary">查询</v-btn>
-      </div>
-      <v-flex md12>
-       <v-data-table
-    :headers="headers"
-    :items="desserts"
-    class="elevation-1"
-  >
-    <template slot="items" slot-scope="props">
-      <td>{{ props.item.name }}</td>
-      <td class="text-xs-right">{{ props.item.calories }}</td>
-      <td class="text-xs-right">{{ props.item.fat }}</td>
-      <td class="text-xs-right">{{ props.item.carbs }}</td>
-      <td class="text-xs-right">{{ props.item.protein }}</td>
-      <td class="text-xs-right">{{ props.item.iron }}</td>
-    </template>
-  </v-data-table>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    <input type="text" style="width:100px;height:30px;border:1px solid;border-radius:20px;outline:none" value=" " />
+    <div>
+      <v-btn small color="primary">查询</v-btn>
+    </div>
+  </v-layout>
+  <v-layout row wrap>
+    <v-flex md12>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        class="elevation-1"
+      >
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.name }}</td>
+          <td class="text-xs-right">{{ props.item.calories }}</td>
+          <td class="text-xs-right">{{ props.item.fat }}</td>
+          <td class="text-xs-right">{{ props.item.carbs }}</td>
+          <td class="text-xs-right">{{ props.item.protein }}</td>
+          <td class="text-xs-right">{{ props.item.iron }}</td>
+        </template>
+      </v-data-table>
+    </v-flex>
+  </v-layout>
+</v-container>
 </template>
 
 <script>
@@ -150,8 +157,10 @@ import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
+import SearchBar from '../components/common/SearchBar.vue';
 import SimpleChart from '../../../components/chart/SimpleChart.vue';
 import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
+
 const defTooltipOpt = deepCopyObject(defaultTooltipOption);
 defTooltipOpt.formatter.countTotal = {
   show: true,
@@ -172,7 +181,8 @@ export default {
     EnergyTypePie,
     SimpleChart,
     Select, 
-    DatePicker
+    DatePicker,
+    SearchBar
   },
   mixins: [energyManageMixin],
   data: vm => ({

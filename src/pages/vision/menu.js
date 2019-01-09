@@ -37,6 +37,12 @@ const vision_menu = [
     target: '_blank',
     href: 'http://10.132.45.143',
   },
+  {
+    title: 'WNBU',
+    icon: 'filter_vintage',
+    target: '_blank',
+    href: 'http://10.167.192.146/wnbu',
+  },
 ];
 
 export default vision_menu;

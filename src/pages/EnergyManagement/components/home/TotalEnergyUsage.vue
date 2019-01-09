@@ -60,7 +60,7 @@ export default {
         { name: 'D10', isWatched: false },
         { name: 'F21', isWatched: false }
       ],
-      dataCount: 500
+      dataCount: 36
     };
   },
   computed: {
