@@ -38,7 +38,7 @@ export default {
         return { path: item.path };
       }
       if (this.parentPath) {
-        console.log(this.parentPath, item.path);
+        // console.log(this.parentPath, item.path);
         return { path: this.parentPath + '/' + item.path };
       } else {
         return { path: item.path };

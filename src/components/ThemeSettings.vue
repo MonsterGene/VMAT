@@ -76,10 +76,10 @@ export default {
   watch: {
     'theme': {
       handler (theme) {
-        console.log('theme changed!');
+        // console.log('theme changed!');
         // this.setTheme(theme);
         if (theme && theme.name) {
-          console.log(theme.name);
+          // console.log(theme.name);
           this.themeColor = theme.name;
           this.darkTheme = theme.isDark;
         }

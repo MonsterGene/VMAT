@@ -23,11 +23,11 @@
           <span v-if="i > 0">/</span><span class="watch-point-item" :class="{'watch-active': p.isWatched}">{{ p.name }}</span>
         </span>
       </v-flex>
-      <v-flex xs12>
+      <!-- <v-flex xs12>
         采集数据 <span class="grey-text">{{ dataCount }} 个</span>
-      </v-flex>
+      </v-flex> -->
     </v-layout>
-    <energy-guage :value="totalEnergyUsage" :max="10000000"></energy-guage>
+    <energy-guage :value="totalEnergyUsage" height="215px" :max="10000000"></energy-guage>
   </div>
 </v-widget>
 </template>

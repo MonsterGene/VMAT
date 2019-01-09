@@ -1,7 +1,10 @@
 <template>
 <simple-chart
   :title="title"
-  series-type="bar"
+  :series-config="{
+    type: 'bar',
+    barMaxWidth: '20%'
+  }"
   :stack="true"
   :dataset-source="chartData"
   :legend-list="energyTypeColors.types"

@@ -27,6 +27,17 @@ export default {
     if (echarts) {
       console.log(this.$refs.chart);
       this.chart = echarts.init(this.$refs.chart);
+      this.chart.on('click', params => {
+        console.log(params);
+        if (params.name.indexOf('空调') > -1) {
+          this.$router.push({
+            path: '/energy_management/airCon',
+            query: {
+              m: params.name === '空调主机' ? 0 : 1
+            }
+          });
+        }
+      });
       this.getChartData();
     }
   },
@@ -44,8 +55,10 @@ export default {
           x: 'center',
           top: 14,
           textStyle: {
-            fontSize: 20,
-            color: '#5e5e5e'
+            color: '#5e5e5e',
+            fortSize: 20,
+            fontFamily: 'Microsoft YaHei',
+            fontWeight: 500
           }
         },
         color: ['#3ac0a9', '#4e7af3', '#515151', '#f7a35c'],

@@ -108,16 +108,16 @@
       row
       wrap
     >
-      <v-flex md3>
+      <v-flex xl3 md6>
         <buildings-energy-usage :w-size="wSize" width="100%" height="330px" title="各楼栋电能消耗"></buildings-energy-usage>
       </v-flex>
-      <v-flex md3>
+      <v-flex xl3 md6>
         <energy-type-pie :w-size="wSize" title="NSD1各电力类型能耗占比" width="100%" height="330px"></energy-type-pie>
       </v-flex>
-      <v-flex md3>
+      <v-flex xl3 md6>
         <bu-energy-total-usage :w-size="wSize" title="各BU累计电能耗" width="100%" height="330px"></bu-energy-total-usage>
       </v-flex>
-      <v-flex md3>
+      <v-flex xl3 md6>
         <department-energy-trend :w-size="wSize" title="NSD1电能耗趋势" width="100%" height="330px"></department-energy-trend>
       </v-flex>
     </v-layout>
