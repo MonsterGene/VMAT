@@ -3,7 +3,7 @@
   <div
     slot-scope="{ hover }"
     :class="['station-card', {'elevation-10': hover}]"
-    @click="$router.push({path: '/tipbu-6streams/packing/station-details/'+station.name, query: {l: lineId, s: station.id}})"
+    @click="$router.push({path: '/npbg_lh_smart_test/mfg_3/packing/station-details/'+station.name, query: {l: lineId, s: station.id}})"
   >
     <div class="top">
       <h5>

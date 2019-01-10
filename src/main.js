@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
 import 'iview/dist/styles/iview.css';
 import router from './router';
 import 'font-awesome/css/font-awesome.css';  

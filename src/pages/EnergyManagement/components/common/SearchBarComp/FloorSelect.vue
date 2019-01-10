@@ -9,6 +9,7 @@
     hide-details
     dense
     solo
+    menu-props="offset-y"
     style="margin-top: -6px"
   ></v-select>
 </div>
@@ -33,7 +34,7 @@ export default {
       floorList: {
         select: this.floor || '',
         options: [
-          { text: 'All', value: '' },
+          { text: '所有', value: '' },
           { text: '1F', value: '1F' },
           { text: '1.5F', value: '1.5F' },
           { text: '2F', value: '2F' },
@@ -60,9 +61,7 @@ export default {
     },
     floor: {
       handler (val) {
-        if (val) {
-          this.floorList.select = val;
-        }
+        this.floorList.select = val;
       },
       immediate: false
     }

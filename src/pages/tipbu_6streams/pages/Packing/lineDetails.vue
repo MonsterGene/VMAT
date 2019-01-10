@@ -343,11 +343,11 @@ export default {
     // 次数、时间分析图点击
     this.$refs.cishu.chartInstance.on('click', evt => {
       console.log(evt);
-      this.$router.push({ path: '/tipbu-6streams/packing/station-details/' + evt.name + '?l=' + this.$route.query.l });
+      this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name + '?l=' + this.$route.query.l });
     });
     this.$refs.shijian.chartInstance.on('click', evt => {
       console.log(evt);
-      this.$router.push({ path: '/tipbu-6streams/packing/station-details/' + evt.name });
+      this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name });
     });
   },
   methods: {

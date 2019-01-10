@@ -5,10 +5,10 @@
     xs12>
     <label class="search-bar-label">楼栋：</label>
     <building-select style="width: 65px;display: inline-block;vertical-align: top" v-model="formModel.building"></building-select>
-    <!-- <label class="search-bar-label">BU：</label>
-    <bu-select style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select> -->
+    <label class="search-bar-label">BU：</label>
+    <bu-select @bu-change="buChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select>
     <label class="search-bar-label">楼层：</label>
-    <floor-select style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
+    <floor-select @floor-change="floorChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
     <label class="search-bar-label">时间段：</label>
     <date-range style="width: 240px;display: inline-block;vertical-align: top" v-model="dateRange"></date-range>
     <label class="search-bar-label">班别：</label>
@@ -50,7 +50,7 @@ export default {
         startTime: moment().format('YYYY-MM-01'),
         endTime: moment().format('YYYY-MM-DD')
       },
-      timeType: ''
+      timeType: { type: 'month' }
     };
   },
   computed: {
@@ -66,6 +66,9 @@ export default {
     }
   },
   watch: {
+    timeType (val) {
+      this.dateRange = val.dateRange;
+    },
     dateRange: {
       handler (val) {
         console.log(val);
@@ -87,6 +90,20 @@ export default {
       immediate: true
     }
   },
+  methods: {
+    buChange (bu) {
+      console.log(bu);
+      if (bu) {
+        this.formModel.floor = '';
+      }
+    },
+    floorChange (floor) {
+      console.log(floor);
+      if (floor) {
+        this.formModel.bu = '';
+      }
+    }
+  }
 };
 </script>
 

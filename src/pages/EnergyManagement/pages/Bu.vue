@@ -10,46 +10,8 @@
     justify-end
     align-center
   >
-    <!-- <embed
-      type="application/pdf"
-      src="http://10.167.192.146/StaticSource/EnergyManagement/E5_1_5F.pdf"
-      style="width:100%;height:100%;padding:10px"
-    /> -->
-    <!-- <div id="select">
-      楼栋：
-      <Select v-model="loudong" style="width:70px">
-        <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>&ensp;&ensp;
-      个体单元：<Select v-model="getidanyuan" style="width:70px">
-          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>&ensp;&ensp;
-        BU：<Select v-model="bu" style="width:70px">
-          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>&ensp;&ensp;
-    
-        时间：<DatePicker type="daterange" placement="bottom-end" placeholder="" style="width: 171px"></DatePicker>&ensp;&ensp;
-        
-        班别：<Select v-model="banbie" style="width:70px">
-          <Option v-for="item in List" :value="item.value" :key="item.value">{{ item.label }}</Option>
-      </Select>&ensp;&ensp;
-    
-      <v-btn-toggle>
-        <v-btn flat value="left">
-          日
-        </v-btn>
-        <v-btn flat value="center">
-          月
-        </v-btn>
-        <v-btn flat value="right">
-          季度
-        </v-btn>
-        <v-btn flat value="justify">
-          年
-        </v-btn>
-      </v-btn-toggle>
-    </div> -->
-    <v-flex md9>
-      <search-bar :field="['building', 'bu', 'startTime', 'endTime', 'shiftType', 'typeTime']"></search-bar>
+    <v-flex md12>
+      <search-bar></search-bar>
     </v-flex>
   </v-layout>
   <v-layout row wrap>
@@ -124,12 +86,20 @@
         class="elevation-1"
       >
         <template slot="items" slot-scope="props">
-          <td>{{ props.item.name }}</td>
-          <td class="text-xs-right">{{ props.item.calories }}</td>
-          <td class="text-xs-right">{{ props.item.fat }}</td>
-          <td class="text-xs-right">{{ props.item.carbs }}</td>
-          <td class="text-xs-right">{{ props.item.protein }}</td>
-          <td class="text-xs-right">{{ props.item.iron }}</td>
+          <td>{{ props.item.rowNumber }}</td>
+          <td class="text-xs-right">{{ props.item.bu }}</td>
+          <td class="text-xs-right">{{ props.item.floor }}</td>
+          <td class="text-xs-right">{{ props.item.positionGateway }}</td>
+          <td class="text-xs-right">{{ props.item.positionMeter }}</td>
+          <td class="text-xs-right">{{ props.item.status }}</td>
+          <td class="text-xs-right">{{ props.item.type }}</td>
+          <td class="text-xs-right">{{ props.item.deviceName }}</td>
+          <td class="text-xs-right">{{ props.item.question }}</td>
+          <td class="text-xs-right">{{ props.item.stationCategory }}</td>
+          <td class="text-xs-right">{{ props.item.question }}</td>
+          <td class="text-xs-right">{{ props.item.question }}</td>
+          <td class="text-xs-right">{{ props.item.level }}</td>
+          <td class="text-xs-right">{{ props.item.question }}</td>
         </template>
       </v-data-table>
     </v-flex>
@@ -138,17 +108,7 @@
 </template>
 
 <script>
-/**
- * import { demoApi, pageApi } from '../api';
- * fetch legends data 使用api接口代码示例
- * pageApi.lineApi.getStateLegends().then(response => {
- *   //你的处理程序
- *   //response 是请求的响应信息 response
- *   //后台实际返回的数据 res.data
- * });
- */
 import moment from 'moment';
-import { Select, DatePicker } from 'iview';
 import { buApi } from '../api';
 import { deepCopyObject } from '../../../util/utils';
 import { energyManageMixin } from '../mixin.js';
@@ -157,7 +117,7 @@ import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
 import SourceTypeBar from '../components/common/SourceTypeBar.vue';
 import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
 import EnergyTypePie from '../components/home/EnergyTypePie.vue';
-import SearchBar from '../components/common/SearchBar.vue';
+import SearchBar from '../components/BU/SearchBar.vue';
 import SimpleChart from '../../../components/chart/SimpleChart.vue';
 import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
 
@@ -165,8 +125,6 @@ const defTooltipOpt = deepCopyObject(defaultTooltipOption);
 defTooltipOpt.formatter.countTotal = {
   show: true,
   isCount: true,
-  nameColor: '#ffcc33',
-  valueColor: '#99ff00'
 };
 const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 
@@ -180,22 +138,12 @@ export default {
     BuildingsEnergyUsage,
     EnergyTypePie,
     SimpleChart,
-    Select, 
-    DatePicker,
     SearchBar
   },
   mixins: [energyManageMixin],
   data: vm => ({
     buildingBuTypeData: {},
     DefaultChartTooltip,
-    // date: new Date().toISOString().substr(0, 10),
-    // dateFormatted: vm.formatDate(new Date().toISOString().substr(0, 10)),
-    // menu1: false,
-    // menu2: false,
-    // items: ['E5', 'D10'],
-    // items2: ['BU', '楼层'],
-    // items3: ['CSD', 'MFG6', 'NWE'],
-    // items4: ['白班', '晚班'],
     List: [
       {
         value: 'E5',
@@ -217,150 +165,33 @@ export default {
     items9: ['照明', '空调', '生产动力'],
     items10: ['1', '2', '3'],
     headers: [
-      { text: '序号', value: 'calories' },
-      { text: 'BU', value: 'fat' },
-      { text: '栋别-楼层', value: 'carbs' },
-      { text: '网关箱安装位置', value: 'protein' },
-      { text: '电表状态', value: 'iron' },
-      { text: '电力类型', value: 'calories' },
-      { text: '电表名称', value: 'fat' },
-      { text: '电能类型', value: 'carbs' },
-      { text: '工段类别', value: 'protein' },
-      { text: '工站类别', value: 'iron' },
-      { text: '设备类别', value: 'calories' },
-      { text: 'Level', value: 'fat' },
-      { text: '能耗', value: 'carbs' }
+      { text: '序号', value: 'rowNumber' },
+      { text: 'BU', value: 'bu' },
+      { text: '栋别-楼层', value: 'floor' },
+      { text: '网关箱安装位置', value: 'positionGateway' },
+      { text: '智能电表安装位置', value: 'positionMeter' },
+      { text: '电表状态', value: 'status' },
+      { text: '电力类型', value: 'type' },
+      { text: '电表名称', value: 'deviceName' },
+      { text: '电能类型', value: 'question' },
+      { text: '工段类别', value: 'stationCategory' },
+      { text: '工站类别', value: 'question' },
+      { text: '设备类别', value: 'question' },
+      { text: 'Level', value: 'level' },
+      { text: '能耗', value: 'question' }
     ],
-    desserts: [
-      {
-        value: false,
-        name: 'Frozen Yogurt',
-        calories: '159',
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
-      },
-      {
-        value: false,
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
-      },
-      {
-        value: false,
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%'
-      },
-      {
-        value: false,
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%'
-      },
-      {
-        value: false,
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%'
-      },
-      {
-        value: false,
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%'
-      },
-      {
-        value: false,
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%'
-      },
-      {
-        value: false,
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%'
-      },
-      {
-        value: false,
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%'
-      },
-      {
-        value: false,
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%'
-      }
-    ]
+    desserts: []
   }),
-  // data: () => ({
-  // }),
-  
-  // computed: {
-  //   computedDateFormatted () {
-  //     return this.formatDate(this.date);
-  //   }
-  // },
-
-  // watch: {
-  //   date (val) {
-  //     this.dateFormatted = this.formatDate(this.date);
-  //   }
-  // },
   mounted () {
     this.getChart2();
     this.getChart3();
+    this.getTableData();
   },
   methods: {
     initCharts () {
-      // this.chart2DOM = this.$refs.chart2;
-      // this.chart2 = echarts.init(this.chart2DOM);
-
       this.chart3DOM = this.$refs.chart3;
       this.chart3 = echarts.init(this.chart3DOM);
     },
-    // formatDate (date) {
-    //   if (!date) return null;
-
-    //   const [year, month, day] = date.split('-');
-    //   return `${month}/${day}/${year}`;
-    // },
-    // parseDate (date) {
-    //   if (!date) return null;
-    //   const [month, day, year] = date.split('/');
-    //   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-    // },
     getChart2 () {
       buApi.chart1Data(this.simpleParseParams({
         startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
@@ -368,15 +199,6 @@ export default {
         building: 'E5'
       })).then(res => {
         if (res && res.status === 200) {
-          // res.data.forEach(item => {
-          //   item['总耗电'] = Object.keys(item).reduce((acc, cur, index) => {
-          //     if (index > 0) {
-          //       return acc + Number(item[cur]);
-          //     } else {
-          //       return acc;
-          //     }
-          //   }, 0);
-          // });
           this.buildingBuTypeData = res.data;
         }
       });
@@ -437,6 +259,22 @@ export default {
         this.chart3.setOption(chartOption);
       });
     },
+    getTableData () {
+      buApi.tableData(this.simpleParseParams({
+        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
+        endTime: moment().format('YYYY-MM-DD'),
+        building: 'E5'
+      })).then(res => {
+        console.log(res);
+        if (res && res.status === 200) {
+          const data = res.data;
+          this.desserts = data.map(v => {
+            v.question = '未知';
+            return v;
+          });
+        }
+      });
+    }
   },
   
 };

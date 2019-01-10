@@ -9,7 +9,7 @@
     hide-details
     dense
     solo
-    offset-y
+    menu-props="offset-y"
     style="margin-top: -6px"
   ></v-select>
 </div>

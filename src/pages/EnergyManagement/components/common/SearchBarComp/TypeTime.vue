@@ -16,31 +16,49 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   model: {
     event: 'time-type-change',
     prop: 'timeType'
   },
   props: {
-    timeType: { type: String }
+    timeType: { type: Object }
   },
   data () {
     return {
-      type: this.timeType || ''
+      type: this.timeType.type || ''
     };
   },
   watch: {
     type: {
       handler (val) {
-        console.log(val);
-        this.$emit('time-type-change', val);
+        const dateRange = {};
+        if (val === 'day') {
+          dateRange.startTime = moment().format('YYYY-MM-DD');
+          dateRange.endTime = moment().format('YYYY-MM-DD');
+        }
+        if (val === 'month') {
+          dateRange.startTime = moment().format('YYYY-MM-01');
+          dateRange.endTime = moment().format('YYYY-MM-DD');
+        }
+        if (val === 'quater') {
+          dateRange.startTime = moment().startOf('quarter').format('YYYY-MM-DD');
+          dateRange.endTime = moment().format('YYYY-MM-DD');
+        }
+        if (val === 'year') {
+          dateRange.startTime = moment().format('YYYY-01-01');
+          dateRange.endTime = moment().format('YYYY-MM-DD');
+        }
+        this.$emit('time-type-change', { type: val, dateRange });
       },
       immediate: false
     },
     timeType: {
       handler (val) {
         if (val) {
-          this.type = val;
+          this.type = val.type;
         }
       },
       immediate: false
