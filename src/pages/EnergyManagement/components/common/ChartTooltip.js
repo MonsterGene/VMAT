@@ -251,15 +251,15 @@ export const ChartTooltip = function (opts = {}) {
 };
 
 export const defaultTooltipOption = {
-  backgroundColor: 'rgba(51, 51, 204, 0.5)',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
   borderColor: 'rgba(255, 255, 255, 0.2)',
-  borderWidth: 5,
+  borderWidth: 0,
   formatter: {
-    seriesName: { show: true, color: '#ffcc33' },
-    dataName: { show: true, color: '#ffcc33' },
+    seriesName: { show: true, color: '#fff' },
+    dataName: { show: true, color: '#fff' },
     dataValue: {
       show: true,
-      color: '#99ff00',
+      color: '#fff',
       conversion: [['KWH', 1], ['M·KWH', 1000000]],
       conversionCondition: 100000
     }

@@ -17,6 +17,7 @@ const themeList = [
     lightSupport: 'dark',
     colors: {
       primary: '#24262c',
+      accent: '#24262c',
       sideNav: '#24262c',
       mainNav: '#24262c',
       sideMenu: '#30333B',
@@ -31,6 +32,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#2196F3',
+      accent: '#2196F3',
       sideNav: '#2196F3',
       mainNav: '#2196F3',
       sideMenu: '#FFFFFF'
@@ -42,6 +44,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#009688',
+      accent: '#009688',
       sideNav: '#009688',
       mainNav: '#009688',
       sideMenu: '#FFFFFF'
@@ -53,6 +56,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#F44336',
+      accent: '#F44336',
       sideNav: '#F44336',
       mainNav: '#F44336',
       sideMenu: '#FFFFFF'
@@ -64,6 +68,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#FF9800',
+      accent: '#FF9800',
       sideNav: '#FF9800',
       mainNav: '#FF9800',
       sideMenu: '#FFFFFF'
@@ -75,6 +80,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#9C27B0',
+      accent: '#9C27B0',
       sideNav: '#9C27B0',
       mainNav: '#9C27B0',
       sideMenu: '#FFFFFF'
@@ -86,6 +92,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#3F51B5',
+      accent: '#3F51B5',
       sideNav: '#3F51B5',
       mainNav: '#3F51B5',
       sideMenu: '#FFFFFF'
@@ -97,6 +104,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#00BCD4',
+      accent: '#00BCD4',
       sideNav: '#00BCD4',
       mainNav: '#00BCD4',
       sideMenu: '#FFFFFF'
@@ -108,6 +116,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#E91E63',
+      accent: '#E91E63',
       sideNav: '#E91E63',
       mainNav: '#E91E63',
       sideMenu: '#FFFFFF'
@@ -119,6 +128,7 @@ const themeList = [
     lightSupport: 'light',
     colors: {
       primary: '#4CAF50',
+      accent: '#4CAF50',
       sideNav: '#4CAF50',
       mainNav: '#4CAF50',
       sideMenu: '#FFFFFF'

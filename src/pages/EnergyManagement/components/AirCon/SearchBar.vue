@@ -5,10 +5,10 @@
     xs12>
     <label class="search-bar-label">楼栋：</label>
     <building-select style="width: 65px;display: inline-block;vertical-align: top" v-model="formModel.building"></building-select>
-    <label class="search-bar-label">BU：</label>
-    <bu-select style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select>
+    <!-- <label class="search-bar-label">BU：</label>
+    <bu-select style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select> -->
     <label class="search-bar-label">楼层：</label>
-    <floor-select style="width: 65px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
+    <floor-select style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
     <label class="search-bar-label">时间段：</label>
     <date-range style="width: 240px;display: inline-block;vertical-align: top" v-model="dateRange"></date-range>
     <label class="search-bar-label">班别：</label>

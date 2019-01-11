@@ -28,8 +28,6 @@ const defTooltipOpt = deepCopyObject(defaultTooltipOption);
 defTooltipOpt.formatter.countTotal = {
   show: true,
   name: '总耗电',
-  nameColor: '#ffcc33',
-  valueColor: '#99ff00'
 };
 const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 

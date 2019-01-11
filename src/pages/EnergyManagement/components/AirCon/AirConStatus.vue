@@ -1,6 +1,6 @@
 <template>
 <div @click="airconClick" class="aircon-status-wrapper" :class="{'active': currentAircon === airconInfo.electricityMeterID}">
-  <div class="aircon-status-top" :class="{'active': currentAircon === airconInfo.electricityMeterID}">
+  <div class="aircon-status-top" :class="{'active': airconInfo.status !== 'NG' }">
     <h4 v-if="currentType === 0">空调主机</h4>
     <h4 v-else>空调风柜</h4>
   </div>

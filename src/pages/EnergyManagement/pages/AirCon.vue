@@ -158,12 +158,11 @@ export default {
   watch: {
     currentAirCon: {
       handler (val, old) {
-        console.log(val);
+        // console.log(val);
         if (val && val !== old) {
           if (this.airconData[val]) {
             this.changeAirconData(this.airconData[val]);
           } else {
-            console.log('#####################');
             this.getChart3(val).then(data => {
               this.changeAirconData(data);
             });
@@ -220,7 +219,7 @@ export default {
       airConApi.homeFistChart(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building,
+        building: this.searchConditions.building + (this.searchConditions.floor && this.searchConditions.floor.replace(/\D/g, '') || ''),
         type: this.machineType
       })).then(res => {
         if (res && res.status === 200) {
@@ -256,18 +255,19 @@ export default {
               machineName: v['设备名称'],
               machineSerialNumber: v['设备编号'],
               building: v['楼栋'],
-              monthEnergyUsage: v['月累积能耗']
+              monthEnergyUsage: v['月累积能耗'],
+              status: v['状态']
             };
           });
         }
       });
     },
     getChart3 (type) {
-      console.log(type);
+      // console.log(type);
       return airConApi.AirConVIPFTrend(this.simpleParseParams({
         startTime: this.searchConditions.startTime,
         endTime: this.searchConditions.endTime,
-        building: this.searchConditions.building,
+        building: this.searchConditions.building + (this.searchConditions.floor && this.searchConditions.floor.replace(/\D/g, '') || ''),
         type: this.machineType
       })).then(res => {
         if (res && res.status === 200) {
@@ -316,7 +316,7 @@ export default {
       });
     },
     searchBarChange (evt) {
-      console.log(evt);
+      // console.log(evt);
       this.searchConditions = evt;
       this.init();
       if (this.currentAirCon !== '') {

@@ -12,6 +12,13 @@ const chart1Data = params => {
   // };
 };
 
+const tableData = (params, demo) => {
+  if (!demo) {
+    return axios.post('/get/meter/detail', params).catch(catchMethod);
+  }
+};
+
 export default {
-  chart1Data
+  chart1Data,
+  tableData
 };

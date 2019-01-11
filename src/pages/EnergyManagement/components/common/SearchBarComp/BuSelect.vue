@@ -9,7 +9,7 @@
     hide-details
     dense
     solo
-    offset-y
+    menu-props="offset-y"
     style="margin-top: -6px"
   ></v-select>
 </div>
@@ -34,6 +34,7 @@ export default {
       buList: {
         select: this.bu || '',
         options: [
+          { text: '所有', value: '' },
           { text: 'MFG6', value: 'MFG6' },
           { text: 'CSD', value: 'CSD' }
         ]
@@ -57,9 +58,7 @@ export default {
     },
     bu: {
       handler (val) {
-        if (val) {
-          this.buList.select = val;
-        }
+        this.buList.select = val;
       },
       immediate: false
     }
