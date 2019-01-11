@@ -9,8 +9,8 @@ const menu = [
         group: 'wip',
         icon: 'view_compact',
         items: [
-          { title: 'WIP trend & Quality feed back', path: 'page1' },
-          { title: 'WIP detail status', path: 'page2' },
+          { title: 'WIP trend & Quality feed back', path: 'feedback' },
+          { title: 'WIP detail status', path: 'status' },
           { title: 'Check-in/out', path: 'page3' },
           { title: '維修數據錄入', path: 'page4' },
           { title: '查詢', path: 'page5' }

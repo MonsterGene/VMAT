@@ -50,7 +50,7 @@ export default {
         startTime: moment().format('YYYY-MM-01'),
         endTime: moment().format('YYYY-MM-DD')
       },
-      timeType: ''
+      timeType: { type: 'month' }
     };
   },
   computed: {
@@ -66,6 +66,11 @@ export default {
     }
   },
   watch: {
+    timeType (val) {
+      if (val.dateRange) {
+        this.dateRange = val.dateRange;
+      }
+    },
     dateRange: {
       handler (val) {
         console.log(val);
