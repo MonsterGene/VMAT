@@ -11,7 +11,7 @@
     align-center
   >
     <v-flex md12>
-      <search-bar></search-bar>
+      <search-bar @condition-change="searchBarChange"></search-bar>
     </v-flex>
   </v-layout>
   <v-layout row wrap>
@@ -274,6 +274,9 @@ export default {
           });
         }
       });
+    },
+    searchBarChange (evt) {
+      console.log(evt);
     }
   },
   
