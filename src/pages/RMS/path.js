@@ -16,15 +16,14 @@ const router = [
             component: () => import(`./pages/404.vue`)
           },
           {
-            path: 'page1',
+            path: 'feedback',
             meta: { breadcrumb: false },
-            component: () => import(`./pages/WipManage/wipTrend.vue`)
+            component: () => import(`./pages/WipManage/Feedback.vue`)
           },
           {
-            path: 'page2',
+            path: 'status',
             meta: { breadcrumb: false },
-            name: 'rms/page2',
-            component: () => import(`./pages/404.vue`)
+            component: () => import(`./pages/WipManage/Status.vue`)
           },
           {
             path: 'page3',
