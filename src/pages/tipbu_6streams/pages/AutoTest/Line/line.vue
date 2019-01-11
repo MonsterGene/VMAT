@@ -41,7 +41,7 @@
         :href="'#/tipbu-6streams/auto_test/line_detail/' + line.name + '?l=' + line.id + '&s=' + line.stations[line.stations.length - 1].id"
       >
         <v-card-title class="pb-0">
-          <h4 style="margin: 0 auto">{{ line.name }}</h4>
+          <h4 style="margin: 0 auto">測試一綫</h4>
         </v-card-title>
         <v-card-text>
           <h5>目标产出：{{ line.totalTarget }}台</h5>
@@ -130,7 +130,7 @@ export default {
     getLinesData () {
       // fetch lineData data
       this.lineInfo.lastReq = Date.now();
-      API.lineApi.getTestLinesData().then(res => {
+      API.lineApi.getLinesData().then(res => {
         const data = res.data;
         if (data.success) {
           this.linesData = data.data.map(line => {
@@ -172,7 +172,7 @@ export default {
   display inline-block
 
 .legend-container
-  width 1250px
+  width 1750px
   margin 0 auto
   color #fff
 
@@ -181,7 +181,7 @@ export default {
   margin-bottom 20px !important
   margin-left auto !important
   margin-right auto !important
-  width 910px
+  width 1900px
   background #00000030
   display flex
   position relative
