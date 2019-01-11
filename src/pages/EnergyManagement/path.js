@@ -16,29 +16,37 @@ const router = isPublic => ({
       )
     },
     {
-      path: 'floors',
+      path: 'source-detail',
       meta: {
         breadcrumb: false,
         public: isPublic ? true : false
       },
-      component: () => import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        `./pages/Floors.vue`
-      )
+      component: () => import('./pages/BuFloorView')
     },
-    {
-      path: 'bu',
-      meta: {
-        breadcrumb: false,
-        public: isPublic ? true : false
-      },
-      component: () => import(
-        /* webpackChunkName: "routes" */
-        /* webpackMode: "lazy-once" */
-        `./pages/Bu.vue`
-      )
-    },
+    // {
+    //   path: 'floors',
+    //   meta: {
+    //     breadcrumb: false,
+    //     public: isPublic ? true : false
+    //   },
+    //   component: () => import(
+    //     /* webpackChunkName: "routes" */
+    //     /* webpackMode: "lazy-once" */
+    //     `./pages/Floors.vue`
+    //   )
+    // },
+    // {
+    //   path: 'bu',
+    //   meta: {
+    //     breadcrumb: false,
+    //     public: isPublic ? true : false
+    //   },
+    //   component: () => import(
+    //     /* webpackChunkName: "routes" */
+    //     /* webpackMode: "lazy-once" */
+    //     `./pages/Bu.vue`
+    //   )
+    // },
     {
       path: 'airCon',
       meta: {

@@ -1,19 +1,5 @@
 <template>
-<v-container
-  grid-list-xl
-  fluid
->
-  <source-type-bar></source-type-bar>
-  <v-layout
-    row
-    wrap
-    justify-end
-    align-center
-  >
-    <v-flex md12>
-      <search-bar @condition-change="searchBarChange"></search-bar>
-    </v-flex>
-  </v-layout>
+<div>
   <v-layout row wrap>
     <v-flex md8>
       <simple-chart
@@ -32,6 +18,8 @@
     <v-flex md4>
       <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
     </v-flex>
+  </v-layout>
+  <v-layout row wrap>
     <v-flex md1 d-flex>
       <v-select
         :items="items5"
@@ -104,22 +92,18 @@
       </v-data-table>
     </v-flex>
   </v-layout>
-</v-container>
+</div>
 </template>
 
 <script>
 import moment from 'moment';
-import { buApi } from '../api';
-import { deepCopyObject } from '../../../util/utils';
-import { energyManageMixin } from '../mixin.js';
-import VWidget from '@/components/VWidget';
-import MiniStatistic from '@/components/widgets/statistic/MiniStatistic';
-import SourceTypeBar from '../components/common/SourceTypeBar.vue';
-import BuildingsEnergyUsage from '../components/home/BuildingsEnergyUsage.vue';
-import EnergyTypePie from '../components/home/EnergyTypePie.vue';
-import SearchBar from '../components/BU/SearchBar.vue';
-import SimpleChart from '../../../components/chart/SimpleChart.vue';
-import { ChartTooltip, defaultTooltipOption } from '../components/common/ChartTooltip';
+import { buApi } from '../../api';
+import { deepCopyObject } from '../../../../util/utils';
+import { energyManageMixin } from '../../mixin.js';
+import BuildingsEnergyUsage from '../../components/home/BuildingsEnergyUsage.vue';
+import EnergyTypePie from '../../components/home/EnergyTypePie.vue';
+import SimpleChart from '../../../../components/chart/SimpleChart.vue';
+import { ChartTooltip, defaultTooltipOption } from '../../components/common/ChartTooltip';
 
 const defTooltipOpt = deepCopyObject(defaultTooltipOption);
 defTooltipOpt.formatter.countTotal = {
@@ -131,33 +115,16 @@ const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 const echarts = window.echarts || undefined;
 
 export default {
+  name: 'bu',
   components: {
-    VWidget,
-    SourceTypeBar,
-    MiniStatistic,
     BuildingsEnergyUsage,
     EnergyTypePie,
-    SimpleChart,
-    SearchBar
+    SimpleChart
   },
   mixins: [energyManageMixin],
   data: vm => ({
     buildingBuTypeData: {},
     DefaultChartTooltip,
-    List: [
-      {
-        value: 'E5',
-        label: 'E5'
-      },
-      {
-        value: 'D10',
-        label: 'D10'
-      }
-    ],
-    loudong: '',
-    getidanyuan: '',
-    bu: '',
-    banbie: '',
     items5: ['SQA', 'MFG6', 'CSD'],
     items6: ['1F', '1.5F', '2F'],
     items7: ['未上电使用', '数据测试OK', '数据不能解析', '未采集到数据'],
