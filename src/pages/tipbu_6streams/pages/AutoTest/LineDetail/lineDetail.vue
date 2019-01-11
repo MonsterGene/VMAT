@@ -3,7 +3,7 @@
   <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-day
-        :header-text="'产出与达成率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
+        :header-text="'产出与达成率分析（整线 - 測試 - 每日趋势）'"
         :line-id="$route.query.l"
         :station-id="$route.query.s"
         :open="true"
@@ -12,7 +12,7 @@
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-hour
-        :header-text="'产出与达成率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ yieldOutputByHour.date +'）'"
+        :header-text="'产出与达成率分析（整线单天 - 測試 - 每日趋势 -'+ yieldOutputByHour.date +'）'"
         :date="yieldOutputByHour.date"
         :line-id="yieldOutputByHour.lineId"
         :station-id="$route.query.s"
@@ -21,7 +21,7 @@
 
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-day
-        :header-text="'产出与稼动率分析（整线 - ' + $route.params.lineName + '- 每日趋势）'"
+        :header-text="'产出与稼动率分析（整线 - 測試 - 每日趋势）'"
         :line-id="$route.query.l"
         :station-id="$route.query.s"
         :open="true"
@@ -30,7 +30,7 @@
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-hour
-        :header-text="'产出与稼动率分析（整线单天 - ' + $route.params.lineName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
+        :header-text="'产出与稼动率分析（整线单天 - 測試 - 每日趋势 -'+ utilOutputByHour.date +'）'"
         :date="utilOutputByHour.date"
         :line-id="utilOutputByHour.lineId"
         :station-id="$route.query.s"
