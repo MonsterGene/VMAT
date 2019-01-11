@@ -65,7 +65,7 @@ const hosts = [
     details: 'Fortinet Genius Server',
     profile: true,
   },
-]
+];
 
 const getHosts = (params, demo) => {
   if (!demo) {
@@ -75,4 +75,4 @@ const getHosts = (params, demo) => {
       resolve({ status: 200, data: hosts });
     });
   }
-}
+};
