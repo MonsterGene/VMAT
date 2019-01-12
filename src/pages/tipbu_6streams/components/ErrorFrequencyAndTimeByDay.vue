@@ -85,7 +85,7 @@ export default {
 
         ['series[0].type', 'line'],
         ['series[0].label.show', true],
-        ['series[0].smooth', true],
+        ['series[0].smooth', false],
         
         ['series[1].type', 'bar'],
         ['series[1].label.show', false],

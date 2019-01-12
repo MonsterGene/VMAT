@@ -33,7 +33,8 @@ export default {
   data: () => ({
     bu: Bu,
     floor: Floor,
-    mainBody: 'floor'
+    mainBody: 'floor',
+    searchCondition: {}
   }),
   computed: {
     currentPage () {
@@ -42,7 +43,7 @@ export default {
   },
   methods: {
     searchBarChange (evt) {
-      // this.mainBody = evt;
+      this.searchCondition = evt;
     }
   },
 };

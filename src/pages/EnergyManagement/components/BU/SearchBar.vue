@@ -44,7 +44,7 @@ export default {
     return {
       mainBody: 'floor',
       formModel: {
-        building: 'E5',
+        building: this.$route.query.b,
         bu: '',
         floor: '',
         startTime: '',

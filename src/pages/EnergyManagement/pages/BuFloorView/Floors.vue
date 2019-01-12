@@ -14,7 +14,8 @@
     </v-flex>
     <v-flex md4>
       <simple-chart
-        title="各楼层电能能耗"
+        @click="floorChartClick"
+        :title="condition.building + '各楼层电能能耗'"
         series-type="bar"
         :stack="true"
         :dataset-source="floorsTypeEnergyData"
@@ -25,7 +26,7 @@
         bg-color="#FFF"
         height="230px"
       ></simple-chart>
-      <energy-type-pie title="各电能类型能耗占比" :chart-data="typeEnergyData" building="E515" width="100%" height="230px"></energy-type-pie>
+      <energy-type-pie :title="condition.building + '-' + floor + '电能耗类型占比'" :chart-data="typeEnergyData" building="E515" width="100%" height="230px"></energy-type-pie>
     </v-flex>
   </v-layout>
 </v-container>
@@ -52,7 +53,6 @@ const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 const echarts = window.echarts || undefined;
 
 export default {
-  name: 'floor',
   components: {
     FloorMap,
     BuildingsEnergyUsage,
@@ -63,29 +63,49 @@ export default {
   data: vm => ({
     floorsTypeEnergyData: {},
     typeEnergyData: true,
-    DefaultChartTooltip
+    DefaultChartTooltip,
+    floor: ''
   }),
+  computed: {
+    condition () {
+      return this.$parent.searchCondition;
+    }
+  },
+  watch: {
+    condition () {
+      this.init();
+    },
+    floor () {
+      this.getChart3();
+    }
+  },
   mounted () {
-    this.getChart2();
-    this.getChart3();
+    this.init();
   },
   methods: {
+    init () {
+      this.getChart2();
+    },
+    floorChartClick (evt) {
+      this.floor = evt.name;
+    },
     getChart2 () {
       floorsApi.chart1Data(this.simpleParseParams({
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
+        startTime: this.condition.startTime,
+        endTime: this.condition.endTime,
+        building: this.condition.building
       })).then(res => {
         if (res && res.status === 200) {
           this.floorsTypeEnergyData = res.data;
+          this.floor = this.floor === res.data[0]['楼层'] ? this.floor + ' ' : res.data[0]['楼层'];
         }
       });
     },
     getChart3 () {
       floorsApi.buildingTypeEnergy(this.simpleParseParams({
-        startTime: moment().subtract('days', 5).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E515'
+        startTime: this.condition.startTime,
+        endTime: this.condition.endTime,
+        building: this.condition.building + this.floor.replace(/\D/g, '')
       })).then(res => {
         if (res && res.status === 200) {
           console.log(res.data);

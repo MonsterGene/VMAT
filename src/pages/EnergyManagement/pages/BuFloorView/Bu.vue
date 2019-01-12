@@ -3,7 +3,8 @@
   <v-layout row wrap>
     <v-flex md8>
       <simple-chart
-        title="该楼栋各BU电能能耗"
+        @click="buChartClick"
+        :title="condition.building + '各BU电能能耗'"
         series-type="bar"
         :stack="true"
         :dataset-source="buildingBuTypeData"
@@ -16,7 +17,7 @@
       ></simple-chart>
     </v-flex>
     <v-flex md4>
-      <energy-type-pie title="各BU电能类型能耗占比" width="100%" height="380px"></energy-type-pie>
+      <energy-type-pie :title="curBu + '电能耗类型占比'" :chart-data="buTypeData" width="100%" height="380px"></energy-type-pie>
     </v-flex>
   </v-layout>
   <v-layout row wrap>
@@ -115,7 +116,6 @@ const DefaultChartTooltip = ChartTooltip(defTooltipOpt);
 const echarts = window.echarts || undefined;
 
 export default {
-  name: 'bu',
   components: {
     BuildingsEnergyUsage,
     EnergyTypePie,
@@ -124,6 +124,8 @@ export default {
   mixins: [energyManageMixin],
   data: vm => ({
     buildingBuTypeData: {},
+    buTypeData: {},
+    curBu: '',
     DefaultChartTooltip,
     items5: ['SQA', 'MFG6', 'CSD'],
     items6: ['1F', '1.5F', '2F'],
@@ -149,88 +151,53 @@ export default {
     ],
     desserts: []
   }),
+  computed: {
+    condition () {
+      return this.$parent.searchCondition;
+    }
+  },
+  watch: {
+    // curBu () {
+      
+    // }
+  },
   mounted () {
-    this.getChart2();
-    this.getChart3();
-    this.getTableData();
+    this.init();
   },
   methods: {
-    initCharts () {
-      this.chart3DOM = this.$refs.chart3;
-      this.chart3 = echarts.init(this.chart3DOM);
+    init () {
+      this.getChart2();
+    },
+    buChartClick (evt) {
+      console.log(evt);
+      this.getChart3(evt.value);
     },
     getChart2 () {
       buApi.chart1Data(this.simpleParseParams({
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
+        startTime: this.condition.startTime,
+        endTime: this.condition.endTime,
+        building: this.condition.building
       })).then(res => {
         if (res && res.status === 200) {
           this.buildingBuTypeData = res.data;
+          if (res.data[0]) {
+            this.curBu = res.data[0].BU;
+            this.getChart3(res.data[0]);
+          }
         }
       });
     },
-    chart3Option (data) { 
-      const cData = {};
-      const chartOpts = {
-        dataset: { source: cData },
-        title: {
-          x: 'center'
-        },
-        color: ['rgb(58,192,169)', 'rgb(112,148,245)', 'rgb(178,189,211)', 'rgb(228,228,228)'],
-        legend: { show: true },
-        tooltip: {
-          trigger: 'item',
-          formatter: '{b} : {c} KWH({d}%)'
-        },
-        series: []
-      };
-      
-      cData['类型'] = Object.keys(data);
-      cData['能耗'] = cData['类型'].map(name => {
-        return Number(data[name]);
-      });
-      Object.keys(data[0]).forEach((v, i) => {
-        if (i === 0) return;
-        const defaultSeries = {
-          name: '',
-          type: 'pie',
-          radius: '55%',
-          center: ['50%', '60%'],
-          itemStyle: {
-            emphasis: {
-              shadowBlur: 10,
-              shadowOffsetX: 0,
-              shadowColor: 'rgba(0, 0, 0, 0.5)'
-            }
-          }
-        };
-        chartOpts.series.push(defaultSeries);
-      });
-      return chartOpts;
-    },
-    getChart3 () {
-      let params = {
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
-      };
-      let data = new FormData();
-      Object.keys(params).forEach(key => {
-        data.append(key, params[key]);
-      });
-      buApi.chart1Data(data).then(res => {
-        console.log(res);
-        const data = res.data;
-        const chartOption = this.chart3Option(data);
-        this.chart3.setOption(chartOption);
-      });
+    getChart3 (data) {
+      data = deepCopyObject(data);
+      this.curBu = data.BU;
+      // delete data.BU;
+      this.buTypeData = data;
     },
     getTableData () {
       buApi.tableData(this.simpleParseParams({
-        startTime: moment().subtract('days', 7).format('YYYY-MM-DD'),
-        endTime: moment().format('YYYY-MM-DD'),
-        building: 'E5'
+        startTime: this.condition.startTime,
+        endTime: this.condition.endTime,
+        building: this.condition.building
       })).then(res => {
         console.log(res);
         if (res && res.status === 200) {
@@ -251,24 +218,5 @@ export default {
 </script>
 
 <style lang='stylus' scoped>
-#header {
-  width: 100%;
-  height: 40px;
 
-  input {
-    width: 100px;
-    height: 30px;
-    margin: 15px;
-    margin-top: 5px;
-    color: #FFFFFF;
-    margin-left: 50px;
-  }
-}
-
-.chart1-text {
-  text-align: center;
-}
-#select{
-  padding:10px
-}
 </style>

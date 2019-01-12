@@ -6,7 +6,7 @@ export default [
   ['grid.bottom', '5%'],
   ['grid.right', '3%'],
   ['series[0].label.show', true],
-  ['series[0].smooth', true],
+  ['series[0].smooth', false],
   ['xAxis.axisLabel.show', true],
   ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
   ['xAxis.axisTick.lineStyle.color', 'rgba(255, 255, 255, .54)'],

@@ -54,44 +54,52 @@ export default {
 
       return [
         ['dataset.source', this.chartData],
-        ['color', ['#fff2cc', '#afabab', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
+        // ['color', ['#fff2cc', '#afabab', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
+        ['color', ['#fff2cc', '#3f9b3b', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
         ['legend.show', true],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
         ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-        ['yAxis', Array(2).fill({
-          show: true,
-          type: 'value',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
-            }
-          },
-          axisTick: {
+        ['yAxis', Array(2).fill(0).map((v, i) => {
+          const d = {
             show: true,
-            lineStyle: {
+            type: 'value',
+            axisLine: {
+              lineStyle: {
+                color: 'rgba(255, 255, 255, .54)',
+                type: 'dashed'
+              }
+            },
+            axisTick: {
               show: true,
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
+              lineStyle: {
+                show: true,
+                color: 'rgba(255, 255, 255, .54)',
+                type: 'dashed'
+              }
+            },
+            axisLabel: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)'
+            },
+            splitLine: {
+              lineStyle: {
+                type: 'dashed'
+              }
             }
-          },
-          axisLabel: {
-            show: true,
-            color: 'rgba(255, 255, 255, .54)'
-          },
-          splitLine: {
-            lineStyle: {
-              type: 'dashed'
-            }
+          };
+          if (i === 1) {
+            d.max = 100;
+            d.min = 0;
           }
+          return d;
         })],    
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
-        ['series', series.map(v => {
+        ['series', series.map((v, i) => {
           const defSeries = JSON.parse(JSON.stringify(this.seriesConf));
           if (v.indexOf('Output') > -1) {
             defSeries.yAxisIndex = 0;
@@ -99,7 +107,9 @@ export default {
           } else {
             defSeries.yAxisIndex = 1;
             defSeries.type = 'line';
+            defSeries.smooth = false;
           }
+          defSeries.label.show = i === 0;
           return defSeries;
         })]
       ];
