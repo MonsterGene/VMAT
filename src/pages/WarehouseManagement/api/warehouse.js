@@ -1,6 +1,8 @@
-// 仓库总信息
-
-
+/*
+* 仓库信息 API
+*/
+import { axios, catchMethod } from './config';
+// import { resolve } from 'dns';
 
 // 仓库信息
 const warehouses1 = [
@@ -98,25 +100,45 @@ const warehouses1 = [
   },
 ];
 const warehouses = [
-  { bu: 'CDBU', building: 'F21', floor: '3F' },
-  { bu: 'CSPG', building: 'E6', floor: '2F' },
-  { bu: 'CSPG', building: 'E6', floor: '3F' },
-  { bu: 'EDVT', building: 'D10', floor: '4F' },
-  { bu: 'ERBU', building: 'F21', floor: '2F' },
-  { bu: 'ERBU', building: 'F21', floor: '3F' },
-  { bu: 'ERBU', building: 'F21', floor: '2F' },
-  { bu: 'ICT', building: 'D10', floor: '4F' },
+  { value: false, id: '01', bu: 'CDBU', building: 'F21', floor: '3F' },
+  { value: false, id: '02', bu: 'CSPG', building: 'E6', floor: '2F' },
+  { value: false, id: '03', bu: 'CSPG', building: 'E6', floor: '3F' },
+  { value: false, id: '04', bu: 'EDVT', building: 'D10', floor: '4F' },
+  { value: false, id: '05', bu: 'ERBU', building: 'F21', floor: '2F' },
+  { value: false, id: '06', bu: 'ERBU', building: 'F21', floor: '3F' },
+  { value: false, id: '07', bu: 'ERBU', building: 'F21', floor: '2F' },
+  { value: false, id: '08', bu: 'ICT', building: 'D10', floor: '4F' },
 ];
+
+const getWarehouseById = (id) => {
+  return (id === undefined) ? warehouses[1] : warehouses.find(x => x.id === id);
+};
 
 const getWarehouse = (limit) => {
   return (limit) ? warehouses.slice(0, limit) : warehouses;
 };
 
-const getWarehouse1 = (limit) => {
-  return (limit) ? warehouses1.slice(0, limit) : warehouses1;
+// const getWarehouse1 = (limit) => {
+//   return (limit) ? warehouses1.slice(0, limit) : warehouses1;
+// };
+
+// 获取服务器数据，或者使用模拟数据
+const getWarehouse2 = (params, demo) => {
+  if (!demo) {
+    return axios.post('good', params).catch(catchMethod);
+  } else {
+    return new Promise(resolve => {
+      resolve({
+        status: 200,
+        data: warehouses
+      });
+    });
+  }
 };
 
 export {
-  getWarehouse1,
-  getWarehouse
+  // getWarehouse1,
+  getWarehouseById,
+  getWarehouse,
+  getWarehouse2
 };

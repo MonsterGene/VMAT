@@ -1,6 +1,9 @@
+/*
+* API 配置文件
+*/
 import axios from 'axios';
 
-const serverAddr = 'http://10.167.192.146/WMS/api';
+const serverAddr = 'http://10.132.49.131:8000/';  // 服务器地址
 
 const catchMethod = function (error) {
   if (error.response) {
@@ -19,6 +22,7 @@ const catchMethod = function (error) {
   console.log(error.config);
 };
 
+// 全局的 axios 默认值
 axios.defaults.baseURL = serverAddr;
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 

@@ -1,3 +1,8 @@
+/*
+* 主页面 数据 API
+*/
+import { axios, catchMethod } from './config';
+
 // 主界面列表数据
 const items = [
   {
@@ -552,10 +557,21 @@ const items = [
   },
 ];
 
-const getMainList = (limit) => {
-  return (limit) ? items.slice(0, limit) : items;
+// 获取服务器数据，或者使用模拟数据
+const getMainList = (params, demo) => {
+  if (!demo) {
+    return axios.post('form', params).catch(catchMethod);   // 返回服务器获取的数据 params
+  } else {
+    return new Promise(resolve => {
+      resolve({
+        status: 200,  // 状态码为 200
+        data: items   // 使用模拟数据 items
+      });
+    });
+  }
 };
 
+// 导出
 export {
   getMainList
 };

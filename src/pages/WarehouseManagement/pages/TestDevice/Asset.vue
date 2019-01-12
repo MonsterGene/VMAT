@@ -46,6 +46,15 @@ export default {
         }, 
       ]
     };
+  },
+  created () {
+    // this.$axios("http://10.132.49.131:8000/form/")
+    // .then(res => {
+    //   console.log(res);
+    // })
+    // .catch(error => {
+    //   console.log(error)
+    // })
   }
 };
 </script>

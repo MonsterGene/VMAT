@@ -1,7 +1,13 @@
+import TestDeviceRouter from './pages/TestDevice/router';
+import FixtureConsumablesRouter from './pages/FixtureConsumables/router';
+import GoldBoardRouter from './pages/GoldBoard/router';
+
+
 // 定義常量router
-const router = [
+const path = [
   {
     path: '/WMS',
+    name: '庫房管理系統',
     component: () => import('./WMS.vue'),
     meta: {
       theme: 'jean-black',   // 默認主題為黑色
@@ -17,53 +23,11 @@ const router = [
           `./pages/Home.vue`
         )
       },
-      {
-        path: 'asset',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/TestDevice/Asset.vue`)
-      },
-      {
-        path: 'maintenance',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/TestDevice/Maintenance.vue`)
-      },
-      {
-        path: 'check',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/TestDevice/Check.vue`)
-      },
-      {
-        path: 'info',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/Fixture&Consumables/InfoConsumables.vue`)
-      },
-      {
-        path: 'fixture',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/Fixture&Consumables/TestFixture.vue`)
-      },
-      {
-        path: 'wire',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/Fixture&Consumables/Wire.vue`)
-      },
-      {
-        path: 'utdGB',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/GoldBoard/UTDGB.vue`)
-      },
-      {
-        path: 'GBc',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/GoldBoard/GBCapacity.vue`)
-      },
-      {
-        path: 'rGB',
-        meta: { breadcrumb: false },
-        component: () => import(`./pages/GoldBoard/RotationGB.vue`)
-      }
+      TestDeviceRouter,
+      GoldBoardRouter,
+      FixtureConsumablesRouter,
     ]
   }
 ];
 
-export default router;
+export default path;
