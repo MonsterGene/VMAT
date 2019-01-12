@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const serverAddr = 'http://10.167.192.233:7777/';
 
+
 const catchMethod = function (error) {
   if (error.response) {
     // The request was made and the server responded with a status code
