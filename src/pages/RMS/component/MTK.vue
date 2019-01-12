@@ -51,6 +51,7 @@ export default {
   },
   watch () {
     this.$emit('close', false);
+    
   }
 };
 </script>
