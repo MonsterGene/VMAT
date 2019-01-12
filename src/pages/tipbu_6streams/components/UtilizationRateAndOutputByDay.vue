@@ -24,7 +24,7 @@ export default {
   components: {
     EChart
   },
-  props: ['headerText', 'stationId', 'lineId', 'open'],
+  props: ['headerText', 'stationId', 'lineId', 'open', 'type'],
   data () {
     return {
       refreshInterval: 5000,
@@ -149,18 +149,33 @@ export default {
         line_id: this.lineId,
         area_id: this.stationId
       });
-      const request2 = null;
+      const request2 = stationApi.getUtilizationRate.byDay({
+        start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD'),
+        line_id: this.lineId,
+        area_id: this.stationId
+      });
 
-      axios.all([request1])
+      axios.all([request1, request2])
         .then(axios.spread((res1, res2) => {
-          console.log(arguments);
+          console.log(res2);
           const resdata = res1.data;
+          const res2data = res2.data;
           if (resdata.success) {
-            const data = resdata.data;
+            if (this.type === 'achive') {
+              this.chartData = resdata.data;
+            } else {
+              const outputKey = Object.keys(resdata.data).filter(v => v.indexOf('Output') > -1)[0];
+              this.chartData = {
+                date: res2data.data.date
+              };
+              this.chartData[outputKey] = resdata.data[outputKey];
+              this.chartData.Utilization = res2data.data.Utilization;
+            }
+            console.log(this.chartData);
             // data.date = data.date.map(v => {
             //   return v.substring(v.indexOf('-') + 1);
             // });
-            this.chartData = data;
             this.$nextTick(() => {
               this.$refs.chartDOM.update();
             });

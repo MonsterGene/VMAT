@@ -8,6 +8,7 @@
         :line-id="$route.query.l"
         :station-id="$route.query.s"
         :open="true"
+        type="achive"
         @chart-click="yieldOutputByDayClick"
       ></utilization-rate-and-output-by-day>
     </v-flex>
@@ -17,6 +18,7 @@
         :date="yieldOutputByHour.date"
         :line-id="yieldOutputByHour.lineId"
         :station-id="$route.query.s"
+        type="achive"
       ></utilization-rate-and-output-by-hour>
     </v-flex>
 
@@ -26,6 +28,7 @@
         :line-id="$route.query.l"
         :station-id="$route.query.s"
         :open="true"
+        type="util"
         @chart-click="utilOutputByDayClick"
       ></utilization-rate-and-output-by-day>
     </v-flex>
@@ -42,7 +45,8 @@
       <error-analysis
         ref="cishu"
         :title="'工站异常次数分析('+ $route.params.lineName +')'" 
-        :path-option="yichangcishu_line"
+        :path-option="errorFreqOption"
+        type="util"
       >
         <div slot="widget-header-action" style="width:380px;display:flex;height:100%">
           <div style="width:120px;">
@@ -93,7 +97,7 @@
       <error-analysis
         ref="shijian"
         :title="'工站异常时间分析('+ $route.params.lineName +')'" 
-        :path-option="yichangshijian_line"
+        :path-option="errorTimeOption"
       >
         <div slot="widget-header-action" style="width:380px;display:flex;height:48px">
           <div style="width:120px;">
@@ -147,18 +151,19 @@
 <script>
 import moment from 'moment';
 import API from '../../api/chart';
+import { lineApi } from '../../api';
 
 import EChart from '@/components/chart/echart';
 import {
   campaignData,
 } from '@/api/chart';
 import Material from 'vuetify/es5/util/colors';
-import _object from 'lodash/object';
 import VWidget from '@/components/VWidget';
 import OutputAnalysis from '../../components/outputAnalysis.vue';
 import ErrorAnalysis from '../../components/errorAnalysis.vue';
 import UtilizationRateAndOutputByDay from '../../components/UtilizationRateAndOutputByDay.vue';
 import UtilizationRateAndOutputByHour from '../../components/UtilizationRateAndOutputByHour.vue';
+import { deepCopyObject } from '../../../../util/utils';
 
 export default {
   components: {
@@ -309,8 +314,145 @@ export default {
           menu: false,
           date: moment().format('YYYY-MM-DD')
         }
-      ]
+      ],
+      errorTimeData: {},
+      errorFreqData: {}
     };
+  },
+  computed: {
+    errorFreqOption () {
+      const dataset = deepCopyObject(this.errorFreqData);
+      if (!dataset.station) return;
+      dataset.station = dataset.station.map(v => v.name);
+      const total = dataset.frequency.reduce((acc, cur) => (acc + cur), 0);
+      let accFreq = 0;
+      dataset['累计次数'] = dataset.frequency.map(v => {
+        accFreq += v;
+        return (accFreq / total) * 100;
+      });
+      return [
+        ['dataset.source', dataset],
+        ['color', ['#bfbfbf', '#73fb79']],
+        ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['legend.selected', {}],
+        ['toolbox.show', true],
+        ['xAxis.axisLabel.show', true],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(2).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
+        ['grid.left', '2%'],
+        ['grid.bottom', '5%'],
+        ['grid.right', '3%'],
+
+        ['series[0].type', 'bar'],
+        ['series[0].label.show', true],
+        ['series[0].smooth', true],
+        
+        ['series[1].type', 'line'],
+        ['series[1].label.show', true],
+        ['series[1].smooth', false],
+        ['series[1].label.formatter', function (params) {
+          console.log(params);
+          return (params.value[2]).toFixed(2) + '%';
+        }],
+        ['series[1].yAxisIndex', 1]
+      ];
+    },
+    errorTimeOption () {
+      let dataset = deepCopyObject(this.errorTimeData);
+      dataset = {
+        station: dataset.station,
+        time: dataset.frequency,
+      };
+      if (!dataset.station) return;
+      dataset.station = dataset.station.map(v => v.name);
+      const totalTime = dataset.time.reduce((acc, cur) => (acc + cur), 0);
+      let accTime = 0;
+      dataset['累计时间'] = dataset.time.map(v => {
+        accTime += v;
+        return (accTime / totalTime) * 100;
+      });
+      return [
+        ['dataset.source', dataset],
+        ['color', ['#bfbfbf', '#73fb79']],
+        ['legend.show', true],
+        ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
+        ['legend.selected', {}],
+        ['toolbox.show', true],
+        ['xAxis.axisLabel.show', true],
+        ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
+        ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
+        ['yAxis', Array(2).fill({
+          show: true,
+          type: 'value',
+          axisLine: {
+            lineStyle: {
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisTick: {
+            show: true,
+            lineStyle: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)',
+              type: 'dashed'
+            }
+          },
+          axisLabel: {
+            show: true,
+            color: 'rgba(255, 255, 255, .54)'
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed'
+            }
+          }
+        })],
+        ['grid.left', '2%'],
+        ['grid.bottom', '5%'],
+        ['grid.right', '3%'],
+
+        ['series[0].type', 'bar'],
+        ['series[0].label.show', true],
+        ['series[0].smooth', false],
+
+        ['series[1].type', 'line'],
+        ['series[1].label.show', true],
+        ['series[1].smooth', false],
+        ['series[1].label.formatter', function (params) {
+          return (params.value[2]).toFixed(2) + '%';
+        }],
+        ['series[1].yAxisIndex', 1]
+      ];
+    }
   },
   watch: {
     'dachengByHour.model.0': function (n) {
@@ -321,36 +463,47 @@ export default {
     }
   },
   mounted () {
-    // 产出达成分析图点击
-    // this.$refs.chanchuDacheng.chartInstance.on('click', evt => {
-    //   console.log(evt);
-    //   console.log(this.$refs.chanchuDacheng.chartInstance);
-    //   this.dachengByHour.model = [true];
-    //   this.dachengByHour.date = evt.name;
-    //   API.hoursData.reverse();
-    //   console.log(this.dachengByHour.model);
-    //   this.$refs.dachengExp.update();
-    // });
-
-    // 产出稼动分析图点击
-    // this.$refs.chanchuJiadong.chartInstance.on('click', evt => {
-    //   this.jiadongByHour.model = [true];
-    //   this.jiadongByHour.date = evt.name;
-    //   API.hoursData.reverse();
-    //   this.$refs.jiadongExp.update();
-    // });
-
     // 次数、时间分析图点击
-    this.$refs.cishu.chartInstance.on('click', evt => {
-      console.log(evt);
-      this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name + '?l=' + this.$route.query.l });
-    });
-    this.$refs.shijian.chartInstance.on('click', evt => {
-      console.log(evt);
-      this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name });
-    });
+    // this.$refs.cishu.chartInstance.on('click', evt => {
+    //   console.log(evt);
+    //   this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name + '?l=' + this.$route.query.l });
+    // });
+    // this.$refs.shijian.chartInstance.on('click', evt => {
+    //   console.log(evt);
+    //   this.$router.push({ path: '/npbg_lh_smart_test/mfg_3/packing/station-details/' + evt.name });
+    // });
+
+    this.getErrorFreqByStation();
+    this.getErrorTimeByStation();
   },
   methods: {
+    getErrorFreqByStation () {
+      const date = moment().format('YYYY-MM-DD');
+      lineApi.getErrorFrequencyByStation({
+        startDate: date,
+        endDate: date,
+        lineID: this.$route.query.l
+      }).then(res => {
+        console.log(res);
+        if (res && res.status === 200 && res.data.success) {
+          const data = res.data;
+          this.errorFreqData = data.data;
+        }
+      });
+    },
+    getErrorTimeByStation () {
+      const date = moment().format('YYYY-MM-DD');
+      lineApi.getErrorTimeByStation({
+        startDate: date,
+        endDate: date,
+        lineID: this.$route.query.l
+      }).then(res => {
+        console.log(res);
+        if (res && res.status === 200 && res.data.success) {
+          this.errorTimeData = res.data.data;
+        }
+      });
+    },
     yieldOutputByDayClick (evt) {
       console.log(evt);
       this.yieldOutputByHour.date = evt.date;

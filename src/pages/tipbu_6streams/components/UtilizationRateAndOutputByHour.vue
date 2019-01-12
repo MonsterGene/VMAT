@@ -24,7 +24,7 @@ export default {
   components: {
     EChart
   },
-  props: ['headerText', 'date', 'stationId', 'lineId'],
+  props: ['headerText', 'date', 'stationId', 'lineId', 'type'],
   data () {
     return {
       refreshInterval: 5000,
@@ -141,15 +141,28 @@ export default {
         area_id: this.stationId
       });
       // 请求稼动率数据
-      const request2 = null;
+      const request2 = stationApi.getUtilizationRate.byHour({
+        date: moment(this.date).format('YYYY-MM-DD'),
+        line_id: this.lineId,
+        area_id: this.stationId
+      });
 
-      axios.all([request1])
+      axios.all([request1, request2])
         .then(axios.spread((res1, res2) => {
-          console.log(arguments);
           const resdata = res1.data;
+          const res2data = res2.data;
           if (resdata.success) {
             const data = resdata.data;
-            this.chartData = data;
+            if (this.type === 'achive') {
+              this.chartData = data;
+            } else {
+              const outputKey = Object.keys(resdata.data).filter(v => v.indexOf('Output') > -1)[0];
+              this.chartData = {
+                hour: res2data.data.hour
+              };
+              this.chartData[outputKey] = resdata.data[outputKey];
+              this.chartData.Utilization = res2data.data.Utilization;
+            }
             this.$nextTick(() => {
               this.$refs.chartDOM.update();
             });

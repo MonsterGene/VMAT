@@ -22,13 +22,13 @@ const getUtilizationRate = {
    * params: { start_date: Date, end_date: Date, line_id: Int, area_id: Int }
    */
   byDay: (params) => {
-
+    return axios.post('/GetUtilization/getUtilByDay', params).catch(catchMethod);
   },
   /**
    * params: { date: Date, line_id: Int, area_id: Int }
    */
   byHour: (params) => {
-
+    return axios.post('/GetUtilization/getUtilByHour', params).catch(catchMethod);
   }
 };
 
@@ -95,6 +95,7 @@ const errorSolution = {
 export default {
   getStationOutput,
   getUtilizationRate,
+  
   getRunTime,
   getErrorFrequencyAndTime,
   getErrorFrequency,
