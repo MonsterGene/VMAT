@@ -12,6 +12,7 @@ import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import Truncate from 'lodash.truncate';
 import store from './store';
+
 Vue.config.productionTip = false;
 // Helpers
 // Global filters

@@ -161,6 +161,25 @@ const stationList = [
   return { name: name, img: stationImgConf[name] || stationImgConf.default, state: stateLegends[Math.floor(Math.random() * 100) % 4].state, output: Math.floor(Math.random() * 1000) + 12 };
 });
 
+const testStationImgConf = {};
+testStationImgConf['ICT'] = require('../static/pic/station_003.png');
+testStationImgConf['BST'] = require('../static/pic/station_003.png');
+testStationImgConf['RF'] = require('../static/pic/station_003.png');
+testStationImgConf['Run In'] = require('../static/pic/station_003.png');
+testStationImgConf['Acoustic Test'] = require('../static/pic/station_003.png');
+testStationImgConf['FST'] = require('../static/pic/station_003.png');
+
+const testStationList = [
+  'ICT',
+  'BST',
+  'RF',
+  'Run In',
+  'Acoustic Test',
+  'FST'
+].map(name => {
+  return { name: name, img: testStationImgConf[name] || testStationImgConf.default };
+});
+
 export default {
   dailyData1,
   dailyData2,
@@ -176,5 +195,7 @@ export default {
   shijianByHour,
   stateLegends,
   stationImgConf,
-  stationList
+  stationList,
+  testStationImgConf,
+  testStationList
 };

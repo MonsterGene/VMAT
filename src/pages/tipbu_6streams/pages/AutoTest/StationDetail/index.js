@@ -1,3 +1,3 @@
-import App from './App.vue';
+import stationDetail from './stationDetail.vue';
 
-export default App;
+export default stationDetail;

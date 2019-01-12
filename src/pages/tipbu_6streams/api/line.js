@@ -15,9 +15,14 @@ const getErrorTimeByStation = (params) => {
   return axios.post('/LineConfig/getLineAlertDate', params).catch(catchMethod);
 };
 
+const getTestLinesData = () => {
+  return axios.post('http://localhost:9000/api/test').catch(catchMethod);
+};
+
 export default {
   getStateLegends,
   getLinesData,
   getErrorFrequencyByStation,
-  getErrorTimeByStation
+  getErrorTimeByStation,
+  getTestLinesData
 };
