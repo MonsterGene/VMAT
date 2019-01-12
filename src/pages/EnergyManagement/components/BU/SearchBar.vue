@@ -5,10 +5,12 @@
     xs12>
     <label class="search-bar-label">楼栋：</label>
     <building-select style="width: 65px;display: inline-block;vertical-align: top" v-model="formModel.building"></building-select>
-    <label class="search-bar-label">BU：</label>
-    <bu-select @bu-change="buChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select>
-    <label class="search-bar-label">楼层：</label>
-    <floor-select @floor-change="floorChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
+    <label class="search-bar-label">主体单元：</label>
+    <bu-floor-select @body-change="bodyChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="mainBody"></bu-floor-select>
+    <label v-if="mainBody === 'bu'" class="search-bar-label">BU：</label>
+    <bu-select v-if="mainBody === 'bu'" @bu-change="buChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.bu"></bu-select>
+    <label v-if="mainBody === 'floor'" class="search-bar-label">楼层：</label>
+    <floor-select v-if="mainBody === 'floor'" @floor-change="floorChange" style="width: 90px;display: inline-block;vertical-align: top" v-model="formModel.floor"></floor-select>
     <label class="search-bar-label">时间段：</label>
     <date-range style="width: 240px;display: inline-block;vertical-align: top" v-model="dateRange"></date-range>
     <label class="search-bar-label">班别：</label>
@@ -26,6 +28,7 @@ import FloorSelect from '../common/SearchBarComp/FloorSelect.vue';
 import DateRange from '../common/SearchBarComp/DateRange.vue';
 import ShiftType from '../common/SearchBarComp/ShiftType.vue';
 import TypeTime from '../common/SearchBarComp/TypeTime.vue';
+import BuFloorSelect from '../common/SearchBarComp/BuFloorSelect.vue';
 
 export default {
   components: {
@@ -34,12 +37,14 @@ export default {
     FloorSelect,
     DateRange,
     ShiftType,
-    TypeTime
+    TypeTime,
+    BuFloorSelect
   },
   data () {
     return {
+      mainBody: 'floor',
       formModel: {
-        building: 'E5',
+        building: this.$route.query.b,
         bu: '',
         floor: '',
         startTime: '',
@@ -102,6 +107,9 @@ export default {
       if (floor) {
         this.formModel.bu = '';
       }
+    },
+    bodyChange (b) {
+      this.$emit('body-change', b);
     }
   }
 };

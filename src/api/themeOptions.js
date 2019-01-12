@@ -133,6 +133,19 @@ const themeList = [
       mainNav: '#4CAF50',
       sideMenu: '#FFFFFF'
     }
+  },
+  {
+    name: 'gc-blue',
+    isDark: false,
+    lightSupport: 'light',
+    colors: {
+      app: '#f0f1f5',
+      primary: '#448aff',
+      accent: '#448aff',
+      sideNav: '#448aff',
+      mainNav: '#448aff',
+      sideMenu: '#FFFFFF'
+    }
   }
 ];
 

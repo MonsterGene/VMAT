@@ -101,6 +101,7 @@ export default {
     _defaultOption: {
       tooltip: {
         show: true,
+        trigger: 'axis'
       },
       title: {
         show: true,

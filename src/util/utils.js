@@ -11,6 +11,10 @@ export function _isObject (obj) {
 }
 
 export function deepCopyObject (obj) {
+  if (!obj) {
+    console.log('Can not copy this data: ', obj);
+    return obj;
+  }
   return JSON.parse(JSON.stringify(obj));
 }
 

@@ -24,7 +24,7 @@ export default {
   components: {
     EChart
   },
-  props: ['headerText', 'stationId', 'lineId', 'open'],
+  props: ['headerText', 'stationId', 'lineId', 'open', 'type'],
   data () {
     return {
       refreshInterval: 5000,
@@ -54,44 +54,52 @@ export default {
 
       return [
         ['dataset.source', this.chartData],
-        ['color', ['#fff2cc', '#afabab', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
+        // ['color', ['#fff2cc', '#afabab', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
+        ['color', ['#fff2cc', '#3f9b3b', '#8faadc', '#ff40ff', '#73fb79', '#fffc00']],
         ['legend.show', true],
         ['legend.textStyle.color', 'rgba(255, 255, 255, .54)'],
         ['toolbox.show', true],
         ['xAxis.axisLabel.show', true],
         ['xAxis.axisTick.lineStyle.color', 'rgba(255,255,255,.54)'],
         ['xAxis.axisLabel.color', 'rgba(255, 255, 255, .54)'],
-        ['yAxis', Array(2).fill({
-          show: true,
-          type: 'value',
-          axisLine: {
-            lineStyle: {
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
-            }
-          },
-          axisTick: {
+        ['yAxis', Array(2).fill(0).map((v, i) => {
+          const d = {
             show: true,
-            lineStyle: {
+            type: 'value',
+            axisLine: {
+              lineStyle: {
+                color: 'rgba(255, 255, 255, .54)',
+                type: 'dashed'
+              }
+            },
+            axisTick: {
               show: true,
-              color: 'rgba(255, 255, 255, .54)',
-              type: 'dashed'
+              lineStyle: {
+                show: true,
+                color: 'rgba(255, 255, 255, .54)',
+                type: 'dashed'
+              }
+            },
+            axisLabel: {
+              show: true,
+              color: 'rgba(255, 255, 255, .54)'
+            },
+            splitLine: {
+              lineStyle: {
+                type: 'dashed'
+              }
             }
-          },
-          axisLabel: {
-            show: true,
-            color: 'rgba(255, 255, 255, .54)'
-          },
-          splitLine: {
-            lineStyle: {
-              type: 'dashed'
-            }
+          };
+          if (i === 1) {
+            d.max = 100;
+            d.min = 0;
           }
+          return d;
         })],    
         ['grid.left', '2%'],
         ['grid.bottom', '5%'],
         ['grid.right', '3%'],
-        ['series', series.map(v => {
+        ['series', series.map((v, i) => {
           const defSeries = JSON.parse(JSON.stringify(this.seriesConf));
           if (v.indexOf('Output') > -1) {
             defSeries.yAxisIndex = 0;
@@ -99,7 +107,9 @@ export default {
           } else {
             defSeries.yAxisIndex = 1;
             defSeries.type = 'line';
+            defSeries.smooth = false;
           }
+          defSeries.label.show = i === 0;
           return defSeries;
         })]
       ];
@@ -139,18 +149,33 @@ export default {
         line_id: this.lineId,
         area_id: this.stationId
       });
-      const request2 = null;
+      const request2 = stationApi.getUtilizationRate.byDay({
+        start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'),
+        end_date: moment().format('YYYY-MM-DD'),
+        line_id: this.lineId,
+        area_id: this.stationId
+      });
 
-      axios.all([request1])
+      axios.all([request1, request2])
         .then(axios.spread((res1, res2) => {
-          console.log(arguments);
+          console.log(res2);
           const resdata = res1.data;
+          const res2data = res2.data;
           if (resdata.success) {
-            const data = resdata.data;
+            if (this.type === 'achive') {
+              this.chartData = resdata.data;
+            } else {
+              const outputKey = Object.keys(resdata.data).filter(v => v.indexOf('Output') > -1)[0];
+              this.chartData = {
+                date: res2data.data.date
+              };
+              this.chartData[outputKey] = resdata.data[outputKey];
+              this.chartData.Utilization = res2data.data.Utilization;
+            }
+            console.log(this.chartData);
             // data.date = data.date.map(v => {
             //   return v.substring(v.indexOf('-') + 1);
             // });
-            this.chartData = data;
             this.$nextTick(() => {
               this.$refs.chartDOM.update();
             });

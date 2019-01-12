@@ -45,11 +45,11 @@ export default {
     this.getChartData();
   },
   methods: {
-    chartClick () {
+    chartClick (evt) {
       if (this.$route.path.indexOf('/public') !== 0) {
-        this.$router.push('/energy_management/floors');
+        this.$router.push('/energy_management/source-detail?b=' + evt.name);
       } else {
-        this.$router.push('/public/energy_management/floors');
+        this.$router.push('/public/energy_management/source-detail?b=' + evt.name);
       }
     },
     getChartData () {

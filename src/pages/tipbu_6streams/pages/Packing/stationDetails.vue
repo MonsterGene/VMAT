@@ -3,7 +3,7 @@
   <v-layout row wrap>
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-day
-        :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
+        :header-text="'产出与达成率分析（单站 - ' + $route.params.stationName + '- 每日趋势）'"
         :line-id="$route.query.l"
         :station-id="$route.query.s"
         @chart-click="utilOutputByDayClick"
@@ -11,7 +11,7 @@
     </v-flex>
     <v-flex lg12 sm12 xs12>
       <utilization-rate-and-output-by-hour
-        :header-text="'产出与稼动率分析（单站 - ' + $route.params.stationName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
+        :header-text="'产出与达成率分析（单站 - ' + $route.params.stationName + '- 每日趋势 -'+ utilOutputByHour.date +'）'"
         :date="utilOutputByHour.date"
         :line-id="utilOutputByHour.lineId"
         :station-id="utilOutputByHour.stationId"

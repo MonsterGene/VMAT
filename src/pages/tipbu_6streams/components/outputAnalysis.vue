@@ -30,9 +30,18 @@ export default {
       chartInstance: null
     };
   },
+  watch: {
+    pathOption (val) {
+      console.log('----------- path option changed ----------');
+      console.log(val);
+      this.$nextTick(() => {
+        this.$refs.chart.update();
+      });
+    }
+  },
   mounted () {
     this.chartInstance = this.$refs.chart.chartInstance;
-  }
+  },
 };
 </script>
 
