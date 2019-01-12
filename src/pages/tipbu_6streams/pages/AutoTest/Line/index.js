@@ -1,3 +1,3 @@
-import App from './App.vue';
+import line from './line.vue';
 
-export default App;
+export default line;

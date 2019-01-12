@@ -907,20 +907,20 @@ export default {
     },
     // 导出excel方法
     export2Excel () {
-      require.ensure([], () => {
-        const { export_json_to_excel } = require('../vendor/Export2Excel');
-        const tHeader = [
-          '物品名称', '廠商', 'S/N', '安全庫存數量設定', '使用壽命', '樓層', '存放位置',
-          '使用狀態', '到貨時間', '驗收人'
-        ];
-        const filterVal = [
-          'item_name', 'vendor', 'sn', 'safe_num', 'service_life', 'floor', 'location', 'use_state',
-          'arrival_time', 'acceptor'
-        ];
-        const list = this.desserts;
-        const data = this.formatJson(filterVal, list);
-        export_json_to_excel(tHeader, data, '列表excel');
-      });
+      // require.ensure([], () => {
+      //   const { export_json_to_excel } = require('../vendor/Export2Excel');
+      //   const tHeader = [
+      //     '物品名称', '廠商', 'S/N', '安全庫存數量設定', '使用壽命', '樓層', '存放位置',
+      //     '使用狀態', '到貨時間', '驗收人'
+      //   ];
+      //   const filterVal = [
+      //     'item_name', 'vendor', 'sn', 'safe_num', 'service_life', 'floor', 'location', 'use_state',
+      //     'arrival_time', 'acceptor'
+      //   ];
+      //   const list = this.desserts;
+      //   const data = this.formatJson(filterVal, list);
+      //   export_json_to_excel(tHeader, data, '列表excel');
+      // });
     },
     formatJson (filterVal, jsonData) {
       console.log(jsonData);

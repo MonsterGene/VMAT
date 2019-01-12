@@ -235,15 +235,15 @@ const API = { formApi };
 
 export default {
   components: {
-    VWidget,
-    Goods,
-    Control,
-    FloatBtn,
+    // VWidget,
+    // Goods,
+    // Control,
+    // FloatBtn,
     Dialog,
     OCard,
     // Cascader,
     Datatable,
-    Warehouse
+    // Warehouse
   },
   data: () => ({
     // dialog初始化
@@ -389,14 +389,14 @@ export default {
     },
     // 输出excel表格
     export2Excel2 () {
-      require.ensure([], () => {
-        const { export_json_to_excel } = require('../vendor/Export2Excel');
-        const tHeader = ['BU', 'Building', 'Floor'];
-        const filterVal = ['bu', 'building', 'floor'];
-        const list = this.desserts;
-        const data = this.formatJson(filterVal, list);
-        export_json_to_excel(tHeader, data, 'WarehouseExcel');
-      });
+      // require//.ensure([], () => {
+      //   const { export_json_to_excel } = require('../vendor/Export2Excel');
+      //   const tHeader = ['BU', 'Building', 'Floor'];
+      //   const filterVal = ['bu', 'building', 'floor'];
+      //   const list = this.desserts;
+      //   const data = this.formatJson(filterVal, list);
+      //   export_json_to_excel(tHeader, data, 'WarehouseExcel');
+      // });
     },
     formatJson (filterVal, jsonData) {
       console.log(jsonData);
