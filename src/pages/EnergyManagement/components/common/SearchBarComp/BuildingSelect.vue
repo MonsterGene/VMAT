@@ -37,7 +37,8 @@ export default {
           { text: 'E5', value: 'E5' },
           { text: 'E6', value: 'E6' },
           { text: 'D9', value: 'D9' },
-          { text: 'D10', value: 'D10' }
+          { text: 'D10', value: 'D10' },
+          { text: 'F21', value: 'F21' }
         ]
       }
     };

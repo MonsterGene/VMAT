@@ -5,8 +5,7 @@ const menu = [
     icon: 'view_compact',
     items: [
       { title: '首页', path: 'home' },
-      // { title: '楼栋', path: 'floors' },
-      // { title: 'BU', path: 'bu' },
+      { title: '楼栋楼层/BU', path: 'source-detail?b=E5' },
       { title: '空调系统', path: 'airCon' },
       // { title: 'Bella', path: 'test' }
     ]

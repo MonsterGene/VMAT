@@ -31,12 +31,12 @@ export default {
       component: Line
     },
     {
-      path: 'line_detail', // 整线智能监控
+      path: 'line_detail/:lineName', // 整线智能监控
       meta: { breadcrumb: false },
       component: LineDetail
     },
     {
-      path: 'station_detail', // 单站智能监控
+      path: 'station_detail/:stationName', // 单站智能监控
       meta: { breadcrumb: false },
       component: StationDetail
     },
