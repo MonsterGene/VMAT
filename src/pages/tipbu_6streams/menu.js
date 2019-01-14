@@ -22,7 +22,7 @@ const menu_6streams_tipbu = [
             group: 'auto_test',
             items: [
               // { title: '智能监控', path: 'intelligent_surveillance' },
-              { title: '智能监控', path: 'line_detail' },
+              { title: '智能监控', path: 'line' },
               { title: '状态看板', path: 'status_board' },
               {
                 title: '良率跟踪',
